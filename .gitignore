@@ -1,3 +1,6 @@
 *.class
 target/
 /backend/mvnw.cmd
+/backend/mvnw
+/backend/.mvn/
+/backend/HELP.md
