@@ -1,5 +1,7 @@
 *.class
+*.project
 target/
+bin/
 /backend/mvnw.cmd
 /backend/mvnw
 /backend/.mvn/
