@@ -30,7 +30,9 @@ public class BackendApplication implements CommandLineRunner {
 			"\n6 - find the 5 cheapest books available in inventory;"+
 			"\n7 - find all books sorted by title alphabetically by title in paginated form. The user can enter the page finder they want;"+
 			"\n8 - add a book to an order (shopping cart);"+
-			"\n9 - sair: ");
+			"\n9 - show all admins;"+
+			"\n10 - change user to admin;"+
+			"\n11 - sair: ");
 
 			int op = Integer.parseInt(input.nextLine());
 
@@ -83,8 +85,8 @@ public class BackendApplication implements CommandLineRunner {
 					for(int i = 0;i < lista.length;i++){
 
 					}
-					System.out.println("Name Author: ");
-					String nameAuthor = input.nextLine();
+					System.out.print("Type the ID Author: ");
+					int id = Integer.parseInt(input.nextLine());
 					System.out.println("description: ");
 					String descricao = input.nextLine();
 					System.out.println("category: ");
@@ -97,19 +99,18 @@ public class BackendApplication implements CommandLineRunner {
 				// alterar campos ou campo do livro
 				}else if(op == 1){
 
-					System.out.println("Se não deseja alterar algum campo dê enter");
+					System.out.println("If you don't want to change any field press enter");
 					System.out.println("Name: ");
 					String name = input.nextLine();
-					System.out.println("Escolha o autor:");
+					System.out.println("choice the author: ");
 					// percorre a lista de autores.
 					String[] lista = new String[5];
 					for(int i = 0;i < lista.length;i++){
 
 					}
+					System.out.print("Type the ID Author: ");
 					int id = Integer.parseInt(input.nextLine());
 
-					System.out.println("Name Author: ");
-					String nameAuthor = input.nextLine();
 					System.out.println("description: ");
 					String descricao = input.nextLine();
 					System.out.println("category: ");
@@ -121,25 +122,27 @@ public class BackendApplication implements CommandLineRunner {
 
 				// excluir o livro
 				}else if(op == 2){
-					System.out.println("Lista de livros:");
+					System.out.println("List of books:");
 					String[] lista = new String[5];
 					for(int i = 0;i < lista.length;i++){
 
 					}
+					System.out.print("Type the ID books: ");
 					int id = Integer.parseInt(input.nextLine());
 				}
 			// opção para registrar categoria.
 			}else if(op == 4){
-				System.out.println("category name:");
+				System.out.print("category name: ");
 				String name = input.nextLine();
 			
 			// opção para excluir categoria
 			}else if(op == 5){
-				System.out.println("List categorys:");
+				System.out.println("List categorys: ");
 				String[] lista = new String[5];
 				for(int i = 0;i < lista.length;i++){
 
 				}
+				System.out.print("Type the ID category: ");
 				int id = Integer.parseInt(input.nextLine());
 			// opção para encontrar os 5 livros mais baratos disponiveis no inventario
 			}else if(op == 6){
@@ -155,7 +158,7 @@ public class BackendApplication implements CommandLineRunner {
 				int contadorDePaginas = 0;
 
 				while(true){
-					System.out.println("What paging do you desire?");
+					System.out.print("What paging do you desire? ");
 	
 					String option = input.nextLine();
 	
@@ -181,17 +184,17 @@ public class BackendApplication implements CommandLineRunner {
 				// Carrinho carrinho = ;
 				while(true){
 					System.out.println("What paging do you desire?");
-					System.out.println("0 - remover\n1 - adicionar\n2 - sair");
+					System.out.print("0 - remover\n1 - adicionar\n2 - sair: ");
 					op = Integer.parseInt(input.nextLine());
 					//Carrinho.toString();
 					//opção para remover livro do carrinho
 					if(op==0){
-						System.out.println("Id Book:");
+						System.out.print("Id Book: ");
 						int id = Integer.parseInt(input.nextLine());
 						
 					//opção para adionar livro no carrinho
 					}else if(op == 1){
-						System.out.println("What paging do you desire?");
+						System.out.print("What paging do you desire? ");
 	
 						String option = input.nextLine();
 		
@@ -211,7 +214,7 @@ public class BackendApplication implements CommandLineRunner {
 						}else{
 							buscaPagina(contadorDePaginas);
 						}
-						System.out.println("What Id of book do you desire?");
+						System.out.print("What Id of book do you desire? ");
 						int id = Integer.parseInt(input.nextLine());
 						if(id >= 1){
 							//carrinho.add(id);
@@ -220,8 +223,22 @@ public class BackendApplication implements CommandLineRunner {
 						break;
 					}
 				}
-			// sair.
+			// show all admins
 			}else if(op == 9){
+				//User admin;
+				for(int i = 0;i < 10;i++){
+					System.out.println();
+				}
+			// opção 
+			}else if(op == 10){
+				//User admin;
+				for(int i = 0;i < 10;i++){
+					System.out.println();
+				}
+				System.out.print("Type the ID user: ");
+				int id = Integer.parseInt(input.nextLine());
+			// sair.
+			}else if(op == 11){
 				isRun = false;
 			}
 			
