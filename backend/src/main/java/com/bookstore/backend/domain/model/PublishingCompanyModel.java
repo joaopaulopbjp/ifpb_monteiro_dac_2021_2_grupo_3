@@ -18,5 +18,22 @@ public class PublishingCompanyModel {
     
 	private Long id;
 	private String name;
-	private List<BookModel> books = new ArrayList<BookModel>();
+	private List<BookModel> bookList;
+
+	public boolean addBookToBookList(BookModel bookModel) {
+		if(bookList != null) {
+			bookList.add(bookModel);
+		} else {
+			bookList = new ArrayList<>();
+			addBookToBookList(bookModel);
+		}
+		return true;
+	}
+
+	public boolean removeBookFromBookList(BookModel bookModel) {
+		if(bookList != null) {
+			return bookList.remove(bookModel);
+		}
+		 return false;
+	}
 }

@@ -28,4 +28,38 @@ public class BookModel {
     private List<CategoryModel> categoryList;
     private PublishingCompanyModel company;
     private List<AuthorModel> authorList;
+
+    public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
+        if(categoryList != null) {
+            categoryList.add(categoryModel);
+        } else {
+            categoryList = new ArrayList<>();
+            addCategoryToCategoryList(categoryModel);
+        }
+        return true;
+    }
+
+    public boolean removeCategoryFromCategoryList(CategoryModel categoryModel) {
+        if(categoryList != null) {
+            return categoryList.remove(categoryModel);
+        }
+        return false;
+    }
+
+    public boolean addAuthorToAuthorList(AuthorModel authorModel) {
+        if(authorList != null) {
+            authorList.add(authorModel);
+        } else {
+            authorList = new ArrayList<>();
+            addAuthorToAuthorList(authorModel);
+        }
+        return true;
+    }
+
+    public boolean removeAuthorFromAuthorList(AuthorModel authorModel) {
+        if(authorList != null) {
+            return authorList.remove(authorModel);
+        }
+        return false;
+    }
 }

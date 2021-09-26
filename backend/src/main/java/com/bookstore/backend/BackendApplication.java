@@ -1,6 +1,9 @@
 package com.bookstore.backend;
 
+import java.util.List;
 import java.util.Scanner;
+
+import com.bookstore.backend.domain.model.BookModel;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -245,13 +248,12 @@ public class BackendApplication implements CommandLineRunner {
 		}
 		input.close();
 	}
-	public List<Book> buscaPagina(int pagina){
+	public List<BookModel> buscaPagina(int pagina){
 		// buscar pagina no banco
 		String[] lista = new String[5];
 		for(int i = 0;i < lista.length;i++){
 
 		}
-		return lista;
+		return null;
 	}
-}
 }

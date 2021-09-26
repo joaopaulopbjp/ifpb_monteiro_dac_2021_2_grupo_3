@@ -17,6 +17,9 @@ public class ItemOrderModel {
     
 	private Long id;
 	private int amount;
-	private BigDecimal TotalPrice;
 	private BookModel book;
+
+	public BigDecimal getTotalPrice() {
+		return book.getPrice().multiply(new BigDecimal(getAmount()));
+	}
 }
