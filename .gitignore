@@ -6,6 +6,7 @@
 target/
 .vscode/
 .idea/
+backend.iml
 bin/
 /backend/mvnw.cmd
 /backend/mvnw
