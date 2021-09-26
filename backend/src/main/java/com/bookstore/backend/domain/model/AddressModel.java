@@ -1,4 +1,4 @@
-package com.bookstore.backend.entitys;
+package com.bookstore.backend.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,14 +11,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Address {
+public class AddressModel {
     
 	private Long id;
 	private String street;
-	private int num;
-	private String CEP;
+	private String num;
+	private String ZipCode;
 	private String city;
 	private String district;
-	private User user;
+	private UserModel user;
 	
 }
