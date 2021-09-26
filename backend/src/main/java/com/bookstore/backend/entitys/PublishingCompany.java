@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-@Lombok
 @Getter
 @Setter
 @AllArgsConstructor
