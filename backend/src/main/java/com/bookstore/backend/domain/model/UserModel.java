@@ -1,4 +1,6 @@
-package com.bookstore.backend.entitys;
+package com.bookstore.backend.domain.model;
+
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -12,12 +14,12 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class User {
+public class UserModel {
     
     private Long id;
     private boolean isAdm;
     private String username;
     private String email;
     private String password;
-    private Address address;
+    private List<AddressModel> addressList;
 }

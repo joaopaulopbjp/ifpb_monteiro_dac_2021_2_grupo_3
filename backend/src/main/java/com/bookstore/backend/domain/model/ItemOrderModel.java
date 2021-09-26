@@ -1,4 +1,6 @@
-package com.bookstore.backend.entitys;
+package com.bookstore.backend.domain.model;
+
+import java.math.BigDecimal;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,9 +13,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class ItemOrder {
+public class ItemOrderModel {
     
 	private Long id;
 	private int amount;
-	private Book book;
+	private BigDecimal TotalPrice;
+	private BookModel book;
 }

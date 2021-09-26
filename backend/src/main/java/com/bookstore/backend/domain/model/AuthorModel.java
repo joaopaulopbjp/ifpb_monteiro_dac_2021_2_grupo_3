@@ -1,8 +1,8 @@
-package com.bookstore.backend.entitys;
+package com.bookstore.backend.domain.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -15,12 +15,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Order {
+public class AuthorModel {
     
-	private Long id;
-	private Date dateOrder;
-	private String status;
-	private List<ItemOrder> items = new ArrayList<ItemOrder>();
-	private Double totalPrice;
-	
+    private Long id;
+    private String name;
+    private List<BookModel> bookList;
+
 }

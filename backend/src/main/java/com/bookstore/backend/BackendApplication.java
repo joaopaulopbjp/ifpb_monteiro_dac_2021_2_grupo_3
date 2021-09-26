@@ -13,7 +13,6 @@ public class BackendApplication implements CommandLineRunner {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-}
 	@Override
 	public void run(String... args) throws Exception {
 		Scanner input = new Scanner(System.in);
@@ -254,4 +253,5 @@ public class BackendApplication implements CommandLineRunner {
 		}
 		return lista;
 	}
+}
 }

@@ -1,5 +1,6 @@
-package com.bookstore.backend.entitys;
+package com.bookstore.backend.domain.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,15 +15,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
-public class Book {
+public class BookModel {
     
     private Long id;
     private String title;
     private String description;
     private int yearLaunch;
     private int pages;
-    private Double price;
-    private Category category;
-    private PublishingCompany company;
-    private List<Author> authores = new ArrayList<Author>();
+    private BigDecimal price;
+    private Sale sale;
+    private InventoryModel inventory;
+    private List<CategoryModel> categoryList;
+    private PublishingCompanyModel company;
+    private List<AuthorModel> authorList;
 }
