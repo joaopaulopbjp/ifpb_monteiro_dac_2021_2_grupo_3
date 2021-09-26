@@ -4,6 +4,8 @@
 *.factorypath
 *.settings
 target/
+.vscode/
+.idea/
 bin/
 /backend/mvnw.cmd
 /backend/mvnw
