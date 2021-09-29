@@ -45,7 +45,7 @@ public class BookModel {
     @Column(name = "PRICE")
     private BigDecimal price;
     @OneToOne(mappedBy = "book")
-    private Sale sale;
+    private SaleModel sale;
     @OneToOne(mappedBy = "book")
     private InventoryModel inventory;
     @ManyToMany(mappedBy = "bookList")
