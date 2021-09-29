@@ -24,7 +24,7 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Entity
 @Table(name = "T_SALE")
-public class Sale {
+public class SaleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
