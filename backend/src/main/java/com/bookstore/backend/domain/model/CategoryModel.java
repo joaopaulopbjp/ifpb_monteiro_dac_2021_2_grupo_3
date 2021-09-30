@@ -36,4 +36,9 @@ public class CategoryModel {
 	@ManyToMany
 	@JoinColumn(name = "PRODUCT_FK")
 	private List<ProductModel> productList;
+
+	@Override
+    public String toString() {
+        return "Category[ID: " + getId() +" - NAME: " + getName() + "]";
+    }
 }

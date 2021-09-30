@@ -55,6 +55,6 @@ public class PublishingCompanyModel {
 
 	@Override
     public String toString() {
-        return "Author[ID: " + getId() +" - NAME: " + getName() + "]";
+        return "PublisingCompany[ID: " + getId() +" - NAME: " + getName() + "]";
     }
 }
