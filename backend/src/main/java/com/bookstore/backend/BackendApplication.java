@@ -3,8 +3,10 @@ package com.bookstore.backend;
 import java.util.List;
 import java.util.Scanner;
 
+import com.bookstore.backend.domain.model.AuthorModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class BackendApplication implements CommandLineRunner {
 	//Respositories
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	AuthorRepository authorRepository;
 
 
 	public static void main(String[] args) {
@@ -85,11 +90,16 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("Name: ");
 				String name = input.nextLine();
 
+				AuthorModel author = new AuthorModel(0l, name, null);
+
+				authorRepository.save(author);
+
 			// opção para CRUD do livro.
 			}else if(op == 3){
 				System.out.println("0 - Register book" + 
 									"\n1 - change book" + 
 									"\n2 - delete book");
+
 				op = Integer.parseInt(input.nextLine());
 
 				while(op < 0 || op > 3){
@@ -108,7 +118,7 @@ public class BackendApplication implements CommandLineRunner {
 					// percorre a lista de autores.
 					String[] lista = new String[5];
 					for(int i = 0;i < lista.length;i++){
-
+						
 					}
 					System.out.print("Type the ID Author: ");
 					int id = Integer.parseInt(input.nextLine());
