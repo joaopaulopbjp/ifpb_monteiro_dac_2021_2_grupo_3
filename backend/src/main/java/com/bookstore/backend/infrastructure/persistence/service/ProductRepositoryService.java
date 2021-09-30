@@ -2,7 +2,7 @@ package com.bookstore.backend.infrastructure.persistence.service;
 
 import java.util.List;
 
-import com.bookstore.backend.domain.model.ProductModel;
+import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.productRepository;
 

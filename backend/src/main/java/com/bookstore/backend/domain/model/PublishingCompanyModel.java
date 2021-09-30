@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model;
 
+import com.bookstore.backend.domain.model.product.ProductModel;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

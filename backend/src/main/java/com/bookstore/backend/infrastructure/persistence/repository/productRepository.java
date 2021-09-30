@@ -1,6 +1,6 @@
 package com.bookstore.backend.infrastructure.persistence.repository;
 
-import com.bookstore.backend.domain.model.ProductModel;
+import com.bookstore.backend.domain.model.product.ProductModel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
