@@ -27,8 +27,8 @@ import lombok.Setter;
 @EqualsAndHashCode
 @NoArgsConstructor
 @Entity
-@Table(name = "T_BOOK")
-public class BookModel {
+@Table(name = "T_PRODUCT")
+public class ProductModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,16 +44,16 @@ public class BookModel {
     private int pages;
     @Column(name = "PRICE")
     private BigDecimal price;
-    @OneToOne(mappedBy = "book")
+    @OneToOne(mappedBy = "product")
     private SaleModel sale;
-    @OneToOne(mappedBy = "book")
+    @OneToOne(mappedBy = "product")
     private InventoryModel inventory;
-    @ManyToMany(mappedBy = "bookList")
+    @ManyToMany(mappedBy = "productList")
     private List<CategoryModel> categoryList;
     @ManyToOne
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
-    @ManyToMany(mappedBy = "bookList")
+    @ManyToMany(mappedBy = "productList")
     private List<AuthorModel> authorList;
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {

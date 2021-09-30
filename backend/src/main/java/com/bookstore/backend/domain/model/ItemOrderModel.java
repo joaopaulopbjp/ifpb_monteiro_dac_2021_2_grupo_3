@@ -33,13 +33,13 @@ public class ItemOrderModel {
 	@Column(name = "AMOUNT")
 	private int amount;
 	@ManyToOne
-	@JoinColumn(name = "BOOK_ID")
-	private BookModel book;
+	@JoinColumn(name = "PRODUCT_ID")
+	private ProductModel product;
 	@ManyToOne
 	@JoinColumn(name = "ORDER_FK")
 	private OrderModel order;
 
 	public BigDecimal getTotalPrice() {
-		return book.getPrice().multiply(new BigDecimal(getAmount()));
+		return product.getPrice().multiply(new BigDecimal(getAmount()));
 	}
 }

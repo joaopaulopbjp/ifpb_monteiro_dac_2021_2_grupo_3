@@ -30,8 +30,8 @@ public class  InventoryModel {
     @Column(name = "AMOUNT")
 	private int amount;
 	@OneToOne
-    @JoinColumn(name = "BOOK_FK")
-	private BookModel book;
+    @JoinColumn(name = "PRODUCT_FK")
+	private ProductModel product;
 
 	public void decrease() {
 		if(amount > 0) {

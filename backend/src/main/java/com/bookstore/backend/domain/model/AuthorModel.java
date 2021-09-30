@@ -36,21 +36,21 @@ public class AuthorModel {
     private String name;
     @ManyToMany
     @JoinColumn(name = "AUTHOR_FK")
-    private List<BookModel> bookList;
+    private List<ProductModel> productList;
 
-    public boolean addBookToBookList(BookModel book) {
-        if(bookList != null){
-            this.bookList.add(book);
+    public boolean addBookToBookList(ProductModel product) {
+        if(productList != null){
+            this.productList.add(product);
         } else {
-            bookList = new ArrayList<>();
-            addBookToBookList(book);
+            productList = new ArrayList<>();
+            addBookToBookList(product);
         }
         return true;
     }
 
-    public boolean removeBookFromBookList(BookModel book) {
-        if(bookList != null) {
-            return bookList.remove(book);
+    public boolean removeBookFromBookList(ProductModel product) {
+        if(productList != null) {
+            return productList.remove(product);
         }
         return false;
     }

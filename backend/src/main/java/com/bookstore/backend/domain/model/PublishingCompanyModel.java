@@ -33,21 +33,21 @@ public class PublishingCompanyModel {
 	@Column(name = "NAME")
 	private String name;
 	@OneToMany(mappedBy = "company")
-	private List<BookModel> bookList;
+	private List<ProductModel> productList;
 
-	public boolean addBookToBookList(BookModel bookModel) {
-		if(bookList != null) {
-			bookList.add(bookModel);
+	public boolean addBookToBookList(ProductModel ProductModel) {
+		if(productList != null) {
+			productList.add(ProductModel);
 		} else {
-			bookList = new ArrayList<>();
-			addBookToBookList(bookModel);
+			productList = new ArrayList<>();
+			addBookToBookList(ProductModel);
 		}
 		return true;
 	}
 
-	public boolean removeBookFromBookList(BookModel bookModel) {
-		if(bookList != null) {
-			return bookList.remove(bookModel);
+	public boolean removeBookFromBookList(ProductModel ProductModel) {
+		if(productList != null) {
+			return productList.remove(ProductModel);
 		}
 		 return false;
 	}

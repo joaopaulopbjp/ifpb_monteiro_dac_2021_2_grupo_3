@@ -30,12 +30,12 @@ public class SaleModel {
     @Column(name = "ID")
     private Long id;
     @OneToOne
-    @JoinColumn(name = "BOOK_FK")
-    private BookModel book;
+    @JoinColumn(name = "PRODUCT_FK")
+    private ProductModel product;
     @Column(name = "AMOUNT")
     private double amount;
 
     public BigDecimal getTotalSalesPrice() {
-        return book.getPrice().multiply(new BigDecimal(amount));
+        return product.getPrice().multiply(new BigDecimal(amount));
     }
 }

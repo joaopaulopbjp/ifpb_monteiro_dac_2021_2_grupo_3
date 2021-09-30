@@ -33,6 +33,6 @@ public class CategoryModel {
 	@Column(name = "NAME")
 	private String name;
 	@ManyToMany
-	@JoinColumn(name = "BOOK_FK")
-	private List<BookModel> bookList;
+	@JoinColumn(name = "PRODUCT_FK")
+	private List<ProductModel> productList;
 }

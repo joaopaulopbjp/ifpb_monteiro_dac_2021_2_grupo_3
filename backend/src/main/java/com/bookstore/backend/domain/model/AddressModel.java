@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.bookstore.backend.domain.model.user.PersonModel;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -39,7 +41,7 @@ public class AddressModel {
 	@Column(name = "DISTRICT", nullable = false)
 	private String district;
 	@ManyToOne
-	@JoinColumn(name = "USER_FK")
-	private UserModel user;
+	@JoinColumn(name = "PERSON_FK")
+	private PersonModel person;
 	
 }

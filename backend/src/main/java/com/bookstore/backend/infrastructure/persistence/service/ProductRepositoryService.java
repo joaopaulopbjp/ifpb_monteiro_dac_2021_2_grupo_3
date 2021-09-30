@@ -2,9 +2,9 @@ package com.bookstore.backend.infrastructure.persistence.service;
 
 import java.util.List;
 
-import com.bookstore.backend.domain.model.BookModel;
+import com.bookstore.backend.domain.model.ProductModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
-import com.bookstore.backend.infrastructure.persistence.repository.BookRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.productRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,14 +14,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookRepositoryService {
+public class ProductRepositoryService {
     @Autowired
-    private BookRepository bookRepository;
+    private productRepository productRepository;
 
-    public List<BookModel> findCheapests(int quantity) throws NotFoundException {
+    public List<ProductModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 
-        Page<BookModel> pages = bookRepository.findAll(pageable);
+        Page<ProductModel> pages = productRepository.findAll(pageable);
 
         if(pages.isEmpty()) throw new NotFoundException();
 
