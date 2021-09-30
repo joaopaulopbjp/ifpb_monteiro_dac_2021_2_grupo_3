@@ -1,13 +1,17 @@
 package com.bookstore.backend;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 
 import com.bookstore.backend.domain.model.AuthorModel;
+import com.bookstore.backend.domain.model.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.UserRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.productRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +27,11 @@ public class BackendApplication implements CommandLineRunner {
 	@Autowired
 	AuthorRepository authorRepository;
 
+	@Autowired
+	PublishingCompanyRepository companyRepository;
+
+	@Autowired
+	productRepository productRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -38,18 +47,19 @@ public class BackendApplication implements CommandLineRunner {
 		while(isRun){
 			clearConsole();
 			System.out.print(
-				"0 - register new user;"+
-			"\n1 - find user by email, id, username;"+
-			"\n2 - register author;"+
-			"\n3 - book crud (the book must be related to an author and inventory);"+
-			"\n4 - register category;"+
-			"\n5 - delete category;"+
-			"\n6 - find the 5 cheapest books available in inventory;"+
-			"\n7 - find all books sorted by title alphabetically by title in paginated form. The user can enter the page finder they want;"+
-			"\n8 - add a book to an order (shopping cart);"+
-			"\n9 - show all admins;"+
-			"\n10 - change user to admin;"+
-			"\n11 - sair: ");
+				"0 - register a new user;"+
+				"\n1 - find user by email, id, username;"+
+				"\n2 - register author;"+
+				"\n3 - book crud (the book must be related to an author and inventory);"+
+				"\n4 - register category;"+
+				"\n5 - delete category;"+
+				"\n6 - Register a new Company"+
+				"\n7 - find the 5 cheapest books available in inventory;"+
+				"\n8 - find all books sorted by title alphabetically by title in paginated form. The user can enter the page finder they want;"+
+				"\n9 - add a book to an order (shopping cart);"+
+				"\n10 - show all admins;"+
+				"\n11 - change user to admin;"+
+				"\n12 - sair: ");
 
 			int op = Integer.parseInt(input.nextLine());
 
@@ -97,18 +107,11 @@ public class BackendApplication implements CommandLineRunner {
 			// opção para CRUD do livro.
 			}else if(op == 3){
 				System.out.println("0 - Register book" + 
-									"\n1 - change book" + 
+									"\n1 - read book" + 
 									"\n2 - delete book");
 
 				op = Integer.parseInt(input.nextLine());
 
-				while(op < 0 || op > 3){
-					System.out.println("Opção invalida!");
-					System.out.println("0 - Register book" + 
-									"\n1 - change book" + 
-									"\n2 - delete book");
-					op = Integer.parseInt(input.nextLine());
-				}
 				// registrar livro
 				if(op == 0){
 					System.out.println("Book Options");
@@ -116,20 +119,28 @@ public class BackendApplication implements CommandLineRunner {
 					String name = input.nextLine();
 					System.out.println("Escolha o autor:");
 					// percorre a lista de autores.
-					String[] lista = new String[5];
-					for(int i = 0;i < lista.length;i++){
-						
+					List<AuthorModel> listAuthors = authorRepository.findAll();
+					for(int i = 0;i < listAuthors.size();i++){
+						System.out.println(listAuthors.get(i).toString());
 					}
-					System.out.print("Type the ID Author: ");
+					System.out.println("Type the ID Author: ");
 					int id = Integer.parseInt(input.nextLine());
 					System.out.println("description: ");
 					String descricao = input.nextLine();
 					System.out.println("category: ");
 					String category = input.nextLine();
 					System.out.println("price: ");
-					Double price = Double.parseDouble(input.nextLine());
-					System.out.println("company: ");
-					Double Company = Double.parseDouble(input.nextLine());
+					BigDecimal price = new BigDecimal(input.nextLine());
+					List<PublishingCompanyModel> listCompanys = companyRepository.findAll();
+					for(int i = 0;i < listCompanys.size();i++){
+						System.out.println(listCompanys.get(i).toString());
+					}
+					System.out.println("Type the ID company: ");
+					String Company = input.nextLine();
+					System.out.println("Inventory: ");
+					Integer inventory = Integer.parseInt(input.nextLine());
+
+
 
 				// alterar campos ou campo do livro
 				}else if(op == 1){
@@ -179,8 +190,13 @@ public class BackendApplication implements CommandLineRunner {
 				}
 				System.out.print("Type the ID category: ");
 				int id = Integer.parseInt(input.nextLine());
-			// opção para encontrar os 5 livros mais baratos disponiveis no inventario
+			// opção para registrar uma editora
 			}else if(op == 6){
+				System.out.println("Type the Company name: ");
+				companyRepository.save(new PublishingCompanyModel(0l, input.nextLine(), null));
+				
+			// opção para encontrar os 5 livros mais baratos disponiveis no inventario
+			}else if(op == 7){
 				// for para percorrer lista dos livros mais baratos
 				String[] lista = new String[5];
 				for(int i = 0;i < lista.length;i++){
@@ -189,7 +205,7 @@ public class BackendApplication implements CommandLineRunner {
 
 			// opção para encontre todos os livros classificados por título em ordem alfabética por título na forma paginada. 
 			// O usuário pode inserir o localizador de página que deseja
-			}else if(op == 7){
+			}else if(op == 8){
 				int contadorDePaginas = 0;
 
 				while(true){
@@ -214,7 +230,7 @@ public class BackendApplication implements CommandLineRunner {
 					}
 				}
 			// adiciona livro ao pedido.
-			}else if(op == 8){
+			}else if(op == 9){
 				int contadorDePaginas = 0;
 				// Carrinho carrinho = ;
 				while(true){
@@ -259,13 +275,13 @@ public class BackendApplication implements CommandLineRunner {
 					}
 				}
 			// show all admins
-			}else if(op == 9){
+			}else if(op == 10){
 				//User admin;
 				for(int i = 0;i < 10;i++){
 					System.out.println();
 				}
 			// opção 
-			}else if(op == 10){
+			}else if(op == 11){
 				//User admin;
 				for(int i = 0;i < 10;i++){
 					System.out.println();
@@ -273,7 +289,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.print("Type the ID user: ");
 				int id = Integer.parseInt(input.nextLine());
 			// sair.
-			}else if(op == 11){
+			}else if(op == 12){
 				isRun = false;
 			}
 
