@@ -66,7 +66,15 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("What option do you desire?");
 				System.out.print("0 - Email\n1 - id\n2 - username: ");
 				String option = input.nextLine();
-				
+				if(option.equals("0")){
+					System.out.print("Type your email: ");
+					System.out.println(userRepository.findByEmail(input.nextLine()).getId());
+					
+				}else if(option.equals("1")){
+
+				}else if(option.equals("2")){
+
+				}
 
 			// opção para registrar o autor.
 			}else if(op == 2){
