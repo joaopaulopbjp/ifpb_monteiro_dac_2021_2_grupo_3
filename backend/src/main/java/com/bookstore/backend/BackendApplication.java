@@ -4,13 +4,20 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.persistence.repository.UserRepository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
+	//Respositories
+	@Autowired
+	UserRepository userRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -20,10 +27,10 @@ public class BackendApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		Scanner input = new Scanner(System.in);
 
+
 		boolean isRun = true;
 
 		while(isRun){
-			System.out.println("não limpou");
 			clearConsole();
 			System.out.print(
 				"0 - register new user;"+
@@ -46,19 +53,20 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("User fields");
 				System.out.println("Username: ");
 				String username = input.nextLine();
-				System.out.println("Login: ");
-				String login = input.nextLine();
 				System.out.println("Email: ");
 				String email = input.nextLine();
 				System.out.println("password: ");
 				String password = input.nextLine();
-
 				
+				UserModel user = new UserModel(3l, username, email, password, null);
+
+				userRepository.save(user);
 			// opção para encontrar usuario.
 			}else if(op == 1){
 				System.out.println("What option do you desire?");
 				System.out.print("0 - Email\n1 - id\n2 - username: ");
 				String option = input.nextLine();
+				
 
 			// opção para registrar o autor.
 			}else if(op == 2){
