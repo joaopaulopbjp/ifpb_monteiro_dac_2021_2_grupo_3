@@ -1,17 +1,22 @@
 package com.bookstore.backend;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import com.bookstore.backend.domain.model.AuthorModel;
+import com.bookstore.backend.domain.model.CategoryModel;
+import com.bookstore.backend.domain.model.InventoryModel;
 import com.bookstore.backend.domain.model.PublishingCompanyModel;
+import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.CategoryRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.UserRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.productRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -31,7 +36,10 @@ public class BackendApplication implements CommandLineRunner {
 	PublishingCompanyRepository companyRepository;
 
 	@Autowired
-	productRepository productRepository;
+	CategoryRepository categoryRepository;
+
+	@Autowired
+	InventoryRepository inventoryRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -115,20 +123,42 @@ public class BackendApplication implements CommandLineRunner {
 				// registrar livro
 				if(op == 0){
 					System.out.println("Book Options");
-					System.out.println("Name: ");
-					String name = input.nextLine();
+					System.out.println("title: ");
+					String title = input.nextLine();
 					System.out.println("Escolha o autor:");
 					// percorre a lista de autores.
 					List<AuthorModel> listAuthors = authorRepository.findAll();
 					for(int i = 0;i < listAuthors.size();i++){
 						System.out.println(listAuthors.get(i).toString());
 					}
-					System.out.println("Type the ID Author: ");
-					int id = Integer.parseInt(input.nextLine());
+					List<AuthorModel> authorList = new ArrayList<>();
+					while(true){
+						System.out.println("Type the ID Author(Type 0 for exit): ");
+						Long id = Long.parseLong(input.nextLine());
+						authorList.add(authorRepository.findById(id).get());
+						if(id==0){
+							break;
+						}
+					}
 					System.out.println("description: ");
-					String descricao = input.nextLine();
-					System.out.println("category: ");
-					String category = input.nextLine();
+					String description = input.nextLine();
+					System.out.println("yearLaunch: ");
+					int yearLaunch = Integer.parseInt(input.nextLine());
+					System.out.println("pages: ");
+					int pages = Integer.parseInt(input.nextLine());
+					List<CategoryModel> categoryList = categoryRepository.findAll();
+					for(int i = 0;i < categoryList.size();i++){
+						System.out.println(categoryList.get(i).toString());
+					}
+					List<CategoryModel> cateList = new ArrayList<>();
+					while(true){
+						System.out.println("Type the ID Category(Type 0 for exit): ");
+						Long id = Long.parseLong(input.nextLine());
+						cateList.add(categoryRepository.findById(id).get());
+						if(id==0){
+							break;
+						}
+					}
 					System.out.println("price: ");
 					BigDecimal price = new BigDecimal(input.nextLine());
 					List<PublishingCompanyModel> listCompanys = companyRepository.findAll();
@@ -136,12 +166,14 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println(listCompanys.get(i).toString());
 					}
 					System.out.println("Type the ID company: ");
-					String Company = input.nextLine();
+					Long companyId = Long.parseLong(input.nextLine());
+					PublishingCompanyModel companyModel = companyRepository.findById(companyId).get();
 					System.out.println("Inventory: ");
-					Integer inventory = Integer.parseInt(input.nextLine());
+					int qtd = Integer.parseInt(input.nextLine());
 
+					InventoryModel inventory = new InventoryModel(0l, qtd, new BookModel(0l, title, description, yearLaunch, pages, price, null, null, cateList, companyModel, authorList));
 
-
+					inventoryRepository.save(inventory);
 				// alterar campos ou campo do livro
 				}else if(op == 1){
 
