@@ -52,4 +52,9 @@ public class PublishingCompanyModel {
 		}
 		 return false;
 	}
+
+	@Override
+    public String toString() {
+        return "Author[ID: " + getId() +" - NAME: " + getName() + "]";
+    }
 }

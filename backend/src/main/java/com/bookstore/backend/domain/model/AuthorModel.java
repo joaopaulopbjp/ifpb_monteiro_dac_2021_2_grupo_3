@@ -39,21 +39,25 @@ public class AuthorModel {
     @JoinColumn(name = "AUTHOR_FK")
     private List<ProductModel> productList;
 
-    public boolean addBookToBookList(ProductModel product) {
+    public boolean addProductToProductList(ProductModel product) {
         if(productList != null){
             this.productList.add(product);
         } else {
             productList = new ArrayList<>();
-            addBookToBookList(product);
+            addProductToProductList(product);
         }
         return true;
     }
 
-    public boolean removeBookFromBookList(ProductModel product) {
+    public boolean removeProductFromProductList(ProductModel product) {
         if(productList != null) {
             return productList.remove(product);
         }
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "Author[ID: " + getId() +" - NAME: " + getName() + "]";
+    }
 }
