@@ -12,9 +12,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner{
-
-	@Autowired
-	private Teste teste;
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
 
@@ -22,7 +19,6 @@ public class BackendApplication implements CommandLineRunner{
 	}
 	@Override
 	public void run(String... args) throws Exception {
-		teste.teste();
 		
 	}
 
