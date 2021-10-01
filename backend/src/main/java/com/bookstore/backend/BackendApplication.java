@@ -61,7 +61,7 @@ public class BackendApplication implements CommandLineRunner {
 				"\n3 - book crud (the book must be related to an author and inventory);"+
 				"\n4 - register category;"+
 				"\n5 - delete category;"+
-				"\n6 - Register a new Company"+
+				"\n6 - register a new Company"+
 				"\n7 - find the 5 cheapest books available in inventory;"+
 				"\n8 - find all books sorted by title alphabetically by title in paginated form. The user can enter the page finder they want;"+
 				"\n9 - add a book to an order (shopping cart);"+
@@ -114,7 +114,7 @@ public class BackendApplication implements CommandLineRunner {
 
 			// opção para CRUD do livro.
 			}else if(op == 3){
-				System.out.println("0 - Register book" + 
+				System.out.println("0 - register book" + 
 									"\n1 - read book" + 
 									"\n2 - delete book");
 
@@ -135,10 +135,10 @@ public class BackendApplication implements CommandLineRunner {
 					while(true){
 						System.out.println("Type the ID Author(Type 0 for exit): ");
 						Long id = Long.parseLong(input.nextLine());
-						authorList.add(authorRepository.findById(id).get());
 						if(id==0){
 							break;
 						}
+						authorList.add(authorRepository.findById(id).get());
 					}
 					System.out.println("description: ");
 					String description = input.nextLine();
@@ -154,10 +154,10 @@ public class BackendApplication implements CommandLineRunner {
 					while(true){
 						System.out.println("Type the ID Category(Type 0 for exit): ");
 						Long id = Long.parseLong(input.nextLine());
-						cateList.add(categoryRepository.findById(id).get());
 						if(id==0){
 							break;
 						}
+						cateList.add(categoryRepository.findById(id).get());
 					}
 					System.out.println("price: ");
 					BigDecimal price = new BigDecimal(input.nextLine());
@@ -171,9 +171,10 @@ public class BackendApplication implements CommandLineRunner {
 					System.out.println("Inventory: ");
 					int qtd = Integer.parseInt(input.nextLine());
 
-					InventoryModel inventory = new InventoryModel(0l, qtd, new BookModel(0l, title, description, yearLaunch, pages, price, null, null, cateList, companyModel, authorList));
+					InventoryModel inventory = new InventoryModel(0l, qtd, new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, companyModel, authorList));
 
 					inventoryRepository.save(inventory);
+					
 				// alterar campos ou campo do livro
 				}else if(op == 1){
 
@@ -213,6 +214,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.print("category name: ");
 				String name = input.nextLine();
 
+				categoryRepository.save(new CategoryModel(0l, name, null));
 			// opção para excluir categoria
 			}else if(op == 5){
 				System.out.println("List categorys: ");
