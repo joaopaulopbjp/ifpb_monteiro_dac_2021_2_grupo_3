@@ -16,7 +16,7 @@ import com.bookstore.backend.infrastructure.persistence.repository.AuthorReposit
 import com.bookstore.backend.infrastructure.persistence.repository.CategoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.UserRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -81,7 +81,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("password: ");
 				String password = input.nextLine();
 				
-				UserModel user = new UserModel(3l, username, email, password, null);
+				UserModel user = new UserModel(0l, username, email, password, null, null);
 
 				userRepository.save(user);
 			// opção para encontrar usuario.

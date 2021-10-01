@@ -1,4 +1,4 @@
-package com.bookstore.backend.domain.model;
+package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
