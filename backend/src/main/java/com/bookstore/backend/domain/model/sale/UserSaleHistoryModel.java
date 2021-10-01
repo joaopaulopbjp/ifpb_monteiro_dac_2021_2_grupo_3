@@ -1,6 +1,6 @@
-package com.bookstore.backend.domain.model;
+package com.bookstore.backend.domain.model.sale;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +8,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.bookstore.backend.domain.model.product.ProductModel;
+import com.bookstore.backend.domain.model.user.PersonModel;
+import com.bookstore.backend.domain.model.user.UserModel;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -24,19 +27,17 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "T_SALE")
-public class SaleModel {
+@Table(name = "T_SALE_HISTORY")
+public class UserSaleHistoryModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ID")
     private Long id;
-    @OneToOne
-    @JoinColumn(name = "PRODUCT_FK")
-    private ProductModel product;
-    @Column(name = "AMOUNT")
-    private double amount;
 
-    public BigDecimal getTotalSalesPrice() {
-        return product.getPrice().multiply(new BigDecimal(amount));
-    }
+    @OneToOne
+    private PersonModel person;
+
+    @Column(name = "ORDER_ID")
+    @OneToMany
+    private List<OrderModel> orderList;
 }

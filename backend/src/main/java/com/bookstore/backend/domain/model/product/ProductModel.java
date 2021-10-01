@@ -7,6 +7,8 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.bookstore.backend.domain.model.*;
+import com.bookstore.backend.domain.model.sale.SaleModel;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

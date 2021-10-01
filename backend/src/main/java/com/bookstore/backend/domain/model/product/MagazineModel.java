@@ -7,7 +7,7 @@ import com.bookstore.backend.domain.model.AuthorModel;
 import com.bookstore.backend.domain.model.CategoryModel;
 import com.bookstore.backend.domain.model.InventoryModel;
 import com.bookstore.backend.domain.model.PublishingCompanyModel;
-import com.bookstore.backend.domain.model.SaleModel;
+import com.bookstore.backend.domain.model.sale.SaleModel;
 
 public class MagazineModel extends ProductModel{
 
