@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
-import com.bookstore.backend.domain.model.sale.shoppingCart;
+import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 
 
 @Entity
@@ -17,11 +17,11 @@ import com.bookstore.backend.domain.model.sale.shoppingCart;
 public class UserModel extends PersonModel{
 
     @OneToOne(mappedBy = "userModel")
-    private shoppingCart shoppingCart;
+    private shoppingCartModel shoppingCart;
 
     public UserModel(Long id, String username, String email, String password, List<AddressModel> addressList,
             List<ProductModel> productForSaleList, UserSaleHistoryModel saleHistory,
-            shoppingCart shoppingCart) {
+            shoppingCartModel shoppingCart) {
         super(id, username, email, password, addressList, productForSaleList, saleHistory);
         this.shoppingCart = shoppingCart;
     }

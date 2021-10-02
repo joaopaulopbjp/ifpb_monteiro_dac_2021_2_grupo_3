@@ -11,7 +11,7 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
-import com.bookstore.backend.domain.model.sale.shoppingCart;
+import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -22,6 +22,8 @@ import com.bookstore.backend.infrastructure.persistence.repository.PublishingCom
 import com.bookstore.backend.infrastructure.persistence.repository.person.AdminRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.sale.ItemOrderRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.sale.ShoppingCartRepository;
 import com.bookstore.backend.infrastructure.persistence.service.BookRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,12 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	BookRepositoryService bookRepositoryService;
+
+	@Autowired
+	ShoppingCartRepository shoppingCartRepository;
+
+	@Autowired
+	ItemOrderRepository itemOrderRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -299,7 +307,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("Type the User ID: ");
 				UserModel userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
 
-				shoppingCart shoppingCart = new shoppingCart(0l, new ArrayList<ItemOrderModel>(), userModel);
+				shoppingCartModel shoppingCart = new shoppingCartModel(0l, null, userModel);
 				// Carrinho carrinho = ;
 				while(true){
 
@@ -329,7 +337,7 @@ public class BackendApplication implements CommandLineRunner {
 					//opção para adionar livro no carrinho
 					}else if(op == 1){
 						int contadorDePaginas = 0;
-
+						List<ItemOrderModel> itemOrderList = new ArrayList<>();
 						while(true){
 							buscaPagina(contadorDePaginas);
 							System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
@@ -347,13 +355,18 @@ public class BackendApplication implements CommandLineRunner {
 								}else if(option.equals("d")){
 									buscaPagina(++contadorDePaginas);
 								}else if(option.equals("s")){
-									
+									List<ItemOrderModel> list = new ArrayList<>();
+									for(ItemOrderModel item: itemOrderList){
+										list.add(itemOrderRepository.save(item));
+									}
+									shoppingCart.setItemList(list);
+									shoppingCartRepository.save(shoppingCart);
 									break;
 								}else{
 									System.out.println("how many books you desire to buy?");
 									int qtd = Integer.parseInt(input.nextLine());
-									ItemOrderModel item = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
-									shoppingCart.addItemOrderToItemList(item);
+									ItemOrderModel itemOrder = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
+									itemOrderList.add(itemOrder);
 								}
 							}
 						}
