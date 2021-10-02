@@ -92,7 +92,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("password: ");
 				String password = input.nextLine();
 				
-				UserModel user = new UserModel(0l, username, email, password, null, null);
+				UserModel user = new UserModel(0l, username, email, password, null, null, null);
 
 				userRepository.save(user);
 			// opção para encontrar usuario.
@@ -181,7 +181,7 @@ public class BackendApplication implements CommandLineRunner {
 					PublishingCompanyModel companyModel = companyRepository.findById(companyId).get();
 					System.out.println("Inventory: ");
 					int qtd = Integer.parseInt(input.nextLine());
-					BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, companyModel, authorList);
+					BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, null, companyModel, authorList);
 					book = bookRepository.save(book);
 					InventoryModel inventory = new InventoryModel(0l, qtd, book);
 
