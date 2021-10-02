@@ -214,9 +214,9 @@ public class BackendApplication implements CommandLineRunner {
 				// excluir o livro
 				}else if(op == 2){
 					System.out.println("List of books:");
-					List<BookModel> lista = bookRepository.findAll();
-					for(int i = 0;i < lista.length;i++){
-
+					List<ProductModel> lista = bookRepository.findAll();
+					for(int i = 0;i < lista.size();i++){
+						
 					}
 					System.out.print("Type the ID books: ");
 					int id = Integer.parseInt(input.nextLine());
