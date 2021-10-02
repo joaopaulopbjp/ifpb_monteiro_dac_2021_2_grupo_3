@@ -36,7 +36,6 @@ public class AuthorModel {
     @Column(name = "NAME")
     private String name;
     @ManyToMany
-    @JoinColumn(name = "AUTHOR_FK")
     private List<ProductModel> productList;
 
     public boolean addProductToProductList(ProductModel product) {
