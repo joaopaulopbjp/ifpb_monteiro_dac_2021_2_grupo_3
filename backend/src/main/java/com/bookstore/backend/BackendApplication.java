@@ -18,11 +18,13 @@ import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepo
 import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.product.ProductRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 
 @SpringBootApplication
@@ -43,12 +45,14 @@ public class BackendApplication implements CommandLineRunner {
 	@Autowired
 	InventoryRepository inventoryRepository;
 
-	@Autowired
-	BookRepository bookRepository;
+	static ConfigurableApplicationContext configurableApplicationContext;
+
+	static ProductRepository bookRepository;
 
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		configurableApplicationContext = SpringApplication.run(BackendApplication.class, args);
+		bookRepository = configurableApplicationContext.getBean(BookRepository.class);
 	}
 
 	@Override
