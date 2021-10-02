@@ -95,7 +95,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println("password: ");
 				String password = input.nextLine();
 				
-				UserModel user = new UserModel(0l, username, email, password, null, null, null);
+				UserModel user = new UserModel(0l, username, email, password, null, null, null, null);
 
 				userRepository.save(user);
 			// opção para encontrar usuario.
