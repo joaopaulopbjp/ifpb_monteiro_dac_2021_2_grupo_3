@@ -34,7 +34,7 @@ public class shoppingCart {
     @OneToMany
     private List<ItemOrderModel> itemList;
 
-    @OneToOne(mappedBy = "shoppingCart")
+    @OneToOne
     private UserModel userModel;
 
 
