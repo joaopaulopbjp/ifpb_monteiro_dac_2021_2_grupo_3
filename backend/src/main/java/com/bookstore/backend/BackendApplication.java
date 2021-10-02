@@ -19,6 +19,7 @@ import com.bookstore.backend.infrastructure.persistence.repository.PublishingCom
 import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.ProductRepository;
+import com.bookstore.backend.infrastructure.persistence.service.BookRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -47,6 +48,9 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	BookRepository bookRepository;
+
+	@Autowired
+	BookRepositoryService bookRepositoryService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -249,9 +253,9 @@ public class BackendApplication implements CommandLineRunner {
 			// opção para encontrar os 5 livros mais baratos disponiveis no inventario
 			}else if(op == 7){
 				// for para percorrer lista dos livros mais baratos
-				String[] lista = new String[5];
-				for(int i = 0;i < lista.length;i++){
-
+				List<BookModel> lista = bookRepositoryService.findCheapests(5);
+				for(int i = 0;i < lista.size();i++){
+					System.out.println(lista.get(i).toString());
 				}
 
 			// opção para encontre todos os livros classificados por título em ordem alfabética por título na forma paginada. 
