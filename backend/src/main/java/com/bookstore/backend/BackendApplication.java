@@ -45,14 +45,11 @@ public class BackendApplication implements CommandLineRunner {
 	@Autowired
 	InventoryRepository inventoryRepository;
 
-	static ConfigurableApplicationContext configurableApplicationContext;
-
-	static ProductRepository bookRepository;
-
+	@Autowired
+	BookRepository bookRepository;
 
 	public static void main(String[] args) {
-		configurableApplicationContext = SpringApplication.run(BackendApplication.class, args);
-		bookRepository = configurableApplicationContext.getBean(BookRepository.class);
+		SpringApplication.run(BackendApplication.class, args);
 	}
 
 	@Override
@@ -180,8 +177,9 @@ public class BackendApplication implements CommandLineRunner {
 					PublishingCompanyModel companyModel = companyRepository.findById(companyId).get();
 					System.out.println("Inventory: ");
 					int qtd = Integer.parseInt(input.nextLine());
-
-					InventoryModel inventory = new InventoryModel(0l, qtd, new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, companyModel, authorList));
+					BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, companyModel, authorList);
+					book = bookRepository.save(book);
+					InventoryModel inventory = new InventoryModel(0l, qtd, book);
 
 					inventoryRepository.save(inventory);
 					
@@ -227,13 +225,22 @@ public class BackendApplication implements CommandLineRunner {
 				categoryRepository.save(new CategoryModel(0l, name, null));
 			// opção para excluir categoria
 			}else if(op == 5){
-				System.out.println("List categorys: ");
-				String[] lista = new String[5];
-				for(int i = 0;i < lista.length;i++){
-
+				System.out.println("List of Categories");
+				List<CategoryModel> categoryList = categoryRepository.findAll();
+				for(int i = 0;i < categoryList.size();i++){
+					System.out.println(categoryList.get(i).toString());
 				}
-				System.out.print("Type the ID category: ");
-				int id = Integer.parseInt(input.nextLine());
+				
+				while(true){
+					System.out.println("Type the ID Category(Type 0 for exit): ");
+					Long id = Long.parseLong(input.nextLine());
+					if(id==0){
+						break;
+					}
+
+					categoryRepository.deleteById(id);
+				}
+
 			// opção para registrar uma editora
 			}else if(op == 6){
 				System.out.println("Type the Company name: ");
