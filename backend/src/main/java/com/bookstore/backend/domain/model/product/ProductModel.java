@@ -45,6 +45,10 @@ public abstract class ProductModel {
     @OneToOne(mappedBy = "product")
     private InventoryModel inventory;
     @ManyToMany(mappedBy = "productList")
+    @JoinTable(
+        name = "T_PRODUCT_CATEGORY_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
+        inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
     private List<CategoryModel> categoryList;
     @ManyToOne
     private PersonModel salesman;
@@ -52,6 +56,10 @@ public abstract class ProductModel {
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
     @ManyToMany(mappedBy = "productList")
+    @JoinTable(
+        name = "T_PRODUCT_AUTHOR_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
+        inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     private List<AuthorModel> authorList;
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
