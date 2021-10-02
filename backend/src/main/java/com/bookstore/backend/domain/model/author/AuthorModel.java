@@ -1,4 +1,4 @@
-package com.bookstore.backend.domain.model;
+package com.bookstore.backend.domain.model.author;
 
 import java.util.List;
 

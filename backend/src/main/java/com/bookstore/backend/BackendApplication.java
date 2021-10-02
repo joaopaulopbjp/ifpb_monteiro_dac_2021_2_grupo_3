@@ -5,13 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-import com.bookstore.backend.domain.model.AuthorModel;
-import com.bookstore.backend.domain.model.CategoryModel;
-import com.bookstore.backend.domain.model.InventoryModel;
-import com.bookstore.backend.domain.model.PublishingCompanyModel;
+import com.bookstore.backend.domain.model.author.AuthorModel;
+import com.bookstore.backend.domain.model.category.CategoryModel;
+import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
+import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
@@ -27,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 
 
 @SpringBootApplication

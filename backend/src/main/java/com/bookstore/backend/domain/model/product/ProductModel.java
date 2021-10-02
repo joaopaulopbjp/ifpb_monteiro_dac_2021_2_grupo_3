@@ -7,6 +7,10 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.bookstore.backend.domain.model.*;
+import com.bookstore.backend.domain.model.author.AuthorModel;
+import com.bookstore.backend.domain.model.category.CategoryModel;
+import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
+import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
 

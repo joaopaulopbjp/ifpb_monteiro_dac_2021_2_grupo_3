@@ -1,4 +1,4 @@
-package com.bookstore.backend.domain.model;
+package com.bookstore.backend.domain.model.company;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
 import lombok.AllArgsConstructor;

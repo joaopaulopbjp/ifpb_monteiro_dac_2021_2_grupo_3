@@ -1,4 +1,4 @@
-package com.bookstore.backend.domain.model;
+package com.bookstore.backend.domain.model.address;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
