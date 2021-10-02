@@ -23,29 +23,19 @@ public class BookRepositoryService {
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 
-        Page<ProductModel> pages = bookRepository.findAll(pageable);
+        Page<BookModel> pages = bookRepository.findAll(pageable);
         
         if(pages.isEmpty()) throw new NotFoundException();
-
-        ArrayList<BookModel> list = new ArrayList<>();
-        for(ProductModel model : pages) {
-            list.add((BookModel) model);
-        }
         
-        return list;
+        return pages.getContent();
     }
 
     public List<BookModel> findAll(int pageNumber) throws NotFoundException {
         Pageable pageable = PageRequest.of(pageNumber, 2, Sort.by("title").ascending());
-        Page<ProductModel> pages = bookRepository.findAll(pageable);
+        Page<BookModel> pages = bookRepository.findAll(pageable);
 
         if(pages.isEmpty()) throw new NotFoundException();
-
-        ArrayList<BookModel> list = new ArrayList<>();
-        for(ProductModel model : pages) {
-            list.add((BookModel) model);
-        }
         
-        return list;
+        return pages.getContent();
     }
 }

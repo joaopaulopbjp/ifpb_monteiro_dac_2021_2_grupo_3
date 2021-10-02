@@ -1,13 +1,16 @@
 package com.bookstore.backend.infrastructure.persistence.repository.person;
 
-import com.bookstore.backend.domain.model.user.UserModel;
+import java.util.List;
 
+import com.bookstore.backend.domain.model.user.AdminModel;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AdminRepository extends PersonRepository {
-    
-    public UserModel findByEmail(String email);
+public interface AdminRepository extends JpaRepository<AdminModel, Long> {
 
-    public UserModel findByUsername(String username);
+    public AdminModel findByEmail(String email);
+
+    public AdminModel findByUsername(String username);
 }

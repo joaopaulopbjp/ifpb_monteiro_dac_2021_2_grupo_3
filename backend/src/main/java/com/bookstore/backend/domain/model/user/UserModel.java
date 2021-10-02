@@ -22,4 +22,8 @@ public class UserModel extends PersonModel{
     public UserModel() {
     }
     
+    @Override
+    public String toString() {
+        return String.format("USER [ID: %s - USERNAME: %s - EMAIL: %s]", getId(), getUsername(), getEmail()); 
+    }
 }

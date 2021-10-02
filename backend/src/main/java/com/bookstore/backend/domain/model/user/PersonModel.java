@@ -79,4 +79,9 @@ public abstract class PersonModel {
         } 
         return false;
     }
+
+    @Override
+    public String toString() {
+        return String.format("PERSON [ID: %s - USERNAME: %s - EMAIL: %s]", getId(), getUsername(), getEmail()); 
+    }
 }

@@ -10,13 +10,15 @@ import com.bookstore.backend.domain.model.CategoryModel;
 import com.bookstore.backend.domain.model.InventoryModel;
 import com.bookstore.backend.domain.model.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.product.BookModel;
-import com.bookstore.backend.domain.model.product.ProductModel;
+import com.bookstore.backend.domain.model.user.AdminModel;
+import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.CategoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.person.AdminRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 import com.bookstore.backend.infrastructure.persistence.service.BookRepositoryService;
@@ -25,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 
 
 @SpringBootApplication
@@ -32,6 +35,9 @@ public class BackendApplication implements CommandLineRunner {
 	//Respositories
 	@Autowired
 	UserRepository userRepository;
+
+	@Autowired
+	AdminRepository adminRepository;
 	
 	@Autowired
 	AuthorRepository authorRepository;
@@ -325,18 +331,38 @@ public class BackendApplication implements CommandLineRunner {
 				}
 			// show all admins
 			}else if(op == 9){
-				//User admin;
-				for(int i = 0;i < 10;i++){
-					System.out.println();
+				List<AdminModel> adminList = adminRepository.findAll();
+				for(AdminModel admin : adminList) {
+					System.out.println(admin.toString());
 				}
-			// opção 
+				input.nextLine();
+				// opção 
+				//User admin;
 			}else if(op == 10){
-				//User admin;
-				for(int i = 0;i < 10;i++){
-					System.out.println();
+				while(true) {
+					clearConsole();
+					List<UserModel> userList = userRepository.findAll();
+					for(UserModel model : userList) {
+						System.out.println(model.toString());
+					}
+					System.out.print("Type 0 to exit or user ID: ");
+					Long id = Long.parseLong(input.nextLine());
+
+					if(id == 0) break;
+
+					UserModel user = userRepository.findById(id).get();
+					AdminModel admin = new AdminModel(user.getId(),
+						user.getUsername(),
+						user.getEmail(),
+						user.getPassword(),
+						user.getAddressList(),
+						user.getProductForSaleList(),
+						user.getSaleHistory());
+
+					userRepository.delete(user);
+					adminRepository.save(admin);
+
 				}
-				System.out.print("Type the ID user: ");
-				int id = Integer.parseInt(input.nextLine());
 			// sair.
 			}else if(op == 11){
 				isRun = false;

@@ -21,4 +21,8 @@ public class AdminModel extends PersonModel{
     public AdminModel() {
     }
     
+    @Override
+    public String toString() {
+        return String.format("ADMIN [ID: %s - USERNAME: %s - EMAIL: %s]", getId(), getUsername(), getEmail()); 
+    }
 }
