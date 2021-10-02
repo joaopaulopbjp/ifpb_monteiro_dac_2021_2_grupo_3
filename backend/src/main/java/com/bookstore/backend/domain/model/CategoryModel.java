@@ -34,7 +34,6 @@ public class CategoryModel {
 	@Column(name = "NAME")
 	private String name;
 	@ManyToMany
-	@JoinColumn(name = "PRODUCT_FK")
 	private List<ProductModel> productList;
 
 	@Override
