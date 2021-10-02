@@ -43,4 +43,9 @@ public class SaleModel {
     public BigDecimal getTotalSalesPrice() {
         return product.getPrice().multiply(new BigDecimal(amount));
     }
+
+    @Override
+    public String toString() {
+        return String.format("SALE [ID: %s - AMOUNT: %s ]", getId(), getAmount());
+    }
 }

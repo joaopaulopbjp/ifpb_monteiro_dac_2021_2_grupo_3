@@ -57,5 +57,10 @@ public class UserSaleHistoryModel {
 		} else {
 			return false;
 		}
-	} 
+	}
+	
+	@Override
+    public String toString() {
+        return String.format("SALE HISTORY [ID: %s ]", getId());
+    }
 }

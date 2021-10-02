@@ -1,7 +1,5 @@
 package com.bookstore.backend.infrastructure.persistence.repository.person;
 
-import java.util.List;
-
 import com.bookstore.backend.domain.model.user.AdminModel;
 
 import org.springframework.data.jpa.repository.JpaRepository;

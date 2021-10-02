@@ -48,4 +48,9 @@ public class ItemOrderModel {
 	public BigDecimal getTotalPrice() {
 		return product.getPrice().multiply(new BigDecimal(getAmount()));
 	}
+
+	@Override
+    public String toString() {
+        return String.format("ITEM ORDER [ID: %s - AMOUNT: %s ]", getId(), getAmount());
+    }
 }

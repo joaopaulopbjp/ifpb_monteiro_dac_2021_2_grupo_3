@@ -55,4 +55,9 @@ public class  InventoryModel {
 	public void removerAmount(int amount) {
 		this.amount -= amount;
 	}
+
+	@Override
+    public String toString() {
+        return String.format("INVENTORY [ID: %s - AMOUNT: %s ]", getId(), getAmount());
+    }
 }

@@ -60,6 +60,6 @@ public class AuthorModel {
 
     @Override
     public String toString() {
-        return "Author[ID: " + getId() +" - NAME: " + getName() + "]";
+        return String.format("AUTHOR [ID: %s - NAME: %s ]", getId(), getName());
     }
 }

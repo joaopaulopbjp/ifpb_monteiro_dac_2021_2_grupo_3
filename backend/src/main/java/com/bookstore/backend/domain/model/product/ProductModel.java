@@ -61,7 +61,6 @@ public abstract class ProductModel {
         name = "T_PRODUCT_CATEGORY_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
         inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
-
     private List<CategoryModel> categoryList;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -111,5 +110,10 @@ public abstract class ProductModel {
             return authorList.remove(authorModel);
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("PRODUCT [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName()); 
     }
 }

@@ -27,4 +27,8 @@ public class HqModel extends ProductModel{
     public HqModel() {
     }
     
+    @Override
+    public String toString() {
+        return String.format("HQ [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName()); 
+    }
 }

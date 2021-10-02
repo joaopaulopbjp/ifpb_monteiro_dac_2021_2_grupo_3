@@ -70,5 +70,10 @@ public class OrderModel {
 		} else {
 			return false;
 		}
-	} 
+	}
+
+	@Override
+    public String toString() {
+        return String.format("ORDER [ID: %s - DATA ORDER: %s - STATUS: %S]", getId(), getDateOrder(), getStatus().toString());
+    }
 }

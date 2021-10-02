@@ -41,6 +41,6 @@ public class CategoryModel {
 	
 	@Override
     public String toString() {
-        return "Category[ID: " + getId() +" - NAME: " + getName() + "]";
+        return String.format("CATEGORY [ID: %s - NAME: %s ]", getId(), getName());
     }
 }

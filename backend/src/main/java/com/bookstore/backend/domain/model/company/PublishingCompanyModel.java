@@ -59,6 +59,6 @@ public class PublishingCompanyModel {
 
 	@Override
     public String toString() {
-        return "PublisingCompany[ID: " + getId() +" - NAME: " + getName() + "]";
+        return String.format("PUBLISHING COMPANY [ID: %s - NAME: %s ]", getId(), getName());
     }
 }

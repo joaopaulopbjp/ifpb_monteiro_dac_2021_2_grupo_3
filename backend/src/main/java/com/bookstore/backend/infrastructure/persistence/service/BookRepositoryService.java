@@ -1,10 +1,8 @@
 package com.bookstore.backend.infrastructure.persistence.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.bookstore.backend.domain.model.product.BookModel;
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 

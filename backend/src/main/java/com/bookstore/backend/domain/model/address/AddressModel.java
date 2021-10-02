@@ -51,4 +51,8 @@ public class AddressModel {
 	@JoinColumn(name = "PERSON_FK")
 	private PersonModel person;
 	
+	@Override
+    public String toString() {
+        return String.format("ADDRESS [ID: %s - STREET: %s - NUMBER: %s - ZIPCODE: %s - CITY: %s - DISTRICT: %s ]", getId(), getStreet(), getNumber(), getZipCode(), getCity(), getDistrict());
+    }
 }
