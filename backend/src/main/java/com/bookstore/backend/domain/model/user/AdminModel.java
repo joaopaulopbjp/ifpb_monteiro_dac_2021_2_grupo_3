@@ -14,8 +14,8 @@ import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 public class AdminModel extends PersonModel{
 
     public AdminModel(Long id, String username, String email, String password, List<AddressModel> addressList,
-            List<ProductModel> productList, UserSaleHistoryModel saleHistory) {
-        super(id, username, email, password, addressList, productList, saleHistory);
+            List<ProductModel> productForSaleList, UserSaleHistoryModel saleHistory) {
+        super(id, username, email, password, addressList, productForSaleList, saleHistory);
     }
 
     public AdminModel() {

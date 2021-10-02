@@ -18,9 +18,9 @@ import com.bookstore.backend.domain.model.user.PersonModel;
 public class MagazineModel extends ProductModel{
 
     public MagazineModel(Long id, String title, String description, int yearLaunch, int pages, BigDecimal price,
-            SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList, PersonModel person,
+            SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList, PersonModel salesman,
             PublishingCompanyModel company, List<AuthorModel> authorList) {
-        super(id, title, description, yearLaunch, pages, price, sale, inventory, categoryList, person, company,
+        super(id, title, description, yearLaunch, pages, price, sale, inventory, categoryList, salesman, company,
                 authorList);
     }
 
