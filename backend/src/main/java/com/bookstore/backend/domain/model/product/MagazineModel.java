@@ -3,12 +3,17 @@ package com.bookstore.backend.domain.model.product;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.bookstore.backend.domain.model.AuthorModel;
 import com.bookstore.backend.domain.model.CategoryModel;
 import com.bookstore.backend.domain.model.InventoryModel;
 import com.bookstore.backend.domain.model.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 
+@Entity
+@Table(name = "T_MAGAZINE")
 public class MagazineModel extends ProductModel{
 
     public MagazineModel(Long id, String title, String description, int yearLaunch, int pages, BigDecimal price,

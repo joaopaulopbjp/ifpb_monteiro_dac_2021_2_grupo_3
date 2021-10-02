@@ -3,14 +3,17 @@ package com.bookstore.backend.domain.model.product;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import com.bookstore.backend.domain.model.AuthorModel;
 import com.bookstore.backend.domain.model.CategoryModel;
 import com.bookstore.backend.domain.model.InventoryModel;
 import com.bookstore.backend.domain.model.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 
-import org.springframework.beans.factory.annotation.Qualifier;
-
+@Entity
+@Table(name = "T_BOOK")
 public class BookModel extends ProductModel{
 
     public BookModel(Long id, String title, String description, int yearLaunch, int pages, BigDecimal price,
