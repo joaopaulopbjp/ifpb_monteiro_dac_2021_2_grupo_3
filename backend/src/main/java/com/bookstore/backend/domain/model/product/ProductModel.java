@@ -44,7 +44,7 @@ public abstract class ProductModel {
     private SaleModel sale;
     @OneToOne(mappedBy = "product")
     private InventoryModel inventory;
-    @ManyToMany(mappedBy = "productList")
+    @ManyToMany
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
@@ -55,7 +55,7 @@ public abstract class ProductModel {
     @ManyToOne
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
-    @ManyToMany(mappedBy = "productList")
+    @ManyToMany
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
