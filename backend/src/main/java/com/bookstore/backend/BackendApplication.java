@@ -291,7 +291,7 @@ public class BackendApplication implements CommandLineRunner {
 			// opção para encontre todos os livros classificados por título em ordem alfabética por título na forma paginada. 
 			// O usuário pode inserir o localizador de página que deseja
 			}else if(op == 8){
-				int contadorDePaginas = 0;
+				
 				
 				for(UserModel user : userRepository.findAll()){
 					System.out.println(user.toString());
@@ -304,7 +304,7 @@ public class BackendApplication implements CommandLineRunner {
 				while(true){
 
 					System.out.println("What option do you desire?");
-					System.out.print("0 - remove\n1 - add\n2 - exit: ");
+					System.out.println("0 - remove\n1 - add\n2 - exit: ");
 					op = Integer.parseInt(input.nextLine());
 					//Carrinho.toString();
 					//opção para remover livro do carrinho
@@ -328,28 +328,34 @@ public class BackendApplication implements CommandLineRunner {
 
 					//opção para adionar livro no carrinho
 					}else if(op == 1){
-						System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
+						int contadorDePaginas = 0;
 
-						String option = input.nextLine();
-
-						//se a opção digitada for vazia começa da pagina 0;
-						if(option.equals("")){
-							//percorre a lista de paginas
+						while(true){
 							buscaPagina(contadorDePaginas);
-						//proxima pagina
-						}else if(option.equals("a")){
-							if(contadorDePaginas > 0) {
-								buscaPagina(--contadorDePaginas);
+							System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
+	
+							String option = input.nextLine();
+	
+							//se a opção digitada for vazia começa da pagina 0;
+							if(!option.equals("")){
+								//percorre a lista de paginas
+								//proxima pagina
+								if(option.equals("a")){
+									if(contadorDePaginas > 0) {
+										buscaPagina(--contadorDePaginas);
+									}
+								}else if(option.equals("d")){
+									buscaPagina(++contadorDePaginas);
+								}else if(option.equals("s")){
+									
+									break;
+								}else{
+									System.out.println("how many books you desire to buy?");
+									int qtd = Integer.parseInt(input.nextLine());
+									ItemOrderModel item = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
+									shoppingCart.addItemOrderToItemList(item);
+								}
 							}
-						}else if(option.equals("d")){
-							buscaPagina(++contadorDePaginas);
-						}else if(option.equals("s")){
-							break;
-						}else{
-							System.out.println("how many books you desire to buy?");
-							int qtd = Integer.parseInt(input.nextLine());
-							ItemOrderModel item = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
-							shoppingCart.addItemOrderToItemList(item);
 						}
 					}else if(op == 2){
 						break;
