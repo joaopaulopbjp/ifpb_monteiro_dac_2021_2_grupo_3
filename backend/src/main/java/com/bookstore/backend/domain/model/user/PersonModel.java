@@ -34,7 +34,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_PERSON")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class PersonModel {
+public abstract class PersonModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

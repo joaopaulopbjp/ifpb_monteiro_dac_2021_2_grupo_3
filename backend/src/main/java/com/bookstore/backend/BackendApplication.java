@@ -17,11 +17,13 @@ import com.bookstore.backend.infrastructure.persistence.repository.CategoryRepos
 import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
@@ -40,6 +42,10 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	InventoryRepository inventoryRepository;
+
+	@Autowired
+	BookRepository bookRepository;
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);

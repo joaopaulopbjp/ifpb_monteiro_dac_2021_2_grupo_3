@@ -4,9 +4,9 @@ import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.repository.NoRepositoryBean;
 
-@Repository
+@NoRepositoryBean
 public interface PersonRepository extends JpaRepository<PersonModel, Long> {
     
     public UserModel findByEmail(String email);

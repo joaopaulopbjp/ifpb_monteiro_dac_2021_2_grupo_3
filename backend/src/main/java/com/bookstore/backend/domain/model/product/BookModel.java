@@ -9,6 +9,8 @@ import com.bookstore.backend.domain.model.InventoryModel;
 import com.bookstore.backend.domain.model.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+
 public class BookModel extends ProductModel{
 
     public BookModel(Long id, String title, String description, int yearLaunch, int pages, BigDecimal price,

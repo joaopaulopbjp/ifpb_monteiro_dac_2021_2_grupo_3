@@ -9,6 +9,7 @@ import javax.persistence.*;
 import com.bookstore.backend.domain.model.*;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,7 +24,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_PRODUCT")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class ProductModel {
+public abstract class ProductModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
