@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,11 +29,14 @@ public class  InventoryModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
 	private Long id;
+
     @Column(name = "AMOUNT")
 	private int amount;
-	@OneToOne
+
+	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
 	private ProductModel product;
+	
 
 	public void decrease() {
 		if(amount > 0) {

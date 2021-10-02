@@ -27,4 +27,8 @@ public class BookModel extends ProductModel{
     public BookModel() {
     }
     
+    @Override
+    public String toString() {
+        return String.format("BOOK [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName()); 
+    }
 }

@@ -12,20 +12,19 @@ import com.bookstore.backend.domain.model.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.CategoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.PublishingCompanyRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.product.ProductRepository;
 import com.bookstore.backend.infrastructure.persistence.service.BookRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ConfigurableApplicationContext;
 
 
 @SpringBootApplication
@@ -74,11 +73,10 @@ public class BackendApplication implements CommandLineRunner {
 				"\n5 - delete category;"+
 				"\n6 - register a new Company"+
 				"\n7 - find the 5 cheapest books available in inventory;"+
-				"\n8 - find all books sorted by title alphabetically by title in paginated form. The user can enter the page finder they want;"+
-				"\n9 - add a book to an order (shopping cart);"+
-				"\n10 - show all admins;"+
-				"\n11 - change user to admin;"+
-				"\n12 - sair: ");
+				"\n8 - add a book to an order (shopping cart);"+
+				"\n9 - show all admins;"+
+				"\n10 - change user to admin;"+
+				"\n11 - sair: ");
 
 			int op = Integer.parseInt(input.nextLine());
 
@@ -125,12 +123,13 @@ public class BackendApplication implements CommandLineRunner {
 
 			// opção para CRUD do livro.
 			}else if(op == 3){
+				clearConsole();
 				System.out.println("0 - register book" + 
 									"\n1 - read book" + 
 									"\n2 - delete book");
 
 				op = Integer.parseInt(input.nextLine());
-
+				clearConsole();
 				// registrar livro
 				if(op == 0){
 					System.out.println("Book Options");
@@ -189,37 +188,57 @@ public class BackendApplication implements CommandLineRunner {
 					
 				// alterar campos ou campo do livro
 				}else if(op == 1){
+					int contadorDePaginas = 0;
 
-					System.out.println("If you don't want to change any field press enter");
-					System.out.println("Name: ");
-					String name = input.nextLine();
-					System.out.println("choice the author: ");
-					// percorre a lista de autores.
-					String[] lista = new String[5];
-					for(int i = 0;i < lista.length;i++){
+					while(true){
+						System.out.print("0..n - page number\na - left page \nd - right page\ns - exit\nWhat paging do you desire? ");
+						
+						String option = input.nextLine();
+						clearConsole();
 
+						//se a opção digitada for vazia começa da pagina 0;
+						if(option.equals("")){
+							//percorre a lista de paginas
+							contadorDePaginas = 0;
+							buscaPagina(contadorDePaginas);
+						//proxima pagina
+						}else if(option.equals("a")){
+							buscaPagina(--contadorDePaginas);
+						}else if(option.equals("d")){
+							buscaPagina(++contadorDePaginas);
+						}else if(option.equals("s")){
+							break;
+						}else{
+							contadorDePaginas = Integer.parseInt(option);
+							buscaPagina(contadorDePaginas);
+						}
 					}
-					System.out.print("Type the ID Author: ");
-					int id = Integer.parseInt(input.nextLine());
-
-					System.out.println("description: ");
-					String descricao = input.nextLine();
-					System.out.println("category: ");
-					String category = input.nextLine();
-					System.out.println("price: ");
-					Double price = Double.parseDouble(input.nextLine());
-					System.out.println("company: ");
-					Double Company = Double.parseDouble(input.nextLine());
 
 				// excluir o livro
 				}else if(op == 2){
-					System.out.println("List of books:");
-					List<ProductModel> lista = bookRepository.findAll();
-					for(int i = 0;i < lista.size();i++){
+					int contadorDePaginas = 0;
+
+					while(true){
+						buscaPagina(contadorDePaginas);
+						System.out.print("0..n - ID\na - left page \nd - right page\ns - exit\nType the ID books: ");
 						
+						String option = input.nextLine();
+						clearConsole();
+
+						//se a opção digitada for vazia começa da pagina 0;
+						if(!option.equals("")){
+							if(option.equals("a")){
+								--contadorDePaginas;
+							}else if(option.equals("d")){
+								++contadorDePaginas;
+							}else if(option.equals("s")){
+								break;
+							}else{
+								Long id = Long.parseLong(option);
+								bookRepository.deleteById(id);
+							}
+						}
 					}
-					System.out.print("Type the ID books: ");
-					int id = Integer.parseInt(input.nextLine());
 				}
 			// opção para registrar categoria.
 			}else if(op == 4){
@@ -262,31 +281,6 @@ public class BackendApplication implements CommandLineRunner {
 			// O usuário pode inserir o localizador de página que deseja
 			}else if(op == 8){
 				int contadorDePaginas = 0;
-
-				while(true){
-					System.out.print("What paging do you desire? ");
-
-					String option = input.nextLine();
-
-					//se a opção digitada for vazia começa da pagina 0;
-					if(option.equals("")){
-						//percorre a lista de paginas
-						contadorDePaginas = 0;
-						buscaPagina(contadorDePaginas);
-					//proxima pagina
-					}else if(option.equals("a")){
-						buscaPagina(contadorDePaginas++);
-					}else if(option.equals("d")){
-						buscaPagina(contadorDePaginas--);
-					}else if(option.equals("s")){
-						break;
-					}else{
-						buscaPagina(contadorDePaginas);
-					}
-				}
-			// adiciona livro ao pedido.
-			}else if(op == 9){
-				int contadorDePaginas = 0;
 				// Carrinho carrinho = ;
 				while(true){
 					System.out.println("What paging do you desire?");
@@ -312,9 +306,9 @@ public class BackendApplication implements CommandLineRunner {
 							buscaPagina(contadorDePaginas);
 						//proxima pagina
 						}else if(option.equals("a")){
-							buscaPagina(contadorDePaginas++);
+							buscaPagina(++contadorDePaginas);
 						}else if(option.equals("d")){
-							buscaPagina(contadorDePaginas--);
+							buscaPagina(--contadorDePaginas);
 						}else if(option.equals("s")){
 							break;
 						}else{
@@ -330,13 +324,13 @@ public class BackendApplication implements CommandLineRunner {
 					}
 				}
 			// show all admins
-			}else if(op == 10){
+			}else if(op == 9){
 				//User admin;
 				for(int i = 0;i < 10;i++){
 					System.out.println();
 				}
 			// opção 
-			}else if(op == 11){
+			}else if(op == 10){
 				//User admin;
 				for(int i = 0;i < 10;i++){
 					System.out.println();
@@ -344,7 +338,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.print("Type the ID user: ");
 				int id = Integer.parseInt(input.nextLine());
 			// sair.
-			}else if(op == 12){
+			}else if(op == 11){
 				isRun = false;
 			}
 
@@ -352,13 +346,16 @@ public class BackendApplication implements CommandLineRunner {
 		input.close();
 	}
 
-	public List<ProductModel> buscaPagina(int pagina){
-		// buscar pagina no banco
-		String[] lista = new String[5];
-		for(int i = 0;i < lista.length;i++){
+	public void buscaPagina(int pagina){
+		try {
+			List<BookModel> bookList = bookRepositoryService.findAll(pagina);
 
+			for(BookModel book : bookList) {
+				System.out.println(book.toString());
+			}
+		} catch (NotFoundException e) {
+			e.printStackTrace();
 		}
-		return null;
 	}
 
 	public void clearConsole(){

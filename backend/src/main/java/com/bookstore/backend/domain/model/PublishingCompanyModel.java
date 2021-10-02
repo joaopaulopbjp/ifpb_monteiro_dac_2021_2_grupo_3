@@ -10,6 +10,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,10 +32,13 @@ public class PublishingCompanyModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+
 	@Column(name = "NAME")
 	private String name;
-	@OneToMany(mappedBy = "company")
+
+	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
 	private List<ProductModel> productList;
+	
 
 	public boolean addBookToBookList(ProductModel ProductModel) {
 		if(productList != null) {

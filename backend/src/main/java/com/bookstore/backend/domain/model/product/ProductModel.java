@@ -30,38 +30,51 @@ public abstract class ProductModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
+
     @Column(name = "TITLE")
     private String title;
+
     @Column(name = "DESCRIPTION")
     private String description;
+
     @Column(name = "YEAR_LAUNCH")
     private int yearLaunch;
+
     @Column(name = "PAGES")
     private int pages;
+
     @Column(name = "PRICE")
     private BigDecimal price;
-    @OneToOne(mappedBy = "product")
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private SaleModel sale;
-    @OneToOne(mappedBy = "product")
+
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private InventoryModel inventory;
-    @ManyToMany
+    
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
         inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
+
     private List<CategoryModel> categoryList;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     private PersonModel salesman;
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
-    @ManyToMany
+
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     private List<AuthorModel> authorList;
 
+    
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
         if(categoryList != null) {
             categoryList.add(categoryModel);

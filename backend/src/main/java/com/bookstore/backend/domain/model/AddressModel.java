@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,17 +31,23 @@ public class AddressModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+
 	@Column(name = "STREET", nullable = false)
 	private String street;
+
 	@Column(name = "NUMBER", nullable = false)
 	private String number;
+
 	@Column(name = "ZIPCODE", nullable = false)
 	private String ZipCode;
+
 	@Column(name = "CITY", nullable = false)
 	private String city;
+
 	@Column(name = "DISTRICT", nullable = false)
 	private String district;
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PERSON_FK")
 	private PersonModel person;
 	

@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,12 +34,16 @@ public class OrderModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+
 	@Column(name = "DATA_ORDER")
 	private LocalDate dateOrder;
+
 	@Column(name = "STATUS")
 	private OrderStatus status;
-	@OneToMany(mappedBy = "order")
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<ItemOrderModel> itemList;
+
 
 	public BigDecimal getTotalPrice() {
 		BigDecimal totalPrice = new BigDecimal(0);

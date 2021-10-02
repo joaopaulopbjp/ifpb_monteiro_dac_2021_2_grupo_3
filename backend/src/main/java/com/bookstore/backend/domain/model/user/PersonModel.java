@@ -3,6 +3,7 @@ package com.bookstore.backend.domain.model.user;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,19 +42,26 @@ public abstract class PersonModel {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "ID", nullable = false)
     private Long id;
+
     @Column(name = "USERNAME", nullable = false)
     private String username;
+
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
     @Column(name = "PASSWORD", nullable = false)
     private String password;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL)
     private List<AddressModel> addressList;
-    @OneToMany(mappedBy = "salesman")
+
+    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL)
     private List<ProductModel> productForSaleList;
-    @OneToOne(mappedBy = "person")
+
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_HISTORY_ID")
     private UserSaleHistoryModel saleHistory;
+    
 
     public boolean addAddressToAddressList(AddressModel addressModel) {
         if(addressList != null) {

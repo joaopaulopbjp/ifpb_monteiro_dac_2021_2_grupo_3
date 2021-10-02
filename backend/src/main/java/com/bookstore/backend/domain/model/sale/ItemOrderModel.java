@@ -2,6 +2,7 @@ package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,14 +32,18 @@ public class ItemOrderModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+
 	@Column(name = "AMOUNT")
 	private int amount;
-	@ManyToOne
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PRODUCT_ID")
 	private ProductModel product;
-	@ManyToOne
+
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_FK")
 	private OrderModel order;
+
 
 	public BigDecimal getTotalPrice() {
 		return product.getPrice().multiply(new BigDecimal(getAmount()));

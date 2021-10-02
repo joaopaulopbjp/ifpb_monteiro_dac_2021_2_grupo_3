@@ -34,4 +34,18 @@ public class BookRepositoryService {
         
         return list;
     }
+
+    public List<BookModel> findAll(int pageNumber) throws NotFoundException {
+        Pageable pageable = PageRequest.of(pageNumber, 2, Sort.by("title").ascending());
+        Page<ProductModel> pages = bookRepository.findAll(pageable);
+
+        if(pages.isEmpty()) throw new NotFoundException();
+
+        ArrayList<BookModel> list = new ArrayList<>();
+        for(ProductModel model : pages) {
+            list.add((BookModel) model);
+        }
+        
+        return list;
+    }
 }

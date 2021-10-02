@@ -1,7 +1,9 @@
 package com.bookstore.backend.domain.model.sale;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,10 +34,28 @@ public class UserSaleHistoryModel {
     @Column(name = "ID")
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private PersonModel person;
 
     @Column(name = "ORDER_ID")
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<OrderModel> orderList;
+
+    public boolean addOrderToOrderList(OrderModel orderModel) {
+		if(orderModel != null) {
+			orderList.add(orderModel);
+		} else {
+			orderList = new ArrayList<>();
+			addOrderToOrderList(orderModel);
+		}
+		return true;
+	}
+
+	public boolean removeOrderFromOrderList(OrderModel orderModel) {
+		if(orderList != null) {
+			return orderList.remove(orderModel);
+		} else {
+			return false;
+		}
+	} 
 }

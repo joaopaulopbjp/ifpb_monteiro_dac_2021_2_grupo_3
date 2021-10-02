@@ -2,6 +2,7 @@ package com.bookstore.backend.domain.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,11 +31,14 @@ public class CategoryModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID")
 	private Long id;
+
 	@Column(name = "NAME")
 	private String name;
-	@ManyToMany
+
+	@ManyToMany(cascade = CascadeType.ALL)
 	private List<ProductModel> productList;
 
+	
 	@Override
     public String toString() {
         return "Category[ID: " + getId() +" - NAME: " + getName() + "]";
