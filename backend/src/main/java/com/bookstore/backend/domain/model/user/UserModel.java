@@ -11,7 +11,12 @@ import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "T_USER")
 public class UserModel extends PersonModel{
