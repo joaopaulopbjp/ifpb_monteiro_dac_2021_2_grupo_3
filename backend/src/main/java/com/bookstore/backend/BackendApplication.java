@@ -207,7 +207,10 @@ public class BackendApplication implements CommandLineRunner {
 							buscaPagina(contadorDePaginas);
 						//proxima pagina
 						}else if(option.equals("a")){
-							buscaPagina(--contadorDePaginas);
+							if(contadorDePaginas > 0) {
+								buscaPagina(--contadorDePaginas);
+
+							}
 						}else if(option.equals("d")){
 							buscaPagina(++contadorDePaginas);
 						}else if(option.equals("s")){
@@ -232,7 +235,9 @@ public class BackendApplication implements CommandLineRunner {
 						//se a opção digitada for vazia começa da pagina 0;
 						if(!option.equals("")){
 							if(option.equals("a")){
-								--contadorDePaginas;
+								if(contadorDePaginas > 0) {
+									--contadorDePaginas;
+								}
 							}else if(option.equals("d")){
 								++contadorDePaginas;
 							}else if(option.equals("s")){
@@ -310,9 +315,11 @@ public class BackendApplication implements CommandLineRunner {
 							buscaPagina(contadorDePaginas);
 						//proxima pagina
 						}else if(option.equals("a")){
-							buscaPagina(++contadorDePaginas);
+							if(contadorDePaginas > 0) {
+								buscaPagina(--contadorDePaginas);
+							}
 						}else if(option.equals("d")){
-							buscaPagina(--contadorDePaginas);
+							buscaPagina(++contadorDePaginas);
 						}else if(option.equals("s")){
 							break;
 						}else{
@@ -378,7 +385,7 @@ public class BackendApplication implements CommandLineRunner {
 				System.out.println(book.toString());
 			}
 		} catch (NotFoundException e) {
-			e.printStackTrace();
+			System.out.println(e.getMessage());;
 		}
 	}
 
