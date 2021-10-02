@@ -55,6 +55,17 @@ public class shoppingCart {
         return false;
     }
 
+    public boolean removeItemOrderFromItemListByProductId(Long id) {
+        if(itemList != null) {
+            for(ItemOrderModel item : itemList) {
+                if(item.getProduct().getId() == id) {
+                    return itemList.remove(item);
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return String.format("SHOPPING CART [ID: %s]", getId());
