@@ -1,7 +1,9 @@
 package com.bookstore.backend.infrastructure.persistence.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
@@ -18,13 +20,18 @@ public class BookRepositoryService {
     @Autowired
     private BookRepository bookRepository;
 
-    public List<ProductModel> findCheapests(int quantity) throws NotFoundException {
+    public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 
         Page<ProductModel> pages = bookRepository.findAll(pageable);
-
+        
         if(pages.isEmpty()) throw new NotFoundException();
 
-        return pages.getContent();
+        ArrayList<BookModel> list = new ArrayList<>();
+        for(ProductModel model : pages) {
+            list.add((BookModel) model);
+        }
+        
+        return list;
     }
 }

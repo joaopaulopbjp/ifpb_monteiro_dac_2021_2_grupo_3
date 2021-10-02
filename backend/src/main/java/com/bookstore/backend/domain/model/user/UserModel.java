@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.AddressModel;
+import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 
 
@@ -14,8 +15,8 @@ import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 public class UserModel extends PersonModel{
 
     public UserModel(Long id, String username, String email, String password, List<AddressModel> addressList,
-            UserSaleHistoryModel saleHistory) {
-        super(id, username, email, password, addressList, saleHistory);
+            List<ProductModel> productList, UserSaleHistoryModel saleHistory) {
+        super(id, username, email, password, addressList, productList, saleHistory);
     }
 
     public UserModel() {

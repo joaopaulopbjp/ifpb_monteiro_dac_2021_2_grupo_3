@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.AddressModel;
+import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 
 import lombok.AllArgsConstructor;
@@ -48,6 +49,8 @@ public abstract class PersonModel {
     private String password;
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person")
     private List<AddressModel> addressList;
+    @OneToMany(mappedBy = "salesman")
+    private List<ProductModel> productForSaleList;
     @OneToOne(mappedBy = "person")
     @JoinColumn(name = "SALE_HISTORY_ID")
     private UserSaleHistoryModel saleHistory;

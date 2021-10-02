@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 import com.bookstore.backend.domain.model.*;
 import com.bookstore.backend.domain.model.sale.SaleModel;
-
+import com.bookstore.backend.domain.model.user.PersonModel;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -46,6 +46,8 @@ public abstract class ProductModel {
     private InventoryModel inventory;
     @ManyToMany(mappedBy = "productList")
     private List<CategoryModel> categoryList;
+    @ManyToOne
+    private PersonModel salesman;
     @ManyToOne
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
