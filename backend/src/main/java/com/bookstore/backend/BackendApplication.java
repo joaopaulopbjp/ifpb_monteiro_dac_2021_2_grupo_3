@@ -317,6 +317,7 @@ public class BackendApplication implements CommandLineRunner {
 					//Carrinho.toString();
 					//opção para remover livro do carrinho
 					if(op==0){
+						shoppingCart = shoppingCartRepository.findById(userModel.getShoppingCart().getId()).get();
 						while(true){
 							System.out.println("Items Oders:");
 							for(ItemOrderModel item: shoppingCart.getItemList()){
