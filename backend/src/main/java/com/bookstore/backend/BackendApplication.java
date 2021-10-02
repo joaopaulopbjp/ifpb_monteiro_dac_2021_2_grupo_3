@@ -11,6 +11,7 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
+import com.bookstore.backend.domain.model.sale.shoppingCart;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -81,7 +82,7 @@ public class BackendApplication implements CommandLineRunner {
 				"\n8 - add a book to an order (shopping cart);"+
 				"\n9 - show all admins;"+
 				"\n10 - change user to admin;"+
-				"\n11 - sair: ");
+				"\n11 - exit: ");
 
 			int op = Integer.parseInt(input.nextLine());
 
@@ -292,18 +293,38 @@ public class BackendApplication implements CommandLineRunner {
 			}else if(op == 8){
 				int contadorDePaginas = 0;
 				
+				for(UserModel user : userRepository.findAll()){
+					System.out.println(user.toString());
+				}
+				System.out.println("Type the User ID: ");
+				UserModel userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
+
+				shoppingCart shoppingCart = new shoppingCart(0l, new ArrayList<ItemOrderModel>(), userModel);
 				// Carrinho carrinho = ;
 				while(true){
 
 					System.out.println("What option do you desire?");
-					System.out.print("0 - remover\n1 - adicionar\n2 - sair: ");
+					System.out.print("0 - remove\n1 - add\n2 - exit: ");
 					op = Integer.parseInt(input.nextLine());
 					//Carrinho.toString();
 					//opção para remover livro do carrinho
 					if(op==0){
-						System.out.print("Id Book: ");
-						int id = Integer.parseInt(input.nextLine());
+						while(true){
+							System.out.println("Items Oders:");
+							for(ItemOrderModel item: shoppingCart.getItemList()){
+								System.out.println(item.getProduct().toString() + 
+								" Amount: " + item.getAmount()+ 
+								" Price: " + item.getTotalPrice());
+							}
+	
+							System.out.print("Id Book for remove(Type 0 for exit): ");
+							Long id = Long.parseLong(input.nextLine());
 
+							if(id == 0){
+								break;
+							}
+							shoppingCart.removeItemOrderFromItemListByProductId(id);
+						}
 
 					//opção para adionar livro no carrinho
 					}else if(op == 1){
@@ -327,8 +348,8 @@ public class BackendApplication implements CommandLineRunner {
 						}else{
 							System.out.println("how many books you desire to buy?");
 							int qtd = Integer.parseInt(input.nextLine());
-							ItemOrderModel itens = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
-
+							ItemOrderModel item = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
+							shoppingCart.addItemOrderToItemList(item);
 						}
 					}else if(op == 2){
 						break;
