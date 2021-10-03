@@ -50,10 +50,10 @@ public abstract class ProductModel {
     @Column(name = "PRICE")
     private BigDecimal price;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private SaleModel sale;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     private InventoryModel inventory;
     
     @ManyToMany(cascade = CascadeType.ALL)
@@ -63,10 +63,10 @@ public abstract class ProductModel {
         inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
     private List<CategoryModel> categoryList;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     private PersonModel salesman;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
 
