@@ -8,6 +8,7 @@ import java.util.Scanner;
 import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
+import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
@@ -15,6 +16,7 @@ import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
+import com.bookstore.backend.infrastructure.persistence.evaluate.EvaluateRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.AuthorRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.CategoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.InventoryRepository;
@@ -64,6 +66,9 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	ItemOrderRepository itemOrderRepository;
+
+	@Autowired
+	EvaluateRepository evaluateRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -342,7 +347,8 @@ public class BackendApplication implements CommandLineRunner {
 										"\n1 - Read book" + 
 										"\n2 - Delete book"+
 										"\n3 - Find the 5 cheapest books available in inventory"+
-										"\n4 - Exit:");
+										"\n4 - Evaluete"+
+										"\n5 - Exit:");
 	
 					op = Integer.parseInt(input.nextLine());
 					clearConsole();
@@ -467,6 +473,66 @@ public class BackendApplication implements CommandLineRunner {
 							System.out.println(lista.get(i).toString());
 						}
 					}else if(op == 4){
+						System.out.println("Users:");
+						for(UserModel user : userRepository.findAll()){
+							System.out.println(user.toString());
+						}
+						System.out.println("Type the User ID: ");
+						UserModel userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
+						while(true){
+							
+							System.out.println("Evaluate options:");
+							System.out.println("0 - Add Evaluate" + 
+												"\n1 - Show all Evaluetes" + 
+												"\n2 - Remover Evaluate"+
+												"\n3 - Exit:");
+	
+							op = Integer.parseInt(input.nextLine());
+
+							if(op == 0){
+								int contadorDePaginas = 0;
+								while(true){
+
+									buscaPagina(contadorDePaginas);
+									System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
+			
+									String option = input.nextLine();
+			
+									//se a opção digitada for vazia começa da pagina 0;
+									if(!option.equals("")){
+										//percorre a lista de paginas
+										//proxima pagina
+										if(option.equals("a")){
+											if(contadorDePaginas > 0) {
+												buscaPagina(--contadorDePaginas);
+											}
+										}else if(option.equals("d")){
+											buscaPagina(++contadorDePaginas);
+										}else if(option.equals("s")){
+											break;
+										}else{
+											System.out.println("how many stars(1 - 5)?");
+											int stars = Integer.parseInt(input.nextLine());
+											System.out.println("Comment:");
+											String comment = input.nextLine();
+											EvaluateModel evaluateModel = new EvaluateModel(0l, stars, comment, userModel, bookRepository.findById(Long.parseLong(option)).get());
+											evaluateRepository.save(evaluateModel);
+										}
+									}
+								}
+							}else if(op == 1){
+								System.out.println("Evaluetes:");
+								for(EvaluateModel evaluete:evaluateRepository.findAll()){
+									System.out.println(evaluete.toString());
+								}
+								input.nextLine();
+							}else if(op == 2){
+								
+							}else if(op == 3){
+								break;
+							}
+						}
+					}else if(op == 5){
 						break;
 					}
 				}
