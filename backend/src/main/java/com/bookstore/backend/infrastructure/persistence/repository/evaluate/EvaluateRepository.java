@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.persistence.evaluate;
+package com.bookstore.backend.infrastructure.persistence.repository.evaluate;
 
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 

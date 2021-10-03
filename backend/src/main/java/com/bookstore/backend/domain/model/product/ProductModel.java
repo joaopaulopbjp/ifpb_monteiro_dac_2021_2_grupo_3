@@ -50,10 +50,10 @@ public abstract class ProductModel {
     @Column(name = "PRICE")
     private BigDecimal price;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private SaleModel sale;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private InventoryModel inventory;
     
     @ManyToMany(cascade = CascadeType.ALL)
@@ -63,10 +63,10 @@ public abstract class ProductModel {
         inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
     private List<CategoryModel> categoryList;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private PersonModel salesman;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "COMPANY_FK")
     private PublishingCompanyModel company;
 
@@ -77,7 +77,7 @@ public abstract class ProductModel {
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     private List<AuthorModel> authorList;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<EvaluateModel> evaluateList; 
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
@@ -115,15 +115,18 @@ public abstract class ProductModel {
     }
 
     public int calculateStarAverage() {
-        int total = 0;
-        for(EvaluateModel evaluate : evaluateList) {
-            total += evaluate.getStarNumber();
+        if(evaluateList != null && evaluateList.size() > 0) {
+            int total = 0;
+            for(EvaluateModel evaluate : evaluateList) {
+                total += evaluate.getStarNumber();
+            }
+            return (total / evaluateList.size());
         }
-        return (total / evaluateList.size());
+        return 0;
     }
 
     @Override
     public String toString() {
-        return String.format("PRODUCT [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s - EVALUATE: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName(), calculateStarAverage()); 
+        return String.format("PRODUCT [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s - EVALUATE: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName(), String.valueOf(calculateStarAverage())); 
     }
 }
