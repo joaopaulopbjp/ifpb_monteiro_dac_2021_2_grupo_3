@@ -77,7 +77,7 @@ public abstract class ProductModel {
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     private List<AuthorModel> authorList;
 
-    @OneToMany(mappedBy = "product")
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
     private List<EvaluateModel> evaluateList; 
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
@@ -115,7 +115,7 @@ public abstract class ProductModel {
     }
 
     public int calculateStarAverage() {
-        if(evaluateList.size() > 0) {
+        if(evaluateList != null && evaluateList.size() > 0) {
             int total = 0;
             for(EvaluateModel evaluate : evaluateList) {
                 total += evaluate.getStarNumber();
