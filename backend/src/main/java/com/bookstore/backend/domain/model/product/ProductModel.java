@@ -115,11 +115,14 @@ public abstract class ProductModel {
     }
 
     public int calculateStarAverage() {
-        int total = 0;
-        for(EvaluateModel evaluate : evaluateList) {
-            total += evaluate.getStarNumber();
+        if(evaluateList.size() > 0) {
+            int total = 0;
+            for(EvaluateModel evaluate : evaluateList) {
+                total += evaluate.getStarNumber();
+            }
+            return (total / evaluateList.size());
         }
-        return (total / evaluateList.size());
+        return 0;
     }
 
     @Override
