@@ -55,10 +55,10 @@ public abstract class PersonModel {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = CascadeType.ALL)
     private List<AddressModel> addressList;
 
-    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<ProductModel> productForSaleList;
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "SALE_HISTORY_ID")
     private UserSaleHistoryModel saleHistory;
     
