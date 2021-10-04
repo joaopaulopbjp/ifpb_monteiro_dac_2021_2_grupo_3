@@ -41,9 +41,9 @@ public class UserSaleHistoryModel {
 
     @OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(
-        name = "T_PRODUCT_AUTHOR_JOIN", 
-        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
-        inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
+        name = "T_PRODUCT_SALEHISTORY_JOIN", 
+        joinColumns = @JoinColumn(name = "ORDER_ID"), 
+        inverseJoinColumns = @JoinColumn(name = "SALE_HISTORY_ID"))
     private List<OrderModel> orderList;
 
     public boolean addOrderToOrderList(OrderModel orderModel) {

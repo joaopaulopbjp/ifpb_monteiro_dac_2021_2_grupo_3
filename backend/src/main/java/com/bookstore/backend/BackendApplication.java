@@ -399,7 +399,7 @@ public class BackendApplication implements CommandLineRunner {
 						PublishingCompanyModel companyModel = companyRepository.findById(companyId).get();
 						System.out.println("Inventory: ");
 						int qtd = Integer.parseInt(input.nextLine());
-						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, null, companyModel, authorList, null);
+						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
 						book = bookRepository.save(book);
 						InventoryModel inventory = new InventoryModel(0l, qtd, book);
 						userModel.addProductToProductList(book);
