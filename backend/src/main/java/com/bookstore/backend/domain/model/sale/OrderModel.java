@@ -1,13 +1,20 @@
-package com.bookstore.backend.domain.model;
+package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,12 +26,24 @@ import lombok.Setter;
 @AllArgsConstructor
 @EqualsAndHashCode
 @NoArgsConstructor
+@Entity
+@Table(name = "T_ORDER")
 public class OrderModel {
     
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID")
 	private Long id;
+
+	@Column(name = "DATA_ORDER")
 	private LocalDate dateOrder;
+
+	@Column(name = "STATUS")
 	private OrderStatus status;
+
+	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	private List<ItemOrderModel> itemList;
+
 
 	public BigDecimal getTotalPrice() {
 		BigDecimal totalPrice = new BigDecimal(0);
@@ -51,5 +70,10 @@ public class OrderModel {
 		} else {
 			return false;
 		}
-	} 
+	}
+
+	@Override
+    public String toString() {
+        return String.format("ORDER [ID: %s - DATA ORDER: %s - STATUS: %S]", getId(), getDateOrder(), getStatus().toString());
+    }
 }
