@@ -9,7 +9,6 @@ import javax.persistence.*;
 import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
-import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
@@ -77,9 +76,7 @@ public abstract class ProductModel {
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     private List<AuthorModel> authorList;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
-    private List<EvaluateModel> evaluateList; 
-
+    
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
         if(categoryList != null) {
             categoryList.add(categoryModel);
@@ -114,19 +111,8 @@ public abstract class ProductModel {
         return false;
     }
 
-    public int calculateStarAverage() {
-        if(evaluateList != null && evaluateList.size() > 0) {
-            int total = 0;
-            for(EvaluateModel evaluate : evaluateList) {
-                total += evaluate.getStarNumber();
-            }
-            return (total / evaluateList.size());
-        }
-        return 0;
-    }
-
     @Override
     public String toString() {
-        return String.format("PRODUCT [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s - EVALUATE: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName(), String.valueOf(calculateStarAverage())); 
+        return String.format("PRODUCT [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName()); 
     }
 }

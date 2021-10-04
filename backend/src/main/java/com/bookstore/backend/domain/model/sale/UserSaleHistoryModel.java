@@ -9,8 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -39,11 +37,8 @@ public class UserSaleHistoryModel {
     @OneToOne(cascade = CascadeType.ALL)
     private PersonModel person;
 
+    @Column(name = "ORDER_ID")
     @OneToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-        name = "T_PRODUCT_AUTHOR_JOIN", 
-        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
-        inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
     private List<OrderModel> orderList;
 
     public boolean addOrderToOrderList(OrderModel orderModel) {
