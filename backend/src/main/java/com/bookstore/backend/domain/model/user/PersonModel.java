@@ -79,6 +79,24 @@ public abstract class PersonModel {
         return false;
     }
 
+    public boolean addProductToProductList(ProductModel product) {
+        if(productForSaleList != null) {
+            productForSaleList.add(product);
+        } else {
+            productForSaleList = new ArrayList<>();
+            addProductToProductList(product);
+        }
+        return true;
+    }
+
+    public boolean removeProductFromProductList(ProductModel product) {
+        if(productForSaleList != null) {
+            return productForSaleList.remove(product);
+        } 
+        return false;
+    }
+
+
     @Override
     public String toString() {
         return String.format("PERSON [ID: %s - USERNAME: %s - EMAIL: %s]", getId(), getUsername(), getEmail()); 
