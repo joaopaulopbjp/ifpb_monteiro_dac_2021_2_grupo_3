@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
@@ -36,6 +38,10 @@ public class CategoryModel {
 	private String name;
 
 	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+        name = "T_PRODUCT_CATEGORY_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
+        inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
 	private List<ProductModel> productList;
 
 	
