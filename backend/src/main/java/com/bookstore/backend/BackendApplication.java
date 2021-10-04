@@ -76,6 +76,10 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		// BookModel bookModel = new BookModel(0l, "titulo", "description", 200, 10, new BigDecimal("10.7"), null, null, null, null, null, null, null);
+		BookModel bookModel = new BookModel(6l, "teste", null, 0, 0, null, null, null, null, null, null, null, null);
+		bookRepository.save(bookModel);
 		Scanner input = new Scanner(System.in);
 
 

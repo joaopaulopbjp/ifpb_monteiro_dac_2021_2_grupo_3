@@ -1,11 +1,13 @@
 package com.bookstore.backend.infrastructure.persistence.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,5 +37,21 @@ public class BookRepositoryService {
         if(pages.isEmpty()) throw new NotFoundException();
         
         return pages.getContent();
+    }
+
+    public BookModel update(BookModel book) throws NotFoundException {
+        BookModel bookDataBase = null;
+        try {
+            bookDataBase = bookRepository.findById(book.getId()).get();
+
+        } catch (NoSuchElementException e) {
+            throw new NotFoundException();
+        }
+
+        ModelMapper mapper = new ModelMapper();
+
+        mapper.map(book, bookDataBase);
+
+        return bookRepository.save(book);
     }
 }
