@@ -402,9 +402,7 @@ public class BackendApplication implements CommandLineRunner {
 						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
 						book = bookRepository.save(book);
 						InventoryModel inventory = new InventoryModel(0l, qtd, book);
-						userModel.addProductToProductList(book);
 						inventoryRepository.save(inventory);
-						userRepository.save(userModel);
 						
 					// alterar campos ou campo do livro
 					}else if(op == 1){
