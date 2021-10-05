@@ -42,10 +42,10 @@ public abstract class ProductModel {
     private String description;
 
     @Column(name = "YEAR_LAUNCH")
-    private int yearLaunch;
+    private Integer yearLaunch;
 
     @Column(name = "PAGES")
-    private int pages;
+    private Integer pages;
 
     @Column(name = "PRICE")
     private BigDecimal price;

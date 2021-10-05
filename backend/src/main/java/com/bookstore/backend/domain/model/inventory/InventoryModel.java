@@ -31,7 +31,7 @@ public class  InventoryModel {
 	private Long id;
 
     @Column(name = "AMOUNT")
-	private int amount;
+	private Integer amount;
 
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
