@@ -517,7 +517,17 @@ public class BackendApplication implements CommandLineRunner {
 								}
 								input.nextLine();
 							}else if(op.equals("3")){
-								
+								while (true) {
+									for (EvaluateModel evaluate : userModel.getEvaluateList()) {
+										System.out.println(evaluate.toString());
+									}
+									System.out.println("Type the ID Evaluate: ");
+									String option = input.nextLine();
+									if(option.equals("s")){
+										break;
+									}
+									evaluateRepository.deleteById(Long.parseLong(option));
+								}
 							}else if(op.equals("s")){
 								break;
 							}
