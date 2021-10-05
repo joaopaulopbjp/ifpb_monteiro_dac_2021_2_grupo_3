@@ -1,9 +1,7 @@
 package com.bookstore.backend.infrastructure.persistence.service;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
 
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -11,8 +9,6 @@ import com.bookstore.backend.infrastructure.persistence.repository.product.BookR
 import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.BeanWrapper;
-import org.springframework.beans.BeanWrapperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
