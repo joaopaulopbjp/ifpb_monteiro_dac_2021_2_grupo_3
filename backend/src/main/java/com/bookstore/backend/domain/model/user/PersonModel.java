@@ -63,8 +63,7 @@ public abstract class PersonModel {
     @Fetch(FetchMode.SUBSELECT)
     private List<ProductModel> productForSaleList;
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_HISTORY_ID")
     private UserSaleHistoryModel saleHistory;
     
