@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,6 +20,9 @@ import javax.persistence.Table;
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -38,7 +42,7 @@ import lombok.Setter;
 public abstract class PersonModel {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
@@ -51,10 +55,12 @@ public abstract class PersonModel {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<AddressModel> addressList;
 
-    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<ProductModel> productForSaleList;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
@@ -78,6 +84,24 @@ public abstract class PersonModel {
         } 
         return false;
     }
+
+    public boolean addProductToProductList(ProductModel product) {
+        if(productForSaleList != null) {
+            productForSaleList.add(product);
+        } else {
+            productForSaleList = new ArrayList<>();
+            addProductToProductList(product);
+        }
+        return true;
+    }
+
+    public boolean removeProductFromProductList(ProductModel product) {
+        if(productForSaleList != null) {
+            return productForSaleList.remove(product);
+        } 
+        return false;
+    }
+
 
     @Override
     public String toString() {

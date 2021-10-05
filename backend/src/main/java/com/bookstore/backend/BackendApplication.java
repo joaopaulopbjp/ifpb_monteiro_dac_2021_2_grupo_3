@@ -82,10 +82,12 @@ public class BackendApplication implements CommandLineRunner {
 		bookRepository.save(bookModel);
 		Scanner input = new Scanner(System.in);
 
-
 		boolean isRun = true;
 
+		UserModel userModel = login();
+
 		while(isRun){
+			
 			clearConsole();
 			System.out.println("0 - User"+
 								"\n1 - Admin"+
@@ -94,7 +96,8 @@ public class BackendApplication implements CommandLineRunner {
 								"\n4 - Company"+
 								"\n5 - ShoppingCart"+
 								"\n6 - Book"+
-								"\n7 - Exit:");
+								"\n7 - Logout"+
+								"\n8 - Exit:");
 
 			int op = Integer.parseInt(input.nextLine());
 
@@ -268,12 +271,6 @@ public class BackendApplication implements CommandLineRunner {
 				}
 			}else if(op == 5){
 				
-				for(UserModel user : userRepository.findAll()){
-					System.out.println(user.toString());
-				}
-				System.out.println("Type the User ID: ");
-				UserModel userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
-				
 				shoppingCartModel shoppingCart = new shoppingCartModel(0l, null, userModel);
 				// Carrinho carrinho = ;
 				while(true){
@@ -406,10 +403,9 @@ public class BackendApplication implements CommandLineRunner {
 						PublishingCompanyModel companyModel = companyRepository.findById(companyId).get();
 						System.out.println("Inventory: ");
 						int qtd = Integer.parseInt(input.nextLine());
-						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, null, companyModel, authorList, null);
+						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
 						book = bookRepository.save(book);
 						InventoryModel inventory = new InventoryModel(0l, qtd, book);
-	
 						inventoryRepository.save(inventory);
 						
 					// alterar campos ou campo do livro
@@ -477,12 +473,6 @@ public class BackendApplication implements CommandLineRunner {
 							System.out.println(lista.get(i).toString());
 						}
 					}else if(op == 4){
-						System.out.println("Users:");
-						for(UserModel user : userRepository.findAll()){
-							System.out.println(user.toString());
-						}
-						System.out.println("Type the User ID: ");
-						UserModel userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
 						while(true){
 							
 							System.out.println("Evaluate options:");
@@ -541,10 +531,11 @@ public class BackendApplication implements CommandLineRunner {
 					}
 				}
 			}else if(op == 7){
+				userModel = login();
+			}else if(op == 8){
 				isRun = false;
 			}
 		}
-		input.close();
 	}
 
 	public void buscaPagina(int pagina){
@@ -568,5 +559,32 @@ public class BackendApplication implements CommandLineRunner {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public UserModel login(){
+		Scanner input = new Scanner(System.in);
+		UserModel userModel = null;
+		List<UserModel> users = userRepository.findAll();
+		if(users.size() > 0){
+			for(UserModel user : users){
+				System.out.println(user.toString());
+			}
+
+			System.out.println("Type the User ID: ");
+			userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
+		}else{
+			System.out.println("User fields");
+			System.out.println("Username: ");
+			String username = input.nextLine();
+			System.out.println("Email: ");
+			String email = input.nextLine();
+			System.out.println("password: ");
+			String password = input.nextLine();
+			
+			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
+
+			userModel = userRepository.save(user);
+		}
+		return userModel;
 	}
 }
