@@ -518,6 +518,8 @@ public class BackendApplication implements CommandLineRunner {
 								input.nextLine();
 							}else if(op.equals("3")){
 								while (true) {
+									userModel = userRepository.findById(userModel.getId()).get();
+									
 									for (EvaluateModel evaluate : userModel.getEvaluateList()) {
 										System.out.println(evaluate.toString());
 									}
@@ -527,6 +529,7 @@ public class BackendApplication implements CommandLineRunner {
 										break;
 									}
 									evaluateRepository.deleteById(Long.parseLong(option));
+									userModel = userRepository.findById(userModel.getId()).get();
 								}
 							}else if(op.equals("s")){
 								break;
