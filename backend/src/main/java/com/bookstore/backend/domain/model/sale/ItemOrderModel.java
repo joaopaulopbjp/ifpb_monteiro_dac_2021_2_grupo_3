@@ -34,7 +34,7 @@ public class ItemOrderModel {
 	private Long id;
 
 	@Column(name = "AMOUNT")
-	private int amount;
+	private Integer amount;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PRODUCT_ID")

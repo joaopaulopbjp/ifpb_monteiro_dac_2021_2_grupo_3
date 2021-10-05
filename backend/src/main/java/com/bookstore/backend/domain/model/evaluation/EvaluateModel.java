@@ -30,7 +30,7 @@ public class EvaluateModel {
     private Long id;
 
     @Column(name = "STAR_NUMBER")
-    private int starNumber;
+    private Integer starNumber;
     
     @Column(name = "COMMENT")
     private String comment;

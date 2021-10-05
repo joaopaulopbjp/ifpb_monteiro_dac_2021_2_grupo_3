@@ -37,11 +37,11 @@ public class SaleModel {
     private ProductModel product;
 
     @Column(name = "AMOUNT")
-    private double amount;
+    private BigDecimal amount;
 
 
     public BigDecimal getTotalSalesPrice() {
-        return product.getPrice().multiply(new BigDecimal(amount));
+        return product.getPrice().multiply(amount);
     }
 
     @Override
