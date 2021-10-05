@@ -3,6 +3,7 @@ package com.bookstore.backend.domain.model.user;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -12,6 +13,9 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.sale.shoppingCartModel;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -26,7 +30,8 @@ public class UserModel extends PersonModel{
     @OneToOne(mappedBy = "userModel")
     private shoppingCartModel shoppingCart;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     private List<EvaluateModel> evaluateList;
 
     public UserModel(Long id, String username, String email, String password, List<AddressModel> addressList,
