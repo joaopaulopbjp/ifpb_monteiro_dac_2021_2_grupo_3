@@ -14,7 +14,7 @@ public class SaleRepositoryService {
     @Autowired
     private SaleRepository saleRepository;
 
-    public SaleRepository getInstace() {
+    public SaleRepository getInstance() {
         return saleRepository;
     }
 

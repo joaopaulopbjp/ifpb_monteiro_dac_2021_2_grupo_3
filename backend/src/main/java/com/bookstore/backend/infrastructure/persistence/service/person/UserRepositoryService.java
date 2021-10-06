@@ -14,7 +14,7 @@ public class UserRepositoryService {
     @Autowired
     private UserRepository userRepository;
 
-    public UserRepository getInstace() {
+    public UserRepository getInstance() {
         return userRepository;
     }
 

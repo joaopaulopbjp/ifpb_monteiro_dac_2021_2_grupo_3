@@ -14,7 +14,7 @@ public class PublishingCompanyRepositoryService {
     @Autowired
     private PublishingCompanyRepository publishingCompanyRepository;
 
-    public PublishingCompanyRepository getInstace() {
+    public PublishingCompanyRepository getInstance() {
         return publishingCompanyRepository;
     }
 

@@ -14,7 +14,7 @@ public class ItemOrderRepositoryService {
     @Autowired
     private ItemOrderRepository itemOrderRepository;
 
-    public ItemOrderRepository getInstace() {
+    public ItemOrderRepository getInstance() {
         return itemOrderRepository;
     }
 
