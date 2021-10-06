@@ -22,11 +22,19 @@ import com.bookstore.backend.infrastructure.persistence.repository.company.Publi
 import com.bookstore.backend.infrastructure.persistence.repository.evaluate.EvaluateRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.inventory.InventoryRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.AdminRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.person.UserRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.sale.ItemOrderRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.sale.ShoppingCartRepository;
+import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.evaluate.EvaluateRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.inventory.InventoryRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -37,37 +45,34 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BackendApplication implements CommandLineRunner {
 	// Respositories
 	@Autowired
-	UserRepository userRepository;
+	UserRepositoryService userRepositoryService;
 
 	@Autowired
-	AdminRepository adminRepository;
+	AdminRepositoryService adminRepositoryService;
 
 	@Autowired
-	AuthorRepository authorRepository;
+	AuthorRepositoryService authorRepositoryService;
 
 	@Autowired
-	PublishingCompanyRepository companyRepository;
+	PublishingCompanyRepositoryService companyRepositoryService;
 
 	@Autowired
-	CategoryRepository categoryRepository;
+	CategoryRepositoryService categoryRepositoryService;
 
 	@Autowired
-	InventoryRepository inventoryRepository;
-
-	@Autowired
-	BookRepository bookRepository;
+	InventoryRepositoryService inventoryRepositoryService;
 
 	@Autowired
 	BookRepositoryService bookRepositoryService;
 
 	@Autowired
-	ShoppingCartRepository shoppingCartRepository;
+	ShoppingCartRepositoryService shoppingCartRepositoryService;
 
 	@Autowired
-	ItemOrderRepository itemOrderRepository;
+	ItemOrderRepositoryService itemOrderRepositoryService;
 
 	@Autowired
-	EvaluateRepository evaluateRepository;
+	EvaluateRepositoryService evaluateRepositoryService;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -78,7 +83,7 @@ public class BackendApplication implements CommandLineRunner {
 
 		// BookModel bookModel = new BookModel(0l, "titulo", "description", 200, 10, new BigDecimal("10.7"), null, null, null, null, null, null, null);
 		BookModel bookModel = new BookModel(6l, "teste", null, 0, 0, null, null, null, null, null, null, null, null);
-		bookRepository.save(bookModel);
+		bookRepositoryService.getInstance().save(bookModel);
 		Scanner input = new Scanner(System.in);
 
 		boolean isRun = true;
@@ -126,7 +131,7 @@ public class BackendApplication implements CommandLineRunner {
 						
 						UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
 		
-						userRepository.save(user);
+						userRepositoryService.getInstance().save(user);
 						clearConsole();
 					}else if(op.equals("2")){
 						System.out.println("What option do you desire?");
@@ -136,19 +141,19 @@ public class BackendApplication implements CommandLineRunner {
 
 						if(option.equals("1")){
 							System.out.print("Type your email: ");
-							System.out.println(userRepository.findByEmail(input.nextLine()).toString());
+							System.out.println(userRepositoryService.getInstance().findByEmail(input.nextLine()).toString());
 							input.nextLine();
 							clearConsole();
 
 						}else if(option.equals("2")){
 							System.out.println("type your id: ");
-							System.out.println(userRepository.findById(Long.parseLong(input.nextLine())).get().toString());
+							System.out.println(userRepositoryService.getInstance().findById(Long.parseLong(input.nextLine())).get().toString());
 							input.nextLine();
 							clearConsole();
 
 						}else if(option.equals("3")){
 							System.out.println("type your Username: ");
-							System.out.println(userRepository.findByUsername(input.nextLine()).toString());
+							System.out.println(userRepositoryService.getInstance().findByUsername(input.nextLine()).toString());
 							input.nextLine();
 							clearConsole();
 
@@ -156,7 +161,7 @@ public class BackendApplication implements CommandLineRunner {
 					}else if(op.equals("3")){
 						while(true) {
 							System.out.println("Users:");
-							List<UserModel> userList = userRepository.findAll();
+							List<UserModel> userList = userRepositoryService.getInstance().findAll();
 							for(UserModel model : userList) {
 								System.out.println(model.toString());
 							}
@@ -165,7 +170,7 @@ public class BackendApplication implements CommandLineRunner {
 		
 							if(id.equals("s")) break;
 		
-							UserModel user = userRepository.findById(Long.parseLong(id)).get();
+							UserModel user = userRepositoryService.getInstance().findById(Long.parseLong(id)).get();
 							AdminModel admin = new AdminModel(user.getId(),
 								user.getUsername(),
 								user.getEmail(),
@@ -174,12 +179,12 @@ public class BackendApplication implements CommandLineRunner {
 								user.getProductForSaleList(),
 								user.getSaleHistory());
 		
-							userRepository.delete(user);
+							userRepositoryService.getInstance().delete(user);
 							adminRepository.save(admin);
 							clearConsole();
 						}
 					}else if(op.equals("4")){
-						List<UserModel>users = userRepository.findAll();
+						List<UserModel>users = userRepositoryService.getInstance().findAll();
 						for(int i = 0; i <= users.size(); i++){
 							System.out.println(users.get((i)).toString());
 						}
@@ -676,7 +681,7 @@ public class BackendApplication implements CommandLineRunner {
 								clearConsole();
 							}else if(op.equals("3")){
 								while (true) {
-									userModel = userRepository.findById(userModel.getId()).get();
+									userModel = userRepositoryService.getInstance().findById(userModel.getId()).get();
 									
 									for (EvaluateModel evaluate : userModel.getEvaluateList()) {
 										System.out.println(evaluate.toString());
@@ -688,7 +693,7 @@ public class BackendApplication implements CommandLineRunner {
 										break;
 									}
 									evaluateRepository.deleteById(Long.parseLong(option));
-									userModel = userRepository.findById(userModel.getId()).get();
+									userModel = userRepositoryService.getInstance().findById(userModel.getId()).get();
 								}
 							}else if(op.equals("s")){
 								clearConsole();
@@ -778,14 +783,14 @@ public class BackendApplication implements CommandLineRunner {
 	public UserModel login() {
 		Scanner input = new Scanner(System.in);
 		UserModel userModel = null;
-		List<UserModel> users = userRepository.findAll();
+		List<UserModel> users = userRepositoryService.getInstance().findAll();
 		if (users.size() > 0) {
 			for (UserModel user : users) {
 				System.out.println(user.toString());
 			}
 
 			System.out.println("Type the User ID: ");
-			userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
+			userModel = userRepositoryService.getInstance().findById(Long.parseLong(input.nextLine())).get();
 		} else {
 			System.out.println("User fields");
 			System.out.println("Username: ");
@@ -797,7 +802,7 @@ public class BackendApplication implements CommandLineRunner {
 
 			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
 
-			userModel = userRepository.save(user);
+			userModel = userRepositoryService.getInstance().save(user);
 		}
 		return userModel;
 	}
