@@ -14,7 +14,7 @@ public class AddressRepositoryService {
     @Autowired
     private AddressRepository addressRepository;
 
-    public AddressRepository getInstace() {
+    public AddressRepository getInstance() {
         return addressRepository;
     }
 

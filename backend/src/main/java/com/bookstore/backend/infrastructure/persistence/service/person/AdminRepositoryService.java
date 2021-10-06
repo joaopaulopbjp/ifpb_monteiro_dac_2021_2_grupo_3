@@ -14,7 +14,7 @@ public class AdminRepositoryService {
     @Autowired
     private AdminRepository adminRepository;
 
-    public AdminRepository getInstace() {
+    public AdminRepository getInstance() {
         return adminRepository;
     }
 

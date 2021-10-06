@@ -14,7 +14,7 @@ public class EvaluateRepositoryService {
     @Autowired
     private EvaluateRepository evaluateRepository;
 
-    public EvaluateRepository getInstace() {
+    public EvaluateRepository getInstance() {
         return evaluateRepository;
     }
 

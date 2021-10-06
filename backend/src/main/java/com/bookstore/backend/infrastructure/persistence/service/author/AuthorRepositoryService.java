@@ -14,7 +14,7 @@ public class AuthorRepositoryService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    public AuthorRepository getInstace() {
+    public AuthorRepository getInstance() {
         return authorRepository;
     }
 

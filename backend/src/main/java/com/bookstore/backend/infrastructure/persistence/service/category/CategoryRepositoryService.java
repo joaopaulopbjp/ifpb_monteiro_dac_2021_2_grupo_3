@@ -14,7 +14,7 @@ public class CategoryRepositoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public CategoryRepository getInstace() {
+    public CategoryRepository getInstance() {
         return categoryRepository;
     }
 

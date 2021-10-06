@@ -14,7 +14,7 @@ public class InventoryRepositoryService {
     @Autowired
     private InventoryRepository inventoryRepository;
 
-    public InventoryRepository getInstace() {
+    public InventoryRepository getInstance() {
         return inventoryRepository;
     }
 

@@ -14,7 +14,7 @@ public class ShoppingCartRepositoryService {
     @Autowired
     private ShoppingCartRepository shoppingCartRepository;
 
-    public ShoppingCartRepository getInstace() {
+    public ShoppingCartRepository getInstance() {
         return shoppingCartRepository;
     }
 
