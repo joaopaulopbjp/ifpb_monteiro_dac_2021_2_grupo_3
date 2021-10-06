@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.persistence.service;
+package com.bookstore.backend.infrastructure.persistence.service.product;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,6 +20,10 @@ import org.springframework.stereotype.Service;
 public class BookRepositoryService {
     @Autowired
     private BookRepository bookRepository;
+
+    public BookRepository getInstance() {
+        return bookRepository;
+    }
 
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
