@@ -10,6 +10,7 @@ import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,9 @@ import org.springframework.data.domain.Sort;
 public class MagazineRepositoryService {
     @Autowired
     private MagazineRepository magazineRepository;
+
+    @Value("${numberOfItemsPerPage}")
+    private String numberOfItemsPerPage;
 
     public MagazineRepository getInstance() {
         return magazineRepository;
@@ -34,7 +38,7 @@ public class MagazineRepositoryService {
     }
 
     public List<MagazineModel> findAll(int pageNumber) throws NotFoundException {
-        Pageable pageable = PageRequest.of(pageNumber, 2, Sort.by("title").ascending());
+        Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
         Page<MagazineModel> pages = magazineRepository.findAll(pageable);
 
         if(pages.isEmpty()) throw new NotFoundException();
