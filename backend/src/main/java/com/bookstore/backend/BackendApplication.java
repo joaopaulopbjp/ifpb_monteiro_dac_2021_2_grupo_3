@@ -26,23 +26,22 @@ import com.bookstore.backend.infrastructure.persistence.repository.person.UserRe
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.sale.ItemOrderRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.sale.ShoppingCartRepository;
-import com.bookstore.backend.infrastructure.persistence.service.BookRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
-	//Respositories
+	// Respositories
 	@Autowired
 	UserRepository userRepository;
 
 	@Autowired
 	AdminRepository adminRepository;
-	
+
 	@Autowired
 	AuthorRepository authorRepository;
 
@@ -108,6 +107,7 @@ public class BackendApplication implements CommandLineRunner {
 										"\n1 - Register User"+
 										"\n2 - Find user by email, id, username"+
 										"\n3 - Change user to admin"+
+										"\n4 - Update User"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -178,6 +178,25 @@ public class BackendApplication implements CommandLineRunner {
 							adminRepository.save(admin);
 							clearConsole();
 						}
+					}else if(op.equals("4")){
+						List<UserModel>users = userRepository.findAll();
+						for(int i = 0; i <= users.size(); i++){
+							System.out.println(users.get((i)).toString());
+						}
+						System.out.println("enter the user ID");
+						Long option = Long.parseLong(input.nextLine());
+
+						System.out.println("Username: ");
+						String username = input.nextLine();
+						System.out.println("Email: ");
+						String email = input.nextLine();
+						System.out.println("Password: ");
+						String password = input.nextLine();
+
+						UserModel userDataBase = new UserModel(option, username, email, password, null, null, null, null, null);
+						[?]
+						clearConsole();
+
 					}else if(op.equals("s")){
 						clearConsole();
 						break;
@@ -188,6 +207,7 @@ public class BackendApplication implements CommandLineRunner {
 				while(true){
 					System.out.println("Admin options:"+
 										"\n1 - Show all admins"+
+										"\n2 - Update admin"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -199,6 +219,25 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						input.nextLine();
 						clearConsole();
+
+					}else if(op.equals("2")){
+						List<AdminModel>adims = adminRepository.findAll();
+						for(int i = 0; i <= adims.size(); i++){
+							System.out.println(adims.get((i)).toString());
+						}
+						System.out.println("enter the admin ID");
+						Long option = Long.parseLong(input.nextLine());
+
+						System.out.println("Username: ");
+						String username = input.nextLine();
+						System.out.println("Email: ");
+						String email = input.nextLine();
+						System.out.println("Password: ");
+						String password = input.nextLine();
+
+						AdminModel userDataBase = new AdminModel(option, username, email, password, null, null, null);
+						[?]
+						clearConsole();
 					}else if(op.equals("s")){
 						clearConsole();
 						break;
@@ -209,6 +248,7 @@ public class BackendApplication implements CommandLineRunner {
 					System.out.println("Author options:"+
 										"\n1 - Register author"+
 										"\n2 - Show All authors"+
+										"\n3 - Update author"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -229,6 +269,20 @@ public class BackendApplication implements CommandLineRunner {
 						input.nextLine();
 						clearConsole();
 
+					}else if(op.equals("3")){
+						List<AuthorModel>authors = authorRepository.findAll();
+						for(int i = 0; i <= authors.size(); i++){
+							System.out.println(authors.get((i)).toString());
+						}
+						System.out.println("enter the admin ID");
+						Long option = Long.parseLong(input.nextLine());
+
+						System.out.println("name: ");
+						String username = input.nextLine();
+
+						AuthorModel userDataBase = new AuthorModel(option, username, null);
+						[?]
+						clearConsole();	
 					}else if(op.equals("s")){
 						clearConsole();
 						break;
@@ -240,6 +294,7 @@ public class BackendApplication implements CommandLineRunner {
 										"\n1 - Register category"+
 										"\n2 - Show all categorys"+
 										"\n3 - Delete category"+
+										"\n4 - Update category"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -276,6 +331,21 @@ public class BackendApplication implements CommandLineRunner {
 
 							categoryRepository.deleteById(id);
 						}
+					}else if (op.equals("4")){
+						List<CategoryModel>categorys = categoryRepository.findAll();
+						for(int i = 0; i <= categorys.size(); i++){
+							System.out.println(categorys.get((i)).toString());
+						}
+						System.out.println("enter the category ID");
+						Long option = Long.parseLong(input.nextLine());
+
+						System.out.println("name: ");
+						String name = input.nextLine();
+
+						CategoryModel userDataBase = new CategoryModel(option, name, null);
+						[?]
+						clearConsole();	
+					
 					}else if(op.equals("s")){
 						clearConsole();
 						break;
@@ -287,6 +357,7 @@ public class BackendApplication implements CommandLineRunner {
 					System.out.println("Company options:"+
 										"\n1 - Register a new Company"+
 										"\n2 - Show all companys"+
+										"\n3 - Update company"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -301,7 +372,23 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						input.nextLine();
 						clearConsole();
-					}else if(op.equals("s")){
+					}else if(op.equals("3")){
+
+						List<PublishingCompanyModel>companys = companyRepository.findAll();
+						for(int i = 0; i <= companys.size(); i++){
+							System.out.println(companys.get((i)).toString());
+						}
+						System.out.println("enter the company ID");
+						Long option = Long.parseLong(input.nextLine());
+
+						System.out.println("name: ");
+						String name = input.nextLine();
+
+						PublishingCompanyModel userDataBase = new PublishingCompanyModel(option, name, null);
+						[?]
+						clearConsole();	
+					}
+					else if(op.equals("s")){
 						clearConsole();
 						break;
 					}
@@ -396,6 +483,7 @@ public class BackendApplication implements CommandLineRunner {
 										"\n3 - Delete book"+
 										"\n4 - Find the 5 cheapest books available in inventory"+
 										"\n5 - Evaluete"+
+										"\n6 - Update book"+
 										"\ns - Exit:");
 	
 					op = input.nextLine();
@@ -607,7 +695,49 @@ public class BackendApplication implements CommandLineRunner {
 								break;
 							}
 						}
-					}else if(op.equals("s")){
+					}else if(op.equals("6")){
+						int contadorDePaginas = 0;
+						while(true){
+
+							buscaPagina(contadorDePaginas);
+							System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
+	
+							String option = input.nextLine();
+	
+							clearConsole();
+
+							//se a opção digitada for vazia começa da pagina 0;
+							if(!option.equals("")){
+								//percorre a lista de paginas
+								//proxima pagina
+								if(option.equals("a")){
+									if(contadorDePaginas > 0) {
+										buscaPagina(--contadorDePaginas);
+									}
+								}else if(option.equals("d")){
+									buscaPagina(++contadorDePaginas);
+								}else if(option.equals("s")){
+									clearConsole();
+									break;
+								}else{
+									System.out.println("title");
+									String title = input.nextLine();
+									System.out.println("description:");
+									String desc = input.nextLine();
+									System.out.println("year_launch:");
+									Integer year = Integer.parseInt(input.nextLine());
+									System.out.println("pages: ");
+									Integer pages = Integer.parseInt(input.nextLine());
+									System.out.println("price: ");
+									BigDecimal price = new BigDecimal(input.nextLine());
+									BookModel bookDataBase = new BookModel(Long.parseLong(option), title, desc, year, pages, price, null, null, null, null, null, null, null);
+									bookRepositoryService.update(bookDataBase);
+									clearConsole();
+								}
+							}
+					}
+				}
+					else if(op.equals("s")){
 						clearConsole();
 						break;
 					}
@@ -621,19 +751,20 @@ public class BackendApplication implements CommandLineRunner {
 		}
 	}
 
-	public void buscaPagina(int pagina){
+	public void buscaPagina(int pagina) {
 		try {
 			List<BookModel> bookList = bookRepositoryService.findAll(pagina);
 
-			for(BookModel book : bookList) {
+			for (BookModel book : bookList) {
 				System.out.println(book.toString());
 			}
 		} catch (NotFoundException e) {
-			System.out.println(e.getMessage());;
+			System.out.println(e.getMessage());
+			;
 		}
 	}
 
-	public void clearConsole(){
+	public void clearConsole() {
 		try {
 			if (System.getProperty("os.name").contains("Windows"))
 				new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
@@ -644,18 +775,18 @@ public class BackendApplication implements CommandLineRunner {
 		}
 	}
 
-	public UserModel login(){
+	public UserModel login() {
 		Scanner input = new Scanner(System.in);
 		UserModel userModel = null;
 		List<UserModel> users = userRepository.findAll();
-		if(users.size() > 0){
-			for(UserModel user : users){
+		if (users.size() > 0) {
+			for (UserModel user : users) {
 				System.out.println(user.toString());
 			}
 
 			System.out.println("Type the User ID: ");
 			userModel = userRepository.findById(Long.parseLong(input.nextLine())).get();
-		}else{
+		} else {
 			System.out.println("User fields");
 			System.out.println("Username: ");
 			String username = input.nextLine();
@@ -663,7 +794,7 @@ public class BackendApplication implements CommandLineRunner {
 			String email = input.nextLine();
 			System.out.println("password: ");
 			String password = input.nextLine();
-			
+
 			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
 
 			userModel = userRepository.save(user);
