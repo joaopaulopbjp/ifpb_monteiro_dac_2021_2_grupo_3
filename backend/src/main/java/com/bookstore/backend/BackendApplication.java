@@ -16,15 +16,6 @@ import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
-import com.bookstore.backend.infrastructure.persistence.repository.author.AuthorRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.category.CategoryRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.company.PublishingCompanyRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.evaluate.EvaluateRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.inventory.InventoryRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.person.AdminRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.sale.ItemOrderRepository;
-import com.bookstore.backend.infrastructure.persistence.repository.sale.ShoppingCartRepository;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
@@ -180,7 +171,7 @@ public class BackendApplication implements CommandLineRunner {
 								user.getSaleHistory());
 		
 							userRepositoryService.getInstance().delete(user);
-							adminRepository.save(admin);
+							adminRepositoryService.getInstance().save(admin);
 							clearConsole();
 						}
 					}else if(op.equals("4")){
@@ -199,7 +190,7 @@ public class BackendApplication implements CommandLineRunner {
 						String password = input.nextLine();
 
 						UserModel userDataBase = new UserModel(option, username, email, password, null, null, null, null, null);
-						[?]
+						userRepositoryService.update(userDataBase);
 						clearConsole();
 
 					}else if(op.equals("s")){
@@ -218,7 +209,7 @@ public class BackendApplication implements CommandLineRunner {
 					clearConsole();
 
 					if(op.equals("1")){
-						List<AdminModel> adminList = adminRepository.findAll();
+						List<AdminModel> adminList = adminRepositoryService.getInstance().findAll();
 						for(AdminModel admin : adminList) {
 							System.out.println(admin.toString());
 						}
@@ -226,7 +217,7 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 
 					}else if(op.equals("2")){
-						List<AdminModel>adims = adminRepository.findAll();
+						List<AdminModel>adims = adminRepositoryService.getInstance().findAll();
 						for(int i = 0; i <= adims.size(); i++){
 							System.out.println(adims.get((i)).toString());
 						}
@@ -240,8 +231,8 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("Password: ");
 						String password = input.nextLine();
 
-						AdminModel userDataBase = new AdminModel(option, username, email, password, null, null, null);
-						[?]
+						AdminModel adminDataBase = new AdminModel(option, username, email, password, null, null, null);
+						adminRepositoryService.update(adminDataBase);
 						clearConsole();
 					}else if(op.equals("s")){
 						clearConsole();
@@ -265,17 +256,17 @@ public class BackendApplication implements CommandLineRunner {
 
 						AuthorModel author = new AuthorModel(0l, name, null);
 
-						authorRepository.save(author);
+						authorRepositoryService.getInstance().save(author);
 						clearConsole();
 					}else if(op.equals("2")){
-						for(AuthorModel author: authorRepository.findAll()){
+						for(AuthorModel author: authorRepositoryService.getInstance().findAll()){
 							System.out.println(author.toString());
 						}
 						input.nextLine();
 						clearConsole();
 
 					}else if(op.equals("3")){
-						List<AuthorModel>authors = authorRepository.findAll();
+						List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
 						for(int i = 0; i <= authors.size(); i++){
 							System.out.println(authors.get((i)).toString());
 						}
@@ -285,8 +276,8 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("name: ");
 						String username = input.nextLine();
 
-						AuthorModel userDataBase = new AuthorModel(option, username, null);
-						[?]
+						AuthorModel authorDataBase = new AuthorModel(option, username, null);
+						authorRepositoryService.update(authorDataBase);
 						clearConsole();	
 					}else if(op.equals("s")){
 						clearConsole();
@@ -308,11 +299,11 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.print("category name: ");
 						String name = input.nextLine();
 
-						categoryRepository.save(new CategoryModel(0l, name, null));
+						categoryRepositoryService.getInstance().save(new CategoryModel(0l, name, null));
 						clearConsole();
 
 					}else if(op.equals("2")){
-						List<CategoryModel> categoryList = categoryRepository.findAll();
+						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
 						for(CategoryModel category : categoryList) {
 							System.out.println(category.toString());
 						}
@@ -321,7 +312,7 @@ public class BackendApplication implements CommandLineRunner {
 
 					}else if(op.equals("3")){
 						System.out.println("List of Categories");
-						List<CategoryModel> categoryList = categoryRepository.findAll();
+						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
 						for(int i = 0;i < categoryList.size();i++){
 							System.out.println(categoryList.get(i).toString());
 						}
@@ -334,10 +325,10 @@ public class BackendApplication implements CommandLineRunner {
 								break;
 							}
 
-							categoryRepository.deleteById(id);
+							categoryRepositoryService.getInstance().deleteById(id);
 						}
 					}else if (op.equals("4")){
-						List<CategoryModel>categorys = categoryRepository.findAll();
+						List<CategoryModel>categorys = categoryRepositoryService.getInstance().findAll();
 						for(int i = 0; i <= categorys.size(); i++){
 							System.out.println(categorys.get((i)).toString());
 						}
@@ -347,8 +338,8 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("name: ");
 						String name = input.nextLine();
 
-						CategoryModel userDataBase = new CategoryModel(option, name, null);
-						[?]
+						CategoryModel categoryDataBase = new CategoryModel(option, name, null);
+						categoryRepositoryService.update(categoryDataBase);
 						clearConsole();	
 					
 					}else if(op.equals("s")){
@@ -369,17 +360,17 @@ public class BackendApplication implements CommandLineRunner {
 
 					if(op.equals("1")){
 						System.out.println("Type the Company name: ");
-						companyRepository.save(new PublishingCompanyModel(0l, input.nextLine(), null));
+						companyRepositoryService.getInstance().save(new PublishingCompanyModel(0l, input.nextLine(), null));
 						clearConsole();
 					}else if(op.equals("2")){
-						for(PublishingCompanyModel company:companyRepository.findAll()){
+						for(PublishingCompanyModel company:companyRepositoryService.getInstance().findAll()){
 							System.out.println(company.toString());
 						}
 						input.nextLine();
 						clearConsole();
 					}else if(op.equals("3")){
 
-						List<PublishingCompanyModel>companys = companyRepository.findAll();
+						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
 						for(int i = 0; i <= companys.size(); i++){
 							System.out.println(companys.get((i)).toString());
 						}
@@ -389,8 +380,8 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("name: ");
 						String name = input.nextLine();
 
-						PublishingCompanyModel userDataBase = new PublishingCompanyModel(option, name, null);
-						[?]
+						PublishingCompanyModel companyDataBase = new PublishingCompanyModel(option, name, null);
+						companyRepositoryService.update(companyDataBase);
 						clearConsole();	
 					}
 					else if(op.equals("s")){
@@ -413,7 +404,7 @@ public class BackendApplication implements CommandLineRunner {
 
 					//opção para remover livro do carrinho
 					if(op.equals("1")){
-						shoppingCart = shoppingCartRepository.findById(userModel.getShoppingCart().getId()).get();
+						shoppingCart = shoppingCartRepositoryService.getInstance().findById(userModel.getShoppingCart().getId()).get();
 						while(true){
 							System.out.println("Items Oders:");
 							for(ItemOrderModel item: shoppingCart.getItemList()){
@@ -457,18 +448,18 @@ public class BackendApplication implements CommandLineRunner {
 								}else if(option.equals("s")){
 									List<ItemOrderModel> list = new ArrayList<>();
 									for(ItemOrderModel item: itemOrderList){
-										list.add(itemOrderRepository.save(item));
+										list.add(itemOrderRepositoryService.getInstance().save(item));
 									}
 									if(list.size() > 0) {
 										shoppingCart.setItemList(list);
-										shoppingCartRepository.save(shoppingCart);
+										shoppingCartRepositoryService.getInstance().save(shoppingCart);
 									}
 									clearConsole();
 									break;
 								}else{
 									System.out.println("how many books you desire to buy?");
 									int qtd = Integer.parseInt(input.nextLine());
-									ItemOrderModel itemOrder = new ItemOrderModel(0l, qtd, bookRepository.findById(Long.parseLong(option)).get(), null);
+									ItemOrderModel itemOrder = new ItemOrderModel(0l, qtd, bookRepositoryService.getInstance().findById(Long.parseLong(option)).get(), null);
 									itemOrderList.add(itemOrder);
 									clearConsole();
 								}
@@ -501,7 +492,7 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 						System.out.println("Escolha o autor:");
 						// percorre a lista de autores.
-						List<AuthorModel> listAuthors = authorRepository.findAll();
+						List<AuthorModel> listAuthors = authorRepositoryService.getInstance().findAll();
 						for(int i = 0;i < listAuthors.size();i++){
 							System.out.println(listAuthors.get(i).toString());
 						}
@@ -513,7 +504,7 @@ public class BackendApplication implements CommandLineRunner {
 								clearConsole();
 								break;
 							}
-							authorList.add(authorRepository.findById(Long.parseLong(id)).get());
+							authorList.add(authorRepositoryService.getInstance().findById(Long.parseLong(id)).get());
 						}
 						System.out.println("description: ");
 						String description = input.nextLine();
@@ -524,7 +515,7 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("pages: ");
 						int pages = Integer.parseInt(input.nextLine());
 						clearConsole();
-						List<CategoryModel> categoryList = categoryRepository.findAll();
+						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
 						for(int i = 0;i < categoryList.size();i++){
 							System.out.println(categoryList.get(i).toString());
 						}
@@ -536,26 +527,26 @@ public class BackendApplication implements CommandLineRunner {
 								clearConsole();
 								break;
 							}
-							cateList.add(categoryRepository.findById(Long.parseLong(id)).get());
+							cateList.add(categoryRepositoryService.getInstance().findById(Long.parseLong(id)).get());
 						}
 						
 						System.out.println("price: ");
 						BigDecimal price = new BigDecimal(input.nextLine());
 						clearConsole();
-						List<PublishingCompanyModel> listCompanys = companyRepository.findAll();
+						List<PublishingCompanyModel> listCompanys = companyRepositoryService.getInstance().findAll();
 						for(int i = 0;i < listCompanys.size();i++){
 							System.out.println(listCompanys.get(i).toString());
 						}
 						System.out.println("Type the ID company: ");
 						Long companyId = Long.parseLong(input.nextLine());
 						clearConsole();
-						PublishingCompanyModel companyModel = companyRepository.findById(companyId).get();
+						PublishingCompanyModel companyModel = companyRepositoryService.getInstance().findById(companyId).get();
 						System.out.println("Inventory: ");
 						int qtd = Integer.parseInt(input.nextLine());
 						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
-						book = bookRepository.save(book);
+						book = bookRepositoryService.getInstance().save(book);
 						InventoryModel inventory = new InventoryModel(0l, qtd, book);
-						inventoryRepository.save(inventory);
+						inventoryRepositoryService.getInstance().save(inventory);
 						clearConsole();
 						
 					// alterar campos ou campo do livro
@@ -612,7 +603,7 @@ public class BackendApplication implements CommandLineRunner {
 									break;
 								}else{
 									Long id = Long.parseLong(option);
-									bookRepository.deleteById(id);
+									bookRepositoryService.getInstance().deleteById(id);
 								}
 							}
 						}
@@ -666,15 +657,15 @@ public class BackendApplication implements CommandLineRunner {
 											int stars = Integer.parseInt(input.nextLine());
 											System.out.println("Comment:");
 											String comment = input.nextLine();
-											EvaluateModel evaluateModel = new EvaluateModel(0l, stars, comment, userModel, bookRepository.findById(Long.parseLong(option)).get());
-											evaluateRepository.save(evaluateModel);
+											EvaluateModel evaluateModel = new EvaluateModel(0l, stars, comment, userModel, bookRepositoryService.getInstance().findById(Long.parseLong(option)).get());
+											evaluateRepositoryService.getInstance().save(evaluateModel);
 											clearConsole();
 										}
 									}
 								}
 							}else if(op.equals("2")){
 								System.out.println("Evaluetes:");
-								for(EvaluateModel evaluete:evaluateRepository.findAll()){
+								for(EvaluateModel evaluete:evaluateRepositoryService.getInstance().findAll()){
 									System.out.println(evaluete.toString());
 								}
 								input.nextLine();
@@ -692,7 +683,8 @@ public class BackendApplication implements CommandLineRunner {
 										clearConsole();
 										break;
 									}
-									evaluateRepository.deleteById(Long.parseLong(option));
+
+									evaluateRepositoryService.getInstance().deleteById(Long.parseLong(option));
 									userModel = userRepositoryService.getInstance().findById(userModel.getId()).get();
 								}
 							}else if(op.equals("s")){
