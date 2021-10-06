@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.persistence.repository;
+package com.bookstore.backend.infrastructure.persistence.repository.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
 

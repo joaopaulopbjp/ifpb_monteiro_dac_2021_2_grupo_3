@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.persistence.repository;
+package com.bookstore.backend.infrastructure.persistence.repository.author;
 
 import com.bookstore.backend.domain.model.author.AuthorModel;
 

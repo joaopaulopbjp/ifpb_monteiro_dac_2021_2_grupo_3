@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.persistence.repository;
+package com.bookstore.backend.infrastructure.persistence.repository.inventory;
 
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 

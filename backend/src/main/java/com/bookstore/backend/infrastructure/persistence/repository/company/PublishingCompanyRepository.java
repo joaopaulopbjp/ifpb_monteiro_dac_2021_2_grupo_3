@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.persistence.repository;
+package com.bookstore.backend.infrastructure.persistence.repository.company;
 
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 
