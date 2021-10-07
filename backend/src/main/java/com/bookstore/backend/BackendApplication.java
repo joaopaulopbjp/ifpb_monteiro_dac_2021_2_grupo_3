@@ -1,8 +1,6 @@
 package com.bookstore.backend;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,8 +12,6 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
-import com.bookstore.backend.domain.model.sale.RevenuesModel;
-import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
@@ -38,7 +34,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import javafx.util.converter.LocalDateStringConverter;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
