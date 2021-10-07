@@ -11,6 +11,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,24 +38,41 @@ public class  InventoryModel {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
 	private ProductModel product;
-	
+
+	@Column(name = "STATUS")
+	private InventoryStatus status;
 
 	public void decrease() {
-		if(amount > 0) {
-			amount--;
+		if(this.amount > 0) {
+			this.amount--;
+			if(this.amount == 0){
+				setStatus(InventoryStatus.UNAVAILABLE);
+			}
 		}
 	}
 
 	public void increase() {
-		amount++;
+		this.amount++;
+		if(this.amount > 0){
+			setStatus(InventoryStatus.AVAILABLE);
+		}
 	}
 	
 	public void addAmount(int amount) {
-		this.amount += amount;
+		if(amount > 0){
+			this.amount += amount;
+			setStatus(InventoryStatus.AVAILABLE);
+		}
 	}
 
 	public void removerAmount(int amount) {
 		this.amount -= amount;
+		if(this.amount == 0){
+			setStatus(InventoryStatus.UNAVAILABLE);
+		}else if(this.amount < 0){
+			setAmount(0);
+			setStatus(InventoryStatus.UNAVAILABLE);
+		}
 	}
 
 	@Override
