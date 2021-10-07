@@ -7,8 +7,5 @@ import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
 public interface PersonRepository extends JpaRepository<PersonModel, Long> {
-    
-    public PersonModel findByEmail(String email);
 
-    public PersonModel findByUsername(String username);
 }

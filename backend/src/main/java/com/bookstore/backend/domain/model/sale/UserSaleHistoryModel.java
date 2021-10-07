@@ -32,7 +32,7 @@ import lombok.Setter;
 @Table(name = "T_SALE_HISTORY")
 public class UserSaleHistoryModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Long id;
 

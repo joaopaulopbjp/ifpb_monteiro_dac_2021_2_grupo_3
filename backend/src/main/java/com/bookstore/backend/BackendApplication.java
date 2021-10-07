@@ -25,12 +25,15 @@ import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepo
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
+import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
@@ -64,6 +67,12 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	EvaluateRepositoryService evaluateRepositoryService;
+
+	@Autowired
+	SaleRepositoryService saleRepositoryService;
+
+	@Autowired
+	RevenuesRepositoryServices revenuesRepositoryServices;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -100,6 +109,7 @@ public class BackendApplication implements CommandLineRunner {
 										"\n2 - Find user by email, id, username"+
 										"\n3 - Change user to admin"+
 										"\n4 - Update User"+
+										"\n5 - Delete User"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -189,6 +199,21 @@ public class BackendApplication implements CommandLineRunner {
 						userRepositoryService.update(userDataBase);
 						clearConsole();
 
+					}else if(op.equals("5")){
+						List<UserModel>users = userRepositoryService.getInstance().findAll();
+						for(int i = 0; i <= users.size(); i++){
+							System.out.println(users.get((i)).toString());
+						}
+						while(true){
+							System.out.println("Type the ID user(Type 0 for exit): ");
+							String id = input.nextLine();
+							if(id.equals("s")){
+								clearConsole();
+								break;
+							}
+
+							userRepositoryService.getInstance().deleteById(Long.parseLong(id));
+						}
 					}else if(op.equals("s")){
 						clearConsole();
 						break;
@@ -200,6 +225,7 @@ public class BackendApplication implements CommandLineRunner {
 					System.out.println("Admin options:"+
 										"\n1 - Show all admins"+
 										"\n2 - Update admin"+
+										"\n3 - Delete admin"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -230,7 +256,24 @@ public class BackendApplication implements CommandLineRunner {
 						AdminModel adminDataBase = new AdminModel(option, username, email, password, null, null, null);
 						adminRepositoryService.update(adminDataBase);
 						clearConsole();
-					}else if(op.equals("s")){
+					}else if(op.equals("3")){
+						List<AdminModel>adims = adminRepositoryService.getInstance().findAll();
+						for(int i = 0; i <= adims.size(); i++){
+							System.out.println(adims.get((i)).toString());
+						}
+
+						while(true){
+							System.out.println("Type the ID admin(Type 0 for exit): ");
+							String id = input.nextLine();
+							if(id.equals("s")){
+								clearConsole();
+								break;
+							}
+
+							adminRepositoryService.getInstance().deleteById(Long.parseLong(id));
+						}
+					}
+					else if(op.equals("s")){
 						clearConsole();
 						break;
 					}
@@ -241,6 +284,7 @@ public class BackendApplication implements CommandLineRunner {
 										"\n1 - Register author"+
 										"\n2 - Show All authors"+
 										"\n3 - Update author"+
+										"\n4 - Delete author"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -266,7 +310,7 @@ public class BackendApplication implements CommandLineRunner {
 						for(int i = 0; i <= authors.size(); i++){
 							System.out.println(authors.get((i)).toString());
 						}
-						System.out.println("enter the admin ID");
+						System.out.println("enter the author ID");
 						Long option = Long.parseLong(input.nextLine());
 
 						System.out.println("name: ");
@@ -275,6 +319,24 @@ public class BackendApplication implements CommandLineRunner {
 						AuthorModel authorDataBase = new AuthorModel(option, username, null);
 						authorRepositoryService.update(authorDataBase);
 						clearConsole();	
+
+					}else if(op.equals("4")){
+						List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
+						for(int i = 0; i <= authors.size(); i++){
+							System.out.println(authors.get((i)).toString());
+						}
+
+						while(true){
+							System.out.println("Type the ID author(Type 0 for exit): ");
+							String id = input.nextLine();
+							if(id.equals("s")){
+								clearConsole();
+								break;
+							}
+
+							authorRepositoryService.getInstance().deleteById(Long.parseLong(id));
+						}
+
 					}else if(op.equals("s")){
 						clearConsole();
 						break;
@@ -315,13 +377,13 @@ public class BackendApplication implements CommandLineRunner {
 						
 						while(true){
 							System.out.println("Type the ID Category(Type 0 for exit): ");
-							Long id = Long.parseLong(input.nextLine());
-							if(id==0){
+							String id = input.nextLine();
+							if(id.equals("s")){
 								clearConsole();
 								break;
 							}
 
-							categoryRepositoryService.getInstance().deleteById(id);
+							categoryRepositoryService.getInstance().deleteById(Long.parseLong(id));
 						}
 					}else if (op.equals("4")){
 						List<CategoryModel>categorys = categoryRepositoryService.getInstance().findAll();
@@ -350,6 +412,7 @@ public class BackendApplication implements CommandLineRunner {
 										"\n1 - Register a new Company"+
 										"\n2 - Show all companys"+
 										"\n3 - Update company"+
+										"\n4 - Delete company"+
 										"\ns - Exit:");
 					op = input.nextLine();
 					clearConsole();
@@ -379,8 +442,23 @@ public class BackendApplication implements CommandLineRunner {
 						PublishingCompanyModel companyDataBase = new PublishingCompanyModel(option, name, null);
 						companyRepositoryService.update(companyDataBase);
 						clearConsole();	
-					}
-					else if(op.equals("s")){
+					}else if(op.equals("4")){
+						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
+						for(int i = 0; i <= companys.size(); i++){
+							System.out.println(companys.get((i)).toString());
+						}
+
+						while(true){
+							System.out.println("Type the ID company(Type 0 for exit): ");
+							String id = input.nextLine();
+							if(id.equals("s")){
+								clearConsole();
+								break;
+							}
+
+							companyRepositoryService.getInstance().deleteById(Long.parseLong(id));
+						}
+					}else if(op.equals("s")){
 						clearConsole();
 						break;
 					}
@@ -541,7 +619,7 @@ public class BackendApplication implements CommandLineRunner {
 						int qtd = Integer.parseInt(input.nextLine());
 						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
 						book = bookRepositoryService.getInstance().save(book);
-						InventoryModel inventory = new InventoryModel(0l, qtd, book);
+						InventoryModel inventory = new InventoryModel(0l, qtd, book, null);
 						inventoryRepositoryService.getInstance().save(inventory);
 						clearConsole();
 						
