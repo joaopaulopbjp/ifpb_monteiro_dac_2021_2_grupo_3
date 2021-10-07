@@ -183,8 +183,8 @@ public class BackendApplication implements CommandLineRunner {
 						}
 					}else if(op.equals("4")){
 						List<UserModel>users = userRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= users.size(); i++){
-							System.out.println(users.get((i)).toString());
+						for(UserModel user : users ) {
+							System.out.println(user.toString());
 						}
 						System.out.println("enter the user ID");
 						Long option = Long.parseLong(input.nextLine());
@@ -202,8 +202,8 @@ public class BackendApplication implements CommandLineRunner {
 
 					}else if(op.equals("5")){
 						List<UserModel>users = userRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= users.size(); i++){
-							System.out.println(users.get((i)).toString());
+						for(UserModel user : users ) {
+							System.out.println(user.toString());
 						}
 						while(true){
 							System.out.println("Type the ID user(Type 0 for exit): ");
@@ -240,9 +240,9 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 
 					}else if(op.equals("2")){
-						List<AdminModel>adims = adminRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= adims.size(); i++){
-							System.out.println(adims.get((i)).toString());
+						List<AdminModel>adminList = adminRepositoryService.getInstance().findAll();
+						for(AdminModel admin: adminList) {
+							System.out.println(admin.toString());
 						}
 						System.out.println("enter the admin ID");
 						Long option = Long.parseLong(input.nextLine());
@@ -258,9 +258,9 @@ public class BackendApplication implements CommandLineRunner {
 						adminRepositoryService.update(adminDataBase);
 						clearConsole();
 					}else if(op.equals("3")){
-						List<AdminModel>adims = adminRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= adims.size(); i++){
-							System.out.println(adims.get((i)).toString());
+						List<AdminModel>admins = adminRepositoryService.getInstance().findAll();
+						for(AdminModel admin : admins) {
+							System.out.println(admin.toString());
 						}
 
 						while(true){
@@ -308,8 +308,8 @@ public class BackendApplication implements CommandLineRunner {
 
 					}else if(op.equals("3")){
 						List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= authors.size(); i++){
-							System.out.println(authors.get((i)).toString());
+						for(AuthorModel author : authors) {
+							System.out.println(author.toString());
 						}
 						System.out.println("enter the author ID");
 						Long option = Long.parseLong(input.nextLine());
@@ -323,8 +323,8 @@ public class BackendApplication implements CommandLineRunner {
 
 					}else if(op.equals("4")){
 						List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= authors.size(); i++){
-							System.out.println(authors.get((i)).toString());
+						for(AuthorModel author : authors) {
+							System.out.println(author.toString());
 						}
 
 						while(true){
@@ -372,8 +372,8 @@ public class BackendApplication implements CommandLineRunner {
 					}else if(op.equals("3")){
 						System.out.println("List of Categories");
 						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
-						for(int i = 0;i < categoryList.size();i++){
-							System.out.println(categoryList.get(i).toString());
+						for(CategoryModel category : categoryList) {
+							System.out.println(category.toString());
 						}
 						
 						while(true){
@@ -388,8 +388,8 @@ public class BackendApplication implements CommandLineRunner {
 						}
 					}else if (op.equals("4")){
 						List<CategoryModel>categorys = categoryRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= categorys.size(); i++){
-							System.out.println(categorys.get((i)).toString());
+						for(CategoryModel category : categorys) {
+							System.out.println(category.toString());
 						}
 						System.out.println("enter the category ID");
 						Long option = Long.parseLong(input.nextLine());
@@ -431,8 +431,8 @@ public class BackendApplication implements CommandLineRunner {
 					}else if(op.equals("3")){
 
 						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= companys.size(); i++){
-							System.out.println(companys.get((i)).toString());
+						for(PublishingCompanyModel company : companys) {
+							System.out.println(company.toString());
 						}
 						System.out.println("enter the company ID");
 						Long option = Long.parseLong(input.nextLine());
@@ -445,8 +445,8 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();	
 					}else if(op.equals("4")){
 						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
-						for(int i = 0; i <= companys.size(); i++){
-							System.out.println(companys.get((i)).toString());
+						for(PublishingCompanyModel company : companys) {
+							System.out.println(company.toString());
 						}
 
 						while(true){
@@ -568,8 +568,8 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("Escolha o autor:");
 						// percorre a lista de autores.
 						List<AuthorModel> listAuthors = authorRepositoryService.getInstance().findAll();
-						for(int i = 0;i < listAuthors.size();i++){
-							System.out.println(listAuthors.get(i).toString());
+						for(AuthorModel author : listAuthors) {
+							System.out.println(author.toString());
 						}
 						List<AuthorModel> authorList = new ArrayList<>();
 						while(true){
@@ -591,8 +591,8 @@ public class BackendApplication implements CommandLineRunner {
 						int pages = Integer.parseInt(input.nextLine());
 						clearConsole();
 						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
-						for(int i = 0;i < categoryList.size();i++){
-							System.out.println(categoryList.get(i).toString());
+						for(CategoryModel category : categoryList) {
+							System.out.println(category.toString());
 						}
 						List<CategoryModel> cateList = new ArrayList<>();
 						while(true){
@@ -609,8 +609,8 @@ public class BackendApplication implements CommandLineRunner {
 						BigDecimal price = new BigDecimal(input.nextLine());
 						clearConsole();
 						List<PublishingCompanyModel> listCompanys = companyRepositoryService.getInstance().findAll();
-						for(int i = 0;i < listCompanys.size();i++){
-							System.out.println(listCompanys.get(i).toString());
+						for(PublishingCompanyModel company : listCompanys) {
+							System.out.println(company.toString());
 						}
 						System.out.println("Type the ID company: ");
 						Long companyId = Long.parseLong(input.nextLine());
@@ -685,8 +685,8 @@ public class BackendApplication implements CommandLineRunner {
 					}else if(op.equals("4")){
 						// for para percorrer lista dos livros mais baratos
 						List<BookModel> lista = bookRepositoryService.findCheapests(5);
-						for(int i = 0;i < lista.size();i++){
-							System.out.println(lista.get(i).toString());
+						for(BookModel book : lista) {
+							System.out.println(book.toString());
 						}
 						input.nextLine();
 						clearConsole();
