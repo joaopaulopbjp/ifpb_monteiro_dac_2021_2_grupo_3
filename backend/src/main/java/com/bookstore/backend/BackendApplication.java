@@ -264,7 +264,7 @@ public class BackendApplication implements CommandLineRunner {
 							for(AdminModel admin: adminList) {
 								System.out.println(admin.toString());
 							}
-							System.out.println("enter the admin ID");
+							System.out.println("enter the admin ID (s to exit)");
 							String option = input.nextLine();
 							clearConsole();
 
@@ -292,12 +292,12 @@ public class BackendApplication implements CommandLineRunner {
 
 						}
 					}else if(op.equals("3")){
-						List<AdminModel>admins = adminRepositoryService.getInstance().findAll();
-						for(AdminModel admin : admins) {
-							System.out.println(admin.toString());
-						}
-
 						while(true){
+							List<AdminModel>admins = adminRepositoryService.getInstance().findAll();
+							for(AdminModel admin : admins) {
+								System.out.println(admin.toString());
+							}
+
 							System.out.println("Type the ID admin(Type s for exit): ");
 							String id = input.nextLine();
 							if(id.equals("s")){
@@ -346,7 +346,7 @@ public class BackendApplication implements CommandLineRunner {
 							for(AuthorModel author : authors) {
 								System.out.println(author.toString());
 							}
-							System.out.println("enter the author ID");
+							System.out.println("enter the author ID (s to exit)");
 							String option = input.nextLine();
 							clearConsole();
 
@@ -416,13 +416,13 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 
 					}else if(op.equals("3")){
-						System.out.println("List of Categories");
-						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
-						for(CategoryModel category : categoryList) {
-							System.out.println(category.toString());
-						}
-						
 						while(true){
+							System.out.println("List of Categories");
+							List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
+							for(CategoryModel category : categoryList) {
+								System.out.println(category.toString());
+							}
+
 							System.out.println("Type the ID Category(Type s for exit): ");
 							String id = input.nextLine();
 							clearConsole();
@@ -439,7 +439,7 @@ public class BackendApplication implements CommandLineRunner {
 							for(CategoryModel category : categorys) {
 								System.out.println(category.toString());
 							}
-							System.out.println("enter the category ID");
+							System.out.println("enter the category ID (s to exit)");
 							String option = input.nextLine();
 							clearConsole();
 
@@ -492,7 +492,7 @@ public class BackendApplication implements CommandLineRunner {
 							for(PublishingCompanyModel company : companys) {
 								System.out.println(company.toString());
 							}
-							System.out.println("enter the company ID");
+							System.out.println("enter the company ID (s to exit)");
 							String option = input.nextLine();
 							clearConsole();
 	
@@ -512,12 +512,12 @@ public class BackendApplication implements CommandLineRunner {
 
 						}
 					}else if(op.equals("4")){
-						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
-						for(PublishingCompanyModel company : companys) {
-							System.out.println(company.toString());
-						}
-
 						while(true){
+							List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
+							for(PublishingCompanyModel company : companys) {
+								System.out.println(company.toString());
+							}
+
 							System.out.println("Type the ID company(Type s for exit): ");
 							String id = input.nextLine();
 							clearConsole();
@@ -536,36 +536,48 @@ public class BackendApplication implements CommandLineRunner {
 				}
 			}else if(op.equals("6")){
 				
-				shoppingCartModel shoppingCart = new shoppingCartModel(0l, null, userModel);
+				shoppingCartModel shoppingCart = userModel.getShoppingCart();
+
+				if(shoppingCart == null) {
+					shoppingCart = new shoppingCartModel(0l, null, userModel);
+				}
+
 				// Carrinho carrinho = ;
 				while(true){
 					System.out.println("ShoppingCart options:");
 
 					System.out.println("What option do you desire?");
-					System.out.println("1 - remove\n2 - add\n3 - exit: ");
+					System.out.println("1 - remove\n2 - add\ns - exit: ");
 					op = input.nextLine();
 					clearConsole();
 
 					//opção para remover livro do carrinho
 					if(op.equals("1")){
-						shoppingCart = shoppingCartRepositoryService.getInstance().findById(userModel.getShoppingCart().getId()).get();
-						while(true){
-							System.out.println("Items Oders:");
-							for(ItemOrderModel item: shoppingCart.getItemList()){
-								System.out.println(item.getProduct().toString() + 
-								" Amount: " + item.getAmount()+ 
-								" Price: " + item.getTotalPrice());
-							}
-	
-							System.out.print("Id Book for remove(Type s for exit): ");
-							String id = input.nextLine();
-							clearConsole();
-
-							if(id.equals("s")){
+						if(userModel.getShoppingCart() != null) {
+							shoppingCart = shoppingCartRepositoryService.getInstance().findById(userModel.getShoppingCart().getId()).get();
+							while(true){
+								System.out.println("Items Oders:");
+								for(ItemOrderModel item: shoppingCart.getItemList()){
+									System.out.println(item.getProduct().toString() + 
+									" Amount: " + item.getAmount()+ 
+									" Price: " + item.getTotalPrice());
+								}
+		
+								System.out.print("Id Book for remove(Type s for exit): ");
+								String id = input.nextLine();
 								clearConsole();
-								break;
+	
+								if(id.equals("s")){
+									shoppingCartRepositoryService.getInstance().deleteById(shoppingCart.getId());
+									clearConsole();
+									break;
+								}
+								shoppingCart.removeItemOrderFromItemListByProductId(Long.parseLong(id));
 							}
-							shoppingCart.removeItemOrderFromItemListByProductId(Long.parseLong(id));
+						}else {
+							System.out.println("Carrinho vazio");
+							input.nextLine();
+							clearConsole();
 						}
 
 					//opção para adionar livro no carrinho
@@ -598,7 +610,9 @@ public class BackendApplication implements CommandLineRunner {
 									}
 									if(list.size() > 0) {
 										shoppingCart.setItemList(list);
-										shoppingCartRepositoryService.getInstance().save(shoppingCart);
+										shoppingCart = shoppingCartRepositoryService.getInstance().save(shoppingCart);
+										userModel.setShoppingCart(shoppingCart);
+										userRepositoryService.getInstance().save(userModel);
 									}
 									clearConsole();
 									break;
@@ -638,12 +652,12 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 						System.out.println("Escolha o autor:");
 						// percorre a lista de autores.
-						List<AuthorModel> listAuthors = authorRepositoryService.getInstance().findAll();
-						for(AuthorModel author : listAuthors) {
-							System.out.println(author.toString());
-						}
 						List<AuthorModel> authorList = new ArrayList<>();
 						while(true){
+							List<AuthorModel> listAuthors = authorRepositoryService.getInstance().findAll();
+							for(AuthorModel author : listAuthors) {
+								System.out.println(author.toString());
+							}
 							System.out.println("Type the ID Author(Type s for exit): ");
 							String id = input.nextLine();
 							clearConsole();
@@ -662,12 +676,13 @@ public class BackendApplication implements CommandLineRunner {
 						System.out.println("pages: ");
 						int pages = Integer.parseInt(input.nextLine());
 						clearConsole();
-						List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
-						for(CategoryModel category : categoryList) {
-							System.out.println(category.toString());
-						}
 						List<CategoryModel> cateList = new ArrayList<>();
 						while(true){
+							List<CategoryModel> categoryList = categoryRepositoryService.getInstance().findAll();
+							for(CategoryModel category : categoryList) {
+								System.out.println(category.toString());
+							}
+							
 							System.out.println("Type the ID Category(Type s for exit): ");
 							String id = input.nextLine();
 							clearConsole();
@@ -691,7 +706,7 @@ public class BackendApplication implements CommandLineRunner {
 						PublishingCompanyModel companyModel = companyRepositoryService.getInstance().findById(companyId).get();
 						System.out.println("Inventory: ");
 						int qtd = Integer.parseInt(input.nextLine());
-						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
+						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, cateList, userModel, companyModel, authorList, null);
 						book = bookRepositoryService.getInstance().save(book);
 						InventoryModel inventory = new InventoryModel(0l, qtd, book, null);
 						inventoryRepositoryService.getInstance().save(inventory);
@@ -974,7 +989,7 @@ public class BackendApplication implements CommandLineRunner {
 			String password = input.nextLine();
 			clearConsole();
 
-			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
+			UserModel user = new UserModel(0l, username, email, password, null, null, null, new shoppingCartModel(), null);
 
 			userModel = userRepositoryService.getInstance().save(user);
 			clearConsole();
