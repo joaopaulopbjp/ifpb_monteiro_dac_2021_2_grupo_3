@@ -191,10 +191,13 @@ public class BackendApplication implements CommandLineRunner {
 
 						System.out.println("Username: ");
 						String username = input.nextLine();
+						if(username.equals("")) userModel = null;
 						System.out.println("Email: ");
 						String email = input.nextLine();
+						if(email.equals("")) email = null;
 						System.out.println("Password: ");
 						String password = input.nextLine();
+						if(password.equals("")) password = null;
 
 						UserModel userDataBase = new UserModel(option, username, email, password, null, null, null, null, null);
 						userRepositoryService.update(userDataBase);
@@ -249,10 +252,13 @@ public class BackendApplication implements CommandLineRunner {
 
 						System.out.println("Username: ");
 						String username = input.nextLine();
+						if(username.equals("")) username = null;
 						System.out.println("Email: ");
 						String email = input.nextLine();
+						if(email.equals("")) email = null;
 						System.out.println("Password: ");
 						String password = input.nextLine();
+						if(password.equals("")) password = null;
 
 						AdminModel adminDataBase = new AdminModel(option, username, email, password, null, null, null);
 						adminRepositoryService.update(adminDataBase);
@@ -316,6 +322,7 @@ public class BackendApplication implements CommandLineRunner {
 
 						System.out.println("name: ");
 						String username = input.nextLine();
+						if(username.equals("")) username = null;
 
 						AuthorModel authorDataBase = new AuthorModel(option, username, null);
 						authorRepositoryService.update(authorDataBase);
@@ -396,6 +403,7 @@ public class BackendApplication implements CommandLineRunner {
 
 						System.out.println("name: ");
 						String name = input.nextLine();
+						if(name.equals("")) name = null;
 
 						CategoryModel categoryDataBase = new CategoryModel(option, name, null);
 						categoryRepositoryService.update(categoryDataBase);
@@ -439,6 +447,7 @@ public class BackendApplication implements CommandLineRunner {
 
 						System.out.println("name: ");
 						String name = input.nextLine();
+						if(name.equals("")) name = null;
 
 						PublishingCompanyModel companyDataBase = new PublishingCompanyModel(option, name, null);
 						companyRepositoryService.update(companyDataBase);
@@ -792,16 +801,37 @@ public class BackendApplication implements CommandLineRunner {
 									clearConsole();
 									break;
 								}else{
+									String entrada = null;
 									System.out.println("title");
 									String title = input.nextLine();
+									if(title.equals("")) title = null;
 									System.out.println("description:");
 									String desc = input.nextLine();
+									if(desc.equals("")) desc = null;
 									System.out.println("year_launch:");
-									Integer year = Integer.parseInt(input.nextLine());
+									entrada = input.nextLine();
+									Integer year = null;
+									if(!entrada.equals("")){
+										year = Integer.parseInt(entrada);
+									}
+									entrada = null;
+									
 									System.out.println("pages: ");
-									Integer pages = Integer.parseInt(input.nextLine());
+									entrada = input.nextLine();
+									Integer pages = null;
+									if(!entrada.equals("")){
+										pages = Integer.parseInt(entrada);
+									}
+									entrada = null;
+									
 									System.out.println("price: ");
-									BigDecimal price = new BigDecimal(input.nextLine());
+									entrada = input.nextLine();
+									BigDecimal price = null;
+									if(!entrada.equals("")){
+										price = new BigDecimal(entrada);
+									}
+									entrada = null;
+									
 									BookModel bookDataBase = new BookModel(Long.parseLong(option), title, desc, year, pages, price, null, null, null, null, null, null, null);
 									bookRepositoryService.update(bookDataBase);
 									clearConsole();
