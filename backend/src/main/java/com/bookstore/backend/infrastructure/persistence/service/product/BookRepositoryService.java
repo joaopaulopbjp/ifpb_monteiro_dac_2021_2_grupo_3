@@ -32,7 +32,7 @@ public class BookRepositoryService {
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 
-        Page<BookModel> pages = bookRepository.findAll(pageable);
+        Page<BookModel> pages = bookRepository.findAllIgnoreInventoryUnavailable(pageable);
         
         if(pages.isEmpty()) throw new NotFoundException();
         
