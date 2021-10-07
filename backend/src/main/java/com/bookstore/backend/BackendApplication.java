@@ -993,6 +993,7 @@ public class BackendApplication implements CommandLineRunner {
 
 			userModel = userRepositoryService.getInstance().save(user);
 			clearConsole();
+			
 		}
 		return userModel;
 	}
