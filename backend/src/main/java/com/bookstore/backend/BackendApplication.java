@@ -186,30 +186,37 @@ public class BackendApplication implements CommandLineRunner {
 							clearConsole();
 						}
 					}else if(op.equals("4")){
-						List<UserModel>users = userRepositoryService.getInstance().findAll();
-						for(UserModel user : users ) {
-							System.out.println(user.toString());
+						while(true) {
+							List<UserModel>users = userRepositoryService.getInstance().findAll();
+							for(UserModel user : users ) {
+								System.out.println(user.toString());
+							}
+							System.out.println("enter the user ID (s to exit)");
+							String option = input.nextLine();
+							clearConsole();
+	
+							if(option.equals("s")) {
+								clearConsole();
+								break;
+							}
+							System.out.println("Username: ");
+							String username = input.nextLine();
+							clearConsole();
+							if(username.equals("")) userModel = null;
+							System.out.println("Email: ");
+							String email = input.nextLine();
+							clearConsole();
+							if(email.equals("")) email = null;
+							System.out.println("Password: ");
+							String password = input.nextLine();
+							clearConsole();
+							if(password.equals("")) password = null;
+	
+							UserModel userDataBase = new UserModel(Long.parseLong(option), username, email, password, null, null, null, null, null);
+							userRepositoryService.update(userDataBase);
+							clearConsole();
+
 						}
-						System.out.println("enter the user ID");
-						Long option = Long.parseLong(input.nextLine());
-						clearConsole();
-
-						System.out.println("Username: ");
-						String username = input.nextLine();
-						clearConsole();
-						if(username.equals("")) userModel = null;
-						System.out.println("Email: ");
-						String email = input.nextLine();
-						clearConsole();
-						if(email.equals("")) email = null;
-						System.out.println("Password: ");
-						String password = input.nextLine();
-						clearConsole();
-						if(password.equals("")) password = null;
-
-						UserModel userDataBase = new UserModel(option, username, email, password, null, null, null, null, null);
-						userRepositoryService.update(userDataBase);
-						clearConsole();
 
 					}else if(op.equals("5")){
 						List<UserModel>users = userRepositoryService.getInstance().findAll();
@@ -252,30 +259,38 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 
 					}else if(op.equals("2")){
-						List<AdminModel>adminList = adminRepositoryService.getInstance().findAll();
-						for(AdminModel admin: adminList) {
-							System.out.println(admin.toString());
+						while(true) {
+							List<AdminModel>adminList = adminRepositoryService.getInstance().findAll();
+							for(AdminModel admin: adminList) {
+								System.out.println(admin.toString());
+							}
+							System.out.println("enter the admin ID");
+							String option = input.nextLine();
+							clearConsole();
+
+							if(option.equals("s")){
+								clearConsole();
+								break;
+							}
+	
+							System.out.println("Username: ");
+							String username = input.nextLine();
+							clearConsole();
+							if(username.equals("")) username = null;
+							System.out.println("Email: ");
+							String email = input.nextLine();
+							clearConsole();
+							if(email.equals("")) email = null;
+							System.out.println("Password: ");
+							String password = input.nextLine();
+							clearConsole();
+							if(password.equals("")) password = null;
+	
+							AdminModel adminDataBase = new AdminModel(Long.parseLong(option), username, email, password, null, null, null);
+							adminRepositoryService.update(adminDataBase);
+							clearConsole();
+
 						}
-						System.out.println("enter the admin ID");
-						Long option = Long.parseLong(input.nextLine());
-						clearConsole();
-
-						System.out.println("Username: ");
-						String username = input.nextLine();
-						clearConsole();
-						if(username.equals("")) username = null;
-						System.out.println("Email: ");
-						String email = input.nextLine();
-						clearConsole();
-						if(email.equals("")) email = null;
-						System.out.println("Password: ");
-						String password = input.nextLine();
-						clearConsole();
-						if(password.equals("")) password = null;
-
-						AdminModel adminDataBase = new AdminModel(option, username, email, password, null, null, null);
-						adminRepositoryService.update(adminDataBase);
-						clearConsole();
 					}else if(op.equals("3")){
 						List<AdminModel>admins = adminRepositoryService.getInstance().findAll();
 						for(AdminModel admin : admins) {
@@ -326,30 +341,38 @@ public class BackendApplication implements CommandLineRunner {
 						clearConsole();
 
 					}else if(op.equals("3")){
-						List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
-						for(AuthorModel author : authors) {
-							System.out.println(author.toString());
+						while(true) {
+							List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
+							for(AuthorModel author : authors) {
+								System.out.println(author.toString());
+							}
+							System.out.println("enter the author ID");
+							String option = input.nextLine();
+							clearConsole();
+
+							if(option.equals("s")){
+								clearConsole();
+								break;
+							}
+	
+							System.out.println("name: ");
+							String username = input.nextLine();
+							clearConsole();
+							if(username.equals("")) username = null;
+	
+							AuthorModel authorDataBase = new AuthorModel(Long.parseLong(option), username, null);
+							authorRepositoryService.update(authorDataBase);
+							clearConsole();	
+
 						}
-						System.out.println("enter the author ID");
-						Long option = Long.parseLong(input.nextLine());
-						clearConsole();
-
-						System.out.println("name: ");
-						String username = input.nextLine();
-						clearConsole();
-						if(username.equals("")) username = null;
-
-						AuthorModel authorDataBase = new AuthorModel(option, username, null);
-						authorRepositoryService.update(authorDataBase);
-						clearConsole();	
 
 					}else if(op.equals("4")){
-						List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
-						for(AuthorModel author : authors) {
-							System.out.println(author.toString());
-						}
-
 						while(true){
+							List<AuthorModel>authors = authorRepositoryService.getInstance().findAll();
+							for(AuthorModel author : authors) {
+								System.out.println(author.toString());
+							}
+
 							System.out.println("Type the ID author(Type s for exit): ");
 							String id = input.nextLine();
 							clearConsole();
@@ -411,22 +434,30 @@ public class BackendApplication implements CommandLineRunner {
 							categoryRepositoryService.getInstance().deleteById(Long.parseLong(id));
 						}
 					}else if (op.equals("4")){
-						List<CategoryModel>categorys = categoryRepositoryService.getInstance().findAll();
-						for(CategoryModel category : categorys) {
-							System.out.println(category.toString());
+						while(true) {
+							List<CategoryModel>categorys = categoryRepositoryService.getInstance().findAll();
+							for(CategoryModel category : categorys) {
+								System.out.println(category.toString());
+							}
+							System.out.println("enter the category ID");
+							String option = input.nextLine();
+							clearConsole();
+
+							if(option.equals("s")){
+								clearConsole();
+								break;
+							}
+	
+							System.out.println("name: ");
+							String name = input.nextLine();
+							clearConsole();
+							if(name.equals("")) name = null;
+	
+							CategoryModel categoryDataBase = new CategoryModel(Long.parseLong(option), name, null);
+							categoryRepositoryService.update(categoryDataBase);
+							clearConsole();	
+
 						}
-						System.out.println("enter the category ID");
-						Long option = Long.parseLong(input.nextLine());
-						clearConsole();
-
-						System.out.println("name: ");
-						String name = input.nextLine();
-						clearConsole();
-						if(name.equals("")) name = null;
-
-						CategoryModel categoryDataBase = new CategoryModel(option, name, null);
-						categoryRepositoryService.update(categoryDataBase);
-						clearConsole();	
 					
 					}else if(op.equals("s")){
 						clearConsole();
@@ -456,23 +487,30 @@ public class BackendApplication implements CommandLineRunner {
 						input.nextLine();
 						clearConsole();
 					}else if(op.equals("3")){
+						while(true) {
+							List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
+							for(PublishingCompanyModel company : companys) {
+								System.out.println(company.toString());
+							}
+							System.out.println("enter the company ID");
+							String option = input.nextLine();
+							clearConsole();
+	
+							if(option.equals("s")) {
+								clearConsole();
+								break;
+							}
 
-						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
-						for(PublishingCompanyModel company : companys) {
-							System.out.println(company.toString());
+							System.out.println("name: ");
+							String name = input.nextLine();
+							clearConsole();
+							if(name.equals("")) name = null;
+	
+							PublishingCompanyModel companyDataBase = new PublishingCompanyModel(Long.parseLong(option), name, null);
+							companyRepositoryService.update(companyDataBase);
+							clearConsole();	
+
 						}
-						System.out.println("enter the company ID");
-						Long option = Long.parseLong(input.nextLine());
-						clearConsole();
-
-						System.out.println("name: ");
-						String name = input.nextLine();
-						clearConsole();
-						if(name.equals("")) name = null;
-
-						PublishingCompanyModel companyDataBase = new PublishingCompanyModel(option, name, null);
-						companyRepositoryService.update(companyDataBase);
-						clearConsole();	
 					}else if(op.equals("4")){
 						List<PublishingCompanyModel>companys = companyRepositoryService.getInstance().findAll();
 						for(PublishingCompanyModel company : companys) {
