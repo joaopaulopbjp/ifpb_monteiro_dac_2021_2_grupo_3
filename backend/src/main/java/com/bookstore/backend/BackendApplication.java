@@ -1,6 +1,8 @@
 package com.bookstore.backend;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,6 +14,8 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
+import com.bookstore.backend.domain.model.sale.RevenuesModel;
+import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
@@ -25,12 +29,16 @@ import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepo
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
+import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import javafx.util.converter.LocalDateStringConverter;
 
 @SpringBootApplication
 public class BackendApplication implements CommandLineRunner {
@@ -64,6 +72,12 @@ public class BackendApplication implements CommandLineRunner {
 
 	@Autowired
 	EvaluateRepositoryService evaluateRepositoryService;
+
+	@Autowired
+	SaleRepositoryService saleRepositoryService;
+
+	@Autowired
+	RevenuesRepositoryServices revenuesRepositoryServices;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
@@ -610,7 +624,7 @@ public class BackendApplication implements CommandLineRunner {
 						int qtd = Integer.parseInt(input.nextLine());
 						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, categoryList, userModel, companyModel, authorList, null);
 						book = bookRepositoryService.getInstance().save(book);
-						InventoryModel inventory = new InventoryModel(0l, qtd, book);
+						InventoryModel inventory = new InventoryModel(0l, qtd, book, null);
 						inventoryRepositoryService.getInstance().save(inventory);
 						clearConsole();
 						

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MagazineRepository extends JpaRepository<MagazineModel, Long> {
-    @Query("SELECT magazine FROM MagazineModel hq WHERE magazine.inventory.amount > 0")
+    @Query("SELECT magazine FROM MagazineModel magazine WHERE magazine.inventory.amount > 0")
     public Page<MagazineModel> findAllIgnoreInventoryUnavailable(Pageable pageable);
 }
 
