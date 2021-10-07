@@ -1,6 +1,7 @@
 package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,6 +36,9 @@ public class SaleModel {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
     private ProductModel product;
+
+    @Column(name = "DATA_SALE")
+	private LocalDate dateSale;
 
     @Column(name = "AMOUNT")
     private BigDecimal amount;
