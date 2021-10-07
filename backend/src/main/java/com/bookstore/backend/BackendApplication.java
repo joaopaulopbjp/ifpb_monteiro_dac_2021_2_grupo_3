@@ -165,8 +165,12 @@ public class BackendApplication implements CommandLineRunner {
 							}
 							System.out.print("Type s to exit or user ID: ");
 							String id = input.nextLine();
+							clearConsole();
 		
-							if(id.equals("s")) break;
+							if(id.equals("s")){
+								clearConsole();
+								break;
+							}
 		
 							UserModel user = userRepositoryService.getInstance().findById(Long.parseLong(id)).get();
 							AdminModel admin = new AdminModel(user.getId(),
@@ -188,15 +192,19 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						System.out.println("enter the user ID");
 						Long option = Long.parseLong(input.nextLine());
+						clearConsole();
 
 						System.out.println("Username: ");
 						String username = input.nextLine();
+						clearConsole();
 						if(username.equals("")) userModel = null;
 						System.out.println("Email: ");
 						String email = input.nextLine();
+						clearConsole();
 						if(email.equals("")) email = null;
 						System.out.println("Password: ");
 						String password = input.nextLine();
+						clearConsole();
 						if(password.equals("")) password = null;
 
 						UserModel userDataBase = new UserModel(option, username, email, password, null, null, null, null, null);
@@ -209,7 +217,7 @@ public class BackendApplication implements CommandLineRunner {
 							System.out.println(user.toString());
 						}
 						while(true){
-							System.out.println("Type the ID user(Type 0 for exit): ");
+							System.out.println("Type the ID user(Type s for exit): ");
 							String id = input.nextLine();
 							if(id.equals("s")){
 								clearConsole();
@@ -217,6 +225,7 @@ public class BackendApplication implements CommandLineRunner {
 							}
 
 							userRepositoryService.getInstance().deleteById(Long.parseLong(id));
+							clearConsole();
 						}
 					}else if(op.equals("s")){
 						clearConsole();
@@ -249,15 +258,19 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						System.out.println("enter the admin ID");
 						Long option = Long.parseLong(input.nextLine());
+						clearConsole();
 
 						System.out.println("Username: ");
 						String username = input.nextLine();
+						clearConsole();
 						if(username.equals("")) username = null;
 						System.out.println("Email: ");
 						String email = input.nextLine();
+						clearConsole();
 						if(email.equals("")) email = null;
 						System.out.println("Password: ");
 						String password = input.nextLine();
+						clearConsole();
 						if(password.equals("")) password = null;
 
 						AdminModel adminDataBase = new AdminModel(option, username, email, password, null, null, null);
@@ -270,7 +283,7 @@ public class BackendApplication implements CommandLineRunner {
 						}
 
 						while(true){
-							System.out.println("Type the ID admin(Type 0 for exit): ");
+							System.out.println("Type the ID admin(Type s for exit): ");
 							String id = input.nextLine();
 							if(id.equals("s")){
 								clearConsole();
@@ -319,9 +332,11 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						System.out.println("enter the author ID");
 						Long option = Long.parseLong(input.nextLine());
+						clearConsole();
 
 						System.out.println("name: ");
 						String username = input.nextLine();
+						clearConsole();
 						if(username.equals("")) username = null;
 
 						AuthorModel authorDataBase = new AuthorModel(option, username, null);
@@ -335,8 +350,9 @@ public class BackendApplication implements CommandLineRunner {
 						}
 
 						while(true){
-							System.out.println("Type the ID author(Type 0 for exit): ");
+							System.out.println("Type the ID author(Type s for exit): ");
 							String id = input.nextLine();
+							clearConsole();
 							if(id.equals("s")){
 								clearConsole();
 								break;
@@ -384,8 +400,9 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						
 						while(true){
-							System.out.println("Type the ID Category(Type 0 for exit): ");
+							System.out.println("Type the ID Category(Type s for exit): ");
 							String id = input.nextLine();
+							clearConsole();
 							if(id.equals("s")){
 								clearConsole();
 								break;
@@ -400,9 +417,11 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						System.out.println("enter the category ID");
 						Long option = Long.parseLong(input.nextLine());
+						clearConsole();
 
 						System.out.println("name: ");
 						String name = input.nextLine();
+						clearConsole();
 						if(name.equals("")) name = null;
 
 						CategoryModel categoryDataBase = new CategoryModel(option, name, null);
@@ -444,9 +463,11 @@ public class BackendApplication implements CommandLineRunner {
 						}
 						System.out.println("enter the company ID");
 						Long option = Long.parseLong(input.nextLine());
+						clearConsole();
 
 						System.out.println("name: ");
 						String name = input.nextLine();
+						clearConsole();
 						if(name.equals("")) name = null;
 
 						PublishingCompanyModel companyDataBase = new PublishingCompanyModel(option, name, null);
@@ -459,8 +480,9 @@ public class BackendApplication implements CommandLineRunner {
 						}
 
 						while(true){
-							System.out.println("Type the ID company(Type 0 for exit): ");
+							System.out.println("Type the ID company(Type s for exit): ");
 							String id = input.nextLine();
+							clearConsole();
 							if(id.equals("s")){
 								clearConsole();
 								break;
@@ -499,6 +521,7 @@ public class BackendApplication implements CommandLineRunner {
 	
 							System.out.print("Id Book for remove(Type s for exit): ");
 							String id = input.nextLine();
+							clearConsole();
 
 							if(id.equals("s")){
 								clearConsole();
@@ -516,6 +539,7 @@ public class BackendApplication implements CommandLineRunner {
 							System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
 	
 							String option = input.nextLine();
+							clearConsole();
 	
 							//se a opção digitada for vazia começa da pagina 0;
 							if(!option.equals("")){
@@ -584,6 +608,7 @@ public class BackendApplication implements CommandLineRunner {
 						while(true){
 							System.out.println("Type the ID Author(Type s for exit): ");
 							String id = input.nextLine();
+							clearConsole();
 							if(id.equals("s")){
 								clearConsole();
 								break;
@@ -607,6 +632,7 @@ public class BackendApplication implements CommandLineRunner {
 						while(true){
 							System.out.println("Type the ID Category(Type s for exit): ");
 							String id = input.nextLine();
+							clearConsole();
 							if(id.equals("s")){
 								clearConsole();
 								break;
@@ -684,10 +710,12 @@ public class BackendApplication implements CommandLineRunner {
 								}else if(option.equals("d")){
 									++contadorDePaginas;
 								}else if(option.equals("s")){
+									clearConsole();
 									break;
 								}else{
 									Long id = Long.parseLong(option);
 									bookRepositoryService.getInstance().deleteById(id);
+									clearConsole();
 								}
 							}
 						}
@@ -739,6 +767,7 @@ public class BackendApplication implements CommandLineRunner {
 										}else{
 											System.out.println("how many stars(1 - 5)?");
 											int stars = Integer.parseInt(input.nextLine());
+											clearConsole();
 											System.out.println("Comment:");
 											String comment = input.nextLine();
 											EvaluateModel evaluateModel = new EvaluateModel(0l, stars, comment, userModel, bookRepositoryService.getInstance().findById(Long.parseLong(option)).get());
@@ -763,6 +792,7 @@ public class BackendApplication implements CommandLineRunner {
 									}
 									System.out.println("Type the ID Evaluate: ");
 									String option = input.nextLine();
+									clearConsole();
 									if(option.equals("s")){
 										clearConsole();
 										break;
@@ -784,7 +814,6 @@ public class BackendApplication implements CommandLineRunner {
 							System.out.print("a - left page \nd - right page\ns - exit\nWhat option do you desire? ");
 	
 							String option = input.nextLine();
-	
 							clearConsole();
 
 							//se a opção digitada for vazia começa da pagina 0;
@@ -804,12 +833,15 @@ public class BackendApplication implements CommandLineRunner {
 									String entrada = null;
 									System.out.println("title");
 									String title = input.nextLine();
+									clearConsole();
 									if(title.equals("")) title = null;
 									System.out.println("description:");
 									String desc = input.nextLine();
+									clearConsole();
 									if(desc.equals("")) desc = null;
 									System.out.println("year_launch:");
 									entrada = input.nextLine();
+									clearConsole();
 									Integer year = null;
 									if(!entrada.equals("")){
 										year = Integer.parseInt(entrada);
@@ -818,6 +850,7 @@ public class BackendApplication implements CommandLineRunner {
 									
 									System.out.println("pages: ");
 									entrada = input.nextLine();
+									clearConsole();
 									Integer pages = null;
 									if(!entrada.equals("")){
 										pages = Integer.parseInt(entrada);
@@ -826,6 +859,7 @@ public class BackendApplication implements CommandLineRunner {
 									
 									System.out.println("price: ");
 									entrada = input.nextLine();
+									clearConsole();
 									BigDecimal price = null;
 									if(!entrada.equals("")){
 										price = new BigDecimal(entrada);
@@ -878,6 +912,7 @@ public class BackendApplication implements CommandLineRunner {
 	}
 
 	public UserModel login() {
+		clearConsole();
 		Scanner input = new Scanner(System.in);
 		UserModel userModel = null;
 		List<UserModel> users = userRepositoryService.getInstance().findAll();
@@ -888,18 +923,23 @@ public class BackendApplication implements CommandLineRunner {
 
 			System.out.println("Type the User ID: ");
 			userModel = userRepositoryService.getInstance().findById(Long.parseLong(input.nextLine())).get();
+			clearConsole();
 		} else {
 			System.out.println("User fields");
 			System.out.println("Username: ");
 			String username = input.nextLine();
+			clearConsole();
 			System.out.println("Email: ");
 			String email = input.nextLine();
+			clearConsole();
 			System.out.println("password: ");
 			String password = input.nextLine();
+			clearConsole();
 
 			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
 
 			userModel = userRepositoryService.getInstance().save(user);
+			clearConsole();
 		}
 		return userModel;
 	}
