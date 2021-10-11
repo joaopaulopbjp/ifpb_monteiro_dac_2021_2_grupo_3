@@ -45,6 +45,7 @@ public class SaleModel {
     private Integer amount;
 
     @ManyToOne
+    @JoinColumn(name = "REVENUE_FK", nullable = false)
     private RevenuesModel revenues; 
 
     public BigDecimal getTotalSalesPrice() {
