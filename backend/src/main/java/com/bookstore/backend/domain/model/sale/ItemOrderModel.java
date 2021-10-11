@@ -30,14 +30,14 @@ public class ItemOrderModel {
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", nullable = false)
 	private Long id;
 
-	@Column(name = "AMOUNT")
+	@Column(name = "AMOUNT", nullable = false)
 	private Integer amount;
 
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PRODUCT_ID")
+	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private ProductModel product;
 
 	@ManyToOne(cascade = CascadeType.ALL)

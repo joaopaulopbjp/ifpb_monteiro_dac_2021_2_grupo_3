@@ -33,7 +33,7 @@ import lombok.Setter;
 public class shoppingCartModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private Long Id;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -42,6 +42,7 @@ public class shoppingCartModel {
     private List<ItemOrderModel> itemList;
 
     @OneToOne
+    @JoinColumn(name = "USER_FK", nullable = false)
     private UserModel userModel;
 
 

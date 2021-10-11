@@ -31,10 +31,10 @@ public class CategoryModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", nullable = false)
 	private Long id;
 
-	@Column(name = "NAME")
+	@Column(name = "NAME", nullable = false)
 	private String name;
 
 	@ManyToMany(cascade = CascadeType.ALL)

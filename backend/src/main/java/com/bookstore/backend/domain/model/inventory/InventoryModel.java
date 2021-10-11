@@ -29,17 +29,17 @@ import lombok.Setter;
 public class  InventoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
 	private Long id;
 
-    @Column(name = "AMOUNT")
+    @Column(name = "AMOUNT", nullable = false)
 	private Integer amount;
 
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
 	private ProductModel product;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS", nullable = false)
 	private InventoryStatus status;
 
 	public void decrease() {

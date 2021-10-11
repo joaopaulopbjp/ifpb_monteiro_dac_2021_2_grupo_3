@@ -30,10 +30,10 @@ public class PublishingCompanyModel {
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", nullable = false)
 	private Long id;
 
-	@Column(name = "NAME")
+	@Column(name = "NAME", nullable = false)
 	private String name;
 
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
