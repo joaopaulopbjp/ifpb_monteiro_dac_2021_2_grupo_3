@@ -29,7 +29,7 @@ public class AddressModel {
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", nullable = false)
 	private Long id;
 
 	@Column(name = "STREET", nullable = false)
@@ -48,7 +48,7 @@ public class AddressModel {
 	private String district;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PERSON_FK")
+	@JoinColumn(name = "PERSON_FK", nullable = false)
 	private PersonModel person;
 	
 	@Override
