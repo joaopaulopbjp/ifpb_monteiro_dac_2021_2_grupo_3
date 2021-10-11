@@ -29,10 +29,11 @@ public class RevenuesModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private long Id;
 
     @OneToMany(mappedBy = "revenues", fetch = FetchType.EAGER)
+    @Column(name = "SALE_LIST_FK", nullable = false)
     private List<SaleModel> saleList;
 
 

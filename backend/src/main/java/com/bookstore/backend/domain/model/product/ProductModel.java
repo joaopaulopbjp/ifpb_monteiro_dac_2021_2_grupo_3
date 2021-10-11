@@ -32,49 +32,52 @@ public abstract class ProductModel {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Column(name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION", nullable = false)
     private String description;
 
-    @Column(name = "YEAR_LAUNCH")
+    @Column(name = "YEAR_LAUNCH", nullable = false)
     private Integer yearLaunch;
 
-    @Column(name = "PAGES")
+    @Column(name = "PAGES", nullable = false)
     private Integer pages;
 
-    @Column(name = "PRICE")
+    @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @JoinColumn(name = "SALE_FK", nullable = false)
     private SaleModel sale;
-
+    
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;
     
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
-        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
-        inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID"))
+        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID", nullable = false))
     private List<CategoryModel> categoryList;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    private PersonModel salesman;
+    @JoinColumn(name = "SALLER_FK", nullable = false)
+    private PersonModel saller;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "COMPANY_FK")
+    @JoinColumn(name = "COMPANY_FK", nullable = false)
     private PublishingCompanyModel company;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
-        joinColumns = @JoinColumn(name = "PRODUCT_ID"), 
-        inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID"))
+        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", nullable = false))
     private List<AuthorModel> authorList;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)

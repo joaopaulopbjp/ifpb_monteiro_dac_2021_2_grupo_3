@@ -26,21 +26,21 @@ import lombok.Setter;
 public class EvaluateModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private Long id;
 
-    @Column(name = "STAR_NUMBER")
+    @Column(name = "STAR_NUMBER", nullable = false)
     private Integer starNumber;
     
-    @Column(name = "COMMENT")
+    @Column(name = "COMMENT", nullable = false)
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name = "USER_FK")
+    @JoinColumn(name = "USER_FK", nullable = false)
     private UserModel user;
 
     @ManyToOne
-    @JoinColumn(name = "PRODUCT_FK")
+    @JoinColumn(name = "PRODUCT_FK", nullable = false)
     private ProductModel product;
 
     @Override

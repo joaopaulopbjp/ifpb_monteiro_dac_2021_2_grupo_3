@@ -57,10 +57,12 @@ public abstract class PersonModel {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
+    @Column(name = "ADDRESS_FK", nullable = false)
     private List<AddressModel> addressList;
-
-    @OneToMany(mappedBy = "salesman", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    
+    @OneToMany(mappedBy = "saller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
+    @Column(name = "PRODUCT_SALE_FK")
     private List<ProductModel> productForSaleList;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)

@@ -31,17 +31,17 @@ import lombok.Setter;
 public class SaleModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PRODUCT_FK")
+    @JoinColumn(name = "PRODUCT_FK", nullable = false)
     private ProductModel product;
 
-    @Column(name = "DATA_SALE")
+    @Column(name = "DATA_SALE", nullable = false)
 	private LocalDate dateSale;
 
-    @Column(name = "AMOUNT")
+    @Column(name = "AMOUNT", nullable = false)
     private Integer amount;
 
     @ManyToOne

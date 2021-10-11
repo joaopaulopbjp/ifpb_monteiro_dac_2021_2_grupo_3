@@ -32,16 +32,17 @@ public class OrderModel {
     
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "ID")
+	@Column(name = "ID", nullable = false)
 	private Long id;
 
-	@Column(name = "DATA_ORDER")
+	@Column(name = "DATA_ORDER", nullable = false)
 	private LocalDate dateOrder;
 
-	@Column(name = "STATUS")
+	@Column(name = "STATUS", nullable = false)
 	private OrderStatus status;
 
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+	@Column(name = "ITEMLIST_FK", nullable = false)
 	private List<ItemOrderModel> itemList;
 
 

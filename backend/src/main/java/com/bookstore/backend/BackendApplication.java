@@ -15,6 +15,7 @@ import com.bookstore.backend.domain.model.sale.ItemOrderModel;
 import com.bookstore.backend.domain.model.sale.shoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
@@ -706,10 +707,10 @@ public class BackendApplication implements CommandLineRunner {
 						PublishingCompanyModel companyModel = companyRepositoryService.getInstance().findById(companyId).get();
 						System.out.println("Inventory: ");
 						int qtd = Integer.parseInt(input.nextLine());
-						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, cateList, userModel, companyModel, authorList, null);
+						InventoryModel inventory = new InventoryModel(0l, qtd, null, InventoryStatus.AVAILABLE);
+						inventory = inventoryRepositoryService.getInstance().save(inventory);
+						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, inventory, cateList, userModel, companyModel, authorList, null);
 						book = bookRepositoryService.getInstance().save(book);
-						InventoryModel inventory = new InventoryModel(0l, qtd, book, null);
-						inventoryRepositoryService.getInstance().save(inventory);
 						clearConsole();
 						
 					// alterar campos ou campo do livro
@@ -989,9 +990,13 @@ public class BackendApplication implements CommandLineRunner {
 			String password = input.nextLine();
 			clearConsole();
 
-			UserModel user = new UserModel(0l, username, email, password, null, null, null, new shoppingCartModel(), null);
+			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
+			user = userRepositoryService.getInstance().save(user);
+			shoppingCartModel cart = new shoppingCartModel(0l, null, user);
+			cart = shoppingCartRepositoryService.getInstance().save(cart);
+			user.setShoppingCart(cart);
 
-			userModel = userRepositoryService.getInstance().save(user);
+			userModel = user;
 			clearConsole();
 			
 		}

@@ -33,17 +33,18 @@ import lombok.Setter;
 public class UserSaleHistoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "ID", nullable = false)
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "PERSON_FK", nullable = false)
     private PersonModel person;
 
     @OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(
         name = "T_PRODUCT_SALEHISTORY_JOIN", 
-        joinColumns = @JoinColumn(name = "ORDER_ID"), 
-        inverseJoinColumns = @JoinColumn(name = "SALE_HISTORY_ID"))
+        joinColumns = @JoinColumn(name = "ORDER_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "SALE_HISTORY_ID", nullable = false))
     private List<OrderModel> orderList;
 
     public boolean addOrderToOrderList(OrderModel orderModel) {
