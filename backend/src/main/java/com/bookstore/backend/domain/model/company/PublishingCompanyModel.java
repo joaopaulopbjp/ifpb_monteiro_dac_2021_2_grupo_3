@@ -33,7 +33,7 @@ public class PublishingCompanyModel {
 	@Column(name = "ID", nullable = false)
 	private Long id;
 
-	@Column(name = "NAME", nullable = false)
+	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
