@@ -19,10 +19,11 @@ import com.bookstore.backend.domain.model.user.PersonModel;
 public class BookModel extends ProductModel{ 
 
     public BookModel(Long id, String title, String description, Integer yearLaunch, Integer pages, BigDecimal price,
-            SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList, PersonModel salesman,
-            PublishingCompanyModel company, List<AuthorModel> authorList, List<EvaluateModel> evaluateList) {
-        super(id, title, description, yearLaunch, pages, price, sale, inventory, categoryList, salesman, company,
-                authorList, evaluateList);
+            List<String> imageList, SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList,
+            PersonModel saller, PublishingCompanyModel company, List<AuthorModel> authorList,
+            List<EvaluateModel> evaluateList) {
+        super(id, title, description, yearLaunch, pages, price, imageList, sale, inventory, categoryList, saller,
+                company, authorList, evaluateList);
     }
 
     public BookModel() {

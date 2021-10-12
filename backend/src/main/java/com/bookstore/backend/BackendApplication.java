@@ -709,7 +709,7 @@ public class BackendApplication implements CommandLineRunner {
 						int qtd = Integer.parseInt(input.nextLine());
 						InventoryModel inventory = new InventoryModel(0l, qtd, null, InventoryStatus.AVAILABLE);
 						inventory = inventoryRepositoryService.getInstance().save(inventory);
-						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, inventory, cateList, userModel, companyModel, authorList, null);
+						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, inventory, cateList, userModel, companyModel, authorList, null);
 						book = bookRepositoryService.getInstance().save(book);
 						clearConsole();
 						
@@ -920,7 +920,7 @@ public class BackendApplication implements CommandLineRunner {
 									}
 									entrada = null;
 									
-									BookModel bookDataBase = new BookModel(Long.parseLong(option), title, desc, year, pages, price, null, null, null, null, null, null, null);
+									BookModel bookDataBase = new BookModel(Long.parseLong(option), title, desc, year, pages, price, null, null, null, null, null, null, null, null);
 									bookRepositoryService.update(bookDataBase);
 									clearConsole();
 								}

@@ -18,11 +18,12 @@ import com.bookstore.backend.domain.model.user.PersonModel;
 @Table(name = "T_MAGAZINE")
 public class MagazineModel extends ProductModel{
 
-    public MagazineModel(Long id, String title, String description, int yearLaunch, int pages, BigDecimal price,
-            SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList, PersonModel salesman,
-            PublishingCompanyModel company, List<AuthorModel> authorList, List<EvaluateModel> evaluateList) {
-        super(id, title, description, yearLaunch, pages, price, sale, inventory, categoryList, salesman, company,
-                authorList, evaluateList);
+    public MagazineModel(Long id, String title, String description, Integer yearLaunch, Integer pages, BigDecimal price,
+            List<String> imageList, SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList,
+            PersonModel saller, PublishingCompanyModel company, List<AuthorModel> authorList,
+            List<EvaluateModel> evaluateList) {
+        super(id, title, description, yearLaunch, pages, price, imageList, sale, inventory, categoryList, saller,
+                company, authorList, evaluateList);
     }
 
     public MagazineModel() {

@@ -13,6 +13,11 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
+import com.bookstore.backend.infrastructure.exception.FullListException;
+import com.bookstore.backend.infrastructure.exception.NotFoundException;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -49,6 +54,11 @@ public abstract class ProductModel {
 
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
+
+    @OneToMany(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "IMAGES", nullable = false)
+    private List<String> imageList;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_FK", nullable = false)
@@ -113,6 +123,32 @@ public abstract class ProductModel {
     public boolean removeAuthorFromAuthorList(AuthorModel authorModel) {
         if(authorList != null) {
             return authorList.remove(authorModel);
+        }
+        return false;
+    }
+
+    public boolean addImageToImageList(String imageBase64) throws FullListException {
+        if(imageList == null) {
+            imageList = new ArrayList<>();
+            addImageToImageList(imageBase64);
+        }
+
+        if(imageList.size() < 2) {
+            imageList.add(imageBase64);
+            return true;
+        } else {
+            throw new FullListException("The list have 2 items");
+        }
+    }
+
+    public boolean removeImageFromImageList(Integer index) throws NotFoundException {
+        if(imageList == null || index > (imageList.size() - 1)) {
+            throw new NotFoundException();
+        }
+
+        String removed = imageList.remove(index.intValue());
+        if(removed != null) {
+            return true;
         }
         return false;
     }
