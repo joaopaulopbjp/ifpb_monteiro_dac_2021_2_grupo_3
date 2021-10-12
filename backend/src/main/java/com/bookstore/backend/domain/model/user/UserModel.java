@@ -12,7 +12,7 @@ import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
-import com.bookstore.backend.domain.model.sale.shoppingCartModel;
+import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -28,14 +28,14 @@ import lombok.Setter;
 public class UserModel extends PersonModel{
 
     @OneToOne(mappedBy = "userModel")
-    private shoppingCartModel shoppingCart;
+    private ShoppingCartModel shoppingCart;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<EvaluateModel> evaluateList;
 
     public UserModel(Long id, String username, String email, String password, List<AddressModel> addressList,
-            List<ProductModel> productForSaleList, UserSaleHistoryModel saleHistory, shoppingCartModel shoppingCart,
+            List<ProductModel> productForSaleList, UserSaleHistoryModel saleHistory, ShoppingCartModel shoppingCart,
             List<EvaluateModel> evaluation) {
         super(id, username, email, password, addressList, productForSaleList, saleHistory);
         this.shoppingCart = shoppingCart;

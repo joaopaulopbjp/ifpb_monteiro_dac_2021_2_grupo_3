@@ -2,7 +2,7 @@ package com.bookstore.backend.infrastructure.persistence.service.sale;
 
 import java.util.NoSuchElementException;
 
-import com.bookstore.backend.domain.model.sale.shoppingCartModel;
+import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.sale.ShoppingCartRepository;
 import com.bookstore.backend.infrastructure.utils.Utils;
@@ -20,8 +20,8 @@ public class ShoppingCartRepositoryService {
         return shoppingCartRepository;
     }
 
-    public shoppingCartModel update(shoppingCartModel shoppingCartModel) throws NotFoundException {
-        shoppingCartModel shoppingCartDB = null;
+    public ShoppingCartModel update(ShoppingCartModel shoppingCartModel) throws NotFoundException {
+        ShoppingCartModel shoppingCartDB = null;
         try {
             shoppingCartDB = shoppingCartRepository.findById(shoppingCartModel.getId()).get();
 

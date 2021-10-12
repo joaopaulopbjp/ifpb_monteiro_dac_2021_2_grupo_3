@@ -12,7 +12,7 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
-import com.bookstore.backend.domain.model.sale.shoppingCartModel;
+import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
@@ -537,10 +537,10 @@ public class BackendApplication implements CommandLineRunner {
 				}
 			}else if(op.equals("6")){
 				
-				shoppingCartModel shoppingCart = userModel.getShoppingCart();
+				ShoppingCartModel shoppingCart = userModel.getShoppingCart();
 
 				if(shoppingCart == null) {
-					shoppingCart = new shoppingCartModel(0l, null, userModel);
+					shoppingCart = new ShoppingCartModel(0l, null, userModel);
 				}
 
 				// Carrinho carrinho = ;
@@ -992,7 +992,7 @@ public class BackendApplication implements CommandLineRunner {
 
 			UserModel user = new UserModel(0l, username, email, password, null, null, null, null, null);
 			user = userRepositoryService.getInstance().save(user);
-			shoppingCartModel cart = new shoppingCartModel(0l, null, user);
+			ShoppingCartModel cart = new ShoppingCartModel(0l, null, user);
 			cart = shoppingCartRepositoryService.getInstance().save(cart);
 			user.setShoppingCart(cart);
 
