@@ -30,7 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "T_SHOPPING_CART")
-public class shoppingCartModel {
+public class ShoppingCartModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
