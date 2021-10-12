@@ -33,7 +33,7 @@ public class RevenuesModel {
     private long Id;
 
     @OneToMany(mappedBy = "revenues", fetch = FetchType.EAGER)
-    @Column(name = "SALE_LIST_FK", nullable = false)
+    @Column(name = "SALE_LIST_FK")
     private List<SaleModel> saleList;
 
 
