@@ -36,8 +36,12 @@ public class AuthorService {
         return author.get();
     }
 
-    public List<AuthorModel> findByName(String name){
-        return authorRepositoryService.getInstance().findByName(name);
+    public List<AuthorModel> findByName(String name) throws NotFoundException{
+        List<AuthorModel> author = authorRepositoryService.getInstance().findByName(name);
+        if(author == null){
+            throw new NotFoundException();
+        }
+        return author;
     }
 
     public List<AuthorModel> findAll(){
