@@ -10,6 +10,7 @@ import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
+import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
@@ -55,10 +56,10 @@ public abstract class ProductModel {
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "base64")
     @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "IMAGES", nullable = false)
-    private List<String> imageList;
+    @Column(name = "IMAGES", nullable = false)
+    private List<ImageModel> imageList;
 
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_FK", nullable = false)
@@ -127,14 +128,14 @@ public abstract class ProductModel {
         return false;
     }
 
-    public boolean addImageToImageList(String imageBase64) throws FullListException {
+    public boolean addImageToImageList(ImageModel image) throws FullListException {
         if(imageList == null) {
             imageList = new ArrayList<>();
-            addImageToImageList(imageBase64);
+            addImageToImageList(image);
         }
 
         if(imageList.size() < 2) {
-            imageList.add(imageBase64);
+            imageList.add(image);
             return true;
         } else {
             throw new FullListException("The list have 2 items");
@@ -146,7 +147,7 @@ public abstract class ProductModel {
             throw new NotFoundException();
         }
 
-        String removed = imageList.remove(index.intValue());
+        ImageModel removed = imageList.remove(index.intValue());
         if(removed != null) {
             return true;
         }
