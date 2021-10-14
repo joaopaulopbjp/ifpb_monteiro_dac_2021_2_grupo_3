@@ -10,6 +10,7 @@ import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
+import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
@@ -19,7 +20,7 @@ import com.bookstore.backend.domain.model.user.PersonModel;
 public class BookModel extends ProductModel{ 
 
     public BookModel(Long id, String title, String description, Integer yearLaunch, Integer pages, BigDecimal price,
-            List<String> imageList, SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList,
+            List<ImageModel> imageList, SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList,
             PersonModel saller, PublishingCompanyModel company, List<AuthorModel> authorList,
             List<EvaluateModel> evaluateList) {
         super(id, title, description, yearLaunch, pages, price, imageList, sale, inventory, categoryList, saller,

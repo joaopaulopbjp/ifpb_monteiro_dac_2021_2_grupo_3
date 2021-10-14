@@ -8,4 +8,8 @@ public class ModelMapperService {
     public static Object convertToDTO(Object object, Object dtoTarget) {
         return modelMapper.map(object, dtoTarget.getClass());
     }
+
+    public static Object convertToModel(Object dto, Object model) {
+        return modelMapper.map(dto, model.getClass());
+    }
 }
