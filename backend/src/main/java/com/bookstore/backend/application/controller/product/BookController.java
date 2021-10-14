@@ -18,7 +18,8 @@ public class BookController {
     private BookService bookServices;
 
     @PostMapping()
-    public ResponseEntity<?> save(@RequestBody BookDTO dto) {
+    // @RequestBody BookDTO dto
+    public ResponseEntity<?> save() {
         return null;
     }
 }
