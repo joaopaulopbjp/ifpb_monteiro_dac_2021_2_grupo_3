@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.user.PersonModel;
+import com.bookstore.backend.presentation.dto.address.AddressDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -50,6 +51,10 @@ public class AddressModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PERSON_FK", nullable = false)
 	private PersonModel person;
+
+	public AddressModel(AddressDTO address){
+		
+	}
 	
 	@Override
     public String toString() {
