@@ -57,7 +57,7 @@ public abstract class PersonModel {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @Column(name = "ADDRESS_FK", nullable = false)
+    @Column(name = "ADDRESS_FK")
     private List<AddressModel> addressList;
     
     @OneToMany(mappedBy = "saller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
