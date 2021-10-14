@@ -20,7 +20,7 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
     
     public List<BookModel> findByTitle(String title);
     
-    @Query("SELECT book FROM BookModel book WHERE (CategoryModel.id = ?1 in book.categoryList)")
+    @Query("SELECT book FROM BookModel book WHERE ( ?1 in book.categoryList)")
     public List<BookModel> findByCategoryId(Long categoryId);
 
     @Query("SELECT book FROM BookModel book WHERE (?1 in book.categoryList)")
