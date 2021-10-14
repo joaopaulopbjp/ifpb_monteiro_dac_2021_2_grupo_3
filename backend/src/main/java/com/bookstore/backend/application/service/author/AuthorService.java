@@ -36,6 +36,10 @@ public class AuthorService {
         return author.get();
     }
 
+    public List<AuthorModel> findByName(String name){
+        return authorRepositoryService.getInstance().findByName(name);
+    }
+
     public List<AuthorModel> findAll(){
         return authorRepositoryService.getInstance().findAll();
     }
