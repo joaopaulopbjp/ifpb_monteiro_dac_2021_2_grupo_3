@@ -7,6 +7,7 @@ import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
 import com.bookstore.backend.presentation.dto.address.AddressDTO;
+import com.bookstore.backend.presentation.response.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/address")
@@ -35,11 +37,15 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addressModel);
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody AddressDTO dto){
-        AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
-        addressService.delete(addressModel);
-        return ResponseEntity.status(HttpStatus.OK).body("Address Deleted");
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        try {
+            addressService.delete(id);
+            return ResponseEntity.status(HttpStatus.OK).body(id + " Address Deleted");
+        } catch (IllegalArgumentException e) {
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
     
     @GetMapping
@@ -54,8 +60,8 @@ public class AddressController {
             AddressModel address = addressService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(address);
         } catch (NotFoundException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
     
@@ -66,8 +72,8 @@ public class AddressController {
             address = addressService.update(address);
             return ResponseEntity.status(HttpStatus.OK).body(address);
         } catch (NotFoundException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(address);
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 }

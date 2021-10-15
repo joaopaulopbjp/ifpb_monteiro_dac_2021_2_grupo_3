@@ -20,8 +20,9 @@ public class AuthorService {
         return authorRepositoryService.getInstance().save(authorModel);
     }
 
-    public void delete(AuthorModel authorModel){
-        authorRepositoryService.getInstance().delete(authorModel);
+    public void delete(Long id) throws IllegalArgumentException{
+        AuthorModel author = authorRepositoryService.getInstance().findById(id).get();
+        authorRepositoryService.getInstance().delete(author);
     }
 
     public AuthorModel update(AuthorModel authorModel) throws NotFoundException{

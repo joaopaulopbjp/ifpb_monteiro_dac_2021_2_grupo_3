@@ -12,6 +12,7 @@ import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -35,6 +36,7 @@ public class  InventoryModel {
     @Column(name = "AMOUNT", nullable = false)
 	private Integer amount;
 
+	@JsonBackReference
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
 	private ProductModel product;

@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,6 +46,7 @@ public class SaleModel {
     @Column(name = "AMOUNT", nullable = false)
     private Integer amount;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "REVENUE_FK", nullable = false)
     private RevenuesModel revenues; 

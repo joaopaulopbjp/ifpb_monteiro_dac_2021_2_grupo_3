@@ -1,6 +1,5 @@
 package com.bookstore.backend.domain.model.product;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -68,6 +67,7 @@ public abstract class ProductModel {
     @JoinColumn(name = "SALE_FK", nullable = false)
     private SaleModel sale;
     
+    @JsonManagedReference
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;

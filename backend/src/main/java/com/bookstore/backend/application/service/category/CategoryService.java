@@ -20,8 +20,9 @@ public class CategoryService {
         return categoryRepositoryService.getInstance().save(categoryModel);
     }
 
-    public void delete(CategoryModel categoryModel){
-        categoryRepositoryService.getInstance().delete(categoryModel);
+    public void delete(Long id){
+        CategoryModel category = categoryRepositoryService.getInstance().findById(id).get();
+        categoryRepositoryService.getInstance().delete(category);
     }
 
     public CategoryModel update(CategoryModel categoryModel) throws NotFoundException{

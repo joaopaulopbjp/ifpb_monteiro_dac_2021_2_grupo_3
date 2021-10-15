@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,6 +43,7 @@ public class OrderModel {
 	@Column(name = "STATUS", nullable = false)
 	private OrderStatus status;
 
+	@JsonManagedReference
 	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
 	@Column(name = "ITEMLIST_FK", nullable = false)
 	private List<ItemOrderModel> itemList;

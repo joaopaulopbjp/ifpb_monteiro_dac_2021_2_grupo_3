@@ -20,7 +20,8 @@ public class PublishingCompanyService {
         return publishingCompanyRepositoryService.getInstance().save(publishingCompanyModel);
     }
 
-    public void delete(PublishingCompanyModel publishingCompanyModel){
+    public void delete(Long id){
+        PublishingCompanyModel publishingCompanyModel = publishingCompanyRepositoryService.getInstance().findById(id).get();
         publishingCompanyRepositoryService.getInstance().delete(publishingCompanyModel);
     }
 
