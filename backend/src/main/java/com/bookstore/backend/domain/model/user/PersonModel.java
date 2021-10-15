@@ -20,6 +20,7 @@ import javax.persistence.Table;
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -60,6 +61,7 @@ public abstract class PersonModel {
     @Column(name = "ADDRESS_FK")
     private List<AddressModel> addressList;
     
+    @JsonBackReference
     @OneToMany(mappedBy = "saller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @Column(name = "PRODUCT_SALE_FK")

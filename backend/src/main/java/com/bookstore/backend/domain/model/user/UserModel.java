@@ -12,6 +12,7 @@ import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 
 import org.hibernate.annotations.Fetch;
@@ -27,9 +28,11 @@ import lombok.Setter;
 @Table(name = "T_USER")
 public class UserModel extends PersonModel{
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "userModel")
     private ShoppingCartModel shoppingCart;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     private List<EvaluateModel> evaluateList;

@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model.category;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,7 +31,7 @@ import lombok.Setter;
 @Entity
 @Table(name = "T_CATEGORY")
 public class CategoryModel {
-	
+    
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", nullable = false)
@@ -37,6 +40,7 @@ public class CategoryModel {
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
+	@JsonBackReference
 	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
