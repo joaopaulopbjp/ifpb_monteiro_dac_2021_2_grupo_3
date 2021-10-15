@@ -1,9 +1,7 @@
 package com.bookstore.backend.application.service.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
-import com.bookstore.backend.infrastructure.persistence.repository.person.PersonRepository;
 import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 

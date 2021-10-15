@@ -3,7 +3,6 @@ package com.bookstore.backend.infrastructure.persistence.service.product;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.product.BookRepository;
@@ -49,7 +48,7 @@ public class BookRepositoryService {
         return pages.getContent();
     }
 
-    public List<BookModel> findByCategoryIdList(int pageNumber, List<CategoryModel> categoryListToFind) throws NotFoundException {
+    public List<BookModel> findByCategoryIdList(int pageNumber, List<Long> categoryListToFind) throws NotFoundException {
         Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
         Page<BookModel> pages = bookRepository.findByCategoryIdList(categoryListToFind, pageable);
 

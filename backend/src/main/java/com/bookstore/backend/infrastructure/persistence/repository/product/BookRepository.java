@@ -3,7 +3,6 @@ package com.bookstore.backend.infrastructure.persistence.repository.product;
 
 import java.util.List;
 
-import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 
 import org.springframework.data.domain.Page;
@@ -21,8 +20,7 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
     
     public List<BookModel> findByTitle(String title);
 
-    @Query("SELECT book FROM BookModel book WHERE :categoryListToFind IN book.categoryList")
-    public Page<BookModel> findByCategoryIdList(@Param("categoryListToFind") List<CategoryModel> categoryListToFind, Pageable pageable);
+    @Query(value = "SELECT DISTINCT * FROM t_product JOIN (SELECT product_id FROM t_product_category_join WHERE t_product_category_join.category_id IN :categoryIdListToFind) AS retorno ON retorno.product_id = id;", nativeQuery = true)
+    public Page<BookModel> findByCategoryIdList(@Param("categoryIdListToFind") List<Long> categoryIdListToFind, Pageable pageable);
     
 }
-

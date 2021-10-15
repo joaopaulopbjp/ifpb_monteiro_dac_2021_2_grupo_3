@@ -44,6 +44,8 @@ public class ProductDTO {
 
     private PersonModel saller;
 
+    private Long sallerId;
+
     private PublishingCompanyModel company;
 
     private List<AuthorModel> authorList;
