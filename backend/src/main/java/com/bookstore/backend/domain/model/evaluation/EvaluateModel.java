@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model.evaluation;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class EvaluateModel {
     private String comment;
 
     @JsonBackReference
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_FK", nullable = false)
     private UserModel user;
 

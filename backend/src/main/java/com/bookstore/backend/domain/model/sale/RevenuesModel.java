@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,6 +34,7 @@ public class RevenuesModel {
     @Column(name = "ID", nullable = false)
     private long Id;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "revenues", fetch = FetchType.EAGER)
     @Column(name = "SALE_LIST_FK")
     private List<SaleModel> saleList;

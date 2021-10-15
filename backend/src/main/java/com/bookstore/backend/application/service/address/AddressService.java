@@ -25,8 +25,9 @@ public class AddressService {
         return addressRepositoryService.getInstance().save(address);
     }
 
-    public void delete(AddressModel addressModel){
-        addressRepositoryService.getInstance().delete(addressModel);
+    public void delete(Long id) throws IllegalArgumentException{
+        AddressModel addres = addressRepositoryService.getInstance().findById(id).get();
+        addressRepositoryService.getInstance().delete(addres);
     }
 
     public AddressModel update(AddressModel addressModel) throws NotFoundException{

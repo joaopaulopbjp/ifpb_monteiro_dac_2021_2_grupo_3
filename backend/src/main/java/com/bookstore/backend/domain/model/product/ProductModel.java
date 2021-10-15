@@ -67,6 +67,7 @@ public abstract class ProductModel {
     @JoinColumn(name = "SALE_FK", nullable = false)
     private SaleModel sale;
     
+    @JsonManagedReference
     @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
     @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;

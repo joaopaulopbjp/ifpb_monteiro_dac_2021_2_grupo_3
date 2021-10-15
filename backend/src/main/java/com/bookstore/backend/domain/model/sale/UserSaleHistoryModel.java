@@ -16,6 +16,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.user.PersonModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,6 +37,7 @@ public class UserSaleHistoryModel {
     @Column(name = "ID", nullable = false)
     private Long id;
 
+	@JsonBackReference
     @OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PERSON_FK", nullable = false)
     private PersonModel person;
