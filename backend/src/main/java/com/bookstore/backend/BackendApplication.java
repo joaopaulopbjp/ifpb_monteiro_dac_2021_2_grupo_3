@@ -37,7 +37,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class BackendApplication implements CommandLineRunner {
+public class BackendApplication {
 	// Respositories
 	
 	@Autowired
@@ -80,7 +80,7 @@ public class BackendApplication implements CommandLineRunner {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	@Override
+	
 	public void run(String... args) throws Exception {
 		Scanner input = new Scanner(System.in);
 

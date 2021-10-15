@@ -27,4 +27,6 @@ public class AddressDTO{
 
     private PersonModel personModel;
 
+    private Long personId;
+
 }

@@ -1,8 +1,11 @@
 package com.bookstore.backend.application.service.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
+import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
+import com.bookstore.backend.infrastructure.persistence.repository.person.PersonRepository;
 import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,11 @@ public class AddressService {
     @Autowired
     private AddressRepositoryService addressRepositoryService;
 
-    public AddressModel save(AddressModel address){
+    @Autowired
+    private UserRepositoryService userRepositoryService;
+
+    public AddressModel save(AddressModel address, Long personId){
+        address.setPerson(userRepositoryService.getInstance().findById(personId).get());
         return addressRepositoryService.getInstance().save(address);
     }
 
