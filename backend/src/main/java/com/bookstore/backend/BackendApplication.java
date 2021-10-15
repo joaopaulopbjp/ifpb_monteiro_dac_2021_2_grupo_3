@@ -9,6 +9,7 @@ import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
+import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
@@ -31,13 +32,12 @@ import com.bookstore.backend.infrastructure.persistence.service.sale.SaleReposit
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class BackendApplication implements CommandLineRunner {
+public class BackendApplication {
 	// Respositories
 	
 	@Autowired
@@ -80,8 +80,7 @@ public class BackendApplication implements CommandLineRunner {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	@Override
-	public void run(String... args) throws Exception {
+	public void run2(String... args) throws Exception {
 		Scanner input = new Scanner(System.in);
 
 		boolean isRun = true;
@@ -709,7 +708,9 @@ public class BackendApplication implements CommandLineRunner {
 						int qtd = Integer.parseInt(input.nextLine());
 						InventoryModel inventory = new InventoryModel(0l, qtd, null, InventoryStatus.AVAILABLE);
 						inventory = inventoryRepositoryService.getInstance().save(inventory);
-						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, null, null, inventory, cateList, userModel, companyModel, authorList, null);
+						List<ImageModel> imagens = new ArrayList<>();
+						imagens.add(new ImageModel(0l, "PUTA"));
+						BookModel book = new BookModel(0l, title, description, yearLaunch, pages, price, imagens, null, inventory, cateList, userModel, companyModel, authorList, null);
 						book = bookRepositoryService.getInstance().save(book);
 						clearConsole();
 						
@@ -919,8 +920,9 @@ public class BackendApplication implements CommandLineRunner {
 										price = new BigDecimal(entrada);
 									}
 									entrada = null;
-									
-									BookModel bookDataBase = new BookModel(Long.parseLong(option), title, desc, year, pages, price, null, null, null, null, null, null, null, null);
+									List<ImageModel> imagens = new ArrayList<>();
+									imagens.add(new ImageModel(0l, "PUTA"));
+									BookModel bookDataBase = new BookModel(Long.parseLong(option), title, desc, year, pages, price, imagens, null, null, null, null, null, null, null);
 									bookRepositoryService.update(bookDataBase);
 									clearConsole();
 								}

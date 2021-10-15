@@ -49,12 +49,13 @@ public class BookRepositoryService {
         return pages.getContent();
     }
 
-    public List<BookModel> findByCategoryList(List<CategoryModel> categoryList) throws NotFoundException {
-        List<BookModel> booklist = bookRepository.findByCategoryList(categoryList);
-        
-        if(booklist.isEmpty()) throw new NotFoundException();
+    public List<BookModel> findByCategoryIdList(int pageNumber, List<CategoryModel> categoryListToFind) throws NotFoundException {
+        Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
+        Page<BookModel> pages = bookRepository.findByCategoryIdList(categoryListToFind, pageable);
 
-        return booklist;
+        if(pages.isEmpty()) throw new NotFoundException();
+
+        return pages.getContent();
     }
 
     public BookModel update(BookModel book) throws NotFoundException {

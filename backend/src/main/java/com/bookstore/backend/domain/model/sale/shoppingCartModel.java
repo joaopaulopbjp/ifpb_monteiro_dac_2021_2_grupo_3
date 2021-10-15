@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -41,6 +42,7 @@ public class ShoppingCartModel {
     @Fetch(FetchMode.SUBSELECT)
     private List<ItemOrderModel> itemList;
 
+    @JsonBackReference
     @OneToOne
     @JoinColumn(name = "USER_FK", nullable = false)
     private UserModel userModel;

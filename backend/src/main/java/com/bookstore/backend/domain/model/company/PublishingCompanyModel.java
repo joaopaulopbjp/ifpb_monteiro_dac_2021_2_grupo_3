@@ -1,6 +1,8 @@
 package com.bookstore.backend.domain.model.company;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -36,6 +38,7 @@ public class PublishingCompanyModel {
 	@Column(name = "NAME", nullable = false, unique = true)
 	private String name;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
 	private List<ProductModel> productList;
 	

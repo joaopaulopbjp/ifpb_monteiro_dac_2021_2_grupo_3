@@ -11,6 +11,7 @@ import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,6 +40,7 @@ public class EvaluateModel {
     @JoinColumn(name = "USER_FK", nullable = false)
     private UserModel user;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "PRODUCT_FK", nullable = false)
     private ProductModel product;

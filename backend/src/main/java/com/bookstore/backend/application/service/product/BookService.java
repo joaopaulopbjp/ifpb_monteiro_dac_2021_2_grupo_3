@@ -1,11 +1,13 @@
 package com.bookstore.backend.application.service.product;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
+import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class BookService {
     
     @Autowired
     private BookRepositoryService bookRepositoryService;
+
+    @Autowired
+    private CategoryRepositoryService categoryRepositoryService;
 
     public BookModel save(BookModel book) {
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
@@ -47,17 +52,13 @@ public class BookService {
         return bookRecoveredList;
     }
 
-    public List<BookModel> findByCategoryId(Long id) throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.getInstance().findByCategoryId(id);
+    public List<BookModel> findByCategoryIdList(List<Long> idList) throws NotFoundException {
+        List<CategoryModel> list = new ArrayList<>();
+        list.add(categoryRepositoryService.getInstance().findById(1l).get());
+        List<BookModel> bookRecoveredList = bookRepositoryService.findByCategoryIdList(0, list);
         if(bookRecoveredList.isEmpty()) 
             throw new NotFoundException();
             
-        return bookRecoveredList;
-    }
-
-    public List<BookModel> findByCategoryList(List<CategoryModel> categoryToFind) throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.findByCategoryList(categoryToFind);
-        
         return bookRecoveredList;
     }
 
