@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -63,6 +64,7 @@ public abstract class ProductModel {
     @JoinColumn(name = "PRODUCT_FK", nullable = false)
     private List<ImageModel> imageList;
 
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_FK", nullable = false)
     private SaleModel sale;

@@ -21,6 +21,7 @@ import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -56,6 +57,7 @@ public abstract class PersonModel {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @Column(name = "ADDRESS_FK")
@@ -67,6 +69,7 @@ public abstract class PersonModel {
     @Column(name = "PRODUCT_SALE_FK")
     private List<ProductModel> productForSaleList;
 
+    @JsonManagedReference
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_HISTORY_ID")
     private UserSaleHistoryModel saleHistory;

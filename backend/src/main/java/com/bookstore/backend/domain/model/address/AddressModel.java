@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.presentation.dto.address.AddressDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -48,6 +50,7 @@ public class AddressModel {
 	@Column(name = "DISTRICT", nullable = false)
 	private String district;
 	
+	@JsonBackReference
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PERSON_FK", nullable = false)
 	private PersonModel person;
