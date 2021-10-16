@@ -63,7 +63,7 @@ public class BookService {
         book.setAuthorList(authorRecoveredList);
         book.setSaller(personModelOp.get());
         book.setCompany(companyOp.get());
-
+        book.getSale().setProduct(book);
         revenuesRepositoryServices.getInstance().save(book.getSale().getRevenues());
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
         return bookSaved;

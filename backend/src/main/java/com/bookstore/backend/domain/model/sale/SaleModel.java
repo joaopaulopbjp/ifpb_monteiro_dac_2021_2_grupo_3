@@ -2,7 +2,6 @@ package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +13,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -36,8 +36,8 @@ public class SaleModel {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "sale")
-    @JoinColumn(name = "PRODUCT_FK")
+    @JsonBackReference
+    @OneToOne(mappedBy = "sale")
     private ProductModel product;
 
     @Column(name = "AMOUNT", nullable = false)
