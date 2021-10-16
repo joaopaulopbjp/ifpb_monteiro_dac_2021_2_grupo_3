@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.presentation.dto.address.AddressDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
