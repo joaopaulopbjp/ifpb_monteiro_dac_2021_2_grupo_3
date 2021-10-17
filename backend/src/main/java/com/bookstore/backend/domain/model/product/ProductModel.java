@@ -12,7 +12,6 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
-import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 
@@ -59,10 +58,6 @@ public abstract class ProductModel {
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "PRODUCT_FK", nullable = false)
     private List<ImageModel> imageList;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALE_FK", nullable = false)
-    private SaleModel sale;
     
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INVENTORY_FK", nullable = false)

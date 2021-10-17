@@ -2,15 +2,13 @@ package com.bookstore.backend.presentation.dto.product;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.bookstore.backend.domain.model.author.AuthorModel;
-import com.bookstore.backend.domain.model.category.CategoryModel;
-import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
-import com.bookstore.backend.domain.model.inventory.InventoryModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
+import com.bookstore.backend.presentation.dto.author.AuthorDTO;
+import com.bookstore.backend.presentation.dto.category.CategoryDTO;
+import com.bookstore.backend.presentation.dto.company.PublishingCompanyDTO;
 import com.bookstore.backend.presentation.dto.evaluate.EvaluateDTO;
 import com.bookstore.backend.presentation.dto.image.ImageDTO;
-import com.bookstore.backend.presentation.dto.sale.SaleDTO;
+import com.bookstore.backend.presentation.dto.inventory.InventoryDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProductDTO {
 
     private Long id;
@@ -37,25 +36,21 @@ public class ProductDTO {
 
     private List<ImageDTO> imageList;
 
-    private SaleDTO sale;
-
-    private InventoryModel inventory;
+    private InventoryDTO inventory;
     
-    private List<CategoryModel> categoryList;
+    private List<CategoryDTO> categoryList;
 
-    private List<Long> categoryListId;
+    private List<Long> idCategoryList;
 
-    private PersonModel saller;
+    private Long idSaller;
 
-    private Long sallerId;
+    private PublishingCompanyDTO company;
 
-    private PublishingCompanyModel company;
+    private Long idCompany;
 
-    private Long companyId;
+    private List<AuthorDTO> authorList;
 
-    private List<AuthorModel> authorList;
-
-    private List<Long> authorListId;
+    private List<Long> idAuthorList;
 
     private List<EvaluateDTO> evaluateList;
 }

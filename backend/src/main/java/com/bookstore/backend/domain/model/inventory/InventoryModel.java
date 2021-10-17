@@ -75,6 +75,14 @@ public class  InventoryModel {
 		}
 	}
 
+	public void setAmount(Integer amount) {
+		this.amount = amount;
+		this.status = InventoryStatus.UNAVAILABLE;
+		if(amount != null && amount > 0) {
+			this.status = InventoryStatus.AVAILABLE;
+		}
+	}
+
 	@Override
     public String toString() {
         return String.format("INVENTORY [ID: %s - AMOUNT: %s ]", getId(), getAmount());

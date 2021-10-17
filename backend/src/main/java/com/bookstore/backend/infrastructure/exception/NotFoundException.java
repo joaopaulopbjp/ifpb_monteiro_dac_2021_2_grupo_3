@@ -3,6 +3,7 @@ package com.bookstore.backend.infrastructure.exception;
 public class NotFoundException extends Exception {
 
     public NotFoundException() {
+        super("Not Found!");
     }
 
     public NotFoundException(String message) {
@@ -11,7 +12,7 @@ public class NotFoundException extends Exception {
 
     @Override
     public String getMessage() {
-        return "Not found";
+        return super.getMessage();
     }
     
 }

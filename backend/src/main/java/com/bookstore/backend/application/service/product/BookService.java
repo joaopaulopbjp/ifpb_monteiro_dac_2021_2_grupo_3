@@ -8,6 +8,7 @@ import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.product.BookModel;
+import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
@@ -15,6 +16,8 @@ import com.bookstore.backend.infrastructure.persistence.service.category.Categor
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +37,9 @@ public class BookService {
     private UserRepositoryService userRepositoryService;
 
     @Autowired
+    private SaleRepositoryService saleRepositoryService;
+
+    @Autowired
     private PublishingCompanyRepositoryService companyRepositoryService;
 
     public BookModel save(BookModel book, List<Long> categoryListId, Long sallerId, Long companyId, List<Long> authorListId) throws NotFoundException {
@@ -43,17 +49,25 @@ public class BookService {
         List<AuthorModel> authorRecoveredList = new ArrayList<>();
 
         for(Long id : categoryListId) {
-            CategoryModel category = categoryRepositoryService.getInstance().findById(id).get();
-            categoryRecoveredList.add(category);
+            Optional<CategoryModel> category = categoryRepositoryService.getInstance().findById(id);
+            if(!category.isPresent())
+                throw new NotFoundException("Not found the id " + id + " for Category.");
+            categoryRecoveredList.add(category.get());
         }
 
         for(Long id : authorListId) {
-            AuthorModel author = authorRepositoryService.getInstance().findById(id).get();
-            authorRecoveredList.add(author);
+            Optional<AuthorModel> author = authorRepositoryService.getInstance().findById(id);
+            if(!author.isPresent())
+                throw new NotFoundException("Not found the id " + id + " for Author.");
+            authorRecoveredList.add(author.get());
         }
 
-        if(personModelOp.get() == null) {
+        if(!personModelOp.isPresent()) {
             throw new NotFoundException("Not found the id " + sallerId + " for user.");
+        }
+        if(!companyOp.isPresent()) {
+            throw new NotFoundException("Not found the id " + companyId + " for PublishingCompany.");
+
         }
         book.setCategoryList(categoryRecoveredList);
         book.setAuthorList(authorRecoveredList);
@@ -62,6 +76,9 @@ public class BookService {
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
         personModelOp.get().addProductToProductList(bookSaved);
         userRepositoryService.getInstance().save(personModelOp.get());
+
+        SaleModel sale = new SaleModel(0l, bookSaved, 0);
+        saleRepositoryService.getInstance().save(sale);
         return bookSaved;
     }
 

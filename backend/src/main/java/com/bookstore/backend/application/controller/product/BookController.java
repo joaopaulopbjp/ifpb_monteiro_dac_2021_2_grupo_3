@@ -30,8 +30,10 @@ public class BookController {
     public ResponseEntity<?> save(@RequestBody BookDTO dto) {
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
         try {
-            BookModel booksaved = bookServices.save(book, dto.getCategoryListId(), dto.getSallerId(), dto.getCompanyId(), dto.getAuthorListId());
-            return ResponseEntity.status(HttpStatus.OK).body(booksaved);
+            BookModel booksaved = bookServices.save(book, dto.getIdCategoryList(), dto.getIdSaller(), dto.getIdCompany(), dto.getIdAuthorList());
+            
+            dto = (BookDTO) ModelMapperService.convertToDTO(booksaved, dto.getClass());
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
