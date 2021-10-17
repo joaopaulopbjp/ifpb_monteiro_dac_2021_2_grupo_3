@@ -1,45 +1,43 @@
 package com.bookstore.backend.domain.model.inventory;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @EqualsAndHashCode
-@NoArgsConstructor
 @Entity
 @Table(name = "T_INVENTORY")
 public class  InventoryModel {
-    @Id
+
+    public InventoryModel(Long id, Integer amount, InventoryStatus status) {
+		this.id = id;
+		this.amount = amount;
+		this.status = InventoryStatus.UNAVAILABLE;
+		if(amount != null && amount > 0) {
+			this.status = InventoryStatus.AVAILABLE;
+		}
+	}
+	
+	public InventoryModel() {
+	}
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
 	private Long id;
 
     @Column(name = "AMOUNT", nullable = false)
 	private Integer amount;
-
-	@JsonBackReference
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PRODUCT_FK")
-	private ProductModel product;
 
 	@Column(name = "STATUS", nullable = false)
 	private InventoryStatus status;

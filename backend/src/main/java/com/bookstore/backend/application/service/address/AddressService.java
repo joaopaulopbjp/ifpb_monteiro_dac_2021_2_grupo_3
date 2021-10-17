@@ -1,6 +1,7 @@
 package com.bookstore.backend.application.service.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
+import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
@@ -21,13 +22,19 @@ public class AddressService {
     private UserRepositoryService userRepositoryService;
 
     public AddressModel save(AddressModel address, Long personId){
-        address.setPerson(userRepositoryService.getInstance().findById(personId).get());
-        return addressRepositoryService.getInstance().save(address);
+        UserModel user = userRepositoryService.getInstance().findById(personId).get();
+        address = addressRepositoryService.getInstance().save(address);
+        user.addAddressToAddressList(address);
+        user = userRepositoryService.getInstance().save(user);
+        return address;
     }
 
-    public void delete(Long id) throws IllegalArgumentException{
-        AddressModel addres = addressRepositoryService.getInstance().findById(id).get();
-        addressRepositoryService.getInstance().delete(addres);
+    public void delete(Long id) throws IllegalArgumentException {
+        UserModel user = userRepositoryService.getInstance().findByAddressId(id);
+        Optional<AddressModel> address = addressRepositoryService.getInstance().findById(id);
+
+        user.removeAddressFromAddressList(address.get());
+        userRepositoryService.getInstance().save(user);
     }
 
     public AddressModel update(AddressModel addressModel) throws NotFoundException{

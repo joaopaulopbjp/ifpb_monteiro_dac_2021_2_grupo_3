@@ -15,7 +15,6 @@ import com.bookstore.backend.infrastructure.persistence.service.category.Categor
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,9 +32,6 @@ public class BookService {
 
     @Autowired
     private UserRepositoryService userRepositoryService;
-
-    @Autowired
-    private RevenuesRepositoryServices revenuesRepositoryServices;
 
     @Autowired
     private PublishingCompanyRepositoryService companyRepositoryService;
@@ -61,11 +57,11 @@ public class BookService {
         }
         book.setCategoryList(categoryRecoveredList);
         book.setAuthorList(authorRecoveredList);
-        book.setSaller(personModelOp.get());
         book.setCompany(companyOp.get());
 
-        revenuesRepositoryServices.getInstance().save(book.getSale().getRevenues());
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
+        personModelOp.get().addProductToProductList(bookSaved);
+        userRepositoryService.getInstance().save(personModelOp.get());
         return bookSaved;
     }
 

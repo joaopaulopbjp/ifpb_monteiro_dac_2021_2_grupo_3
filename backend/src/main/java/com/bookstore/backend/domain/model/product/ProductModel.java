@@ -13,10 +13,8 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -57,7 +55,6 @@ public abstract class ProductModel {
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @JsonManagedReference
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @JoinColumn(name = "PRODUCT_FK", nullable = false)
@@ -67,12 +64,10 @@ public abstract class ProductModel {
     @JoinColumn(name = "SALE_FK", nullable = false)
     private SaleModel sale;
     
-    @JsonManagedReference
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;
     
-    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
@@ -81,17 +76,10 @@ public abstract class ProductModel {
     @Fetch(FetchMode.SUBSELECT)
     private List<CategoryModel> categoryList;
 
-    @JsonManagedReference
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALLER_FK", nullable = false)
-    private PersonModel saller;
-
-    @JsonManagedReference
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMPANY_FK", nullable = false)
     private PublishingCompanyModel company;
 
-    @JsonManagedReference
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
@@ -99,8 +87,11 @@ public abstract class ProductModel {
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", nullable = false))
     private List<AuthorModel> authorList;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "T_PRODUCT_EVALUATE_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "EVALUATE_ID", nullable = false))
     private List<EvaluateModel> evaluateList; 
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {

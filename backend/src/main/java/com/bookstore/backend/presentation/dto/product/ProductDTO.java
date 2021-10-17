@@ -8,6 +8,7 @@ import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
+import com.bookstore.backend.presentation.dto.evaluate.EvaluateDTO;
 import com.bookstore.backend.presentation.dto.image.ImageDTO;
 import com.bookstore.backend.presentation.dto.sale.SaleDTO;
 
@@ -56,5 +57,5 @@ public class ProductDTO {
 
     private List<Long> authorListId;
 
-    // private List<EvaluateDTO> evaluateList;
+    private List<EvaluateDTO> evaluateList;
 }

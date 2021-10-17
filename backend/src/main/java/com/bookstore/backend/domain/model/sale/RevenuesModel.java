@@ -9,10 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -34,9 +34,11 @@ public class RevenuesModel {
     @Column(name = "ID", nullable = false)
     private long Id;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "revenues", fetch = FetchType.EAGER)
-    @Column(name = "SALE_LIST_FK")
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "T_PRODUCT_SALE_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "SALE_ID", nullable = false))
     private List<SaleModel> saleList;
 
 
@@ -44,6 +46,15 @@ public class RevenuesModel {
         BigDecimal revenue = new BigDecimal("0");
 
         for(SaleModel sale : list) {
+            revenue = revenue.add(sale.getTotalSalesPrice());
+        }
+        return revenue;
+    }
+
+    public BigDecimal calculateAll() {
+        BigDecimal revenue = new BigDecimal("0");
+
+        for(SaleModel sale : saleList) {
             revenue = revenue.add(sale.getTotalSalesPrice());
         }
         return revenue;

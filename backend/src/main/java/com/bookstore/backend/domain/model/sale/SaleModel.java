@@ -9,13 +9,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -36,17 +34,12 @@ public class SaleModel {
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "sale")
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_FK")
     private ProductModel product;
 
     @Column(name = "AMOUNT", nullable = false)
     private Integer amount;
-
-    @JsonManagedReference
-    @ManyToOne
-    @JoinColumn(name = "REVENUE_FK", nullable = false)
-    private RevenuesModel revenues; 
 
     @JsonIgnore
     public BigDecimal getTotalSalesPrice() {

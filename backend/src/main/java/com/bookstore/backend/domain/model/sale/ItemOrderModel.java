@@ -13,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -41,11 +40,6 @@ public class ItemOrderModel {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private ProductModel product;
-
-	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ORDER_FK")
-	private OrderModel order;
 
 
 	public BigDecimal getTotalPrice() {

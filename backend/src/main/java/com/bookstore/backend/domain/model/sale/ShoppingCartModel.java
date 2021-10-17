@@ -11,11 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.bookstore.backend.domain.model.user.UserModel;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -41,11 +37,6 @@ public class ShoppingCartModel {
     @JoinColumn(name = "ITEMLIST_FK")
     @Fetch(FetchMode.SUBSELECT)
     private List<ItemOrderModel> itemList;
-
-    @JsonBackReference
-    @OneToOne
-    @JoinColumn(name = "USER_FK", nullable = false)
-    private UserModel userModel;
 
 
     public boolean addItemOrderToItemList(ItemOrderModel item) {

@@ -1,7 +1,7 @@
 package com.bookstore.backend.presentation.dto.evaluate;
 
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.presentation.dto.product.ProductDTO;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,5 +17,5 @@ public class EvaluateDTO {
 
     private UserModel user;
 
-    private ProductModel product;
+    private ProductDTO product;
 }

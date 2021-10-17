@@ -13,7 +13,6 @@ import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
 
 @Entity
 @Table(name = "T_BOOK")
@@ -21,10 +20,9 @@ public class BookModel extends ProductModel{
 
     public BookModel(Long id, String title, String description, Integer yearLaunch, Integer pages, BigDecimal price,
             List<ImageModel> imageList, SaleModel sale, InventoryModel inventory, List<CategoryModel> categoryList,
-            PersonModel saller, PublishingCompanyModel company, List<AuthorModel> authorList,
-            List<EvaluateModel> evaluateList) {
-        super(id, title, description, yearLaunch, pages, price, imageList, sale, inventory, categoryList, saller,
-                company, authorList, evaluateList);
+            PublishingCompanyModel company, List<AuthorModel> authorList, List<EvaluateModel> evaluateList) {
+        super(id, title, description, yearLaunch, pages, price, imageList, sale, inventory, categoryList, company,
+                authorList, evaluateList);
     }
 
     public BookModel() {
