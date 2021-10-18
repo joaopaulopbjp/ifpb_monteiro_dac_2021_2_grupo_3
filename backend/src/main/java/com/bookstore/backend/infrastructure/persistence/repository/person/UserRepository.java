@@ -16,4 +16,7 @@ public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     @Query(value = "SELECT * FROM t_user JOIN (SELECT * FROM t_person JOIN (SELECT person_id FROM t_person_address_join WHERE t_person_address_join.address_id = :addressId) AS retorno ON retorno.person_id = id) AS person ON person.person_id = t_user.id;", nativeQuery = true)
     public UserModel findByAddressId(@Param("addressId") Long addressId);
+
+    @Query(value = "SELECT * FROM t_user JOIN (SELECT * FROM t_person JOIN (SELECT person_id FROM t_person_product_for_sale_join WHERE t_person_product_for_sale_join.product_for_sale_id = :productId) AS retorno ON retorno.person_id = id) AS person ON person.person_id = t_user.id;", nativeQuery = true)
+    public UserModel findByProductId(@Param("productId") Long productId);
 }

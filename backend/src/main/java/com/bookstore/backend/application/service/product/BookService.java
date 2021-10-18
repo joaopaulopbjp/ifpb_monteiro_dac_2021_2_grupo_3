@@ -8,6 +8,7 @@ import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.product.BookModel;
+import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -87,8 +88,20 @@ public class BookService {
         return bookUpdated;
     }
 
-    public void delete(Long id) throws IllegalArgumentException{
-        bookRepositoryService.getInstance().deleteById(id);
+    public void delete(Long id) throws NotFoundException {
+        boolean flag = bookRepositoryService.getInstance().existsById(id);
+        if(!flag)
+        throw new NotFoundException();
+        
+        UserModel user = userRepositoryService.getInstance().findByProductId(id);
+        ProductModel product = bookRepositoryService.getInstance().findById(id).get();
+        user.removeProductFromProductList(product);
+
+        SaleModel sale = saleRepositoryService.getInstance().findByProductId(id);
+        
+        userRepositoryService.getInstance().save(user);
+        saleRepositoryService.getInstance().deleteById(sale.getId());
+
     }
 
     public BookModel findById(Long id) throws NotFoundException {

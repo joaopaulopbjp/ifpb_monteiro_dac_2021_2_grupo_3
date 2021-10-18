@@ -63,7 +63,7 @@ public abstract class ProductModel {
     @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;
     
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
@@ -71,18 +71,18 @@ public abstract class ProductModel {
     @Fetch(FetchMode.SUBSELECT)
     private List<CategoryModel> categoryList;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "COMPANY_FK", nullable = false)
     private PublishingCompanyModel company;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", nullable = false))
     private List<AuthorModel> authorList;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
         name = "T_PRODUCT_EVALUATE_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
