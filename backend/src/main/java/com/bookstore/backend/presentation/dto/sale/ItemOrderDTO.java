@@ -7,16 +7,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Getter
 @Setter
-public class SaleDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class ItemOrderDTO {
     private Long id;
 
-    private Integer amount;
+	private Integer amount;
 
-    private ProductDTO productDto;
-    
-    private Long productId;
+	private ProductDTO product;
 }

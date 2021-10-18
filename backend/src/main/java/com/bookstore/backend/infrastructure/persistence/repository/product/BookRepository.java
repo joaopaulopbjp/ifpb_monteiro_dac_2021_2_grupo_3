@@ -20,7 +20,8 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
     
     public List<BookModel> findByTitle(String title);
 
-    @Query(value = "SELECT DISTINCT * FROM t_product JOIN (SELECT product_id FROM t_product_category_join WHERE t_product_category_join.category_id IN :categoryIdListToFind) AS retorno ON retorno.product_id = id;", nativeQuery = true)
-    public Page<BookModel> findByCategoryIdList(@Param("categoryIdListToFind") List<Long> categoryIdListToFind, Pageable pageable);
+    @Query(value = "SELECT * FROM t_book JOIN (SELECT DISTINCT * FROM t_product JOIN (SELECT product_id FROM t_product_category_join WHERE t_product_category_join.category_id IN :categoryIdListToFind) AS retorno ON retorno.product_id = id) as product on product.id = t_book.id;", 
+    nativeQuery = true)
+    public List<BookModel> findByCategoryIdList(@Param("categoryIdListToFind") List<Long> categoryIdListToFind);
     
 }

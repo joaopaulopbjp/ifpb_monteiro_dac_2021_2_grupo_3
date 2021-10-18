@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,6 +46,16 @@ public class BookController {
     public ResponseEntity<?> findAll() {
         try {
             List<BookModel> bookList = bookServices.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{page}")
+    public ResponseEntity<?> findByCategoryList(@PathVariable("page") int page, @RequestBody BookDTO dto) {
+        try {
+            List<BookModel> bookList = bookServices.findByCategoryIdList(page, dto.getIdCategoryList());
             return ResponseEntity.status(HttpStatus.OK).body(bookList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));

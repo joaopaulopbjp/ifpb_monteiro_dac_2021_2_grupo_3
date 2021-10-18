@@ -8,6 +8,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BookDTO extends ProductDTO{
+public class BookDTO extends ProductDTO {
     
 }
