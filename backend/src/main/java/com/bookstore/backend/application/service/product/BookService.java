@@ -93,7 +93,7 @@ public class BookService {
 
     public BookModel findById(Long id) throws NotFoundException {
         Optional<BookModel> bookRecovered = bookRepositoryService.getInstance().findById(id);
-        if(bookRecovered.get() == null) 
+        if(!bookRecovered.isPresent()) 
             throw new NotFoundException();
             
         return bookRecovered.get();
@@ -120,8 +120,11 @@ public class BookService {
         return bookRecoveredList;
     }
 
-    public List<BookModel> findAll() {
+    public List<BookModel> findAll() throws NotFoundException {
         List<BookModel> bookRecoveredList = bookRepositoryService.getInstance().findAll();
+
+        if(bookRecoveredList.isEmpty()) 
+            throw new NotFoundException();
         return bookRecoveredList;
     }
 }

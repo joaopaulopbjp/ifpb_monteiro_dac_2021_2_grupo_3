@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.controller.product;
 
+import java.util.List;
+
 import com.bookstore.backend.application.service.product.BookService;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -41,7 +43,41 @@ public class BookController {
 
     @GetMapping
     public ResponseEntity<?> findAll() {
-        return null;
+        try {
+            List<BookModel> bookList = bookServices.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
     }
     
+    @GetMapping("/id")
+    public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
+        try {
+            BookModel book = bookServices.findById(dto.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(book);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/title")
+    public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
+        try {
+            List<BookModel> book = bookServices.findByTitle(dto.getTitle());
+            return ResponseEntity.status(HttpStatus.OK).body(book);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/cheapests")
+    public ResponseEntity<?> cheapests() {
+        try {
+            List<BookModel> bookList = bookServices.findFiveCheapests();
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
 }
