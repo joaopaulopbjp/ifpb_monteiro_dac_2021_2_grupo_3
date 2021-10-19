@@ -86,4 +86,15 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
+
+    @GetMapping("/find-by-name")
+    public ResponseEntity<?> findByName(@RequestBody CategoryDTO dto){
+        try {
+            List<CategoryModel> categoryList = categoryService.findByName(dto.getName());
+            return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+        } catch (NotFoundException e) {
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }
