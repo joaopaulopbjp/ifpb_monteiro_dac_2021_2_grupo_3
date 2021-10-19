@@ -74,4 +74,16 @@ public class CategoryController {
         List<CategoryModel> categoryList = categoryService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(categoryList);
     }
+    
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> findById(@RequestBody CategoryDTO dto){
+        CategoryModel category;
+        try {
+            category = categoryService.findById(dto.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(category);
+        } catch (NotFoundException e) {
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
+    }
 }
