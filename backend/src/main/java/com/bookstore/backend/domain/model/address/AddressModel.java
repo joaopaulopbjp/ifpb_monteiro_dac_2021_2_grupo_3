@@ -1,6 +1,5 @@
 package com.bookstore.backend.domain.model.address;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -50,7 +49,7 @@ public class AddressModel {
 	private String district;
 	
 	@JsonBackReference
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "PERSON_FK", nullable = false)
 	private PersonModel person;
 

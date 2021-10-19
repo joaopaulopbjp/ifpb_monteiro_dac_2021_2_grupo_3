@@ -32,12 +32,13 @@ import com.bookstore.backend.infrastructure.persistence.service.sale.SaleReposit
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-public class BackendApplication {
+public class BackendApplication{
 	// Respositories
 	
 	@Autowired
@@ -80,7 +81,8 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 
-	public void run2(String... args) throws Exception {
+	
+	public void run(String... args) throws Exception {
 		Scanner input = new Scanner(System.in);
 
 		boolean isRun = true;

@@ -2,7 +2,6 @@ package com.bookstore.backend.domain.model.author;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +41,7 @@ public class AuthorModel {
     private String name;
 
     @JsonBackReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN",
         joinColumns = @JoinColumn(name = "PRODUCT_ID"),

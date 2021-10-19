@@ -42,7 +42,7 @@ public class AuthorController {
     public ResponseEntity<?> delete(@PathVariable Long id){
         try {
             authorService.delete(id);
-            return ResponseEntity.status(HttpStatus.OK).body(id + " Address Deleted");
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

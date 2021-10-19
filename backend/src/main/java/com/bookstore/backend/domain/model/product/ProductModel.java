@@ -93,7 +93,7 @@ public abstract class ProductModel {
     private PublishingCompanyModel company;
 
     @JsonManagedReference
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 

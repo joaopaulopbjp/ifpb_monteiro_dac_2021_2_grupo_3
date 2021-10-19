@@ -58,7 +58,7 @@ public abstract class PersonModel {
     private String password;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "person", cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
     @Column(name = "ADDRESS_FK")
     private List<AddressModel> addressList;
