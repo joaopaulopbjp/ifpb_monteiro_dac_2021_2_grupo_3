@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.controller.category;
 
+import java.util.List;
+
 import com.bookstore.backend.application.service.category.CategoryService;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -12,8 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,20 +52,26 @@ public class CategoryController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } catch (NotFoundException e) {
             response = new Response(e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody CategoryDTO dto){
         CategoryModel category = (CategoryModel) ModelMapperService.convertToModel(dto, CategoryModel.class);
         try {
             category = categoryService.update(category);
-            return ResponseEntity.status(HttpStatus.OK).body(category);
+            dto = (CategoryDTO)ModelMapperService.convertToDTO(category, CategoryDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
         }
     }
 
+    @GetMapping("/find-all")
+    public ResponseEntity<?> findAll(){
+        List<CategoryModel> categoryList = categoryService.findAll();
+        return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+    }
 }
