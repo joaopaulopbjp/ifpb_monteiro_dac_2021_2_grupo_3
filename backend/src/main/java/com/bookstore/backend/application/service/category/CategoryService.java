@@ -3,9 +3,12 @@ package com.bookstore.backend.application.service.category;
 import java.util.List;
 import java.util.Optional;
 
+import com.bookstore.backend.application.service.product.BookService;
 import com.bookstore.backend.domain.model.category.CategoryModel;
+import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,13 +19,31 @@ public class CategoryService {
     @Autowired
     private CategoryRepositoryService categoryRepositoryService;
 
+    @Autowired
+    private BookRepositoryService bookRepositoryService;
+
+    @Autowired
+    private BookService bookService;
+
     public CategoryModel save(CategoryModel categoryModel) throws IllegalArgumentException{
         return categoryRepositoryService.getInstance().save(categoryModel);
     }
 
-    public void delete(Long id) throws IllegalArgumentException{
+    public void delete(Long id) throws IllegalArgumentException, NotFoundException{
+        if(!categoryRepositoryService.getInstance().existsById(id)){
+            throw new NotFoundException("not Found category. " + id);
+        }
         CategoryModel category = categoryRepositoryService.getInstance().findById(id).get();
-        categoryRepositoryService.getInstance().delete(category);
+        List<BookModel> bookList = bookRepositoryService.getInstance().findByCategoryId(id);
+        for(BookModel book: bookList){
+            book.removeCategoryFromCategoryList(category);
+            if(book.getCategoryList().isEmpty()){
+                bookService.delete(book.getId());
+            }else{
+                bookRepositoryService.getInstance().save(book);
+            }
+        }
+        categoryRepositoryService.getInstance().deleteById(id);
     }
 
     public CategoryModel update(CategoryModel categoryModel) throws NotFoundException{

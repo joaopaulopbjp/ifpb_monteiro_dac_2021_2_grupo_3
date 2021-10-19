@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("/api/address")
@@ -33,15 +32,21 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody AddressDTO dto){
         AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
-        addressModel = addressService.save(addressModel, dto.getPersonId());
-        return ResponseEntity.status(HttpStatus.CREATED).body(addressModel);
+        try {
+            addressModel = addressService.save(addressModel, dto.getPersonId());
+            dto = (AddressDTO) ModelMapperService.convertToDTO(addressModel, AddressDTO.class);
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
+        } catch (NotFoundException e) {
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestBody AddressDTO dto){
         try {
-            addressService.delete(id);
-            return ResponseEntity.status(HttpStatus.OK).body(id + " Address Deleted");
+            addressService.delete(dto.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
@@ -54,11 +59,12 @@ public class AddressController {
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/find-by-id")
     public ResponseEntity<?> getAddressById(@RequestBody Long id){
         try {
             AddressModel address = addressService.findById(id);
-            return ResponseEntity.status(HttpStatus.OK).body(address);
+            AddressDTO dto = (AddressDTO)ModelMapperService.convertToDTO(address, AddressDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

@@ -38,14 +38,14 @@ public class AuthorController {
         return ResponseEntity.status(HttpStatus.OK).body(author);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestBody AuthorDTO dto){
         try {
-            authorService.delete(id);
+            authorService.delete(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        } catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException | NotFoundException e) {
             Response response = new Response(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }
 
@@ -63,7 +63,7 @@ public class AuthorController {
             return ResponseEntity.status(HttpStatus.OK).body(authorList);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }catch(NotFoundException e){
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
