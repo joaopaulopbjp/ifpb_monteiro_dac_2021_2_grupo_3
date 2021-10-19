@@ -15,11 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 
 @RestController
 @RequestMapping("/api/address")
@@ -53,14 +53,14 @@ public class AddressController {
         }
     }
     
-    @GetMapping
-    public ResponseEntity<?> getAll() {
+    @GetMapping("/find-all")
+    public ResponseEntity<?> findAll() {
         List<AddressModel> list = addressService.findAll();
         return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> getAddressById(@RequestBody Long id){
+    public ResponseEntity<?> findById(@RequestBody Long id){
         try {
             AddressModel address = addressService.findById(id);
             AddressDTO dto = (AddressDTO)ModelMapperService.convertToDTO(address, AddressDTO.class);
@@ -71,7 +71,7 @@ public class AddressController {
         }
     }
     
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody AddressDTO dto){
         AddressModel address = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
         try {

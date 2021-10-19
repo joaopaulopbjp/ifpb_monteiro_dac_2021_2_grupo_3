@@ -15,9 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,15 +49,15 @@ public class AuthorController {
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAll(){
+    @GetMapping("/find-all")
+    public ResponseEntity<?> findAll(){
         List<AuthorModel> authorList = authorService.findAll();
 
         return ResponseEntity.status(HttpStatus.OK).body(authorList);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@RequestBody Long id){
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> findById(@RequestBody Long id){
         try {
             AuthorModel authorList = authorService.findById(id);
             return ResponseEntity.status(HttpStatus.OK).body(authorList);
@@ -70,8 +70,8 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<?> getByName(@PathVariable String name){
+    @GetMapping("/find-by-name")
+    public ResponseEntity<?> findByName(@PathVariable String name){
         try {
             List<AuthorModel> author = authorService.findByName(name);
             return ResponseEntity.status(HttpStatus.OK).body(author);
@@ -81,7 +81,7 @@ public class AuthorController {
         }
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody AuthorModel dto){
         try {
             AuthorModel author = (AuthorModel) ModelMapperService.convertToModel(dto, AuthorModel.class);
