@@ -48,7 +48,7 @@ public class BookRepositoryService {
         return pages.getContent();
     }
 
-    public List<BookModel> findByCategoryIdList(int pageNumber, List<Long> categoryListToFind) throws NotFoundException {
+    public List<BookModel> findByCategoryIdList(List<Long> categoryListToFind) throws NotFoundException {
         List<BookModel> bookRecoveredList = bookRepository.findByCategoryIdList(categoryListToFind);
 
         if(bookRecoveredList.isEmpty()) throw new NotFoundException();

@@ -46,7 +46,7 @@ public class BookController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody BookModel dto) {
+    public ResponseEntity<?> delete(@RequestBody BookDTO dto) {
         try {
             bookServices.delete(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -76,10 +76,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-by-category/{page}")
-    public ResponseEntity<?> findByCategoryList(@PathVariable("page") int page, @RequestBody BookDTO dto) {
+    @GetMapping("/find-by-category")
+    public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
-            List<BookModel> bookList = bookServices.findByCategoryIdList(page, dto.getIdCategoryList());
+            List<BookModel> bookList = bookServices.findByCategoryIdList(dto.getIdCategoryList());
             return ResponseEntity.status(HttpStatus.OK).body(bookList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
