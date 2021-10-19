@@ -15,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,9 +56,9 @@ public class AuthorController {
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> findById(@RequestBody Long id){
+    public ResponseEntity<?> findById(@RequestBody AuthorDTO dto){
         try {
-            AuthorModel authorList = authorService.findById(id);
+            AuthorModel authorList = authorService.findById(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(authorList);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
@@ -71,9 +70,9 @@ public class AuthorController {
     }
 
     @GetMapping("/find-by-name")
-    public ResponseEntity<?> findByName(@PathVariable String name){
+    public ResponseEntity<?> findByName(@RequestBody AuthorDTO dto){
         try {
-            List<AuthorModel> author = authorService.findByName(name);
+            List<AuthorModel> author = authorService.findByName(dto.getName());
             return ResponseEntity.status(HttpStatus.OK).body(author);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
