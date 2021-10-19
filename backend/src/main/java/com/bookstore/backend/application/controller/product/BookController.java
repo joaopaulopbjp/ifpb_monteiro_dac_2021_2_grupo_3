@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.product;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.bookstore.backend.application.service.product.BookService;
@@ -60,7 +61,8 @@ public class BookController {
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
         try {
             book = bookServices.update(book);
-            return ResponseEntity.status(HttpStatus.OK).body(book);
+            dto = (BookDTO) ModelMapperService.convertToDTO(book, dto.getClass());
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -70,7 +72,13 @@ public class BookController {
     public ResponseEntity<?> findAll(@PathVariable("page") int page) {
         try {
             List<BookModel> bookList = bookServices.findAll(page);
-            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+            List<BookDTO> dtoList = new ArrayList<>();
+            for (BookModel book : bookList) {
+                BookDTO dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
+
+                dtoList.add(dto);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(dtoList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
@@ -80,7 +88,13 @@ public class BookController {
     public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
             List<BookModel> bookList = bookServices.findByCategoryIdList(dto.getIdCategoryList());
-            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+            List<BookDTO> dtoList = new ArrayList<>();
+            for (BookModel book : bookList) {
+                dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
+
+                dtoList.add(dto);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(dtoList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
@@ -90,7 +104,8 @@ public class BookController {
     public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
         try {
             BookModel book = bookServices.findById(dto.getId());
-            return ResponseEntity.status(HttpStatus.OK).body(book);
+            dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
@@ -100,7 +115,8 @@ public class BookController {
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
             List<BookModel> book = bookServices.findByTitle(dto.getTitle());
-            return ResponseEntity.status(HttpStatus.OK).body(book);
+            dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
@@ -110,7 +126,13 @@ public class BookController {
     public ResponseEntity<?> cheapests(@PathVariable("number") int number) {
         try {
             List<BookModel> bookList = bookServices.findCheapests(number);
-            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+            List<BookDTO> dtoList = new ArrayList<>();
+            for (BookModel book : bookList) {
+                BookDTO dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
+
+                dtoList.add(dto);
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(dtoList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (InvalidValueException e) {
