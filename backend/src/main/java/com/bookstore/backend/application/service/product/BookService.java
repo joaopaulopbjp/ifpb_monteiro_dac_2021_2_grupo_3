@@ -74,7 +74,6 @@ public class BookService {
         book.setCategoryList(categoryRecoveredList);
         book.setAuthorList(authorRecoveredList);
         book.setCompany(companyOp.get());
-
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
         personModelOp.get().addProductToProductList(bookSaved);
         userRepositoryService.getInstance().save(personModelOp.get());

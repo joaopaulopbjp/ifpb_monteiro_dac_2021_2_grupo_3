@@ -16,11 +16,11 @@ public class CategoryService {
     @Autowired
     private CategoryRepositoryService categoryRepositoryService;
 
-    public CategoryModel save(CategoryModel categoryModel){
+    public CategoryModel save(CategoryModel categoryModel) throws IllegalArgumentException{
         return categoryRepositoryService.getInstance().save(categoryModel);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws IllegalArgumentException{
         CategoryModel category = categoryRepositoryService.getInstance().findById(id).get();
         categoryRepositoryService.getInstance().delete(category);
     }
