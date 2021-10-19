@@ -1,12 +1,14 @@
 package com.bookstore.backend.presentation.dto.inventory;
 
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class InventoryDTO {
     private Long id;
 

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class OrderDTO {
 	private Long id;
 
