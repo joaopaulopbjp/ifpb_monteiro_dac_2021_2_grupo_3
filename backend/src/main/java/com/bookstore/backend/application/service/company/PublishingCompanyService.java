@@ -20,7 +20,7 @@ public class PublishingCompanyService {
         return publishingCompanyRepositoryService.getInstance().save(publishingCompanyModel);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws NotFoundException, IllegalArgumentException{
         PublishingCompanyModel publishingCompanyModel = publishingCompanyRepositoryService.getInstance().findById(id).get();
         publishingCompanyRepositoryService.getInstance().delete(publishingCompanyModel);
     }
