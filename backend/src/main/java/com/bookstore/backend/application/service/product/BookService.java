@@ -11,6 +11,7 @@ import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.exception.InvalidValueException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
@@ -128,13 +129,15 @@ public class BookService {
         return bookRecoveredList;
     }
 
-    public List<BookModel> findFiveCheapests() throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.findCheapests(5);
+    public List<BookModel> findCheapests(int number) throws NotFoundException, InvalidValueException {
+        if(number <= 0)
+            throw new InvalidValueException(number + " is a invalid number for page");
+        List<BookModel> bookRecoveredList = bookRepositoryService.findCheapests(number);
         return bookRecoveredList;
     }
 
-    public List<BookModel> findAll() throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.getInstance().findAll();
+    public List<BookModel> findAll(int pageNumber) throws NotFoundException {
+        List<BookModel> bookRecoveredList = bookRepositoryService.findAll(pageNumber);
 
         if(bookRecoveredList.isEmpty()) 
             throw new NotFoundException();

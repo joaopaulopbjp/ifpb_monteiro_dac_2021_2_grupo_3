@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bookstore.backend.application.service.product.BookService;
 import com.bookstore.backend.domain.model.product.BookModel;
+import com.bookstore.backend.infrastructure.exception.InvalidValueException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
 import com.bookstore.backend.presentation.dto.product.BookDTO;
@@ -38,7 +39,7 @@ public class BookController {
             BookModel booksaved = bookServices.save(book, dto.getIdCategoryList(), dto.getIdSaller(), dto.getIdCompany(), dto.getIdAuthorList());
             
             dto = (BookDTO) ModelMapperService.convertToDTO(booksaved, dto.getClass());
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
@@ -57,20 +58,25 @@ public class BookController {
     @PutMapping
     public ResponseEntity<?> update(@RequestBody BookDTO dto) {
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
-        return null;
+        try {
+            book = bookServices.update(book);
+            return ResponseEntity.status(HttpStatus.OK).body(book);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
     }
 
-    @GetMapping
-    public ResponseEntity<?> findAll() {
+    @GetMapping("/find-all/{page}")
+    public ResponseEntity<?> findAll(@PathVariable("page") int page) {
         try {
-            List<BookModel> bookList = bookServices.findAll();
+            List<BookModel> bookList = bookServices.findAll(page);
             return ResponseEntity.status(HttpStatus.OK).body(bookList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
     }
 
-    @GetMapping("/{page}")
+    @GetMapping("/find-by-category/{page}")
     public ResponseEntity<?> findByCategoryList(@PathVariable("page") int page, @RequestBody BookDTO dto) {
         try {
             List<BookModel> bookList = bookServices.findByCategoryIdList(page, dto.getIdCategoryList());
@@ -80,7 +86,7 @@ public class BookController {
         }
     }
     
-    @GetMapping("/id")
+    @GetMapping("/find-by-id")
     public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
         try {
             BookModel book = bookServices.findById(dto.getId());
@@ -90,7 +96,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/title")
+    @GetMapping("/find-by-title")
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
             List<BookModel> book = bookServices.findByTitle(dto.getTitle());
@@ -100,13 +106,15 @@ public class BookController {
         }
     }
 
-    @GetMapping("/cheapests")
-    public ResponseEntity<?> cheapests() {
+    @GetMapping("/find-{number}-cheapests")
+    public ResponseEntity<?> cheapests(@PathVariable("number") int number) {
         try {
-            List<BookModel> bookList = bookServices.findFiveCheapests();
+            List<BookModel> bookList = bookServices.findCheapests(number);
             return ResponseEntity.status(HttpStatus.OK).body(bookList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (InvalidValueException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 }
