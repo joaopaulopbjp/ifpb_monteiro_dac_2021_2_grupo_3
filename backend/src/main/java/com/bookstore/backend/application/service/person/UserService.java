@@ -1,10 +1,13 @@
 package com.bookstore.backend.application.service.person;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
@@ -60,7 +63,35 @@ public class UserService {
         return user;
     }
     
+    public List<UserModel> findAll(int pageNumber) throws NotFoundException {
+        List<UserModel> userList = userRepositoryService.findAll(pageNumber);
+        return userList;
+    }
+
+    public UserModel findById(Long id) throws NotFoundException {
+        Optional<UserModel> user = userRepositoryService.getInstance().findById(id);
+        if(!user.isPresent())
+            throw new NotFoundException("User with id " + id + " not found");
+        
+        return user.get();
+    }
     
+    public UserModel findByEmail(String email) throws NotFoundException {
+        Optional<UserModel> user = userRepositoryService.getInstance().findByEmail(email);
+        if(!user.isPresent())
+            throw new NotFoundException("User with email " + email + " not found");
+        
+        return user.get();
+    }
+
+    public UserModel findByUsername(String username) throws NotFoundException {
+        Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
+        if(!user.isPresent())
+            throw new NotFoundException("User with username " + username + " not found");
+        
+        return user.get();
+    }
+
 
     private static boolean validate(String emailStr) {
             Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
