@@ -41,7 +41,7 @@ public class UserController {
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
@@ -57,48 +57,48 @@ public class UserController {
             }
             return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }  catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
-    @GetMapping("find-by-id")
+    @GetMapping("/find-by-id")
     public ResponseEntity<?> getById(UserDTO dto) {
         try {
             UserModel user = userService.findById(dto.getId());
             dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
-    @GetMapping("find-by-email")
+    @GetMapping("/find-by-email")
     public ResponseEntity<?> getByEmail(UserDTO dto) {
         try {
             UserModel user = userService.findByEmail(dto.getEmail());
             dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 
-    @GetMapping("find-by-username")
+    @GetMapping("/find-by-username")
     public ResponseEntity<?> getByUsername(UserDTO dto) {
         try {
             UserModel user = userService.findByUsername(dto.getUsername());
             dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 }
