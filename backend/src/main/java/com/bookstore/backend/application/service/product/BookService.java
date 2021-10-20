@@ -93,7 +93,7 @@ public class BookService {
         if(!flag)
         throw new NotFoundException();
         
-        UserModel user = userRepositoryService.getInstance().findByProductId(id);
+        UserModel user = userRepositoryService.getInstance().findByProductId(id).get();
         ProductModel product = bookRepositoryService.getInstance().findById(id).get();
         user.removeProductFromProductList(product);
 

@@ -33,7 +33,7 @@ public class AddressService {
     }
 
     public void delete(Long id) throws IllegalArgumentException {
-        UserModel user = userRepositoryService.getInstance().findByAddressId(id);
+        UserModel user = userRepositoryService.getInstance().findByAddressId(id).get();
         Optional<AddressModel> address = addressRepositoryService.getInstance().findById(id);
         user.removeAddressFromAddressList(address.get());
         userRepositoryService.getInstance().save(user);
