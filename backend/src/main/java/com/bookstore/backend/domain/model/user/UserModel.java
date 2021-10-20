@@ -30,6 +30,7 @@ import lombok.Setter;
 public class UserModel extends PersonModel{
 
     @OneToOne
+    @JoinColumn(name = "SHOPPING_CART_ID", nullable = false)
     private ShoppingCartModel shoppingCart;
 
     @OneToMany(fetch = FetchType.EAGER)
