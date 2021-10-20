@@ -17,7 +17,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,8 +47,20 @@ public class UserController {
         }
     }
 
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestBody UserDTO dto) {
+        try {
+            userService.delete(dto.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    }
+
     @GetMapping("/find-all/{page}")
-    public ResponseEntity<?> getAll(@PathParam("page") int page) {
+    public ResponseEntity<?> getAll(@PathVariable("page") int page) {
         try {
             List<UserModel> userList = userService.findAll(page);
             List<UserDTO> userDtoList = new ArrayList<>();

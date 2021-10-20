@@ -44,7 +44,7 @@ public class UserRepositoryService {
     }
 
     public List<UserModel> findAll(int pageNumber) throws NotFoundException {
-        Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
+        Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.unsorted());
         Page<UserModel> pages = userRepository.findAll(pageable);
 
         if(pages.isEmpty()) throw new NotFoundException();
