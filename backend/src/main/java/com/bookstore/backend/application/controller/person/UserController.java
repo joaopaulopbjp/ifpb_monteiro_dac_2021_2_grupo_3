@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> getById(UserDTO dto) {
+    public ResponseEntity<?> getById(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findById(dto.getId());
             dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
@@ -77,7 +77,7 @@ public class UserController {
     }
 
     @GetMapping("/find-by-email")
-    public ResponseEntity<?> getByEmail(UserDTO dto) {
+    public ResponseEntity<?> getByEmail(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findByEmail(dto.getEmail());
             dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
@@ -90,7 +90,7 @@ public class UserController {
     }
 
     @GetMapping("/find-by-username")
-    public ResponseEntity<?> getByUsername(UserDTO dto) {
+    public ResponseEntity<?> getByUsername(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findByUsername(dto.getUsername());
             dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);

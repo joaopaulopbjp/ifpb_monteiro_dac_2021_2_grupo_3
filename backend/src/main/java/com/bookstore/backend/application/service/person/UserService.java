@@ -38,7 +38,7 @@ public class UserService {
         if(user.getPassword().equals(null))
             throw new IllegalArgumentException();
 
-        if(validate(user.getEmail()))
+        if(!validate(user.getEmail()))
             throw new IllegalArgumentException(user.getEmail() + " is a invalid Email");
         
         if(user.getUsername().length() < 3 || user.getUsername().length() > 15) {
