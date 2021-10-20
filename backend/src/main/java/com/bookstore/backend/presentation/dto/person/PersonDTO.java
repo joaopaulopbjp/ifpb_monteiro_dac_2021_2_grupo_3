@@ -5,6 +5,7 @@ import java.util.List;
 import com.bookstore.backend.presentation.dto.address.AddressDTO;
 import com.bookstore.backend.presentation.dto.product.ProductDTO;
 import com.bookstore.backend.presentation.dto.sale.UserSaleHistoryDTO;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +16,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class PersonDTO {
     private Long id;
 
