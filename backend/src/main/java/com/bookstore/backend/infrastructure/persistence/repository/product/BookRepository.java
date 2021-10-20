@@ -29,4 +29,5 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
 
     @Query(value = "select * from t_book join (select * from t_product JOIN (SELECT product_id from t_product_category_join WHERE category_id = :categoryId) AS products_id on product_id=id) as products on products.id=t_book.id", nativeQuery = true)
     public List<BookModel> findByCategoryId(@Param("categoryId") Long categoryId);
+
 }

@@ -12,4 +12,6 @@ public class ImageDTO {
     private Long id;
 
     private String base64;
+
+    private Long idBook;
 }

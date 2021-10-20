@@ -160,6 +160,15 @@ public abstract class ProductModel {
         return 0;
     }
 
+    public ImageModel findImageByContent(String contente){
+        for(ImageModel image: imageList){
+            if(image.getBase64().equals(contente)){
+                return image;
+            }
+        }
+        return null;
+    }
+
     @Override
     public String toString() {
         return String.format("PRODUCT [ID: %s - TITLE: %s - DESCRIPTION: %s - YEAR LAUNCH: %s - PAGES: %s - PRICE: %s - COMPANY: %s - EVALUATE: [AVERAGE: %s - AVALUATE NUMBER: %s]]", getId(), getTitle(), getDescription(), getYearLaunch(), getPages(), getPrice().toString(), getCompany().getName(), String.valueOf(calculateStarAverage()), String.valueOf(getEvaluateList().size())); 
