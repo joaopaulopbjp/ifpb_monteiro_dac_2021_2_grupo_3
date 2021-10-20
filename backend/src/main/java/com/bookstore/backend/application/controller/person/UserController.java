@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,11 +46,28 @@ public class UserController {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<?> update(@RequestBody UserDTO dto) {
+        UserModel userModel = (UserModel) ModelMapperService.convertToModel(dto, UserModel.class);
+
+        try {
+            userModel = userService.update(userModel);
+            dto = (UserDTO) ModelMapperService.convertToDTO(userModel, UserDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(dto);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    } 
+
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestBody UserDTO dto) {
         try {
             userService.delete(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         } catch (Exception e) {

@@ -10,7 +10,6 @@ import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -63,6 +62,25 @@ public class UserService {
         return user;
     }
     
+    public UserModel update(UserModel user) throws NotFoundException {
+        if(!userRepositoryService.getInstance().existsById(user.getId()))
+            throw new NotFoundException("User with id " + user.getId() + " not found");
+
+        if(user.getEmail() != null && !validate(user.getEmail()))
+            throw new IllegalArgumentException(user.getEmail() + " is a invalid Email");
+        
+        if(user.getUsername() != null && (user.getUsername().length() < 3 || user.getUsername().length() > 15)) {
+            throw new IllegalArgumentException("Username must be between 3 and 15 characters");
+        }
+
+        if(user.getPassword() != null && user.getPassword().length() < 5) {
+            throw new IllegalArgumentException("Password must be at least 5 characters");
+        }    
+
+        user = userRepositoryService.update(user);
+        return user;
+    }
+
     public void delete(Long personId) throws NotFoundException {
         boolean flag = userRepositoryService.getInstance().existsById(personId);
         if(!flag)
