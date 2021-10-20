@@ -10,6 +10,7 @@ import com.bookstore.backend.presentation.dto.category.CategoryDTO;
 import com.bookstore.backend.presentation.response.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -38,6 +39,10 @@ public class CategoryController {
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 
@@ -47,12 +52,16 @@ public class CategoryController {
         try {
             categoryService.delete(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        } catch (IllegalArgumentException e) {
+        }catch (IllegalArgumentException e) {
             response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-        } catch (NotFoundException e) {
+        }catch (NotFoundException e) {
             response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 
@@ -66,13 +75,23 @@ public class CategoryController {
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 
     @GetMapping("/find-all")
     public ResponseEntity<?> findAll(){
-        List<CategoryModel> categoryList = categoryService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+        try {
+            List<CategoryModel> categoryList = categoryService.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }
     }
     
     @GetMapping("/find-by-id")
@@ -84,6 +103,10 @@ public class CategoryController {
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 
@@ -95,6 +118,10 @@ public class CategoryController {
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 }

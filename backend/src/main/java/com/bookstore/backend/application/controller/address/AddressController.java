@@ -10,6 +10,7 @@ import com.bookstore.backend.presentation.dto.address.AddressDTO;
 import com.bookstore.backend.presentation.response.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -32,13 +33,17 @@ public class AddressController {
     @PostMapping
     public ResponseEntity<?> save(@RequestBody AddressDTO dto){
         AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
-        try {
+        try{
             addressModel = addressService.save(addressModel, dto.getPersonId());
             dto = (AddressDTO) ModelMapperService.convertToDTO(addressModel, AddressDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
-        } catch (NotFoundException e) {
+        }catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 
@@ -47,16 +52,26 @@ public class AddressController {
         try {
             addressService.delete(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        } catch (IllegalArgumentException e) {
+        }catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
     
     @GetMapping("/find-all")
     public ResponseEntity<?> findAll() {
-        List<AddressModel> list = addressService.findAll();
-        return ResponseEntity.status(HttpStatus.OK).body(list);
+        try {
+            List<AddressModel> list = addressService.findAll();
+            return ResponseEntity.status(HttpStatus.OK).body(list);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }
     }
 
     @GetMapping("/find-by-id")
@@ -68,6 +83,10 @@ public class AddressController {
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
     
@@ -77,9 +96,13 @@ public class AddressController {
             AddressModel address = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
             address = addressService.update(address);
             return ResponseEntity.status(HttpStatus.OK).body(address);
-        } catch (NotFoundException e) {
+        } catch(NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }
     }
 }
