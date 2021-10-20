@@ -2,6 +2,7 @@ package com.bookstore.backend.domain.model.user;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -29,11 +30,11 @@ import lombok.Setter;
 @Table(name = "T_USER")
 public class UserModel extends PersonModel{
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SHOPPING_CART_ID", nullable = false)
     private ShoppingCartModel shoppingCart;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
     @JoinTable(
         name = "T_PERSON_EVALUATE_JOIN", 

@@ -63,6 +63,14 @@ public class UserService {
         return user;
     }
     
+    public void delete(Long personId) throws NotFoundException {
+        boolean flag = userRepositoryService.getInstance().existsById(personId);
+        if(!flag)
+            throw new NotFoundException("User with id " + personId + " not found");
+
+        userRepositoryService.getInstance().deleteById(personId);
+    }
+
     public List<UserModel> findAll(int pageNumber) throws NotFoundException {
         List<UserModel> userList = userRepositoryService.findAll(pageNumber);
         return userList;
@@ -91,7 +99,6 @@ public class UserService {
         
         return user.get();
     }
-
 
     private static boolean validate(String emailStr) {
             Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
