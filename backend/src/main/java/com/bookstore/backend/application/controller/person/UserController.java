@@ -3,8 +3,6 @@ package com.bookstore.backend.application.controller.person;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import com.bookstore.backend.application.service.person.UserService;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
