@@ -24,4 +24,8 @@ public class OrderDTO {
 	private OrderStatus status;
 
 	private List<ItemOrderDTO> itemList;
+
+	private List<Long> idItemList;
+
+	private Long idUser;
 }

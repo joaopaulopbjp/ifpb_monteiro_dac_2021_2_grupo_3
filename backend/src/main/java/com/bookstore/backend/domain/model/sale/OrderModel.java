@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
