@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +16,7 @@ import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
+import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 
 import org.hibernate.annotations.Fetch;
@@ -51,6 +53,25 @@ public class UserModel extends PersonModel{
     }
 
     public UserModel() {
+    }
+
+    public boolean addEvaluateToEvaluateList(EvaluateModel evaluate){
+        if(evaluateList == null) {
+            evaluateList = new ArrayList<>();
+        }
+        return evaluateList.add(evaluate);
+    }
+
+    public boolean removeEvaluateFromEvaluateList(Integer index) throws NotFoundException{
+        if(evaluateList == null || index > (evaluateList.size() - 1)) {
+            throw new NotFoundException();
+        }
+
+        EvaluateModel removed = evaluateList.remove(index.intValue());
+        if(removed != null) {
+            return true;
+        }
+        return false;
     }
     
     @Override

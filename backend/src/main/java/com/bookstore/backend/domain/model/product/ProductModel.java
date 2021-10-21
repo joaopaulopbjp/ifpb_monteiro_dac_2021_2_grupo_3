@@ -149,6 +149,25 @@ public abstract class ProductModel {
         return false;
     }
 
+    public boolean addEvaluateToEvaluateList(EvaluateModel evaluate){
+        if(evaluateList == null) {
+            evaluateList = new ArrayList<>();
+        }
+        return evaluateList.add(evaluate);
+    }
+
+    public boolean removeEvaluateFromEvaluateList(Integer index) throws NotFoundException{
+        if(evaluateList == null || index > (evaluateList.size() - 1)) {
+            throw new NotFoundException();
+        }
+
+        EvaluateModel removed = evaluateList.remove(index.intValue());
+        if(removed != null) {
+            return true;
+        }
+        return false;
+    }
+
     public int calculateStarAverage() {
         if(evaluateList != null && evaluateList.size() > 0) {
             int total = 0;
