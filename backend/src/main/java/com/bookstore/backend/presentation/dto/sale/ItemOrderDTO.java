@@ -20,4 +20,6 @@ public class ItemOrderDTO {
 	private Integer amount;
 
 	private ProductDTO product;
+
+	private Long idProduct;
 }

@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model.sale;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +39,17 @@ public class ShoppingCartModel {
     @Fetch(FetchMode.SUBSELECT)
     private List<ItemOrderModel> itemList;
 
+    @Column(name = "TOTAL_PRICE")
+    private BigDecimal totalPrice;
+
+    public BigDecimal CalculateTotalPrice() {
+        BigDecimal total = new BigDecimal(0);
+        for(ItemOrderModel item : itemList) {
+            total = total.add(item.getTotalPrice());
+        }
+        this.totalPrice = total;
+        return total;
+    }
 
     public boolean addItemOrderToItemList(ItemOrderModel item) {
         if(itemList != null){
@@ -46,6 +58,7 @@ public class ShoppingCartModel {
             itemList = new ArrayList<>();
             addItemOrderToItemList(item);
         }
+        CalculateTotalPrice();
         return true;
     }
 
@@ -64,6 +77,7 @@ public class ShoppingCartModel {
                 }
             }
         }
+        CalculateTotalPrice();
         return false;
     }
 

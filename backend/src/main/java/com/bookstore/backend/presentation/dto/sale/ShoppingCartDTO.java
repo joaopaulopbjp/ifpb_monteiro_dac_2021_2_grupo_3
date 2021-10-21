@@ -1,5 +1,6 @@
 package com.bookstore.backend.presentation.dto.sale;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,5 +18,9 @@ import lombok.Setter;
 public class ShoppingCartDTO {
     private Long Id;
 
+    private Long idPerson;
+
     private List<ItemOrderDTO> itemList;
+
+    private BigDecimal totalPrice;
 }
