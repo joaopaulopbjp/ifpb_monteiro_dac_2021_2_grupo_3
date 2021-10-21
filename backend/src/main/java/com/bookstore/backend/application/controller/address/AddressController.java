@@ -75,10 +75,10 @@ public class AddressController {
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> findById(@RequestBody AddressDTO dto){
+    public ResponseEntity<?> getAddressById(@RequestBody Long id){
         try {
-            AddressModel address = addressService.findById(dto.getId());
-            dto = (AddressDTO)ModelMapperService.convertToDTO(address, AddressDTO.class);
+            AddressModel address = addressService.findById(id);
+            AddressDTO dto = (AddressDTO)ModelMapperService.convertToDTO(address, AddressDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
