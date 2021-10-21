@@ -149,21 +149,19 @@ public abstract class ProductModel {
         return false;
     }
 
-    public boolean addEvaluateToEvaluateList(EvaluateModel evaluate){
-        if(evaluateList == null) {
+    public boolean addEvaluateToEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            evaluateList.add(evaluateModel);
+        } else {
             evaluateList = new ArrayList<>();
+            addEvaluateToEvaluateList(evaluateModel);
         }
-        return evaluateList.add(evaluate);
+        return true;
     }
 
-    public boolean removeEvaluateFromEvaluateList(Integer index) throws NotFoundException{
-        if(evaluateList == null || index > (evaluateList.size() - 1)) {
-            throw new NotFoundException();
-        }
-
-        EvaluateModel removed = evaluateList.remove(index.intValue());
-        if(removed != null) {
-            return true;
+    public boolean removeEvaluateFromEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            return evaluateList.remove(evaluateModel);
         }
         return false;
     }
