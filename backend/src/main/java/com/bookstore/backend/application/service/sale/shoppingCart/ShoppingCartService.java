@@ -80,4 +80,11 @@ public class ShoppingCartService {
         itemOrderRepositoryService.getInstance().delete(opItemOrder.get());
         return shopping;
     }
+
+    public ShoppingCartModel findByUser(Long idUser) throws NotFoundException {
+        Optional<UserModel> opUser = userRepositoryService.getInstance().findById(idUser);
+        if(!opUser.isPresent())
+            throw new NotFoundException("User with id " + idUser + " not found");
+        return opUser.get().getShoppingCart();
+    }
 }
