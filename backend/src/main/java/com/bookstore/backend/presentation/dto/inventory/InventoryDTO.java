@@ -16,6 +16,8 @@ public class InventoryDTO {
 
 	private InventoryStatus status;
 
+	private Long idBook;
+
 	public InventoryDTO(Long id, Integer amount, InventoryStatus status) {
 		this.id = id;
 		this.amount = amount;
