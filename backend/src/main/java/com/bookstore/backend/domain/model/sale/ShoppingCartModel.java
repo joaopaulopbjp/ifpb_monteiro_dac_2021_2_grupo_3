@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model.sale;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.bookstore.backend.domain.model.user.UserModel;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -41,10 +39,17 @@ public class ShoppingCartModel {
     @Fetch(FetchMode.SUBSELECT)
     private List<ItemOrderModel> itemList;
 
-    @OneToOne
-    @JoinColumn(name = "USER_FK", nullable = false)
-    private UserModel userModel;
+    @Column(name = "TOTAL_PRICE")
+    private BigDecimal totalPrice;
 
+    public BigDecimal CalculateTotalPrice() {
+        BigDecimal total = new BigDecimal(0);
+        for(ItemOrderModel item : itemList) {
+            total = total.add(item.getTotalPrice());
+        }
+        this.totalPrice = total;
+        return total;
+    }
 
     public boolean addItemOrderToItemList(ItemOrderModel item) {
         if(itemList != null){
@@ -53,6 +58,7 @@ public class ShoppingCartModel {
             itemList = new ArrayList<>();
             addItemOrderToItemList(item);
         }
+        CalculateTotalPrice();
         return true;
     }
 
@@ -71,6 +77,7 @@ public class ShoppingCartModel {
                 }
             }
         }
+        CalculateTotalPrice();
         return false;
     }
 

@@ -1,7 +1,6 @@
 package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,11 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.product.ProductModel;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,19 +35,13 @@ public class SaleModel {
     private Long id;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PRODUCT_FK", nullable = false)
+    @JoinColumn(name = "PRODUCT_FK")
     private ProductModel product;
-
-    @Column(name = "DATA_SALE", nullable = false)
-	private LocalDate dateSale;
 
     @Column(name = "AMOUNT", nullable = false)
     private Integer amount;
 
-    @ManyToOne
-    @JoinColumn(name = "REVENUE_FK", nullable = false)
-    private RevenuesModel revenues; 
-
+    @JsonIgnore
     public BigDecimal getTotalSalesPrice() {
         return product.getPrice().multiply(new BigDecimal(amount));
     }

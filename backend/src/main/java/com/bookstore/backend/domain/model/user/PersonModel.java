@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -55,17 +56,23 @@ public abstract class PersonModel {
     @Column(name = "PASSWORD", nullable = false)
     private String password;
 
-    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @Column(name = "ADDRESS_FK")
+    @JoinTable(
+        name = "T_PERSON_ADDRESS_JOIN", 
+        joinColumns = @JoinColumn(name = "PERSON_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "ADDRESS_ID", nullable = false))
     private List<AddressModel> addressList;
     
-    @OneToMany(mappedBy = "saller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @Column(name = "PRODUCT_SALE_FK")
+    @JoinTable(
+        name = "T_PERSON_PRODUCT_FOR_SALE_JOIN", 
+        joinColumns = @JoinColumn(name = "PERSON_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "PRODUCT_FOR_SALE_ID", nullable = false))
     private List<ProductModel> productForSaleList;
 
-    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_HISTORY_ID")
     private UserSaleHistoryModel saleHistory;
     
@@ -103,7 +110,6 @@ public abstract class PersonModel {
         } 
         return false;
     }
-
 
     @Override
     public String toString() {

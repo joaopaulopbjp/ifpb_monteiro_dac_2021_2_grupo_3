@@ -48,6 +48,14 @@ public class BookRepositoryService {
         return pages.getContent();
     }
 
+    public List<BookModel> findByCategoryIdList(List<Long> categoryListToFind) throws NotFoundException {
+        List<BookModel> bookRecoveredList = bookRepository.findByCategoryIdList(categoryListToFind);
+
+        if(bookRecoveredList.isEmpty()) throw new NotFoundException();
+
+        return bookRecoveredList;
+    }
+
     public BookModel update(BookModel book) throws NotFoundException {
         BookModel bookDataBase = null;
         try {

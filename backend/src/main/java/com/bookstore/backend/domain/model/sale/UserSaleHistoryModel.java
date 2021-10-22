@@ -12,11 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.bookstore.backend.domain.model.user.PersonModel;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,16 +25,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "T_SALE_HISTORY")
+@Table(name = "T_USER_SALE_HISTORY")
 public class UserSaleHistoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
-
-    @OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PERSON_FK", nullable = false)
-    private PersonModel person;
 
     @OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(

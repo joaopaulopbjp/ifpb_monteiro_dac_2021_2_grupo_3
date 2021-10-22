@@ -12,8 +12,6 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
-import com.bookstore.backend.domain.model.sale.SaleModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 
@@ -56,42 +54,39 @@ public abstract class ProductModel {
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "base64")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
-    @Column(name = "IMAGES", nullable = false)
+    @JoinColumn(name = "PRODUCT_FK", nullable = false)
     private List<ImageModel> imageList;
-
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALE_FK", nullable = false)
-    private SaleModel sale;
     
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
         inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID", nullable = false))
+    @Fetch(FetchMode.SUBSELECT)
     private List<CategoryModel> categoryList;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALLER_FK", nullable = false)
-    private PersonModel saller;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "COMPANY_FK", nullable = false)
     private PublishingCompanyModel company;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", nullable = false))
     private List<AuthorModel> authorList;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "T_PRODUCT_EVALUATE_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "EVALUATE_ID", nullable = false))
     private List<EvaluateModel> evaluateList; 
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
