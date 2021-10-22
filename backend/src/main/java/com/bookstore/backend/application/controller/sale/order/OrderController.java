@@ -12,12 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/ap/order")
+@RequestMapping("/api/order")
 @CrossOrigin
 public class OrderController {
     
@@ -28,7 +29,7 @@ public class OrderController {
     public ResponseEntity<?> save(@RequestBody OrderDTO dto){
         try {
             OrderModel order = (OrderModel) ModelMapperService.convertToModel(dto, OrderModel.class);
-            orderService.save(order, dto.getIdItemList(), dto.getIdUser());
+            order = orderService.save(order, dto.getIdItemList(), dto.getIdUser());
             dto = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (NotFoundException e) {
@@ -37,4 +38,22 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         } 
     }
+    
+    @PutMapping
+    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO dto){
+        try {
+            OrderModel order = orderService.updateStatus(dto.getId(), dto.getIdStatus());
+            OrderDTO orderDTO = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
+            return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        } 
+    }
+
+    
+
 }

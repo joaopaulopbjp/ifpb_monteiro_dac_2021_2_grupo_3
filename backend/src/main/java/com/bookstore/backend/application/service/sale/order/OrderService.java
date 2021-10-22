@@ -52,4 +52,15 @@ public class OrderService {
         userRepositoryService.getInstance().save(user.get());
         return order;
     }
+
+    public OrderModel updateStatus(Long idOrder, Long idStatus) throws IllegalArgumentException, NotFoundException{
+        Optional<OrderModel> order = orderRepositoryService.getInstance().findById(idOrder);
+        if(!order.isPresent()){
+            throw new NotFoundException("Not found Order " + idOrder);
+        }
+        
+        OrderStatus status = OrderStatus.getById(idStatus);
+        order.get().setStatus(status);
+        return orderRepositoryService.getInstance().save(order.get());
+    }
 }
