@@ -149,6 +149,23 @@ public abstract class ProductModel {
         return false;
     }
 
+    public boolean addEvaluateToEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            evaluateList.add(evaluateModel);
+        } else {
+            evaluateList = new ArrayList<>();
+            addEvaluateToEvaluateList(evaluateModel);
+        }
+        return true;
+    }
+
+    public boolean removeEvaluateFromEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            return evaluateList.remove(evaluateModel);
+        }
+        return false;
+    }
+
     public int calculateStarAverage() {
         if(evaluateList != null && evaluateList.size() > 0) {
             int total = 0;
@@ -158,6 +175,15 @@ public abstract class ProductModel {
             return (total / evaluateList.size());
         }
         return 0;
+    }
+
+    public ImageModel findImageByContent(String contente){
+        for(ImageModel image: imageList){
+            if(image.getBase64().equals(contente)){
+                return image;
+            }
+        }
+        return null;
     }
 
     @Override

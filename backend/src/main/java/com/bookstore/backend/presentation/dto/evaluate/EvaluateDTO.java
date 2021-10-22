@@ -14,4 +14,8 @@ public class EvaluateDTO {
     private Integer starNumber;
     
     private String comment;
+
+    private Long idBook;
+    
+    private Long idUser;
 }

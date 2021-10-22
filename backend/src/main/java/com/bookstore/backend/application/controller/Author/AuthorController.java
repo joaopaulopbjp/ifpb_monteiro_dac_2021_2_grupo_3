@@ -10,14 +10,14 @@ import com.bookstore.backend.presentation.dto.author.AuthorDTO;
 import com.bookstore.backend.presentation.response.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,56 +32,80 @@ public class AuthorController {
 
     @PostMapping
     public ResponseEntity<?> save(@RequestBody AuthorDTO dto){
-        AuthorModel author = (AuthorModel) ModelMapperService.convertToModel(dto, AuthorModel.class);
-        author = authorService.save(author);
-
-        return ResponseEntity.status(HttpStatus.OK).body(author);
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable Long id){
         try {
-            authorService.delete(id);
-            return ResponseEntity.status(HttpStatus.OK).body(null);
-        } catch (IllegalArgumentException e) {
-            Response response = new Response(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            AuthorModel author = (AuthorModel) ModelMapperService.convertToModel(dto, AuthorModel.class);
+            author = authorService.save(author);
+    
+            return ResponseEntity.status(HttpStatus.CREATED).body(author);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
-    @GetMapping
-    public ResponseEntity<?> getAll(){
-        List<AuthorModel> authorList = authorService.findAll();
-
-        return ResponseEntity.status(HttpStatus.OK).body(authorList);
+    @DeleteMapping
+    public ResponseEntity<?> delete(@RequestBody AuthorDTO dto){
+        try {
+            authorService.delete(dto.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (IllegalArgumentException | NotFoundException e) {
+            Response response = new Response(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@RequestBody Long id){
+    @GetMapping("/find-all")
+    public ResponseEntity<?> findAll(){
         try {
-            AuthorModel authorList = authorService.findById(id);
+            List<AuthorModel> authorList = authorService.findAll();
+    
+            return ResponseEntity.status(HttpStatus.OK).body(authorList);
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> findById(@RequestBody AuthorDTO dto){
+        try {
+            AuthorModel authorList = authorService.findById(dto.getId());
             return ResponseEntity.status(HttpStatus.OK).body(authorList);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }catch(NotFoundException e){
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
-    @GetMapping("/{name}")
-    public ResponseEntity<?> getByName(@PathVariable String name){
+    @GetMapping("/find-by-name")
+    public ResponseEntity<?> findByName(@RequestBody AuthorDTO dto){
         try {
-            List<AuthorModel> author = authorService.findByName(name);
+            List<AuthorModel> author = authorService.findByName(dto.getName());
             return ResponseEntity.status(HttpStatus.OK).body(author);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<?> update(@RequestBody AuthorModel dto){
         try {
             AuthorModel author = (AuthorModel) ModelMapperService.convertToModel(dto, AuthorModel.class);
@@ -90,6 +114,10 @@ public class AuthorController {
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        }catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     } 
 }

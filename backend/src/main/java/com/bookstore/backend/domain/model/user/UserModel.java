@@ -1,5 +1,6 @@
 package com.bookstore.backend.domain.model.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -51,6 +52,23 @@ public class UserModel extends PersonModel{
     }
 
     public UserModel() {
+    }
+
+    public boolean addEvaluateToEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            evaluateList.add(evaluateModel);
+        } else {
+            evaluateList = new ArrayList<>();
+            addEvaluateToEvaluateList(evaluateModel);
+        }
+        return true;
+    }
+
+    public boolean removeEvaluateFromEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            return evaluateList.remove(evaluateModel);
+        }
+        return false;
     }
     
     @Override

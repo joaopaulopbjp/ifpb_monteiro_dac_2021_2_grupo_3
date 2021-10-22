@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface InventoryRepository extends JpaRepository<InventoryModel, Long> {
     
-    @Query(value = "SELECT * FROM t_inventory JOIN (SELECT inventory_fk FROM t_product WHERE id = 1) as retorno on retorno.inventory_fk = t_inventory.id; ",
+    @Query(value = "SELECT * FROM t_inventory JOIN (SELECT inventory_fk FROM t_product WHERE id = :productId) as retorno on retorno.inventory_fk = t_inventory.id",
     nativeQuery = true)
     public Optional<InventoryModel> findByProductId(Long productId);
 }

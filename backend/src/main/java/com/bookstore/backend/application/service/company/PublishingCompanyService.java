@@ -16,11 +16,11 @@ public class PublishingCompanyService {
     @Autowired
     private PublishingCompanyRepositoryService publishingCompanyRepositoryService;
 
-    public PublishingCompanyModel save(PublishingCompanyModel publishingCompanyModel){
+    public PublishingCompanyModel save(PublishingCompanyModel publishingCompanyModel) throws IllegalArgumentException{
         return publishingCompanyRepositoryService.getInstance().save(publishingCompanyModel);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) throws NotFoundException, IllegalArgumentException{
         PublishingCompanyModel publishingCompanyModel = publishingCompanyRepositoryService.getInstance().findById(id).get();
         publishingCompanyRepositoryService.getInstance().delete(publishingCompanyModel);
     }
