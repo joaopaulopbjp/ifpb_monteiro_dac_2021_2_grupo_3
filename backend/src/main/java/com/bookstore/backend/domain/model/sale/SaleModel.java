@@ -39,11 +39,19 @@ public class SaleModel {
     private ProductModel product;
 
     @Column(name = "AMOUNT", nullable = false)
-    private Integer amount;
+    private int amount;
 
     @JsonIgnore
     public BigDecimal getTotalSalesPrice() {
         return product.getPrice().multiply(new BigDecimal(amount));
+    }
+
+    public int incressOne() {
+        return ++amount;
+    }
+
+    public int decressOne() {
+        return --amount;
     }
 
     @Override

@@ -37,8 +37,8 @@ public class RevenuesModel {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "T_REVENUE_SALE_JOIN", 
-        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
-        inverseJoinColumns = @JoinColumn(name = "REVENUE_ID", nullable = false))
+        joinColumns = @JoinColumn(name = "REVENUE_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "SALE_ID", nullable = false))
     private List<SaleModel> saleList;
 
 

@@ -97,10 +97,10 @@ public class BookService {
         ProductModel product = bookRepositoryService.getInstance().findById(id).get();
         user.removeProductFromProductList(product);
 
-        SaleModel sale = saleRepositoryService.getInstance().findByProductId(id);
+        Optional<SaleModel> sale = saleRepositoryService.getInstance().findByProductId(id);
         
         userRepositoryService.getInstance().save(user);
-        saleRepositoryService.getInstance().deleteById(sale.getId());
+        saleRepositoryService.getInstance().deleteById(sale.get().getId());
 
     }
 
