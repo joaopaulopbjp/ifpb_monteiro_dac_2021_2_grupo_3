@@ -1,31 +1,42 @@
 package com.bookstore.backend.database.person;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
-import com.bookstore.backend.domain.model.address.AddressModel;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 
-import org.apache.tomcat.jni.Address;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
-import junit.framework.*;
 
-public class UserTest extends TestCase{
+@SpringBootTest
+public class UserTest {
 
+    @Autowired
     private UserRepositoryService userRepositoryService;
 
     @Test
-    void nameTest(){
-        UserModel user = new UserModel(0l, null, "thauan@gmail.com", 
-        "123", null, null, null, null, null);
+    public void variable(){
+        // correct
+        UserModel user = new UserModel(0l,
+        "Thauan",
+        "thauan@email.com",
+        "123",
+        null,
+        null, 
+        null,
+        new ShoppingCartModel(0l, null, null),
+        null);
         
-        assertThrows(expectedType, executable, messageSupplier);
-    }
+        UserModel userSaved = userRepositoryService.getInstance().save(user);
+        assertTrue(userSaved != null);
 
-    @Test
-    public void testeAssertNotSame(){
-    
+		// incorrect
+        user.setUsername("");
+
+        assertThrows(DataIntegrityViolationException.class, () -> userRepositoryService.getInstance().save(user));
     }
 }
