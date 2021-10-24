@@ -1,6 +1,7 @@
 package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -58,5 +59,22 @@ public class RevenuesModel {
             revenue = revenue.add(sale.getTotalSalesPrice());
         }
         return revenue;
+    }
+
+    public boolean addSaleToSaleList(SaleModel sale) {
+        if(saleList != null) {
+            saleList.add(sale);
+        } else {
+            saleList = new ArrayList<>();
+            addSaleToSaleList(sale);
+        }
+        return true;
+    }
+
+    public boolean removeSaleFromSaleList(SaleModel sale) {
+        if(saleList != null) {
+            return saleList.remove(sale);
+        } 
+        return false;
     }
 }

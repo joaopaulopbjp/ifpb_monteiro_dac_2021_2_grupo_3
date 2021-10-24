@@ -46,12 +46,15 @@ public class SaleModel {
         return product.getPrice().multiply(new BigDecimal(amount));
     }
 
-    public int incressOne() {
-        return ++amount;
+    public int incress(int value) {
+        amount += value;
+        return amount;
     }
 
-    public int decressOne() {
-        return --amount;
+    public int decress(int value) {
+        amount -= value;
+        if(amount < 0) amount = 0;
+        return amount;
     }
 
     @Override

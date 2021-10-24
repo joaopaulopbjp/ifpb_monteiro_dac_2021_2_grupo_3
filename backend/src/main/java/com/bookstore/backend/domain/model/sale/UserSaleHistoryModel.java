@@ -40,7 +40,7 @@ public class UserSaleHistoryModel {
     private List<OrderModel> orderList;
 
     public boolean addOrderToOrderList(OrderModel orderModel) {
-		if(orderModel != null) {
+		if(orderList != null) {
 			orderList.add(orderModel);
 		} else {
 			orderList = new ArrayList<>();

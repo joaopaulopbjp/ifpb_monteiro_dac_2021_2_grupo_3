@@ -5,18 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
 import com.bookstore.backend.domain.model.sale.OrderModel;
+import com.bookstore.backend.domain.model.sale.RevenuesModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.OrderRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
 import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class OrderService {
     private SaleRepositoryService saleRepositoryService;
 
     @Autowired
-    private BookRepositoryService bookRepositoryService;
+    private RevenuesRepositoryServices revenuesRepositoryServices;
 
     public OrderModel save(OrderModel order, List<Long> idItemList, Long idUser) throws NotFoundException{
         Optional<UserModel> user = userRepositoryService.getInstance().findById(idUser);
@@ -68,14 +68,19 @@ public class OrderService {
             saleOp = saleRepositoryService.getInstance().findByProductId(itemOrder.getProduct().getId());
 
             if(!saleOp.isPresent()) {
-                SaleModel sale = new SaleModel(0l, itemOrder.getProduct(), 1);
+                SaleModel sale = new SaleModel(0l, itemOrder.getProduct(), itemOrder.getAmount());
                 saleList.add(sale);
             } else {
-                saleOp.get().incressOne();
+                saleOp.get().incress(itemOrder.getAmount());
                 saleList.add(saleOp.get());
             }
         }
-        saleRepositoryService.getInstance().saveAll(saleList);
+        saleList = saleRepositoryService.getInstance().saveAll(saleList);
+        RevenuesModel revenue = revenuesRepositoryServices.getInstance().findAll().stream().findFirst().get();
+        for(SaleModel sale : saleList) {
+            revenue.addSaleToSaleList(sale);
+        }
+        revenuesRepositoryServices.getInstance().save(revenue);
         return order;
     }
 
