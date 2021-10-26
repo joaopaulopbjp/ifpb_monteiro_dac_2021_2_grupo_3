@@ -1,5 +1,6 @@
-package com.bookstore.backend.configs;
+package com.bookstore.backend.application.controller;
 
+import com.bookstore.backend.configs.ConfigClass;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
