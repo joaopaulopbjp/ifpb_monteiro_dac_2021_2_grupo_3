@@ -1,6 +1,7 @@
 package com.bookstore.backend.domain.model.sale;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -37,8 +38,8 @@ public class RevenuesModel {
     @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "T_REVENUE_SALE_JOIN", 
-        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
-        inverseJoinColumns = @JoinColumn(name = "REVENUE_ID", nullable = false))
+        joinColumns = @JoinColumn(name = "REVENUE_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "SALE_ID", nullable = false))
     private List<SaleModel> saleList;
 
 
@@ -58,5 +59,22 @@ public class RevenuesModel {
             revenue = revenue.add(sale.getTotalSalesPrice());
         }
         return revenue;
+    }
+
+    public boolean addSaleToSaleList(SaleModel sale) {
+        if(saleList != null) {
+            saleList.add(sale);
+        } else {
+            saleList = new ArrayList<>();
+            addSaleToSaleList(sale);
+        }
+        return true;
+    }
+
+    public boolean removeSaleFromSaleList(SaleModel sale) {
+        if(saleList != null) {
+            return saleList.remove(sale);
+        } 
+        return false;
     }
 }

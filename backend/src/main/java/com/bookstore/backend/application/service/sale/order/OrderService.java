@@ -1,11 +1,14 @@
 package com.bookstore.backend.application.service.sale.order;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.bookstore.backend.domain.model.sale.ItemOrderModel;
 import com.bookstore.backend.domain.model.sale.OrderModel;
+import com.bookstore.backend.domain.model.sale.RevenuesModel;
+import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
@@ -13,6 +16,8 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.OrderRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
+import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +33,12 @@ public class OrderService {
 
     @Autowired
     private UserRepositoryService userRepositoryService;
+
+    @Autowired
+    private SaleRepositoryService saleRepositoryService;
+
+    @Autowired
+    private RevenuesRepositoryServices revenuesRepositoryServices;
 
     public OrderModel save(OrderModel order, List<Long> idItemList, Long idUser) throws NotFoundException{
         Optional<UserModel> user = userRepositoryService.getInstance().findById(idUser);
@@ -50,6 +61,26 @@ public class OrderService {
         order = orderRepositoryService.getInstance().save(order);
         user.get().getSaleHistory().addOrderToOrderList(order);
         userRepositoryService.getInstance().save(user.get());
+
+        List<SaleModel> saleList = new ArrayList<>();
+        Optional<SaleModel> saleOp = null;
+        for(ItemOrderModel itemOrder : order.getItemList()) {
+            saleOp = saleRepositoryService.getInstance().findByProductId(itemOrder.getProduct().getId());
+
+            if(!saleOp.isPresent()) {
+                SaleModel sale = new SaleModel(0l, itemOrder.getProduct(), itemOrder.getAmount());
+                saleList.add(sale);
+            } else {
+                saleOp.get().incress(itemOrder.getAmount());
+                saleList.add(saleOp.get());
+            }
+        }
+        saleList = saleRepositoryService.getInstance().saveAll(saleList);
+        RevenuesModel revenue = revenuesRepositoryServices.getInstance().findAll().stream().findFirst().get();
+        for(SaleModel sale : saleList) {
+            revenue.addSaleToSaleList(sale);
+        }
+        revenuesRepositoryServices.getInstance().save(revenue);
         return order;
     }
 

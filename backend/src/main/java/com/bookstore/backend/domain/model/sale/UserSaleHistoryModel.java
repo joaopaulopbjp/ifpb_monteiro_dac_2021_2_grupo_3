@@ -36,11 +36,11 @@ public class UserSaleHistoryModel {
 	@JoinTable(
         name = "T_PRODUCT_SALEHISTORY_JOIN", 
         joinColumns = @JoinColumn(name = "ORDER_ID", nullable = false), 
-        inverseJoinColumns = @JoinColumn(name = "SALE_HISTORY_ID", nullable = false))
+        inverseJoinColumns = @JoinColumn(name = "USER_SALE_HISTORY_ID", nullable = false))
     private List<OrderModel> orderList;
 
     public boolean addOrderToOrderList(OrderModel orderModel) {
-		if(orderModel != null) {
+		if(orderList != null) {
 			orderList.add(orderModel);
 		} else {
 			orderList = new ArrayList<>();
