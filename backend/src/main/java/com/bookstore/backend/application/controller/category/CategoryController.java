@@ -35,7 +35,7 @@ public class CategoryController {
         try {
             CategoryModel category = (CategoryModel) ModelMapperService.convertToModel(dto, CategoryModel.class);
             category = categoryService.save(category);
-            return ResponseEntity.status(HttpStatus.OK).body(category);
+            return ResponseEntity.status(HttpStatus.CREATED).body(category);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
