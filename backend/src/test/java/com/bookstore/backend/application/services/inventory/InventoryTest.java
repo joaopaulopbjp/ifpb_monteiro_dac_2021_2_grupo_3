@@ -41,10 +41,6 @@ import com.bookstore.backend.infrastructure.persistence.service.product.BookRepo
 @TestMethodOrder(OrderAnnotation.class)
 public class InventoryTest {
 	
-	
-    @Autowired
-    private InventoryService inventoryService;
-
     @Autowired
     private InventoryRepositoryService inventoryRepositoryService;
     
@@ -59,12 +55,6 @@ public class InventoryTest {
     
     @Autowired
     private BookRepositoryService bookRepositoryService;
-    
-    @Autowired
-    private UserRepositoryService userRepositoryService;
-    
-    @Autowired
-    private ImageRepositoryService imageRepositoryService;
     
     @Autowired
     private UserService userService;
@@ -158,11 +148,11 @@ public class InventoryTest {
                  
              InventoryModel inventory = book.getInventory();
    
-             inventory.removerAmount(20);
+             inventory.removerAmount(-50);
              
              inventory = inventoryRepositoryService.getInstance().save(inventory);
              
-             assertEquals(0,inventory.getAmount());
+             assertEquals(20,inventory.getAmount());
              
     }
     

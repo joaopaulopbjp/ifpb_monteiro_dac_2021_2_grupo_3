@@ -67,14 +67,18 @@ public class  InventoryModel {
 			setStatus(InventoryStatus.AVAILABLE);
 		}
 	}
-
-	public void removerAmount(int amount) {
-		this.amount -= amount;
-		if(this.amount == 0){
-			setStatus(InventoryStatus.UNAVAILABLE);
-		}else if(this.amount < 0){
-			setAmount(0);
-			setStatus(InventoryStatus.UNAVAILABLE);
+	
+	public void removerAmount(Integer amount) {
+		
+		if(amount >= 0) {
+			this.amount -= amount;
+			
+			if(this.amount == 0){
+				setStatus(InventoryStatus.UNAVAILABLE);
+			}else if(this.amount < 0){
+				setAmount(0);
+				setStatus(InventoryStatus.UNAVAILABLE);
+			}
 		}
 	}
 
