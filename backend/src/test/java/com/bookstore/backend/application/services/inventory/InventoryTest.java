@@ -41,6 +41,9 @@ import com.bookstore.backend.infrastructure.persistence.service.product.BookRepo
 @TestMethodOrder(OrderAnnotation.class)
 public class InventoryTest {
 	
+	@Autowired
+	private InventoryService inventoryService;
+	
     @Autowired
     private InventoryRepositoryService inventoryRepositoryService;
     
@@ -61,7 +64,7 @@ public class InventoryTest {
 
     @Test
     @Order(1)
-    public void saveSucess() {
+    public void saveSucess() throws NotFoundException {
         	
         	 CategoryModel category = new CategoryModel(0l, "romance");
              category = categoryRepositoryService.getInstance().save(category);
@@ -91,9 +94,7 @@ public class InventoryTest {
     
              book = bookRepositoryService.getInstance().save(book);
              
-             
-             InventoryModel inventory = book.getInventory();
-             
+             InventoryModel inventory = inventoryService.findById(book.getInventory().getId());
              assertEquals(InventoryStatus.AVAILABLE,inventory.getStatus());
              
     }
@@ -101,10 +102,9 @@ public class InventoryTest {
     
     @Test
     @Order(2)
-    public void saveInventoryUnavailable() {
+    public void saveInventoryUnavailable() throws NotFoundException {
     	
     		
-        	
         	 CategoryModel category = new CategoryModel(0l, "horror");
              category = categoryRepositoryService.getInstance().save(category);
              List<CategoryModel> categoryList = new ArrayList<>();
@@ -133,8 +133,7 @@ public class InventoryTest {
     
              book = bookRepositoryService.getInstance().save(book);
              
-             InventoryModel inventory = book.getInventory();
-             
+             InventoryModel inventory = inventoryService.findById(book.getInventory().getId());
              assertEquals(0,inventory.getAmount());
              
     }
