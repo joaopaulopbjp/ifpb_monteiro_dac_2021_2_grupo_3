@@ -23,6 +23,9 @@ public class  InventoryModel {
 		this.id = id;
 		this.amount = amount;
 		this.status = InventoryStatus.UNAVAILABLE;
+		if(amount < 0) {
+			this.amount = 0;
+		}
 		if(amount != null && amount > 0) {
 			this.status = InventoryStatus.AVAILABLE;
 		}
