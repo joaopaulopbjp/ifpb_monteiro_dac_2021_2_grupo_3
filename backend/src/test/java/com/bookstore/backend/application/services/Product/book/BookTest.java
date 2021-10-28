@@ -139,6 +139,11 @@ public class BookTest {
         imageList1, new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
         // Test imageList empty
         assertThrows(IllegalArgumentException.class, () -> {bookService.save(book4, categoryListId, userId, companyId, authorListId);});
+
+        BookModel book5 = new BookModel(0l, "The adventure in Hell", "livro de fantasia", 2021, -200, new BigDecimal(1.99), Status.ACTIVE, 
+        imageList, new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
+        // Test pages minor than 0 
+        assertThrows(IllegalArgumentException.class, () -> {bookService.save(book5, categoryListId, userId, companyId, authorListId);});
     }
 
     @Test
