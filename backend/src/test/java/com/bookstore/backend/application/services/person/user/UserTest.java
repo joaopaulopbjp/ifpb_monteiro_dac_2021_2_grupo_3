@@ -48,6 +48,14 @@ public class UserTest {
         null, null, null);
         
         assertThrows(IllegalArgumentException.class, () -> userService.save(userModel));
+
+        userModel.setUsername("Thauan");
+        userModel.setEmail("thauan@email");
+        assertThrows(IllegalArgumentException.class, () -> userService.save(userModel));
+        
+        userModel.setEmail("thauan@email.com");
+        userModel.setPassword("123");
+        assertThrows(IllegalArgumentException.class, () -> userService.save(userModel));
     }
     
     @Test
