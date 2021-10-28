@@ -2,8 +2,8 @@ package com.bookstore.backend.application.services.evaluate;
 
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
@@ -32,6 +32,7 @@ import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
+
 
 @SpringBootTest
 @TestMethodOrder(OrderAnnotation.class)
@@ -91,7 +92,33 @@ public class EvaluateTest {
              EvaluateModel evaluate = new EvaluateModel(1L, 6, "livro muito ruim");
             
              assertThrows(IllegalArgumentException.class, () -> {evaluateService.save(evaluate, idBook, idUser);});
-             
-				
+			
 		}
+		
+		
+		@Test
+		@Order(2)
+		public void validRating() throws NotFoundException, FullListException {
+			 UserModel user = userService.findById(1L);
+			 BookModel book = bookService.findById(1L);
+			
+			 EvaluateModel evaluate = new EvaluateModel(1L, 3, "Livro muito ruim");
+			 evaluate = evaluateService.save(evaluate, book.getId(), user.getId());
+			 
+			 assertNotNull(evaluate); 
+		}
+		
+		@Test
+		@Order(3)
+		public void invalidSize() throws NotFoundException, FullListException {
+			 UserModel user = userService.findById(1L);
+			 BookModel book = bookService.findById(1L);
+			
+			 EvaluateModel evaluate = new EvaluateModel(1L, 3, "ok");
+	         Long idBook = book.getId();
+	         Long idUser = user.getId();
+	         
+			 assertThrows(IllegalArgumentException.class, () -> {evaluateService.save(evaluate, idBook, idUser);});
+		}
+		
 }
