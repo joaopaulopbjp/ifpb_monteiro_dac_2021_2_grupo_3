@@ -2,8 +2,6 @@ package com.bookstore.backend.application.controller.category;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import com.bookstore.backend.application.service.category.CategoryService;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -33,7 +31,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid CategoryDTO dto){
+    public ResponseEntity<?> save(@RequestBody CategoryDTO dto){
         try {
             CategoryModel category = (CategoryModel) ModelMapperService.convertToModel(dto, CategoryModel.class);
             category = categoryService.save(category);
