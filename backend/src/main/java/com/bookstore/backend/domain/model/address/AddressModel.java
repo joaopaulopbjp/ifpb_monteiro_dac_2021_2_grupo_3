@@ -6,7 +6,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import com.bookstore.backend.presentation.dto.address.AddressDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -42,10 +41,6 @@ public class AddressModel {
 
 	@Column(name = "DISTRICT", nullable = false)
 	private String district;
-
-	public AddressModel(AddressDTO address){
-		
-	}
 	
 	@Override
     public String toString() {
