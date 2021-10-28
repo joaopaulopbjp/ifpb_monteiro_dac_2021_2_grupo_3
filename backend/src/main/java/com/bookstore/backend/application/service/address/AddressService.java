@@ -26,6 +26,10 @@ public class AddressService {
         if(!user.isPresent()){
             throw new NotFoundException("Not find person with this id " + personId);
         }
+        address.setZipCode(address.getZipCode().replaceAll("-", ""));
+        if(address.getZipCode().length() != 9) {
+            throw new IllegalArgumentException("ZipCode must be 9");
+        }
         address = addressRepositoryService.getInstance().save(address);
         user.get().addAddressToAddressList(address);
         userRepositoryService.getInstance().save(user.get());

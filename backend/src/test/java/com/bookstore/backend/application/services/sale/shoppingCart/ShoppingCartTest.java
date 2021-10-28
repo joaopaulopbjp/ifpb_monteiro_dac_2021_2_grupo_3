@@ -2,7 +2,9 @@ package com.bookstore.backend.application.services.sale.shoppingCart;
 
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -128,7 +130,6 @@ public class ShoppingCartTest {
 
         Long idUser = userModel.getId();
 
-        userModel = userService.save(userModel);
         ShoppingCartModel shoppingCartModel = userModel.getShoppingCart();
         
         assertThrows(NotFoundException.class, () -> shoppingCartService.add(shoppingCartModel, idUser, 100000l));
@@ -143,7 +144,16 @@ public class ShoppingCartTest {
 
         Long bookId = bookRepositoryService.getInstance().findAll().stream().findFirst().get().getId();
 
-        assertNotNull(shoppingCartModel.removeItemOrderFromItemListByProductId(bookId));
+        assertTrue(shoppingCartModel.removeItemOrderFromItemListByProductId(bookId));
+    }
 
+    @Test
+    @Order(4)
+    public void removeTestError() throws NotFoundException {
+        UserModel userModel = userRepositoryService.getInstance().findAll().stream().findFirst().get();
+
+        ShoppingCartModel shoppingCartModel = userModel.getShoppingCart();
+
+        assertFalse(shoppingCartModel.removeItemOrderFromItemListByProductId(1000000l));
     }
 }
