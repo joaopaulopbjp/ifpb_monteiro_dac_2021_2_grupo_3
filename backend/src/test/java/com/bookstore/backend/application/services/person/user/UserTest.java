@@ -78,7 +78,7 @@ public class UserTest {
         List<UserModel> userModel = userRepositoryService.getInstance().findAll();
         userService.delete(userModel.stream().findFirst().get().getId());
         
-        assertEquals(userModel.size()-1, userRepositoryService.getInstance().findAll().size()-1);
+        assertEquals(userModel.size()-1, userRepositoryService.getInstance().findAll().size());
     }
 
     @Test
