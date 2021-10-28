@@ -52,9 +52,9 @@ public class UserTest {
         userModel.setUsername("Thauan");
         userModel.setEmail("thauan@email");
         assertThrows(IllegalArgumentException.class, () -> userService.save(userModel));
-        
+
         userModel.setEmail("thauan@email.com");
-        userModel.setPassword("123");
+        userModel.setPassword("1234");
         assertThrows(IllegalArgumentException.class, () -> userService.save(userModel));
     }
     
