@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.services.sale.shoppingCart;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -25,6 +26,7 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 
@@ -65,10 +67,13 @@ public class ShoppingCartTest {
 
     @Autowired
     private BookService bookService;
+
+    @Autowired
+    private BookRepositoryService bookRepositoryService;
     
     @Test
     @Order(1)
-    public void addTest() throws NotFoundException {
+    public void addTestSucess() throws NotFoundException {
         shoppingCartRepositoryService.getInstance().deleteAll();
         userRepositoryService.getInstance().deleteAll();
         
@@ -77,7 +82,6 @@ public class ShoppingCartTest {
 
         userModel = userService.save(userModel);
         ShoppingCartModel shoppingCartModel = userModel.getShoppingCart();
-
         
         CategoryModel category = new CategoryModel(0l, "adventure");
         category = categoryRepositoryService.getInstance().save(category);
@@ -114,6 +118,31 @@ public class ShoppingCartTest {
         assertNotNull(shoppingCartService);
         assertEquals(itemOrderList.stream().findFirst().get().getId(),
             shoppingCartModel.getItemList().stream().findFirst().get().getId());
+    }
+
+    @Test
+    @Order(2)
+    public void addProductNotFoundTestError() throws NotFoundException {
+        UserModel userModel = userRepositoryService.getInstance().findAll().stream().findFirst().get();
+
+        Long idUser = userModel.getId();
+
+        userModel = userService.save(userModel);
+        ShoppingCartModel shoppingCartModel = userModel.getShoppingCart();
+        
+        assertThrows(NotFoundException.class, () -> shoppingCartService.add(shoppingCartModel, idUser, 100000l));
+    }
+
+    @Test
+    @Order(3)
+    public void removeTestSucess() throws NotFoundException {
+        UserModel userModel = userRepositoryService.getInstance().findAll().stream().findFirst().get();
+
+        ShoppingCartModel shoppingCartModel = userModel.getShoppingCart();
+
+        Long bookId = bookRepositoryService.getInstance().findAll().stream().findFirst().get().getId();
+
+        assertNotNull(shoppingCartModel.removeItemOrderFromItemListByProductId(bookId));
 
     }
 }
