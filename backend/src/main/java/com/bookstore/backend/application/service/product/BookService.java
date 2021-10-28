@@ -69,6 +69,10 @@ public class BookService {
             authorRecoveredList.add(author.get());
         }
 
+        if(book.getPages() <= 0){
+            throw new IllegalArgumentException("pages can't be minor or equal than 0");
+        }
+
         if(book.getYearLaunch() <= 0){
             throw new IllegalArgumentException("yearLaunch can't be minor than 0");
         }
