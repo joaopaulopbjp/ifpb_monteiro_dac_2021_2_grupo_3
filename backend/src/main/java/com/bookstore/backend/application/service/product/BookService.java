@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.service.product;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,7 @@ import java.util.Optional;
 import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
+import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
@@ -67,6 +69,14 @@ public class BookService {
             authorRecoveredList.add(author.get());
         }
 
+        if(book.getYearLaunch() <= 0){
+            throw new IllegalArgumentException("yearLaunch can't be minor than 0");
+        }
+
+        if(book.getYearLaunch() > LocalDate.now().getYear()){
+            throw new IllegalArgumentException("yearLaunch can't be greater than " + LocalDate.now().getYear());
+        }
+
         if(!personModelOp.isPresent()) {
             throw new NotFoundException("Not found the id " + sallerId + " for user.");
         }
@@ -81,6 +91,15 @@ public class BookService {
 
         if(book.getTitle() != null && book.getTitle().length() < 5){
             throw new IllegalArgumentException("The title size must be greater than five.");
+        }
+
+        if(book.getImageList().isEmpty()){
+            throw new IllegalArgumentException("The ImageList is empty");
+        }
+
+        for(ImageModel image: book.getImageList()){
+            if(image.getBase64() == null || image.getBase64().equals(""))
+                throw new IllegalArgumentException("Image is empty");
         }
         book.setCategoryList(categoryRecoveredList);
         book.setAuthorList(authorRecoveredList);

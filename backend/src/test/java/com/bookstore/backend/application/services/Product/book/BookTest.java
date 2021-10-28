@@ -80,7 +80,7 @@ public class BookTest {
 
         PublishingCompanyModel company = new PublishingCompanyModel(0l, "brascabam");
         company = publishingCompanyService.save(company);
-        BookModel book = new BookModel(0l, "teste", "livro de fantasia", 2000, 10, new BigDecimal(1.99), Status.ACTIVE, imageList, 
+        BookModel book = new BookModel(0l, "teste", "livro de fantasia", 2021, 10, new BigDecimal(1.99), Status.ACTIVE, imageList, 
         new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
 
         List<BookModel> bookList = bookRepositoryService.getInstance().findAll();
@@ -90,7 +90,7 @@ public class BookTest {
 
     @Test
     @Order(2)
-    public void saveBookTitleError() throws NotFoundException{
+    public void saveBookError() throws NotFoundException{
         CategoryModel category = new CategoryModel(0l, "literatura");
         category = categoryRepositoryService.getInstance().save(category);
         List<CategoryModel> categoryList = new ArrayList<>();
@@ -114,13 +114,31 @@ public class BookTest {
 
         PublishingCompanyModel company = new PublishingCompanyModel(0l, "literatura de cordel");
         company = publishingCompanyService.save(company);
-        BookModel book = new BookModel(0l, "", "livro de fantasia", 2000, 10, new BigDecimal(1.99), Status.ACTIVE, imageList, 
-        new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
+        BookModel book = new BookModel(0l, "", "livro de fantasia", 2000, 10, new BigDecimal(1.99), Status.ACTIVE, 
+        imageList, new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
 
         Long userId = user.getId();
         Long companyId = company.getId();
-
+        // Test title empty
         assertThrows(IllegalArgumentException.class, () -> {bookService.save(book, categoryListId, userId, companyId, authorListId);});
+        
+        BookModel book2 = new BookModel(0l, "The adventure in Hell", "livro de fantasia", 2022, 10, new BigDecimal(1.99), Status.ACTIVE, 
+        imageList, new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
+        // Test yearlaunch 2022
+        assertThrows(IllegalArgumentException.class, () -> {bookService.save(book2, categoryListId, userId, companyId, authorListId);});
+
+        BookModel book3 = new BookModel(0l, "The adventure in Hell", "livro de fantasia", 0, 10, new BigDecimal(1.99), Status.ACTIVE, 
+        imageList, new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
+        // Test yearLaunch 0
+        assertThrows(IllegalArgumentException.class, () -> {bookService.save(book3, categoryListId, userId, companyId, authorListId);});
+
+        ImageModel image1 = new ImageModel(0l,"");
+        List<ImageModel> imageList1 = new ArrayList<>();
+        imageList.add(image1);
+        BookModel book4 = new BookModel(0l, "The adventure in Hell", "livro de fantasia", 2021, 10, new BigDecimal(1.99), Status.ACTIVE, 
+        imageList1, new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), categoryList, company, authorList, null);
+        // Test imageList empty
+        assertThrows(IllegalArgumentException.class, () -> {bookService.save(book4, categoryListId, userId, companyId, authorListId);});
     }
 
     @Test
@@ -128,9 +146,6 @@ public class BookTest {
     public void deleteSucess() throws NotFoundException{
         List<BookModel> bookList = bookRepositoryService.getInstance().findAll();
 
-        // if(!bookRepositoryService.getInstance().findAll().isEmpty()){
-        //     bookService.delete(bookRepositoryService.getInstance().findAll().stream().findFirst().get().getId());
-        // }
         bookService.delete(bookList.get(0).getId());
 
         assertEquals(bookList.size()-1, bookRepositoryService.getInstance().findAll().size()-1);
@@ -138,18 +153,25 @@ public class BookTest {
 
     @Test
     @Order(4)
+    public void invalidIdsForDelete() throws NotFoundException{
+        assertThrows(NotFoundException.class, () -> {bookService.delete(-100000l);});
+        assertThrows(NotFoundException.class, () -> {bookService.delete(100000l);});
+    }
+
+    @Test
+    @Order(5)
     public void findBytitleSucess() throws NotFoundException{
         assertFalse(bookService.findByTitle("teste").isEmpty());
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void findByTitleErrorPassing() throws NotFoundException{
         assertThrows(NotFoundException.class, () -> {bookService.findByTitle("");});
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void findByTitleErrorNull() throws NotFoundException{
         assertThrows(NotFoundException.class, () -> {bookService.findByTitle(null);});
     }
