@@ -12,16 +12,19 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 
 @Entity
 @Table(name = "T_BOOK")
 public class BookModel extends ProductModel{ 
 
+    
+
     public BookModel(Long id, String title, String description, Integer yearLaunch, Integer pages, BigDecimal price,
-            List<ImageModel> imageList, InventoryModel inventory, List<CategoryModel> categoryList,
+            Status status, List<ImageModel> imageList, InventoryModel inventory, List<CategoryModel> categoryList,
             PublishingCompanyModel company, List<AuthorModel> authorList, List<EvaluateModel> evaluateList) {
-        super(id, title, description, yearLaunch, pages, price, imageList, inventory, categoryList, company, authorList,
-                evaluateList);
+        super(id, title, description, yearLaunch, pages, price, status, imageList, inventory, categoryList, company,
+                authorList, evaluateList);
     }
 
     public BookModel() {

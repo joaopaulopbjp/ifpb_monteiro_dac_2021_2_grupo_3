@@ -1,10 +1,6 @@
 package com.bookstore.backend.application.services.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,7 +13,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.bookstore.backend.application.service.company.PublishingCompanyService;
 import com.bookstore.backend.application.service.inventory.InventoryService;
 import com.bookstore.backend.application.service.person.UserService;
 import com.bookstore.backend.domain.model.author.AuthorModel;
@@ -28,13 +23,12 @@ import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.image.ImageRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.inventory.InventoryRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 
 @SpringBootTest
@@ -88,7 +82,7 @@ public class InventoryTest {
              user = userService.save(user);
              PublishingCompanyModel company = new PublishingCompanyModel(0l, "literatura de cordel");
              company = publishingCompanyRepositoryService.getInstance().save(company);
-             BookModel book = new BookModel(0l, "teste", "livro de fantasia", 2000, 10, new BigDecimal(1.99), imageList, 
+             BookModel book = new BookModel(0l, "teste", "livro de fantasia", 2000, 10, new BigDecimal(1.99), Status.ACTIVE, imageList, 
              new InventoryModel(null, 20, null), 
              categoryList, company, authorList, null);
     
@@ -127,7 +121,7 @@ public class InventoryTest {
              user = userService.save(user);
              PublishingCompanyModel company = new PublishingCompanyModel(0l, "literatura");
              company = publishingCompanyRepositoryService.getInstance().save(company);
-             BookModel book = new BookModel(0l, "teste2", "livro de terror", 2000, 10, new BigDecimal(1.99), imageList, 
+             BookModel book = new BookModel(0l, "teste2", "livro de terror", 2000, 10, new BigDecimal(1.99), Status.ACTIVE, imageList, 
              new InventoryModel(null, -1, null), 
              categoryList, company, authorList, null);
     

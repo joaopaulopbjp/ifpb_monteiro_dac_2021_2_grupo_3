@@ -22,6 +22,7 @@ import com.bookstore.backend.domain.model.sale.ItemOrderModel;
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
@@ -103,7 +104,7 @@ public class ShoppingCartTest {
 
         PublishingCompanyModel company = new PublishingCompanyModel(0l, "literatura de cordel");
         company = publishingCompanyService.save(company);
-        BookModel book = new BookModel(0l, "teste", "livro de fantasia", 2000, 10, new BigDecimal(1.99), imageList, 
+        BookModel book = new BookModel(0l, "teste", "livro de fantasia", 2000, 10, new BigDecimal(1.99), Status.ACTIVE, imageList, 
             new InventoryModel(0l, 1000, InventoryStatus.AVAILABLE), 
             categoryList, company, authorList, null);
 

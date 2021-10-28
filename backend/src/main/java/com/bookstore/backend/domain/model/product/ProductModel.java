@@ -12,6 +12,7 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 
@@ -53,6 +54,9 @@ public abstract class ProductModel {
 
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
+
+    @Column(name = "STATUS", nullable = false)
+    private Status status;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
