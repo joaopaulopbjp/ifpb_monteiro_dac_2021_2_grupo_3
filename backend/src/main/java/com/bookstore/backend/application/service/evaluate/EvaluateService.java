@@ -36,6 +36,9 @@ public class EvaluateService {
         if(!user.isPresent()){
             throw new NotFoundException("Not found User " + idUser);
         }
+        if(evaluate.getStarNumber() <= 0 || evaluate.getStarNumber() > 5) {
+        	throw new IllegalArgumentException("invalid rating: " + evaluate.getStarNumber());
+        }
         evaluate = evaluateRepositoryService.getInstance().save(evaluate);
         book.get().addEvaluateToEvaluateList(evaluate);
         bookRepositoryService.getInstance().save(book.get());
