@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -27,8 +28,8 @@ public class AddressService {
             throw new NotFoundException("Not find person with this id " + personId);
         }
         address.setZipCode(address.getZipCode().replaceAll("-", ""));
-        if(address.getZipCode().length() != 9) {
-            throw new IllegalArgumentException("ZipCode must be 9");
+        if(address.getZipCode().length() != 8) {
+            throw new IllegalArgumentException("ZipCode must be 8");
         }
         address = addressRepositoryService.getInstance().save(address);
         user.get().addAddressToAddressList(address);
@@ -36,8 +37,13 @@ public class AddressService {
         return address;
     }
 
-    public void delete(Long id) throws IllegalArgumentException {
-        UserModel user = userRepositoryService.getInstance().findByAddressId(id).get();
+    public void delete(Long id) throws IllegalArgumentException, NotFoundException {
+        UserModel user;
+        try {
+            user = userRepositoryService.getInstance().findByAddressId(id).get();
+        } catch (NoSuchElementException e) {
+            throw new NotFoundException("Can't found address with id " + id);
+        }
         Optional<AddressModel> address = addressRepositoryService.getInstance().findById(id);
         user.removeAddressFromAddressList(address.get());
         userRepositoryService.getInstance().save(user);
