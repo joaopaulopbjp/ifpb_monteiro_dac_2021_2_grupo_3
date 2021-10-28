@@ -11,6 +11,7 @@ import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.InvalidValueException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
@@ -50,6 +51,8 @@ public class BookService {
         List<CategoryModel> categoryRecoveredList = new ArrayList<>();
         List<AuthorModel> authorRecoveredList = new ArrayList<>();
 
+        book.setStatus(Status.ACTIVE);
+
         for(Long id : categoryListId) {
             Optional<CategoryModel> category = categoryRepositoryService.getInstance().findById(id);
             if(!category.isPresent())
@@ -71,6 +74,14 @@ public class BookService {
             throw new NotFoundException("Not found the id " + companyId + " for PublishingCompany.");
 
         }
+
+        if(book.getTitle() == null){
+            throw new IllegalArgumentException("Title is null");
+        }
+
+        if(book.getTitle() != null && book.getTitle().length() < 5){
+            throw new IllegalArgumentException("The title size must be greater than five.");
+        }
         book.setCategoryList(categoryRecoveredList);
         book.setAuthorList(authorRecoveredList);
         book.setCompany(companyOp.get());
@@ -91,17 +102,19 @@ public class BookService {
     public void delete(Long id) throws NotFoundException {
         boolean flag = bookRepositoryService.getInstance().existsById(id);
         if(!flag)
-        throw new NotFoundException();
+            throw new NotFoundException("Not found book with id " + id);
         
         UserModel user = userRepositoryService.getInstance().findByProductId(id).get();
         ProductModel product = bookRepositoryService.getInstance().findById(id).get();
         user.removeProductFromProductList(product);
-
-        Optional<SaleModel> sale = saleRepositoryService.getInstance().findByProductId(id);
         
         userRepositoryService.getInstance().save(user);
-        saleRepositoryService.getInstance().deleteById(sale.get().getId());
-
+        BookModel book = findById(id);
+        if(book.getStatus()==Status.INACTIVE){
+            throw new NotFoundException("Not found book with id " + id);
+        }
+        book.setStatus(Status.INACTIVE);
+        bookRepositoryService.getInstance().save(book);
     }
 
     public BookModel findById(Long id) throws NotFoundException {
