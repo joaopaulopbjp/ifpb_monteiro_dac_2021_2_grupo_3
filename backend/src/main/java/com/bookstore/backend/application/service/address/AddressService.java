@@ -47,7 +47,7 @@ public class AddressService {
         Optional<AddressModel> address = addressRepositoryService.getInstance().findById(id);
         user.removeAddressFromAddressList(address.get());
         userRepositoryService.getInstance().save(user);
-        addressRepositoryService.getInstance().delete(address.get());
+        addressRepositoryService.getInstance().deleteById(address.get().getId());
     }
 
     public AddressModel update(AddressModel addressModel) throws NotFoundException{
