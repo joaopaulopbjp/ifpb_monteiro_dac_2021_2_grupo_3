@@ -1,13 +1,10 @@
 package com.bookstore.backend.application.services.address;
 
 import static org.junit.Assert.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
 
 import com.bookstore.backend.application.service.address.AddressService;
 import com.bookstore.backend.application.service.person.UserService;
