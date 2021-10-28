@@ -39,7 +39,7 @@ public class EvaluateService {
         if(evaluate.getStarNumber() <= 0 || evaluate.getStarNumber() > 5) {
         	throw new IllegalArgumentException("invalid rating: " + evaluate.getStarNumber());
         }
-        if(evaluate.getComment() == null || evaluate.getComment().length() < 4) {
+        if(evaluate.getComment() == null || evaluate.getComment().length() < 4 || evaluate.getComment().length() > 1000) {
         	throw new IllegalArgumentException("amount of invalid characters: " + evaluate.getComment().length());
         }
         evaluate = evaluateRepositoryService.getInstance().save(evaluate);

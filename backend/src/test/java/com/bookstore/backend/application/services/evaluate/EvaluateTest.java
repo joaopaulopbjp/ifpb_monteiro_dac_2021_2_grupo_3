@@ -3,7 +3,6 @@ package com.bookstore.backend.application.services.evaluate;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.math.BigDecimal;
@@ -30,6 +29,7 @@ import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 
@@ -82,7 +82,7 @@ public class EvaluateTest {
              user = userService.save(user);
              PublishingCompanyModel company = new PublishingCompanyModel(0l, "literatura");
              company = companyService.save(company);
-             BookModel book = new BookModel(0l, "meuteste", "livro de aventura", 2000, 10, new BigDecimal(1.99), imageList, 
+             BookModel book = new BookModel(0l, "meuteste", "livro de aventura", 2000, 10, new BigDecimal(1.99), Status.ACTIVE , imageList, 
              new InventoryModel(1L, 20, null), 
              categoryList, company, authorList, null);
              book = bookService.save(book, categoryListId, user.getId(), company.getId(), authorListId);
@@ -110,15 +110,45 @@ public class EvaluateTest {
 		
 		@Test
 		@Order(3)
-		public void invalidSize() throws NotFoundException, FullListException {
+		public void invalidSizeMin() throws NotFoundException, FullListException {
 			 UserModel user = userService.findById(1L);
 			 BookModel book = bookService.findById(1L);
+			 EvaluateModel evaluate = evaluateService.findById(1L);
+			 evaluate.setComment("ok");
 			
-			 EvaluateModel evaluate = new EvaluateModel(1L, 3, "ok");
 	         Long idBook = book.getId();
 	         Long idUser = user.getId();
 	         
 			 assertThrows(IllegalArgumentException.class, () -> {evaluateService.save(evaluate, idBook, idUser);});
+			 
 		}
+		
+		@Test
+		@Order(4)
+		public void invalidSizeMax() throws NotFoundException, FullListException {
+			 UserModel user = userService.findById(1L);
+			 BookModel book = bookService.findById(1L);
+			 EvaluateModel evaluate = evaluateService.findById(1L);
+			 
+			 evaluate.setComment("On the other hand, we denounce with righteous indignation and dislike men who are"
+			 		+ "so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they"
+			 		+ " cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail "
+			 		+ "in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. "
+			 		+ "These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is "
+			 		+ "untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be"
+			 		+ " welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the "
+			 		+ "obligations of business it will frequently occur that pleasures have to be repudiated and annoyances "
+			 		+ "accepted. The wise man therefore always holds in these matters to this principle of selection: he "
+			 		+ "rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains "
+			 		+ "therestghplmksdzfhisbdfigmdçfghopdxfngofldmhioe.");
+			 
+			 Long idBook = book.getId();
+	         Long idUser = user.getId();
+				        
+			 assertThrows(IllegalArgumentException.class, () -> {evaluateService.save(evaluate, idBook, idUser);});
+			 
+		}
+		
+		
 		
 }
