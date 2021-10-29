@@ -84,6 +84,22 @@ public class OrderService {
         return order;
     }
 
+    public OrderModel findById(Long id) throws NotFoundException{
+        Optional<OrderModel> order = orderRepositoryService.getInstance().findById(id);
+        if(!order.isPresent()){
+            throw new NotFoundException("Not Found Order " + id);
+        }
+        return order.get();
+    }
+
+    public List<OrderModel> findAll() throws NotFoundException{
+        List<OrderModel> orderList = orderRepositoryService.getInstance().findAll();
+        if(orderList.isEmpty()){
+            throw new NotFoundException();
+        }
+        return orderList;
+    }
+
     public OrderModel updateStatus(Long idOrder, Long idStatus) throws IllegalArgumentException, NotFoundException{
         Optional<OrderModel> order = orderRepositoryService.getInstance().findById(idOrder);
         if(!order.isPresent()){
