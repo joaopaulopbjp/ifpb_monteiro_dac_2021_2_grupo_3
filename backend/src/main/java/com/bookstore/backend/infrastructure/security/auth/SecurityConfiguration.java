@@ -1,5 +1,6 @@
 package com.bookstore.backend.infrastructure.security.auth;
 
+import com.bookstore.backend.infrastructure.exception.JwtAuthorizationException;
 import com.bookstore.backend.infrastructure.security.filter.JwtFilterRequest;
 import com.bookstore.backend.infrastructure.security.service.UserSecurityService;
 
@@ -26,6 +27,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Autowired
     private JwtFilterRequest jwtFilterRequest;
 
+    @Autowired
+    private JwtAuthorizationException authorizationException;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(authenticationProvider());
@@ -41,10 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
             .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
-            .authorizeRequests().antMatchers("/api/user/save", "/api/login").permitAll().anyRequest()
-            .authenticated()
+            .authorizeRequests()
+            .antMatchers("/api/user/save", "/api/login").permitAll()
+            .anyRequest().authenticated()
             .and()
-            .exceptionHandling().accessDeniedPage("/403")
+            .exceptionHandling().authenticationEntryPoint(authorizationException)
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -55,8 +60,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
         authProvider.setUserDetailsService(userService);
-        // authProvider.setPasswordEncoder(passwordEncoder());
-         
         return authProvider;
     }
     
