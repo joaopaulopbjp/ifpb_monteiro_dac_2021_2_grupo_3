@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,17 +30,18 @@ public class UserSecurityService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         PersonModel foundedUser;
         List<SimpleGrantedAuthority> roles = new ArrayList<>();
+        PasswordEncoder encoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
 
         try {
             foundedUser = userService.findByUsername(username);
             roles.add(new SimpleGrantedAuthority("USER"));
-            return new User(foundedUser.getUsername(), foundedUser.getPassword(), roles);
+            return new User(foundedUser.getUsername(), encoder.encode(foundedUser.getPassword()), roles);
             
         } catch(NotFoundException e) {
             try {
                 foundedUser = adminService.findByUsername(username);
                 roles.add(new SimpleGrantedAuthority("ADMIN"));
-                return new User(foundedUser.getUsername(), foundedUser.getPassword(), roles);
+                return new User(foundedUser.getUsername(), encoder.encode(foundedUser.getPassword()), roles);
     
             } catch(NotFoundException e1) {
                 throw new UsernameNotFoundException(username);
