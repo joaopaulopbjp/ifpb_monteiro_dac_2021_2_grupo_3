@@ -32,7 +32,7 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody UserDTO dto) {
         UserModel userModel = (UserModel) ModelMapperService.convertToModel(dto, UserModel.class);
         try {
