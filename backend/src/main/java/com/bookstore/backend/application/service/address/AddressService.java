@@ -1,9 +1,11 @@
 package com.bookstore.backend.application.service.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
+import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
@@ -25,22 +27,43 @@ public class AddressService {
     @Autowired
     private UserRepositoryService userRepositoryService;
 
-    public AddressModel save(AddressModel address, String username) throws NotFoundException{
-        Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
+    @Autowired
+    private AdminRepositoryService adminRepositoryService;
 
+    public AddressModel save(AddressModel address, String username) throws NotFoundException {
+        if(!adminVerify.idAdmin(username)) {
+            Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
+    
+            verifyAddress(address);
+            
+            address = addressRepositoryService.getInstance().save(address);
+            user.get().addAddressToAddressList(address);
+            userRepositoryService.getInstance().save(user.get());
+            return address;
+
+        } else {
+            Optional<AdminModel> admin = adminRepositoryService.getInstance().findByUsername(username);
+
+            verifyAddress(address);
+
+            address = addressRepositoryService.getInstance().save(address);
+            admin.get().addAddressToAddressList(address);
+            adminRepositoryService.getInstance().save(admin.get());
+            return address;
+        }
+    }
+
+    private void verifyAddress (AddressModel address) {
         address.setZipCode(address.getZipCode().replaceAll("-", ""));
         if(address.getZipCode().length() != 8) {
             throw new IllegalArgumentException("ZipCode must be 8");
         }
-        address = addressRepositoryService.getInstance().save(address);
-        user.get().addAddressToAddressList(address);
-        userRepositoryService.getInstance().save(user.get());
-        return address;
     }
 
     public void delete(String username, Long id) throws Exception {
         Optional<UserModel> userOp = userRepositoryService.getInstance().findByAddressId(id);
-        if(!userOp.isPresent())
+        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByAddressId(id);
+        if(!userOp.isPresent() && !adminOp.isPresent())
             throw new NotFoundException("Can't found address with id " + id);
 
         if(!adminVerify.idAdmin(username)) {
@@ -54,8 +77,14 @@ public class AddressService {
         }
 
         Optional<AddressModel> address = addressRepositoryService.getInstance().findById(id);
-        userOp.get().removeAddressFromAddressList(address.get());
-        userRepositoryService.getInstance().save(userOp.get());
+        if(userOp.isPresent()) {
+            userOp.get().removeAddressFromAddressList(address.get());
+            userRepositoryService.getInstance().save(userOp.get());
+
+        } else {
+            adminOp.get().removeAddressFromAddressList(address.get());
+            adminRepositoryService.getInstance().save(adminOp.get());
+        }
         addressRepositoryService.getInstance().deleteById(address.get().getId());
 
     }
