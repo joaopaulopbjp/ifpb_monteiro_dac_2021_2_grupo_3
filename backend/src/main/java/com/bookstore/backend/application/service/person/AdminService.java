@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
+import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
@@ -23,6 +24,12 @@ public class AdminService {
 
     @Autowired
     private AdminRepositoryService adminRepositoryService;
+
+    @Autowired
+    private UserRepositoryService userRepositoryService;
+
+    @Autowired
+    private UserService userService;
     
     @EventListener(ApplicationReadyEvent.class)
     private void init() {
@@ -33,8 +40,23 @@ public class AdminService {
         }
     }
 
-    public AdminModel save(Long userId) throws IllegalArgumentException {
-        return null;
+    public AdminModel save(Long userId) throws IllegalArgumentException, NotFoundException {
+        Optional<UserModel> userOp = userRepositoryService.getInstance().findById(userId);
+        if(!userOp.isPresent())
+            throw new NotFoundException("User not found with id " + userId);
+
+        AdminModel admin = new AdminModel(userOp.get().getId(),
+            userOp.get().getUsername(),
+            userOp.get().getEmail(),
+            userOp.get().getPassword(),
+            userOp.get().getAddressList(),
+            null,
+            userOp.get().getSaleHistory());
+        
+        userService.delete(userId);
+        AdminModel adminSaved = adminRepositoryService.getInstance().save(admin);
+        
+        return adminSaved;
     }
     
     public AdminModel update(AdminModel adminModel) throws NotFoundException {
@@ -66,9 +88,8 @@ public class AdminService {
     }
 
     public List<AdminModel> findAll(int pageNumber) throws NotFoundException {
-        // List<UserModel> userList = userRepositoryService.findAll(pageNumber);
-        // return userList;
-        return null;
+        List<AdminModel> adminList = adminRepositoryService.findAll(pageNumber);
+        return adminList;
     }
 
     public AdminModel findById(Long id) throws NotFoundException {
