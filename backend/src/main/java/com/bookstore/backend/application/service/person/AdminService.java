@@ -91,7 +91,7 @@ public class AdminService {
     public void delete(Long personId, String username) throws NotFoundException, Exception {
         boolean flagAdmin = adminRepositoryService.getInstance().existsById(personId);
         boolean flagUser = userRepositoryService.getInstance().existsById(personId);
-        if(!adminVerify.idAdmin(username))
+        if(!adminVerify.isAdmin(username))
             throw new Exception("you can't delete, you don't have permission to delete.");
         if(!flagUser && !flagAdmin){
             throw new NotFoundException("User with id " + personId + " not found");

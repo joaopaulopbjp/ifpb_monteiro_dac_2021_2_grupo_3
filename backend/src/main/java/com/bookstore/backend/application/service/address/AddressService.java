@@ -31,7 +31,7 @@ public class AddressService {
     private AdminRepositoryService adminRepositoryService;
 
     public AddressModel save(AddressModel address, String username) throws NotFoundException {
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
     
             verifyAddress(address);
@@ -66,7 +66,7 @@ public class AddressService {
         if(!userOp.isPresent() && !adminOp.isPresent())
             throw new NotFoundException("Can't found address with id " + id);
 
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             userOp = userRepositoryService.getInstance().findByUsername(username);
             boolean flag = false;
             flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == id).findFirst().isPresent();
@@ -99,7 +99,7 @@ public class AddressService {
             throw new NotFoundException("Not found address with id " + id);
         }
 
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
             boolean flag = false;
             flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == id).findFirst().isPresent();
@@ -112,7 +112,7 @@ public class AddressService {
     }
 
     public List<AddressModel> findAll(String username) throws NotFoundException {
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
             List<AddressModel> addressList = userOp.get().getAddressList();
 

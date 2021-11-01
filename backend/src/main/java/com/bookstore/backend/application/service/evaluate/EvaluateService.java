@@ -31,7 +31,7 @@ public class EvaluateService {
     private AdminVerify adminVerify;
 
     public EvaluateModel save(EvaluateModel evaluate, Long idBook, String username) throws Exception {
-        if(adminVerify.idAdmin(username))
+        if(adminVerify.isAdmin(username))
             throw new Exception("You are admin. You can't add evaluate to products");
             
         Optional<BookModel> book = bookRepositoryService.getInstance().findById(idBook);
@@ -66,7 +66,7 @@ public class EvaluateService {
             throw new NotFoundException("Not found Book");
         }
 
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             boolean flag = userOp.get().getEvaluateList()
                 .stream().filter(evaluate -> evaluate.getId() == evaluateId)
                 .findFirst().isPresent();
@@ -89,7 +89,7 @@ public class EvaluateService {
     }
 
     public List<EvaluateModel> findAll(String username) throws NotFoundException {
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
             List<EvaluateModel> evaluateList = userOp.get().getEvaluateList();
             if(evaluateList.isEmpty())
@@ -111,7 +111,7 @@ public class EvaluateService {
             throw new NotFoundException("Not Found evaluate " + id);
         }
 
-        if(!adminVerify.idAdmin(username)) {
+        if(!adminVerify.isAdmin(username)) {
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByEvaluateId(id);
 
             if(!userOp.isPresent())
