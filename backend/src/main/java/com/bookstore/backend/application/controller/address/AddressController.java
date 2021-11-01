@@ -51,7 +51,7 @@ public class AddressController {
     @DeleteMapping
     public ResponseEntity<?> delete(@RequestBody AddressDTO dto, Principal principal){
         try {
-            addressService.delete(principal.getName(), dto.getId());
+            addressService.delete(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         }catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
@@ -80,7 +80,7 @@ public class AddressController {
     @GetMapping("/find-by-id")
     public ResponseEntity<?> getAddressById(@RequestBody AddressDTO dto, Principal principal){
         try {
-            AddressModel address = addressService.findById(principal.getName(), dto.getId());
+            AddressModel address = addressService.findById(dto.getId(), principal.getName());
             dto = (AddressDTO) ModelMapperService.convertToDTO(address, AddressDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
