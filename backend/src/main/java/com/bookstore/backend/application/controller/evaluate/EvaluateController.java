@@ -71,9 +71,9 @@ public class EvaluateController {
     }
 
     @GetMapping("/find-all")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll(Principal principal){
         try {
-            List<EvaluateModel> evaluateList = evaluateService.findAll();
+            List<EvaluateModel> evaluateList = evaluateService.findAll(principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(evaluateList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
@@ -83,12 +83,14 @@ public class EvaluateController {
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> findById(@RequestBody EvaluateDTO dto){
+    public ResponseEntity<?> findById(@RequestBody EvaluateDTO dto, Principal principal){
         try {
-            EvaluateModel evaluate = evaluateService.findById(dto.getId());
+            EvaluateModel evaluate = evaluateService.findById(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(evaluate);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 }

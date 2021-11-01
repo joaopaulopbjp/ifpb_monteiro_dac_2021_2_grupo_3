@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.user.UserModel;
-import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.evaluate.EvaluateRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
@@ -72,7 +71,7 @@ public class EvaluateService {
                 .stream().filter(evaluate -> evaluate.getId() == evaluateId)
                 .findFirst().isPresent();
             if(!flag)
-                throw new Exception("You can't delete this address because it belongs to another user");
+                throw new Exception("You can't delete this evaluate because it belongs to another user");
 
         } else {
             userOp = userRepositoryService.getInstance().findByEvaluateId(evaluateId);
@@ -89,7 +88,16 @@ public class EvaluateService {
         return evaluateRepositoryService.update(evaluate);
     }
 
-    public List<EvaluateModel> findAll() throws NotFoundException{
+    public List<EvaluateModel> findAll(String username) throws NotFoundException {
+        if(!adminVerify.idAdmin(username)) {
+            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+            List<EvaluateModel> evaluateList = userOp.get().getEvaluateList();
+            if(evaluateList.isEmpty())
+                throw new NotFoundException("List is empty");
+
+            return evaluateList;
+        }
+
         List<EvaluateModel> evaluateList = evaluateRepositoryService.getInstance().findAll();
         if(evaluateList.isEmpty()){
             throw new NotFoundException("List is empty");
@@ -97,10 +105,24 @@ public class EvaluateService {
         return evaluateList;
     }
 
-    public EvaluateModel findById(Long id) throws NotFoundException{
+    public EvaluateModel findById(Long id, String username) throws Exception{
         Optional<EvaluateModel> evaluate = evaluateRepositoryService.getInstance().findById(id);
         if(!evaluate.isPresent()){
             throw new NotFoundException("Not Found evaluate " + id);
+        }
+
+        if(!adminVerify.idAdmin(username)) {
+            Optional<UserModel> userOp = userRepositoryService.getInstance().findByEvaluateId(id);
+
+            if(!userOp.isPresent())
+                throw new Exception("You can't find this evaluate because it belongs to another user");
+
+            boolean flag = userOp.get().getEvaluateList()
+                .stream().filter(evaluateLab -> evaluateLab.getId() == evaluate.get().getId())
+                .findFirst().isPresent();
+            if(!flag)
+                throw new Exception("You can't find this evaluate because it belongs to another user");
+            return evaluate.get();
         }
         return evaluate.get();
     }
