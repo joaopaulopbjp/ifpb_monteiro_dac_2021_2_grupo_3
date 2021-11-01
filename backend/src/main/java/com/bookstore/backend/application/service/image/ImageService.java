@@ -32,7 +32,7 @@ public class ImageService {
     private AdminVerify adminVerify;
 
     public ImageModel save(ImageModel image, Long idBook, String username) throws FullListException, NotFoundException, Exception{
-        if(!adminVerify.idAdmin(username)){
+        if(!adminVerify.isAdmin(username)){
 
             Optional<BookModel> book = bookRepositoryService.getInstance().findById(idBook);
             if(!book.isPresent()){
@@ -51,7 +51,7 @@ public class ImageService {
         if(!image.isPresent()){
             throw new NotFoundException("Not found image " + id);
         }
-        if(!adminVerify.idAdmin(username)){
+        if(!adminVerify.isAdmin(username)){
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
             boolean flag = userOp.get().getProductForSaleList().stream().map(product -> product.getImageList())
                 .map(imageList -> imageList.stream()
