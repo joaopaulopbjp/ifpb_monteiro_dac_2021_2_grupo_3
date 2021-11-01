@@ -2,6 +2,7 @@ package com.bookstore.backend.application.service.image;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
@@ -65,12 +66,17 @@ public class ImageService {
         imageRepositoryService.getInstance().deleteById(id);
     }
 
-    public List<ImageModel> findAll() throws NotFoundException{
-        List<ImageModel> imageList = imageRepositoryService.getInstance().findAll();
-        if(imageList.isEmpty()){
-            throw new NotFoundException("List is empty");
+    public List<ImageModel> findAll(String username) throws NotFoundException, Exception{
+        List<ImageModel> allImageList = imageRepositoryService.getInstance().findAll();
+        if(!allImageList.isEmpty()){
+            throw new NotFoundException("You don't have any Image in yours product");
         }
-        return imageList;
+        if(!adminVerify.isAdmin(username)){
+            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+            List<ImageModel> flag = userOp.get().getProductForSaleList().stream().map(product -> product.getImageList()).map(imageList -> imageList.stream()).collect(Collectors.toList());
+
+        }
+        return imageRepositoryService.getInstance().findAll();
     }
 
     public ImageModel findById(Long id) throws NotFoundException{
