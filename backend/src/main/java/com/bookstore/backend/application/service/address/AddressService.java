@@ -69,7 +69,7 @@ public class AddressService {
         if(!adminVerify.idAdmin(username)) {
             userOp = userRepositoryService.getInstance().findByUsername(username);
             boolean flag = false;
-            flag = userOp.get().getAddressList().stream().map(address -> address.getId() == id).findFirst().isPresent();
+            flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == id).findFirst().isPresent();
 
             if(!flag)
                 throw new Exception("You can't delete this address because it belongs to another user");
@@ -102,7 +102,7 @@ public class AddressService {
         if(!adminVerify.idAdmin(username)) {
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
             boolean flag = false;
-            flag = userOp.get().getAddressList().stream().map(address -> address.getId() == id).findFirst().isPresent();
+            flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == id).findFirst().isPresent();
 
             if(!flag)
                 throw new Exception("You can't get this address because it belongs to another user");
