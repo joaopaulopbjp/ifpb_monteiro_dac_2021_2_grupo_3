@@ -38,10 +38,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/api/category/").hasAnyAuthority("ADMIN")
-            // .antMatchers("/new").hasAnyAuthority("ADMIN", "CREATOR")
-            // .antMatchers("/edit/**").hasAnyAuthority("ADMIN", "EDITOR")
-            // .antMatchers("/delete/**").hasAuthority("ADMIN")
+            .antMatchers("/api/category/find-all").hasAnyAuthority("ADMIN", "USER")
+            .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
+            .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
+            .antMatchers("/api/category/**").hasAnyAuthority("ADMIN")
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
             .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
