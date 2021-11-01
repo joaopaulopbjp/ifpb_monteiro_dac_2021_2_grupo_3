@@ -60,7 +60,7 @@ public class AddressService {
         }
     }
 
-    public void delete(String username, Long id) throws Exception {
+    public void delete(Long id, String username) throws Exception {
         Optional<UserModel> userOp = userRepositoryService.getInstance().findByAddressId(id);
         Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByAddressId(id);
         if(!userOp.isPresent() && !adminOp.isPresent())
@@ -93,7 +93,7 @@ public class AddressService {
         return addressRepositoryService.update(addressModel);
     }
 
-    public AddressModel findById(String username, Long id) throws Exception {
+    public AddressModel findById(Long id, String username) throws Exception {
         Optional<AddressModel> addressOp = addressRepositoryService.getInstance().findById(id);
         if(!addressOp.isPresent()){
             throw new NotFoundException("Not found address with id " + id);
