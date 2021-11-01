@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.controller.inventory;
 
+import java.security.Principal;
+
 import com.bookstore.backend.application.service.inventory.InventoryService;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -37,9 +39,9 @@ public class InventoryController {
     }
 
     @PostMapping("/increment")
-    public ResponseEntity<?> increment(@RequestBody InventoryDTO dto) {
+    public ResponseEntity<?> increment(@RequestBody InventoryDTO dto, Principal principal) {
         try {
-            inventoryService.incremet(dto.getAmount(), dto.getIdBook());
+            inventoryService.incremet(dto.getAmount(), dto.getIdBook(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());
@@ -52,9 +54,9 @@ public class InventoryController {
     }
 
     @PostMapping("/decrement")
-    public ResponseEntity<?> decrement(@RequestBody InventoryDTO dto){
+    public ResponseEntity<?> decrement(@RequestBody InventoryDTO dto, Principal principal){
         try {
-            inventoryService.decrement(dto.getAmount(), dto.getIdBook());
+            inventoryService.decrement(dto.getAmount(), dto.getIdBook(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
 
         }catch(NotFoundException e){
