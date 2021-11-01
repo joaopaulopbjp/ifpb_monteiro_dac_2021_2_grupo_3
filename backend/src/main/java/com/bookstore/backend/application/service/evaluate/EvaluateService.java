@@ -11,6 +11,7 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.evaluate.EvaluateRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +28,19 @@ public class EvaluateService {
     @Autowired
     private UserRepositoryService userRepositoryService;
 
-    public EvaluateModel save(EvaluateModel evaluate, Long idBook, Long idUser) throws NotFoundException, FullListException{
+    @Autowired
+    private AdminVerify adminVerify;
+
+    public EvaluateModel save(EvaluateModel evaluate, Long idBook, String username) throws Exception {
+        if(adminVerify.idAdmin(username))
+            throw new Exception("You are admin. You can't add evaluate to products");
+            
         Optional<BookModel> book = bookRepositoryService.getInstance().findById(idBook);
         if(!book.isPresent()){
             throw new NotFoundException("Not found book " + idBook);
         }
-        Optional<UserModel> user = userRepositoryService.getInstance().findById(idUser);
-        if(!user.isPresent()){
-            throw new NotFoundException("Not found User " + idUser);
-        }
+        Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
+
         if(evaluate.getStarNumber() <= 0 || evaluate.getStarNumber() > 5) {
         	throw new IllegalArgumentException("invalid rating: " + evaluate.getStarNumber());
         }
@@ -50,24 +55,34 @@ public class EvaluateService {
         return evaluate;
     }
 
-    public void delete(Long id) throws NotFoundException{
-        Optional<UserModel> opUser = userRepositoryService.getInstance().findByEvaluateId(id);
-        Optional<BookModel> opBook = bookRepositoryService.getInstance().findByEvaluateId(id);
-        Optional<EvaluateModel> opEvaluate = evaluateRepositoryService.getInstance().findById(id);
-        if(!opEvaluate.isPresent()){
-            throw new NotFoundException("Not found Evaluate " + id);
+    public void delete(Long evaluateId, String username) throws Exception {
+        Optional<BookModel> bookOp = bookRepositoryService.getInstance().findByEvaluateId(evaluateId);
+        Optional<EvaluateModel> evaluateOp = evaluateRepositoryService.getInstance().findById(evaluateId);
+        Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+
+        if(!evaluateOp.isPresent()){
+            throw new NotFoundException("Not found Evaluate " + evaluateId);
         }
-        if(!opUser.isPresent()){
-            throw new NotFoundException("Not found User " + id);
+        if(!bookOp.isPresent()){
+            throw new NotFoundException("Not found Book");
         }
-        if(!opBook.isPresent()){
-            throw new NotFoundException("Not found Book " + id);
+
+        if(!adminVerify.idAdmin(username)) {
+            boolean flag = userOp.get().getEvaluateList()
+                .stream().filter(evaluate -> evaluate.getId() == evaluateId)
+                .findFirst().isPresent();
+            if(!flag)
+                throw new Exception("You can't delete this address because it belongs to another user");
+
+        } else {
+            userOp = userRepositoryService.getInstance().findByEvaluateId(evaluateId);
         }
-        opBook.get().removeEvaluateFromEvaluateList(opEvaluate.get());
-        opUser.get().removeEvaluateFromEvaluateList(opEvaluate.get());
-        bookRepositoryService.getInstance().save(opBook.get());
-        userRepositoryService.getInstance().save(opUser.get());
-        evaluateRepositoryService.getInstance().deleteById(id);
+
+        bookOp.get().removeEvaluateFromEvaluateList(evaluateOp.get());
+        userOp.get().removeEvaluateFromEvaluateList(evaluateOp.get());
+        bookRepositoryService.getInstance().save(bookOp.get());
+        userRepositoryService.getInstance().save(userOp.get());
+        evaluateRepositoryService.getInstance().deleteById(evaluateId);
     }
 
     public EvaluateModel update(EvaluateModel evaluate) throws NotFoundException{
