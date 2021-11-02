@@ -27,9 +27,6 @@ public class AdminService {
     private UserRepositoryService userRepositoryService;
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private AdminVerify adminVerify;
 
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
@@ -44,7 +41,7 @@ public class AdminService {
         }
     }
 
-    public AdminModel save(Long userId) throws IllegalArgumentException, NotFoundException {
+    public AdminModel save(Long userId, String username) throws NotFoundException, Exception {
         Optional<UserModel> userOp = userRepositoryService.getInstance().findById(userId);
         if(!userOp.isPresent())
             throw new NotFoundException("User not found with id " + userId);
@@ -57,7 +54,7 @@ public class AdminService {
             null,
             userOp.get().getSaleHistory());
         
-        userService.delete(userId);
+        delete(userId, username);
         AdminModel adminSaved = adminRepositoryService.getInstance().save(admin);
         
         return adminSaved;
