@@ -1,25 +1,20 @@
 package com.bookstore.backend.application.service.person;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.bookstore.backend.domain.model.address.AddressModel;
-import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.user.AdminModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
-import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -35,7 +30,10 @@ public class AdminService {
     private UserService userService;
 
     @Autowired
-    private AddressRepositoryService addressRepositoryService;
+    private AdminVerify adminVerify;
+
+    private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
+        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
     @EventListener(ApplicationReadyEvent.class)
     private void init() {
@@ -65,32 +63,43 @@ public class AdminService {
         return adminSaved;
     }
     
-    public AdminModel update(AdminModel adminModel) throws NotFoundException {
-        // if(!userRepositoryService.getInstance().existsById(user.getId()))
-        //     throw new NotFoundException("User with id " + user.getId() + " not found");
+    public AdminModel update(AdminModel admin) throws NotFoundException {
+        if(!adminRepositoryService.getInstance().existsById(admin.getId()))
+            throw new NotFoundException("admin with id " + admin.getId() + " not found");
 
-        // if(user.getEmail() != null && !validate(user.getEmail()))
-        //     throw new IllegalArgumentException(user.getEmail() + " is a invalid Email");
+        if(admin.getEmail() != null && !validate(admin.getEmail()))
+            throw new IllegalArgumentException(admin.getEmail() + " is a invalid Email");
         
-        // if(user.getUsername() != null && (user.getUsername().length() < 3 || user.getUsername().length() > 15)) {
-        //     throw new IllegalArgumentException("Username must be between 3 and 15 characters");
-        // }
+        if(admin.getUsername() != null && (admin.getUsername().length() < 3 || admin.getUsername().length() > 15)) {
+            throw new IllegalArgumentException("Username must be between 3 and 15 characters");
+        }
 
-        // if(user.getPassword() != null && user.getPassword().length() < 5) {
-        //     throw new IllegalArgumentException("Password must be at least 5 characters");
-        // }    
+        if(admin.getPassword() != null && admin.getPassword().length() < 5) {
+            throw new IllegalArgumentException("Password must be at least 5 characters");
+        }    
 
-        // user = userRepositoryService.update(user);
-        // return user;
-        return null;
+        admin = adminRepositoryService.update(admin);
+        return admin;
     }
 
-    public void delete(Long adminId) throws NotFoundException {
-        // boolean flag = userRepositoryService.getInstance().existsById(personId);
-        // if(!flag)
-        //     throw new NotFoundException("User with id " + personId + " not found");
+    public void delete(String username) throws NotFoundException {
+        Optional<AdminModel> admin = adminRepositoryService.getInstance().findByUsername(username);
 
-        // userRepositoryService.getInstance().deleteById(personId);
+        adminRepositoryService.getInstance().deleteById(admin.get().getId());
+    }
+
+    public void delete(Long personId, String username) throws NotFoundException, Exception {
+        boolean flagAdmin = adminRepositoryService.getInstance().existsById(personId);
+        boolean flagUser = userRepositoryService.getInstance().existsById(personId);
+        if(!adminVerify.isAdmin(username))
+            throw new Exception("you can't delete, you don't have permission to delete.");
+        if(!flagUser && !flagAdmin){
+            throw new NotFoundException("User with id " + personId + " not found");
+        }
+        if(flagUser){
+            userRepositoryService.getInstance().deleteById(personId);
+        }
+        adminRepositoryService.getInstance().deleteById(personId);
     }
 
     public List<AdminModel> findAll(int pageNumber) throws NotFoundException {
@@ -99,33 +108,31 @@ public class AdminService {
     }
 
     public AdminModel findById(Long id) throws NotFoundException {
-        // Optional<UserModel> user = userRepositoryService.getInstance().findById(id);
-        // if(!user.isPresent())
-        //     throw new NotFoundException("User with id " + id + " not found");
+        Optional<AdminModel> admin = adminRepositoryService.getInstance().findById(id);
+        if(!admin.isPresent())
+            throw new NotFoundException("Admin with id " + id + " not found.");
         
-        // return user.get();
-        return null;
+        return admin.get();
     }
     
-    public AdminModel findByEmail(AdminModel email) throws NotFoundException {
-        // Optional<UserModel> user = userRepositoryService.getInstance().findByEmail(email);
-        // if(!user.isPresent())
-        //     throw new NotFoundException("User with email " + email + " not found");
+    public AdminModel findByEmail(String email) throws NotFoundException {
+        Optional<AdminModel> admin = adminRepositoryService.getInstance().findByEmail(email);
+        if(!admin.isPresent())
+            throw new NotFoundException("Admin with email " + email + " not found.");
         
-        // return user.get();
-        return null;
+        return admin.get();
     }
 
     public AdminModel findByUsername(String username) throws NotFoundException {
         Optional<AdminModel> user = adminRepositoryService.getInstance().findByUsername(username);
         if(!user.isPresent())
-            throw new NotFoundException("User with username " + username + " not found");
+            throw new NotFoundException("Admin with username " + username + " not found");
         
         return user.get();
     }
 
-    // private static boolean validate(String emailStr) {
-    //         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
-    //         return matcher.find();
-    // }
+    private static boolean validate(String emailStr) {
+            Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(emailStr);
+            return matcher.find();
+    }
 }

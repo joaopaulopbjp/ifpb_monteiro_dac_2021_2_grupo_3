@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.image;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.bookstore.backend.application.service.image.ImageService;
@@ -30,10 +31,10 @@ public class ImageController {
     private ImageService imageService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody ImageDTO dto){
+    public ResponseEntity<?> save(@RequestBody ImageDTO dto, Principal principal){
         try {
             ImageModel image = (ImageModel) ModelMapperService.convertToModel(dto, ImageModel.class);
-            image = imageService.save(image, dto.getIdBook());
+            image = imageService.save(image, dto.getIdBook(), principal.getName());
             dto = (ImageDTO) ModelMapperService.convertToDTO(image, ImageDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (Exception e) {
@@ -42,9 +43,9 @@ public class ImageController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody ImageDTO dto){
+    public ResponseEntity<?> delete(@RequestBody ImageDTO dto, Principal principal){
         try {
-            imageService.delete(dto.getId());
+            imageService.delete(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));

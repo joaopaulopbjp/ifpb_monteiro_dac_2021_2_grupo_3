@@ -14,7 +14,7 @@ public class AdminVerify {
     @Autowired
     private AdminRepositoryService adminRepositoryService;
 
-    public boolean idAdmin(String username) {
+    public boolean isAdmin(String username) {
         Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByUsername(username);
 
         if(adminOp.isPresent())
