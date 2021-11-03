@@ -105,7 +105,7 @@ public class BookController {
     @GetMapping("/find/find-by-category")
     public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
-            List<BookModel> bookList = bookServices.findByCategoryIdList(dto.getIdCategoryList());
+            List<BookModel> bookList = bookServices.findByCategoryId(dto.getIdCategory());
             List<BookDTO> dtoList = new ArrayList<>();
             for (BookModel book : bookList) {
                 dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);

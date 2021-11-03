@@ -157,8 +157,11 @@ public class BookService {
         return bookRecoveredList;
     }
 
-    public List<BookModel> findByCategoryIdList(List<Long> idList) throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.findByCategoryIdList(idList);
+    public List<BookModel> findByCategoryId(Long idCategory) throws NotFoundException {
+        if(!categoryRepositoryService.getInstance().existsById(idCategory))
+            throw new NotFoundException("Category with id " + idCategory + " not found");
+
+        List<BookModel> bookRecoveredList = bookRepositoryService.findByCategoryId(idCategory);
         if(bookRecoveredList.isEmpty()) 
             throw new NotFoundException();
             
