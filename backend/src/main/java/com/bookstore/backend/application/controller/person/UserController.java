@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.person;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +48,11 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody UserDTO dto) {
+    public ResponseEntity<?> update(@RequestBody UserDTO dto, Principal principal) {
         UserModel userModel = (UserModel) ModelMapperService.convertToModel(dto, UserModel.class);
 
         try {
-            userModel = userService.update(userModel);
+            userModel = userService.update(userModel, principal.getName());
             dto = (UserDTO) ModelMapperService.convertToDTO(userModel, UserDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
@@ -62,9 +63,9 @@ public class UserController {
     } 
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody UserDTO dto) {
+    public ResponseEntity<?> delete(Principal principal) {
         try {
-            userService.delete(dto.getId());
+            userService.delete(principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
@@ -75,7 +76,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find-all/{page}")
+    @GetMapping("/find/find-all/{page}")
     public ResponseEntity<?> getAll(@PathVariable("page") int page) {
         try {
             List<UserModel> userList = userService.findAll(page);
@@ -93,7 +94,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @GetMapping("/find/find-by-id")
     public ResponseEntity<?> getById(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findById(dto.getId());
@@ -106,7 +107,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find-by-email")
+    @GetMapping("/find/find-by-email")
     public ResponseEntity<?> getByEmail(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findByEmail(dto.getEmail());
@@ -119,7 +120,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find-by-username")
+    @GetMapping("/find/find-by-username")
     public ResponseEntity<?> getByUsername(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findByUsername(dto.getUsername());
