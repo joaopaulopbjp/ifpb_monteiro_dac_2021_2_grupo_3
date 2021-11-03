@@ -53,7 +53,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
             .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/user/save", "/api/login").permitAll()
+            .antMatchers("/api/user/save",
+                "/api/login",
+                "/api/book/find").permitAll()
             .anyRequest().authenticated()
             .and()
             .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {

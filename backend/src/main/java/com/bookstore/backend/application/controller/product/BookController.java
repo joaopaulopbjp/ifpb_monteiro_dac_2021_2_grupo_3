@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.product;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,10 @@ public class BookController {
     private BookService bookServices;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody BookDTO dto) {
+    public ResponseEntity<?> save(@RequestBody BookDTO dto, Principal principal) {
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
         try {
-            BookModel booksaved = bookServices.save(book, dto.getIdCategoryList(), dto.getIdSaller(), dto.getIdCompany(), dto.getIdAuthorList());
+            BookModel booksaved = bookServices.save(book, dto.getIdCategoryList(), dto.getIdCompany(), dto.getIdAuthorList(), principal.getName());
             
             dto = (BookDTO) ModelMapperService.convertToDTO(booksaved, dto.getClass());
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
@@ -81,7 +82,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-all/{page}")
+    @GetMapping("/find/find-all/{page}")
     public ResponseEntity<?> findAll(@PathVariable("page") int page) {
         try {
             List<BookModel> bookList = bookServices.findAll(page);
@@ -101,7 +102,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-by-category")
+    @GetMapping("/find/find-by-category")
     public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
             List<BookModel> bookList = bookServices.findByCategoryIdList(dto.getIdCategoryList());
@@ -121,7 +122,7 @@ public class BookController {
         }
     }
     
-    @GetMapping("/find-by-id")
+    @GetMapping("/find/find-by-id")
     public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
         try {
             BookModel book = bookServices.findById(dto.getId());
@@ -136,7 +137,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-by-title")
+    @GetMapping("/find/find-by-title")
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
             List<BookModel> book = bookServices.findByTitle(dto.getTitle());
@@ -151,7 +152,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-{number}-cheapests")
+    @GetMapping("/find/find-{number}-cheapests")
     public ResponseEntity<?> cheapests(@PathVariable("number") int number) {
         try {
             List<BookModel> bookList = bookServices.findCheapests(number);

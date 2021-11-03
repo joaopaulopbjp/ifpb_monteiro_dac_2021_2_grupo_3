@@ -47,8 +47,8 @@ public class BookService {
     @Autowired
     private PublishingCompanyRepositoryService companyRepositoryService;
 
-    public BookModel save(BookModel book, List<Long> categoryListId, Long sallerId, Long companyId, List<Long> authorListId) throws NotFoundException {
-        Optional<UserModel> personModelOp = userRepositoryService.getInstance().findById(sallerId);
+    public BookModel save(BookModel book, List<Long> categoryListId, Long companyId, List<Long> authorListId, String username) throws NotFoundException {
+        Optional<UserModel> personModelOp = userRepositoryService.getInstance().findByUsername(username);
         Optional<PublishingCompanyModel> companyOp = companyRepositoryService.getInstance().findById(companyId);
         List<CategoryModel> categoryRecoveredList = new ArrayList<>();
         List<AuthorModel> authorRecoveredList = new ArrayList<>();
@@ -85,9 +85,6 @@ public class BookService {
             throw new IllegalArgumentException("yearLaunch can't be greater than " + LocalDate.now().getYear());
         }
 
-        if(!personModelOp.isPresent()) {
-            throw new NotFoundException("Not found the id " + sallerId + " for user.");
-        }
         if(!companyOp.isPresent()) {
             throw new NotFoundException("Not found the id " + companyId + " for PublishingCompany.");
 
