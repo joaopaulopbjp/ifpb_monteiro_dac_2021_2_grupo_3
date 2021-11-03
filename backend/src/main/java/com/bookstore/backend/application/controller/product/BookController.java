@@ -173,4 +173,28 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
+
+    @GetMapping("/find/find-{number}-available")
+    public ResponseEntity<?> findBooksAvailable(@PathVariable("number") int number){
+        try {
+            List<BookModel> bookList = bookServices.findBooksAvailable(number);
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find/find-{number}-unavailable")
+    public ResponseEntity<?> findBooksUnavailable(@PathVariable("number") int number){
+        try {
+            List<BookModel> bookList = bookServices.findBooksUnavailable(number);
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
 }

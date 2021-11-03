@@ -39,7 +39,7 @@ public class BookRepositoryService {
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 
-        Page<BookModel> pages = bookRepository.findAllIgnoreInventoryUnavailable(pageable);
+        Page<BookModel> pages = bookRepository.findAllInventoryAvailable(pageable);
         
         if(pages.isEmpty()) throw new NotFoundException();
         
@@ -81,4 +81,22 @@ public class BookRepositoryService {
 
         return bookRepository.save(bookDataBase);
     }
+
+    public List<BookModel> findBooksAvailable(int pageNumber) throws NotFoundException{
+        Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
+        Page<BookModel> pages = bookRepository.findAllInventoryAvailable(pageable);
+
+        if(pages.isEmpty()) throw new NotFoundException();
+        
+        return pages.getContent();
+    }
+
+    public List<BookModel> findBooksUnavailable(int pageNumber) throws NotFoundException{
+        Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
+        Page<BookModel> pages = bookRepository.findAllInventoryUnavailable(pageable);
+
+        if(pages.isEmpty()) throw new NotFoundException();
+        
+        return pages.getContent();
+    }  
 }

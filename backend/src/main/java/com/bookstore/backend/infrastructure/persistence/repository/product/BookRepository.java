@@ -18,7 +18,10 @@ import org.springframework.stereotype.Repository;
 public interface BookRepository extends JpaRepository<BookModel, Long> {
     
     @Query("SELECT book FROM BookModel book WHERE book.inventory.amount > 0")
-    public Page<BookModel> findAllIgnoreInventoryUnavailable(Pageable pageable);
+    public Page<BookModel> findAllInventoryAvailable(Pageable pageable);
+
+    @Query("SELECT book FROM BookModel book WHERE book.inventory.amount <= 0")
+    public Page<BookModel> findAllInventoryUnavailable(Pageable pageable);
     
     public List<BookModel> findByTitle(String title);
 
@@ -37,4 +40,5 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
 
     @Query(value = "SELECT * FROM t_book JOIN (SELECT * FROM t_product JOIN (SELECT product_id FROM t_product_evaluate_join WHERE t_product_evaluate_join.evaluate_id = :evaluateId) AS retorno ON retorno.product_id = id) AS product ON product.product_id = t_book.id;", nativeQuery = true)
     public Optional<BookModel> findByEvaluateId(@Param("evaluateId") Long evaluateId);
+
 }

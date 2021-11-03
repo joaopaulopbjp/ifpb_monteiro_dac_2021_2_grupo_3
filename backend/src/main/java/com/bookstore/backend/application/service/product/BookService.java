@@ -182,4 +182,12 @@ public class BookService {
             throw new NotFoundException();
         return bookRecoveredList;
     }
+
+    public List<BookModel> findBooksAvailable(int pageNumber) throws NotFoundException{
+        return bookRepositoryService.findBooksAvailable(pageNumber);
+    }
+
+    public List<BookModel> findBooksUnavailable(int pageNumber) throws NotFoundException{
+        return bookRepositoryService.findBooksUnavailable(pageNumber);
+    }
 }
