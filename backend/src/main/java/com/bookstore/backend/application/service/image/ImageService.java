@@ -1,11 +1,11 @@
 package com.bookstore.backend.application.service.image;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
+import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -73,16 +73,35 @@ public class ImageService {
         }
         if(!adminVerify.isAdmin(username)){
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            List<ImageModel> flag = userOp.get().getProductForSaleList().stream().map(product -> product.getImageList()).map(imageList -> imageList.stream()).collect(Collectors.toList());
+            allImageList = new ArrayList<>();
 
+            for(ProductModel productList : userOp.get().getProductForSaleList()) {
+                for(ImageModel imageFor : productList.getImageList()) {
+                    allImageList.add(imageFor);
+                }
+            }
+
+            if(allImageList.isEmpty())
+                throw new NotFoundException("Image list empty");
         }
-        return imageRepositoryService.getInstance().findAll();
+        return allImageList;
     }
 
-    public ImageModel findById(Long id) throws NotFoundException{
+    public ImageModel findById(Long id, String username) throws Exception{
         Optional<ImageModel> image = imageRepositoryService.getInstance().findById(id);
         if(!image.isPresent()){
-            throw new NotFoundException("Not found image" + id);
+            throw new NotFoundException("Not found image " + id);
+        }
+        if(!adminVerify.isAdmin(username)){
+            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+            boolean flag = userOp.get().getProductForSaleList().stream().map(product -> product.getImageList())
+                .map(imageList -> imageList.stream()
+                .filter(imageVerify -> imageVerify.getId() == id))
+                .findFirst().isPresent();
+            if(!flag){
+                throw new Exception("You can't delete this image because it belongs to another user");
+            }
+
         }
         return image.get();
     }

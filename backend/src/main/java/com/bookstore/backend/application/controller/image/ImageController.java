@@ -55,22 +55,26 @@ public class ImageController {
     }
 
     @GetMapping("/find-all")
-    public ResponseEntity<?> findAll(){
+    public ResponseEntity<?> findAll(Principal principal){
         try {
-            List<ImageModel> imageList = imageService.findAll();
+            List<ImageModel> imageList = imageService.findAll(principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(imageList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> findById(@RequestBody ImageDTO dto){
+    public ResponseEntity<?> findById(@RequestBody ImageDTO dto, Principal principal){
         try {
-            ImageModel image = imageService.findById(dto.getId());
+            ImageModel image = imageService.findById(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(image);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 }

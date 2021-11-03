@@ -35,9 +35,9 @@ public class AdminController {
     
     
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody AdminDTO dto) {
+    public ResponseEntity<?> save(@RequestBody AdminDTO dto, Principal principal) {
         try {
-            AdminModel admin = adminService.save(dto.getId());
+            AdminModel admin = adminService.save(dto.getId(), principal.getName());
             dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (DataIntegrityViolationException e) {
