@@ -67,10 +67,10 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody BookDTO dto) {
+    public ResponseEntity<?> update(@RequestBody BookDTO dto, Principal principal){
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
         try {
-            book = bookServices.update(book);
+            book = bookServices.update(book, principal.getName());
             dto = (BookDTO) ModelMapperService.convertToDTO(book, dto.getClass());
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
