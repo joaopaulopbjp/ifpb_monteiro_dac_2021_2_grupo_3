@@ -10,7 +10,6 @@ import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.status.Status;
@@ -122,21 +121,29 @@ public class BookService {
         return bookUpdated;
     }
 
-    public void delete(Long id) throws NotFoundException {
+    public void delete(Long id, String username) throws Exception {
         boolean flag = bookRepositoryService.getInstance().existsById(id);
         if(!flag)
             throw new NotFoundException("Not found book with id " + id);
         
-        UserModel user = userRepositoryService.getInstance().findByProductId(id).get();
-        ProductModel product = bookRepositoryService.getInstance().findById(id).get();
-        user.removeProductFromProductList(product);
-        
-        userRepositoryService.getInstance().save(user);
-        BookModel book = findById(id);
+        BookModel book = bookRepositoryService.getInstance().findById(id).get();
+        Optional<UserModel> userOp = null;
+        if(!adminVerify.isAdmin(username)){
+            userOp = userRepositoryService.getInstance().findByUsername(username);
+            flag = userOp.get().getProductForSaleList().stream().filter(personBook -> personBook.getId()==book.getId()).findFirst().isPresent();
+            if(!flag){
+                throw new NotFoundException("You can't delete this book because it belongs to another user");
+            }
+        }else{
+            userOp = userRepositoryService.getInstance().findByProductId(id);
+        }
+
         if(book.getStatus()==Status.INACTIVE){
-            throw new NotFoundException("Not found book with id " + id);
+            throw new Exception("You can't delete this Book with id " + id + " because it is inactive.");
         }
         book.setStatus(Status.INACTIVE);
+        userOp.get().removeProductFromProductList(book);
+        userRepositoryService.getInstance().save(userOp.get());
         bookRepositoryService.getInstance().save(book);
     }
 

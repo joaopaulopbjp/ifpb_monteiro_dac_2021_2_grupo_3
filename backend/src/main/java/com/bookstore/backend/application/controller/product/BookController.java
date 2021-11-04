@@ -53,9 +53,9 @@ public class BookController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody BookDTO dto) {
+    public ResponseEntity<?> delete(@RequestBody BookDTO dto, Principal principal){
         try {
-            bookServices.delete(dto.getId());
+            bookServices.delete(dto.getId(),principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
