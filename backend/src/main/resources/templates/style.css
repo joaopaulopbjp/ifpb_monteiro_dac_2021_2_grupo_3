@@ -52,7 +52,7 @@ footer {
 }
 
 .bloco {
-    display: flow-root;
+    display: grid;
     justify-content: center;
     align-items: center;
     margin: auto;
