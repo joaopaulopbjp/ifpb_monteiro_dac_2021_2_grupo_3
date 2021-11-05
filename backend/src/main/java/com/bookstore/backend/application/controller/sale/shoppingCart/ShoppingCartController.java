@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.controller.sale.shoppingCart;
 
+import java.security.Principal;
+
 import com.bookstore.backend.application.service.sale.shoppingCart.ShoppingCartService;
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -25,13 +27,12 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(@RequestBody ShoppingCartDTO dto) {
+    public ResponseEntity<?> add(@RequestBody ShoppingCartDTO dto, Principal principal) {
         ShoppingCartModel shoppingCartModel = (ShoppingCartModel) ModelMapperService.convertToModel(dto, ShoppingCartModel.class);
         
         try {
-            shoppingCartModel = shoppingCartService.add(shoppingCartModel,
-                dto.getIdPerson(),
-                dto.getItemList().get(0).getIdProduct());
+            shoppingCartModel = shoppingCartService.add(shoppingCartModel, 
+                dto.getItemList().get(0).getIdProduct(), principal.getName());
             
             dto = (ShoppingCartDTO) ModelMapperService.convertToDTO(shoppingCartModel, ShoppingCartDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
@@ -43,10 +44,10 @@ public class ShoppingCartController {
     }
 
     @PostMapping("/remove")
-    public ResponseEntity<?> remove(@RequestBody ShoppingCartDTO dto) {
+    public ResponseEntity<?> remove(@RequestBody ShoppingCartDTO dto, Principal principal) {
         try {
-            ShoppingCartModel shoppingCartModel = shoppingCartService.remove(dto.getIdPerson(),
-                dto.getItemList().get(0).getId());
+            ShoppingCartModel shoppingCartModel = shoppingCartService.remove(dto.getItemList().get(0).getId(), 
+                principal.getName());
             
             dto = (ShoppingCartDTO) ModelMapperService.convertToDTO(shoppingCartModel, ShoppingCartDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
@@ -57,12 +58,11 @@ public class ShoppingCartController {
         }
     }
 
-    @GetMapping("/find-by-user-id")
-    public ResponseEntity<?> findByUserId(@RequestBody ShoppingCartDTO dto) {
+    @GetMapping("/find-shoppingcart")
+    public ResponseEntity<?> findShoppingCart(Principal principal){
         try {
-            ShoppingCartModel shoppingCartModel = shoppingCartService.findByUser(dto.getIdPerson());
-            dto = (ShoppingCartDTO) ModelMapperService.convertToDTO(shoppingCartModel, ShoppingCartDTO.class);
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
+            ShoppingCartModel shoppingCart = shoppingCartService.findShoppingCart(principal.getName());
+            return ResponseEntity.status(HttpStatus.OK).body(shoppingCart);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         } catch (Exception e) {

@@ -13,6 +13,7 @@ import com.bookstore.backend.infrastructure.persistence.service.person.UserRepos
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ItemOrderRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,9 @@ public class ShoppingCartService {
     private BookRepositoryService bookRepositoryService;
 
     @Autowired
+    private AdminVerify adminVerify;
+
+    @Autowired
     private ItemOrderRepositoryService itemOrderRepositoryService;
 
     @Autowired
@@ -35,13 +39,16 @@ public class ShoppingCartService {
     @Autowired
     private InventoryRepositoryService inventoryRepositoryService;
 
-    public ShoppingCartModel add(ShoppingCartModel shoppingCart, Long idPerson, Long idProduct) throws NotFoundException {
-        Optional<UserModel> opPerson = userRepositoryService.getInstance().findById(idPerson);
+    public ShoppingCartModel add(ShoppingCartModel shoppingCart, Long idProduct, String username) throws NotFoundException, Exception{
+        if(adminVerify.isAdmin(username)){
+            throw new Exception("you can't add in shopping cart because you is admin");
+        }
+        Optional<UserModel> opPerson = userRepositoryService.getInstance().findByUsername(username);
         Optional<BookModel> opBook = bookRepositoryService.getInstance().findById(idProduct);
         Optional<InventoryModel> opInventory = inventoryRepositoryService.getInstance().findByProductId(idProduct);
 
         if(!opPerson.isPresent())
-            throw new NotFoundException("User with id " + idPerson + " not found");
+            throw new NotFoundException("User " + username + " not found");
         if(!opBook.isPresent())
             throw new NotFoundException("Book with id " + idProduct + " not found");
         if(shoppingCart.getItemList().get(0).getAmount() < 1)
@@ -62,16 +69,19 @@ public class ShoppingCartService {
 
         opPerson.get().getShoppingCart().addItemOrderToItemList(itemOrder);
 
-        UserModel user = userRepositoryService.getInstance().save(opPerson.get());
-        return user.getShoppingCart();
+        UserModel Op = userRepositoryService.getInstance().save(opPerson.get());
+        return Op.getShoppingCart();
     }
 
-    public ShoppingCartModel remove(Long idPerson, Long itemOrderId) throws NotFoundException {
-        Optional<UserModel> opPerson = userRepositoryService.getInstance().findById(idPerson);
+    public ShoppingCartModel remove(Long itemOrderId, String username) throws NotFoundException, Exception {
+        if(adminVerify.isAdmin(username)){
+            throw new Exception("You can't remove items to shopping cart because you are an admin");
+        }
+        Optional<UserModel> opPerson = userRepositoryService.getInstance().findByUsername(username);
         Optional<ItemOrderModel> opItemOrder = itemOrderRepositoryService.getInstance().findById(itemOrderId);
 
         if(!opPerson.isPresent())
-            throw new NotFoundException("User with id " + idPerson + " not found");
+            throw new NotFoundException("User " + username + " not found");
         if(!opItemOrder.isPresent())
             throw new NotFoundException("Item order with id " + itemOrderId + " not found");
 
@@ -81,10 +91,12 @@ public class ShoppingCartService {
         return shopping;
     }
 
-    public ShoppingCartModel findByUser(Long idUser) throws NotFoundException {
-        Optional<UserModel> opUser = userRepositoryService.getInstance().findById(idUser);
-        if(!opUser.isPresent())
-            throw new NotFoundException("User with id " + idUser + " not found");
-        return opUser.get().getShoppingCart();
+    public ShoppingCartModel findShoppingCart(String username) throws NotFoundException, Exception {
+        if(adminVerify.isAdmin(username)){
+            throw new Exception("You can't find any shopping cart because you are an admin");
+        }
+        Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+
+        return userOp.get().getShoppingCart();
     }
 }
