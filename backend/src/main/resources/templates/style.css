@@ -102,8 +102,21 @@ footer {
     align-items: center;
     justify-content: center;
 }
+.photo2 {
+    justify-content: space-between;
+    display: grid;
+    max-width:10%;
+    height:auto;
+}
 
 .descriptionBook {
+    background: rgb(177, 175, 175);
+    padding: 20px 40px;
+    margin-top: 25px;
+    width: 100%;
+}
+
+.descriptionAddress {
     background: rgb(177, 175, 175);
     padding: 20px 40px;
     margin-top: 25px;
@@ -135,6 +148,29 @@ footer {
     height:auto;
     align-items: center;
     justify-content: center;
+}
+
+.profileHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.requests {
+    padding: 20px;
+    display: flow-root;
+    justify-items:auto;
+    width: auto;
+    height: auto;
+    background: #ffffff;
+}
+
+.bloco2 {
+    display: grid;
+    width: 200px;
+    height: 200px;
+    background: #ffffff;
+    margin-left: 20px;
+    padding: 10px 10px;
 }
 
 table {
