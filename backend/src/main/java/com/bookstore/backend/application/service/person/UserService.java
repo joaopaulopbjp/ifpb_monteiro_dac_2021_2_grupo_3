@@ -10,6 +10,8 @@ import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,9 @@ public class UserService {
 
     @Autowired
     private ShoppingCartRepositoryService shoppingCartRepositoryService;
+
+    @Autowired
+    private AdminVerify adminVerify;
 
     public UserModel save(UserModel user) throws IllegalArgumentException {
 
@@ -62,9 +67,16 @@ public class UserService {
         return user;
     }
     
-    public UserModel update(UserModel user) throws NotFoundException {
+    public UserModel update(UserModel user, String username) throws Exception {
         if(!userRepositoryService.getInstance().existsById(user.getId()))
             throw new NotFoundException("User with id " + user.getId() + " not found");
+
+        boolean isAdmin = adminVerify.isAdmin(username);
+        if(!isAdmin) {
+            Optional<UserModel> userOp = userRepositoryService.getInstance().findById(user.getId());
+            if(userOp.get().getUsername().equals(username))
+                throw new Exception("You can't update this user");
+        }
 
         if(user.getEmail() != null && !validate(user.getEmail()))
             throw new IllegalArgumentException(user.getEmail() + " is a invalid Email");
@@ -81,12 +93,9 @@ public class UserService {
         return user;
     }
 
-    public void delete(Long personId) throws NotFoundException {
-        boolean flag = userRepositoryService.getInstance().existsById(personId);
-        if(!flag)
-            throw new NotFoundException("User with id " + personId + " not found");
-
-        userRepositoryService.getInstance().deleteById(personId);
+    public void delete(String username) throws NotFoundException {
+        Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+        userRepositoryService.getInstance().deleteById(userOp.get().getId());
     }
 
     public List<UserModel> findAll(int pageNumber) throws NotFoundException {

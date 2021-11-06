@@ -46,6 +46,8 @@ public class ProductDTO {
 
     private List<Long> idCategoryList;
 
+    private Long idCategory;
+
     private Long idSaller;
 
     private PublishingCompanyDTO company;

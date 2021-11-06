@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.product;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,10 +36,10 @@ public class BookController {
     private BookService bookServices;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody BookDTO dto) {
+    public ResponseEntity<?> save(@RequestBody BookDTO dto, Principal principal) {
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
         try {
-            BookModel booksaved = bookServices.save(book, dto.getIdCategoryList(), dto.getIdSaller(), dto.getIdCompany(), dto.getIdAuthorList());
+            BookModel booksaved = bookServices.save(book, dto.getIdCategoryList(), dto.getIdCompany(), dto.getIdAuthorList(), principal.getName());
             
             dto = (BookDTO) ModelMapperService.convertToDTO(booksaved, dto.getClass());
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
@@ -52,9 +53,9 @@ public class BookController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody BookDTO dto) {
+    public ResponseEntity<?> delete(@RequestBody BookDTO dto, Principal principal){
         try {
-            bookServices.delete(dto.getId());
+            bookServices.delete(dto.getId(),principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
@@ -66,10 +67,10 @@ public class BookController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody BookDTO dto) {
+    public ResponseEntity<?> update(@RequestBody BookDTO dto, Principal principal){
         BookModel book = (BookModel) ModelMapperService.convertToModel(dto, BookModel.class);
         try {
-            book = bookServices.update(book);
+            book = bookServices.update(book, principal.getName());
             dto = (BookDTO) ModelMapperService.convertToDTO(book, dto.getClass());
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
@@ -81,7 +82,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-all/{page}")
+    @GetMapping("/find/find-all/{page}")
     public ResponseEntity<?> findAll(@PathVariable("page") int page) {
         try {
             List<BookModel> bookList = bookServices.findAll(page);
@@ -101,10 +102,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-by-category")
+    @GetMapping("/find/find-by-category")
     public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
-            List<BookModel> bookList = bookServices.findByCategoryIdList(dto.getIdCategoryList());
+            List<BookModel> bookList = bookServices.findByCategoryId(dto.getIdCategory());
             List<BookDTO> dtoList = new ArrayList<>();
             for (BookModel book : bookList) {
                 dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
@@ -121,7 +122,7 @@ public class BookController {
         }
     }
     
-    @GetMapping("/find-by-id")
+    @GetMapping("/find/find-by-id")
     public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
         try {
             BookModel book = bookServices.findById(dto.getId());
@@ -136,7 +137,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-by-title")
+    @GetMapping("/find/find-by-title")
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
             List<BookModel> book = bookServices.findByTitle(dto.getTitle());
@@ -151,7 +152,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find-{number}-cheapests")
+    @GetMapping("/find/find-{number}-cheapests")
     public ResponseEntity<?> cheapests(@PathVariable("number") int number) {
         try {
             List<BookModel> bookList = bookServices.findCheapests(number);
@@ -170,6 +171,30 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find/find-{number}-available")
+    public ResponseEntity<?> findBooksAvailable(@PathVariable("number") int number){
+        try {
+            List<BookModel> bookList = bookServices.findBooksAvailable(number);
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find/find-{number}-unavailable")
+    public ResponseEntity<?> findBooksUnavailable(@PathVariable("number") int number){
+        try {
+            List<BookModel> bookList = bookServices.findBooksUnavailable(number);
+            return ResponseEntity.status(HttpStatus.OK).body(bookList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
     }
 }

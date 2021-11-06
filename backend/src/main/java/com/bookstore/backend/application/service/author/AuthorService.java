@@ -29,7 +29,7 @@ public class AuthorService {
         return authorRepositoryService.getInstance().save(authorModel);
     }
 
-    public void delete(Long id) throws IllegalArgumentException, NotFoundException{
+    public void delete(Long id, String username) throws Exception{
         if(!authorRepositoryService.getInstance().existsById(id)){
             throw new NotFoundException("not Found Author. " + id);
         }
@@ -38,7 +38,7 @@ public class AuthorService {
         for(BookModel book: bookList){
             book.removeAuthorFromAuthorList(author);
             if(book.getAuthorList().isEmpty()){
-                bookService.delete(book.getId());
+                bookService.delete(book.getId(), username);
             }else{
                 bookRepositoryService.getInstance().save(book);
             }

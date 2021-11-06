@@ -1,0 +1,39 @@
+version: '3.1'
+services:
+    # DATABASES
+    db-dev:
+        container_name: db-dev
+        image: postgres:14-alpine
+        restart: always
+        ports:
+            - "5434:5432"
+        environment:
+            POSTGRES_USER: dev
+            POSTGRES_PASSWORD: dev
+        volumes:
+            - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+            - ./database/postgres/data-dev:/var/lib/postgresql/data
+
+    # BARRAMENTO DE MENSAGERIA
+    rabbitmq:
+        container_name: rabbitmq
+        image: rabbitmq:3.7.5-management-alpine
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: dev
+            RABBITMQ_DEFAULT_PASS: dev
+
+    # SERVIÇOS
+    # backend:
+    #     container_name: backend
+    #     image: openjdk:8-alpine
+    #     ports:
+    #         - "8080:8080"
+    #     command: java -Duser.timezone=GMT-03:00 -Xmx512m -Xmx256m -jar /xpto/backend.jar
+    #     volumes:
+    #         - ./backend/target/backend-0.0.1-SNAPSHOT.jar:/xpto/backend.jar
+    #     links:
+    #         - db-dev
+    #         - rabbitmq

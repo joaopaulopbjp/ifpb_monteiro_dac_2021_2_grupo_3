@@ -42,7 +42,7 @@ public class ShoppingCartModel {
     @Column(name = "TOTAL_PRICE")
     private BigDecimal totalPrice;
 
-    public BigDecimal CalculateTotalPrice() {
+    public BigDecimal calculateTotalPrice() {
         BigDecimal total = new BigDecimal(0);
         for(ItemOrderModel item : itemList) {
             total = total.add(item.getTotalPrice());
@@ -58,13 +58,15 @@ public class ShoppingCartModel {
             itemList = new ArrayList<>();
             addItemOrderToItemList(item);
         }
-        CalculateTotalPrice();
+        calculateTotalPrice();
         return true;
     }
 
     public boolean removeItemOrderFromItemList(ItemOrderModel item) {
         if(itemList != null) {
-            return itemList.remove(item);
+            boolean flag = itemList.remove(item);
+            calculateTotalPrice();
+            return flag;
         }
         return false;
     }
@@ -73,11 +75,12 @@ public class ShoppingCartModel {
         if(itemList != null) {
             for(ItemOrderModel item : itemList) {
                 if(item.getProduct().getId() == id) {
-                    return itemList.remove(item);
+                    boolean flag = itemList.remove(item);
+                    calculateTotalPrice();
+                    return flag;
                 }
             }
         }
-        CalculateTotalPrice();
         return false;
     }
 

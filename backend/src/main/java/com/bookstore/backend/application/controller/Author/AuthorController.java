@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.Author;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.bookstore.backend.application.service.author.AuthorService;
@@ -45,9 +46,9 @@ public class AuthorController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody AuthorDTO dto){
+    public ResponseEntity<?> delete(@RequestBody AuthorDTO dto, Principal principal){
         try {
-            authorService.delete(dto.getId());
+            authorService.delete(dto.getId(),principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (IllegalArgumentException | NotFoundException e) {
             Response response = new Response(e.getMessage());

@@ -1,5 +1,8 @@
 package com.bookstore.backend.application.controller.sale.order;
 
+import java.security.Principal;
+import java.util.List;
+
 import com.bookstore.backend.application.service.sale.order.OrderService;
 import com.bookstore.backend.domain.model.sale.OrderModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,11 +30,10 @@ public class OrderController {
     private OrderService orderService; 
     
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody OrderDTO dto){
+    public ResponseEntity<?> save(Principal principal){
         try {
-            OrderModel order = (OrderModel) ModelMapperService.convertToModel(dto, OrderModel.class);
-            order = orderService.save(order, dto.getIdItemList(), dto.getIdUser());
-            dto = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
+            OrderModel order = orderService.save(principal.getName());
+            OrderDTO dto = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
@@ -40,9 +43,9 @@ public class OrderController {
     }
     
     @PutMapping
-    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO dto){
+    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO dto, Principal principal){
         try {
-            OrderModel order = orderService.updateStatus(dto.getId(), dto.getIdStatus());
+            OrderModel order = orderService.updateStatus(dto.getId(), dto.getIdStatus(), principal.getName());
             OrderDTO orderDTO = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
         } catch (IllegalArgumentException e) {
@@ -54,6 +57,28 @@ public class OrderController {
         } 
     }
 
-    
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> findById(@RequestBody OrderDTO dto, Principal principal){
+        try {
+            OrderModel order = orderService.findById(dto.getId(), principal.getName());
+            return ResponseEntity.status(HttpStatus.OK).body(order);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find-all")
+    public ResponseEntity<?> findAll(Principal principal){
+        try {
+            List<OrderModel> orderList = orderService.findAll(principal.getName());
+            return ResponseEntity.status(HttpStatus.OK).body(orderList);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.OK).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
 
 }

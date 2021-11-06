@@ -29,7 +29,7 @@ public class CategoryService {
         return categoryRepositoryService.getInstance().save(categoryModel);
     }
 
-    public void delete(Long id) throws IllegalArgumentException, NotFoundException{
+    public void delete(Long id, String username) throws Exception{
         if(!categoryRepositoryService.getInstance().existsById(id)){
             throw new NotFoundException("not Found category. " + id);
         }
@@ -38,7 +38,7 @@ public class CategoryService {
         for(BookModel book: bookList){
             book.removeCategoryFromCategoryList(category);
             if(book.getCategoryList().isEmpty()){
-                bookService.delete(book.getId());
+                bookService.delete(book.getId(), username);
             }else{
                 bookRepositoryService.getInstance().save(book);
             }

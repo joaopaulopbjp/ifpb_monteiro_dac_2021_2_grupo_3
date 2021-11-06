@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.address;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.bookstore.backend.application.service.address.AddressService;
@@ -31,10 +32,10 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody AddressDTO dto){
+    public ResponseEntity<?> save(@RequestBody AddressDTO dto, Principal principal) {
         AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
         try{
-            addressModel = addressService.save(addressModel, dto.getPersonId());
+            addressModel = addressService.save(addressModel, principal.getName());
             dto = (AddressDTO) ModelMapperService.convertToDTO(addressModel, AddressDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         }catch (NotFoundException e) {
@@ -48,9 +49,9 @@ public class AddressController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody AddressDTO dto){
+    public ResponseEntity<?> delete(@RequestBody AddressDTO dto, Principal principal){
         try {
-            addressService.delete(dto.getId());
+            addressService.delete(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         }catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
@@ -63,10 +64,12 @@ public class AddressController {
     }
     
     @GetMapping("/find-all")
-    public ResponseEntity<?> findAll() {
+    public ResponseEntity<?> findAll(Principal principal) {
         try {
-            List<AddressModel> list = addressService.findAll();
+            List<AddressModel> list = addressService.findAll(principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(list);
+        }catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }catch (Exception e) {
@@ -75,10 +78,10 @@ public class AddressController {
     }
 
     @GetMapping("/find-by-id")
-    public ResponseEntity<?> getAddressById(@RequestBody Long id){
+    public ResponseEntity<?> getAddressById(@RequestBody AddressDTO dto, Principal principal){
         try {
-            AddressModel address = addressService.findById(id);
-            AddressDTO dto = (AddressDTO)ModelMapperService.convertToDTO(address, AddressDTO.class);
+            AddressModel address = addressService.findById(dto.getId(), principal.getName());
+            dto = (AddressDTO) ModelMapperService.convertToDTO(address, AddressDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             Response response = new Response(e.getMessage());

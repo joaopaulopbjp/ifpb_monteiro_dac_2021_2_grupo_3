@@ -4,11 +4,11 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bookstore.backend.application.service.person.UserService;
-import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.application.service.person.AdminService;
+import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
-import com.bookstore.backend.presentation.dto.person.UserDTO;
+import com.bookstore.backend.presentation.dto.person.AdminDTO;
 import com.bookstore.backend.presentation.response.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,18 +27,18 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/admin")
+public class AdminController {
 
     @Autowired
-    private UserService userService;
+    private AdminService adminService;
+    
     
     @PostMapping("/save")
-    public ResponseEntity<?> save(@RequestBody UserDTO dto) {
-        UserModel userModel = (UserModel) ModelMapperService.convertToModel(dto, UserModel.class);
+    public ResponseEntity<?> save(@RequestBody AdminDTO dto, Principal principal) {
         try {
-            userModel = userService.save(userModel);
-            dto = (UserDTO) ModelMapperService.convertToDTO(userModel, UserDTO.class);
+            AdminModel admin = adminService.save(dto.getId(), principal.getName());
+            dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
@@ -48,12 +48,12 @@ public class UserController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody UserDTO dto, Principal principal) {
-        UserModel userModel = (UserModel) ModelMapperService.convertToModel(dto, UserModel.class);
+    public ResponseEntity<?> update(@RequestBody AdminDTO dto) {
+        AdminModel adminModel = (AdminModel) ModelMapperService.convertToModel(dto, AdminModel.class);
 
         try {
-            userModel = userService.update(userModel, principal.getName());
-            dto = (UserDTO) ModelMapperService.convertToDTO(userModel, UserDTO.class);
+            AdminModel admin = adminService.update(adminModel);
+            dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
@@ -62,10 +62,10 @@ public class UserController {
         }
     } 
 
-    @DeleteMapping
-    public ResponseEntity<?> delete(Principal principal) {
+    @DeleteMapping("/delete-user")
+    public ResponseEntity<?> delete(@RequestBody AdminDTO dto, Principal principal) {
         try {
-            userService.delete(principal.getName());
+            adminService.delete(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
@@ -76,17 +76,31 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-all/{page}")
+    @DeleteMapping
+    public ResponseEntity<?> delete(Principal principal) {
+        try {
+            adminService.delete(principal.getName());
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find-all/{page}")
     public ResponseEntity<?> getAll(@PathVariable("page") int page) {
         try {
-            List<UserModel> userList = userService.findAll(page);
-            List<UserDTO> userDtoList = new ArrayList<>();
+            List<AdminModel> adminList = adminService.findAll(page);
+            List<AdminDTO> adminDtoList = new ArrayList<>();
 
-            for(UserModel user : userList) {
-                UserDTO dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
-                userDtoList.add(dto);
+            for(AdminModel admin : adminList) {
+                AdminDTO dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
+                adminDtoList.add(dto);
             }
-            return ResponseEntity.status(HttpStatus.OK).body(userDtoList);
+            return ResponseEntity.status(HttpStatus.OK).body(adminDtoList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }  catch (Exception e) {
@@ -94,11 +108,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-by-id")
-    public ResponseEntity<?> getById(@RequestBody UserDTO dto) {
+    @GetMapping("/find-by-id")
+    public ResponseEntity<?> getById(@RequestBody AdminDTO dto) {
         try {
-            UserModel user = userService.findById(dto.getId());
-            dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
+            AdminModel admin = adminService.findById(dto.getId());
+            dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
@@ -107,11 +121,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-by-email")
-    public ResponseEntity<?> getByEmail(@RequestBody UserDTO dto) {
+    @GetMapping("/find-by-email")
+    public ResponseEntity<?> getByEmail(@RequestBody AdminDTO dto) {
         try {
-            UserModel user = userService.findByEmail(dto.getEmail());
-            dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
+            AdminModel admin = adminService.findByEmail(dto.getEmail());
+            dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
@@ -120,11 +134,11 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-by-username")
-    public ResponseEntity<?> getByUsername(@RequestBody UserDTO dto) {
+    @GetMapping("/find-by-username")
+    public ResponseEntity<?> getByUsername(@RequestBody AdminDTO dto) {
         try {
-            UserModel user = userService.findByUsername(dto.getUsername());
-            dto = (UserDTO) ModelMapperService.convertToDTO(user, UserDTO.class);
+            AdminModel admin = adminService.findByUsername(dto.getUsername());
+            dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
