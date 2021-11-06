@@ -49,6 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/**").hasAnyAuthority("ADMIN")
             .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN")
+            .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
             .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
