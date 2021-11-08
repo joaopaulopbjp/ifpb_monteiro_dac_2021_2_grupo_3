@@ -26,8 +26,8 @@ public class AuthorService {
     private BookService bookService;
 
     public AuthorModel save(AuthorModel authorModel){
-        if(authorModel.getName().isBlank()){
-            throw new IllegalArgumentException("name can't not be blank");
+        if(authorModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
         }
         return authorRepositoryService.getInstance().save(authorModel);
     }
@@ -50,8 +50,8 @@ public class AuthorService {
     }
 
     public AuthorModel update(AuthorModel authorModel) throws NotFoundException{
-        if(authorModel.getName().isBlank()){
-            throw new IllegalArgumentException("name can't not be blank");
+        if(authorModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
         }
         return authorRepositoryService.update(authorModel);
     }

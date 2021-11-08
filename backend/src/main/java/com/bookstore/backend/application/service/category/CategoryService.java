@@ -26,8 +26,8 @@ public class CategoryService {
     private BookService bookService;
 
     public CategoryModel save(CategoryModel categoryModel) throws IllegalArgumentException{
-        if(categoryModel.getName().isBlank()){
-            throw new IllegalArgumentException("name can't not be blank");
+        if(categoryModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
         }
         return categoryRepositoryService.getInstance().save(categoryModel);
     }
@@ -50,8 +50,8 @@ public class CategoryService {
     }
 
     public CategoryModel update(CategoryModel categoryModel) throws NotFoundException{
-        if(categoryModel.getName().isBlank()){
-            throw new IllegalArgumentException("name can't not be blank");
+        if(categoryModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
         }
         return categoryRepositoryService.update(categoryModel);
     }
