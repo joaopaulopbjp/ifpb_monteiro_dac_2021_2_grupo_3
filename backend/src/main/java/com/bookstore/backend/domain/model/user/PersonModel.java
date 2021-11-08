@@ -19,7 +19,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 
 import org.hibernate.annotations.Fetch;
@@ -63,14 +62,6 @@ public abstract class PersonModel {
         joinColumns = @JoinColumn(name = "PERSON_ID", nullable = false), 
         inverseJoinColumns = @JoinColumn(name = "ADDRESS_ID", nullable = false))
     private List<AddressModel> addressList;
-    
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(
-        name = "T_PERSON_PRODUCT_FOR_SALE_JOIN", 
-        joinColumns = @JoinColumn(name = "PERSON_ID", nullable = false), 
-        inverseJoinColumns = @JoinColumn(name = "PRODUCT_FOR_SALE_ID", nullable = false))
-    private List<ProductModel> productForSaleList;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "SALE_HISTORY_ID")
@@ -90,23 +81,6 @@ public abstract class PersonModel {
     public boolean removeAddressFromAddressList(AddressModel addressModel) {
         if(addressList != null) {
             return addressList.remove(addressModel);
-        } 
-        return false;
-    }
-
-    public boolean addProductToProductList(ProductModel product) {
-        if(productForSaleList != null) {
-            productForSaleList.add(product);
-        } else {
-            productForSaleList = new ArrayList<>();
-            addProductToProductList(product);
-        }
-        return true;
-    }
-
-    public boolean removeProductFromProductList(ProductModel product) {
-        if(productForSaleList != null) {
-            return productForSaleList.remove(product);
         } 
         return false;
     }

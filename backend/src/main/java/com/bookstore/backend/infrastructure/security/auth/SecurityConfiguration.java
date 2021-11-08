@@ -48,6 +48,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/**").hasAnyAuthority("ADMIN")
+            .antMatchers("/api/book").hasAnyAuthority("ADMIN")
             .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN")
             .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
