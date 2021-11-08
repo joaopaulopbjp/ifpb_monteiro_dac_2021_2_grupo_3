@@ -25,7 +25,7 @@ public class AuthorService {
     @Autowired
     private BookService bookService;
 
-    public AuthorModel save(AuthorModel authorModel, String username){
+    public AuthorModel save(AuthorModel authorModel){
         if(authorModel.getName().isBlank()){
             throw new IllegalArgumentException("name can't not be blank");
         }
