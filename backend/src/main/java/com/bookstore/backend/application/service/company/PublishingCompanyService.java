@@ -17,6 +17,9 @@ public class PublishingCompanyService {
     private PublishingCompanyRepositoryService publishingCompanyRepositoryService;
 
     public PublishingCompanyModel save(PublishingCompanyModel publishingCompanyModel) throws IllegalArgumentException{
+        if(publishingCompanyModel.getName().isBlank()){
+            throw new IllegalArgumentException("name can't not be blank");
+        }
         return publishingCompanyRepositoryService.getInstance().save(publishingCompanyModel);
     }
 
@@ -26,6 +29,9 @@ public class PublishingCompanyService {
     }
 
     public PublishingCompanyModel update(PublishingCompanyModel publishingCompanyModel) throws NotFoundException{
+        if(publishingCompanyModel.getName().isBlank()){
+            throw new IllegalArgumentException("name can't not be blank");
+        }
         return publishingCompanyRepositoryService.update(publishingCompanyModel);
     }
     

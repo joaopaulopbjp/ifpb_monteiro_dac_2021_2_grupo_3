@@ -9,7 +9,6 @@ import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
-import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,9 @@ public class AuthorService {
     private BookService bookService;
 
     public AuthorModel save(AuthorModel authorModel, String username){
+        if(authorModel.getName().isBlank()){
+            throw new IllegalArgumentException("name can't not be blank");
+        }
         return authorRepositoryService.getInstance().save(authorModel);
     }
 
@@ -48,6 +50,9 @@ public class AuthorService {
     }
 
     public AuthorModel update(AuthorModel authorModel) throws NotFoundException{
+        if(authorModel.getName().isBlank()){
+            throw new IllegalArgumentException("name can't not be blank");
+        }
         return authorRepositoryService.update(authorModel);
     }
 
