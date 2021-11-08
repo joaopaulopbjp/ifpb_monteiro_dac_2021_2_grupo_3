@@ -6,11 +6,11 @@ import java.util.Optional;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.product.ProductModel;
-import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.image.ImageRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
@@ -27,7 +27,7 @@ public class ImageService {
     private BookRepositoryService bookRepositoryService;
 
     @Autowired
-    private UserRepositoryService userRepositoryService;
+    private AdminRepositoryService adminRepositoryService;
 
     @Autowired
     private AdminVerify adminVerify;
@@ -52,17 +52,7 @@ public class ImageService {
         if(!image.isPresent()){
             throw new NotFoundException("Not found image " + id);
         }
-        if(!adminVerify.isAdmin(username)){
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getProductForSaleList().stream().map(product -> product.getImageList())
-                .map(imageList -> imageList.stream()
-                .filter(imageVerify -> imageVerify.getId() == id))
-                .findFirst().isPresent();
-            if(!flag){
-                throw new Exception("You can't delete this image because it belongs to another user");
-            }
 
-        }
         imageRepositoryService.getInstance().deleteById(id);
     }
 
@@ -71,19 +61,18 @@ public class ImageService {
         if(!allImageList.isEmpty()){
             throw new NotFoundException("You don't have any Image in yours product");
         }
-        if(!adminVerify.isAdmin(username)){
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            allImageList = new ArrayList<>();
+        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByUsername(username);
+        allImageList = new ArrayList<>();
 
-            for(ProductModel productList : userOp.get().getProductForSaleList()) {
-                for(ImageModel imageFor : productList.getImageList()) {
-                    allImageList.add(imageFor);
-                }
+        for(ProductModel productList : adminOp.get().getProductForSaleList()) {
+            for(ImageModel imageFor : productList.getImageList()) {
+                allImageList.add(imageFor);
             }
-
-            if(allImageList.isEmpty())
-                throw new NotFoundException("Image list empty");
         }
+
+        if(allImageList.isEmpty())
+            throw new NotFoundException("Image list empty");
+
         return allImageList;
     }
 
@@ -91,17 +80,6 @@ public class ImageService {
         Optional<ImageModel> image = imageRepositoryService.getInstance().findById(id);
         if(!image.isPresent()){
             throw new NotFoundException("Not found image " + id);
-        }
-        if(!adminVerify.isAdmin(username)){
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getProductForSaleList().stream().map(product -> product.getImageList())
-                .map(imageList -> imageList.stream()
-                .filter(imageVerify -> imageVerify.getId() == id))
-                .findFirst().isPresent();
-            if(!flag){
-                throw new Exception("You can't delete this image because it belongs to another user");
-            }
-
         }
         return image.get();
     }
