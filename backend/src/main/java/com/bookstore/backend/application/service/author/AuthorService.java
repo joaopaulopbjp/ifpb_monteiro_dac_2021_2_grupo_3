@@ -9,6 +9,7 @@ import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +26,7 @@ public class AuthorService {
     @Autowired
     private BookService bookService;
 
-    public AuthorModel save(AuthorModel authorModel){
+    public AuthorModel save(AuthorModel authorModel, String username){
         return authorRepositoryService.getInstance().save(authorModel);
     }
 

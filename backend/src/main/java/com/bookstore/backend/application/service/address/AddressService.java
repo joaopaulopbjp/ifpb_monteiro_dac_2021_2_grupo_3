@@ -89,7 +89,14 @@ public class AddressService {
 
     }
 
-    public AddressModel update(AddressModel addressModel) throws NotFoundException{
+    public AddressModel update(AddressModel addressModel, String username) throws NotFoundException{
+        if(!adminVerify.isAdmin(username)){
+            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
+            boolean flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == addressModel.getId()).findFirst().isPresent();
+            if(!flag){
+                throw new NotFoundException("you can't update this address because belong to another user.");
+            }
+        }
         return addressRepositoryService.update(addressModel);
     }
 
