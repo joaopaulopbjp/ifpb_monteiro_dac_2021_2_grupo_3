@@ -42,20 +42,20 @@ public class OrderController {
         } 
     }
     
-    @PutMapping
-    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO dto, Principal principal){
-        try {
-            OrderModel order = orderService.updateStatus(dto.getId(), dto.getIdStatus(), principal.getName());
-            OrderDTO orderDTO = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
-            return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
-        } 
-    }
+    // @PutMapping
+    // public ResponseEntity<?> updateStatus(@RequestBody OrderDTO dto, Principal principal){
+    //     try {
+    //         OrderModel order = orderService.updateStatus(dto.getId(), dto.getIdStatus(), principal.getName());
+    //         OrderDTO orderDTO = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
+    //         return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
+    //     } catch (IllegalArgumentException e) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+    //     } catch (NotFoundException e) {
+    //         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+    //     } catch (Exception e) {
+    //         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+    //     } 
+    // }
 
     @GetMapping("/find-by-id")
     public ResponseEntity<?> findById(@RequestBody OrderDTO dto, Principal principal){
