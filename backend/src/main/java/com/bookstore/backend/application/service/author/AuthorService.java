@@ -72,7 +72,7 @@ public class AuthorService {
         return author;
     }
 
-    public List<AuthorModel> findAll(){
-        return authorRepositoryService.getInstance().findAll();
+    public List<AuthorModel> findAll(int numberPages) throws NotFoundException{
+        return authorRepositoryService.findAll(numberPages);
     }
 }
