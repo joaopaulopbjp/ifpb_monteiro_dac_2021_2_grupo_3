@@ -12,11 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
-import com.bookstore.backend.domain.model.user.PersonModel;
-
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -29,26 +25,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "T_SALE_HISTORY")
+@Table(name = "T_USER_SALE_HISTORY")
 public class UserSaleHistoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private Long id;
 
-    @OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PERSON_FK", nullable = false)
-    private PersonModel person;
-
     @OneToMany(cascade = CascadeType.ALL)
 	@JoinTable(
         name = "T_PRODUCT_SALEHISTORY_JOIN", 
         joinColumns = @JoinColumn(name = "ORDER_ID", nullable = false), 
-        inverseJoinColumns = @JoinColumn(name = "SALE_HISTORY_ID", nullable = false))
+        inverseJoinColumns = @JoinColumn(name = "USER_SALE_HISTORY_ID", nullable = false))
     private List<OrderModel> orderList;
 
     public boolean addOrderToOrderList(OrderModel orderModel) {
-		if(orderModel != null) {
+		if(orderList != null) {
 			orderList.add(orderModel);
 		} else {
 			orderList = new ArrayList<>();
