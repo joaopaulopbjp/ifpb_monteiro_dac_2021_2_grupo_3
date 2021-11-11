@@ -26,10 +26,13 @@ public class CategoryService {
     private BookService bookService;
 
     public CategoryModel save(CategoryModel categoryModel) throws IllegalArgumentException{
+        if(categoryModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
+        }
         return categoryRepositoryService.getInstance().save(categoryModel);
     }
 
-    public void delete(Long id) throws IllegalArgumentException, NotFoundException{
+    public void delete(Long id, String username) throws Exception{
         if(!categoryRepositoryService.getInstance().existsById(id)){
             throw new NotFoundException("not Found category. " + id);
         }
@@ -38,7 +41,7 @@ public class CategoryService {
         for(BookModel book: bookList){
             book.removeCategoryFromCategoryList(category);
             if(book.getCategoryList().isEmpty()){
-                bookService.delete(book.getId());
+                bookService.delete(book.getId(), username);
             }else{
                 bookRepositoryService.getInstance().save(book);
             }
@@ -47,6 +50,9 @@ public class CategoryService {
     }
 
     public CategoryModel update(CategoryModel categoryModel) throws NotFoundException{
+        if(categoryModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
+        }
         return categoryRepositoryService.update(categoryModel);
     }
 

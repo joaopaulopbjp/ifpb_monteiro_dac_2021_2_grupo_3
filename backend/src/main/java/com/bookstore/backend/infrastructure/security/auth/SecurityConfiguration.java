@@ -48,12 +48,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/**").hasAnyAuthority("ADMIN")
+            .antMatchers("/api/book").hasAnyAuthority("ADMIN")
             .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN")
+            .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
             .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
             .authorizeRequests()
-            .antMatchers("/api/user/save", "/api/login").permitAll()
+            .antMatchers("/api/user/save",
+                "/api/login",
+                "/api/book/find").permitAll()
             .anyRequest().authenticated()
             .and()
             .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {

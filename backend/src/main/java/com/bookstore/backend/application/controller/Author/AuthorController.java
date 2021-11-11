@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.Author;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.bookstore.backend.application.service.author.AuthorService;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,9 +47,9 @@ public class AuthorController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody AuthorDTO dto){
+    public ResponseEntity<?> delete(@RequestBody AuthorDTO dto, Principal principal){
         try {
-            authorService.delete(dto.getId());
+            authorService.delete(dto.getId(),principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         } catch (IllegalArgumentException | NotFoundException e) {
             Response response = new Response(e.getMessage());
@@ -59,10 +61,10 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/find-all")
-    public ResponseEntity<?> findAll(){
+    @GetMapping("/find/find-all/{page}")
+    public ResponseEntity<?> findAll(@PathVariable("page") int page){
         try {
-            List<AuthorModel> authorList = authorService.findAll();
+            List<AuthorModel> authorList = authorService.findAll(page);
     
             return ResponseEntity.status(HttpStatus.OK).body(authorList);
         } catch (DataIntegrityViolationException e) {
@@ -72,7 +74,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @GetMapping("/find/find-by-id")
     public ResponseEntity<?> findById(@RequestBody AuthorDTO dto){
         try {
             AuthorModel authorList = authorService.findById(dto.getId());
@@ -90,7 +92,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/find-by-name")
+    @GetMapping("/find/find-by-name")
     public ResponseEntity<?> findByName(@RequestBody AuthorDTO dto){
         try {
             List<AuthorModel> author = authorService.findByName(dto.getName());

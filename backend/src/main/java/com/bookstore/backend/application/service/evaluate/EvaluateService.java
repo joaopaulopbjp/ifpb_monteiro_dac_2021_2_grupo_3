@@ -84,10 +84,6 @@ public class EvaluateService {
         evaluateRepositoryService.getInstance().deleteById(evaluateId);
     }
 
-    public EvaluateModel update(EvaluateModel evaluate) throws NotFoundException{
-        return evaluateRepositoryService.update(evaluate);
-    }
-
     public List<EvaluateModel> findAll(String username) throws NotFoundException {
         if(!adminVerify.isAdmin(username)) {
             Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);

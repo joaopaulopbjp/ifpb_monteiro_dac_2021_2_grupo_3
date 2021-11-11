@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.controller.category;
 
+import java.security.Principal;
 import java.util.List;
 
 import com.bookstore.backend.application.service.category.CategoryService;
@@ -47,10 +48,10 @@ public class CategoryController {
     }
 
     @DeleteMapping
-    public ResponseEntity<?> delete(@RequestBody CategoryDTO dto){
+    public ResponseEntity<?> delete(@RequestBody CategoryDTO dto, Principal principal){
         Response response;
         try {
-            categoryService.delete(dto.getId());
+            categoryService.delete(dto.getId(), principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(null);
         }catch (IllegalArgumentException e) {
             response = new Response(e.getMessage());

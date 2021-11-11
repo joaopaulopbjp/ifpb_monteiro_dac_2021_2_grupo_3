@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 
@@ -44,9 +43,9 @@ public class UserModel extends PersonModel{
     private List<EvaluateModel> evaluateList;
 
     public UserModel(Long id, String username, String email, String password, List<AddressModel> addressList,
-            List<ProductModel> productForSaleList, UserSaleHistoryModel saleHistory, ShoppingCartModel shoppingCart,
-            List<EvaluateModel> evaluation) {
-        super(id, username, email, password, addressList, productForSaleList, saleHistory);
+        UserSaleHistoryModel saleHistory, ShoppingCartModel shoppingCart,
+        List<EvaluateModel> evaluation) {
+        super(id, username, email, password, addressList, saleHistory);
         this.shoppingCart = shoppingCart;
         this.evaluateList = evaluation;
     }

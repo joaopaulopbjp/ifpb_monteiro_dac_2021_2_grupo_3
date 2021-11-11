@@ -10,19 +10,17 @@ import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
-import com.bookstore.backend.domain.model.product.ProductModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
-import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.InvalidValueException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,7 +37,7 @@ public class BookService {
     private AuthorRepositoryService authorRepositoryService;
 
     @Autowired
-    private UserRepositoryService userRepositoryService;
+    private AdminRepositoryService adminRepositoryService;
 
     @Autowired
     private SaleRepositoryService saleRepositoryService;
@@ -47,8 +45,8 @@ public class BookService {
     @Autowired
     private PublishingCompanyRepositoryService companyRepositoryService;
 
-    public BookModel save(BookModel book, List<Long> categoryListId, Long sallerId, Long companyId, List<Long> authorListId) throws NotFoundException {
-        Optional<UserModel> personModelOp = userRepositoryService.getInstance().findById(sallerId);
+    public BookModel save(BookModel book, List<Long> categoryListId, Long companyId, List<Long> authorListId, String username) throws NotFoundException, Exception {
+        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByUsername(username);
         Optional<PublishingCompanyModel> companyOp = companyRepositoryService.getInstance().findById(companyId);
         List<CategoryModel> categoryRecoveredList = new ArrayList<>();
         List<AuthorModel> authorRecoveredList = new ArrayList<>();
@@ -69,36 +67,8 @@ public class BookService {
             authorRecoveredList.add(author.get());
         }
 
-        if(book.getPrice().doubleValue() < 0){
-            throw new IllegalArgumentException("price can't be minor than 0");
-        }
-
-        if(book.getPages() <= 0){
-            throw new IllegalArgumentException("pages can't be minor or equal than 0");
-        }
-
-        if(book.getYearLaunch() <= 0){
-            throw new IllegalArgumentException("yearLaunch can't be minor than 0");
-        }
-
-        if(book.getYearLaunch() > LocalDate.now().getYear()){
-            throw new IllegalArgumentException("yearLaunch can't be greater than " + LocalDate.now().getYear());
-        }
-
-        if(!personModelOp.isPresent()) {
-            throw new NotFoundException("Not found the id " + sallerId + " for user.");
-        }
-        if(!companyOp.isPresent()) {
-            throw new NotFoundException("Not found the id " + companyId + " for PublishingCompany.");
-
-        }
-
         if(book.getTitle() == null){
             throw new IllegalArgumentException("Title is null");
-        }
-
-        if(book.getTitle() != null && book.getTitle().length() < 5){
-            throw new IllegalArgumentException("The title size must be greater than five.");
         }
 
         if(book.getImageList().isEmpty()){
@@ -109,12 +79,19 @@ public class BookService {
             if(image.getBase64() == null || image.getBase64().equals(""))
                 throw new IllegalArgumentException("Image is empty");
         }
+
+        if(!companyOp.isPresent()) {
+            throw new NotFoundException("Not found the id " + companyId + " for PublishingCompany.");
+        }
+
+        validate(book);
+
         book.setCategoryList(categoryRecoveredList);
         book.setAuthorList(authorRecoveredList);
         book.setCompany(companyOp.get());
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
-        personModelOp.get().addProductToProductList(bookSaved);
-        userRepositoryService.getInstance().save(personModelOp.get());
+        adminOp.get().addProductToProductList(bookSaved);
+        adminRepositoryService.getInstance().save(adminOp.get());
 
         SaleModel sale = new SaleModel(0l, bookSaved, 0);
         saleRepositoryService.getInstance().save(sale);
@@ -122,25 +99,28 @@ public class BookService {
     }
 
     public BookModel update(BookModel book) throws NotFoundException {
+        validate(book);
+
         BookModel bookUpdated = bookRepositoryService.update(book);
+        
         return bookUpdated;
     }
 
-    public void delete(Long id) throws NotFoundException {
+    public void delete(Long id, String username) throws Exception {
         boolean flag = bookRepositoryService.getInstance().existsById(id);
         if(!flag)
             throw new NotFoundException("Not found book with id " + id);
         
-        UserModel user = userRepositoryService.getInstance().findByProductId(id).get();
-        ProductModel product = bookRepositoryService.getInstance().findById(id).get();
-        user.removeProductFromProductList(product);
-        
-        userRepositoryService.getInstance().save(user);
-        BookModel book = findById(id);
-        if(book.getStatus()==Status.INACTIVE){
-            throw new NotFoundException("Not found book with id " + id);
+        BookModel book = bookRepositoryService.getInstance().findById(id).get();
+
+        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByUsername(username);
+
+        if(book.getStatus()==Status.INACTIVE) {
+            throw new Exception("You can't delete this Book with id " + id + " because it is inactive.");
         }
         book.setStatus(Status.INACTIVE);
+        adminOp.get().removeProductFromProductList(book);
+        adminRepositoryService.getInstance().save(adminOp.get());
         bookRepositoryService.getInstance().save(book);
     }
 
@@ -160,8 +140,11 @@ public class BookService {
         return bookRecoveredList;
     }
 
-    public List<BookModel> findByCategoryIdList(List<Long> idList) throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.findByCategoryIdList(idList);
+    public List<BookModel> findByCategoryId(Long idCategory) throws NotFoundException {
+        if(!categoryRepositoryService.getInstance().existsById(idCategory))
+            throw new NotFoundException("Category with id " + idCategory + " not found");
+
+        List<BookModel> bookRecoveredList = bookRepositoryService.findByCategoryId(idCategory);
         if(bookRecoveredList.isEmpty()) 
             throw new NotFoundException();
             
@@ -181,5 +164,37 @@ public class BookService {
         if(bookRecoveredList.isEmpty()) 
             throw new NotFoundException();
         return bookRecoveredList;
+    }
+
+    public List<BookModel> findBooksAvailable(int pageNumber) throws NotFoundException{
+        return bookRepositoryService.findBooksAvailable(pageNumber);
+    }
+
+    public List<BookModel> findBooksUnavailable(int pageNumber) throws NotFoundException{
+        return bookRepositoryService.findBooksUnavailable(pageNumber);
+    }
+
+    private void validate(BookModel book) throws IllegalArgumentException{
+        
+        if(book.getPrice() != null && book.getPrice().doubleValue() < 0){
+            throw new IllegalArgumentException("price can't be minor than 0");
+        }
+
+        if(book.getPages() != null && book.getPages() <= 0){
+            throw new IllegalArgumentException("pages can't be minor or equal than 0");
+        }
+
+        if(book.getPages() != null && book.getYearLaunch() <= 0){
+            throw new IllegalArgumentException("yearLaunch can't be minor than 0");
+        }
+
+        if(book.getPages() != null && book.getYearLaunch() > LocalDate.now().getYear()){
+            throw new IllegalArgumentException("yearLaunch can't be greater than " + LocalDate.now().getYear());
+        }
+
+        if(book.getTitle() != null && book.getTitle().length() < 5){
+            throw new IllegalArgumentException("The title size must be greater than five.");
+        }
+
     }
 }
