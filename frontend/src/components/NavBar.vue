@@ -14,8 +14,10 @@
       <div class="menu-items" v-if="menuActive">
           <ul>
             <div class="box-profile">
-                <img alt="men" class="icon-menu" src="https://cdn-icons-png.flaticon.com/512/64/64572.png">
-                <h3>Profile</h3>
+                <router-link to="Profile">
+                    <img alt="men" class="icon-menu" src="https://cdn-icons-png.flaticon.com/512/64/64572.png">
+                    <h3>Profile</h3>
+                </router-link>
             </div>
             <h3>Highlights</h3>
             <li><a href="/">Best Sellers</a></li>
