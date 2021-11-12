@@ -10,9 +10,9 @@ import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.domain.model.category.CategoryModel;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.evaluation.EvaluateModel;
+import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
-import com.bookstore.backend.domain.model.sale.SaleModel;
-import com.bookstore.backend.domain.model.user.PersonModel;
+import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.FullListException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 
@@ -55,42 +55,42 @@ public abstract class ProductModel {
     @Column(name = "PRICE", nullable = false)
     private BigDecimal price;
 
-    @OneToMany(fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinColumn(name = "IMAGES", nullable = false)
-    private List<String> imageList;
+    @Column(name = "STATUS", nullable = false)
+    private Status status;
 
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALE_FK", nullable = false)
-    private SaleModel sale;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinColumn(name = "PRODUCT_FK", nullable = false)
+    private List<ImageModel> imageList;
     
-    @OneToOne(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INVENTORY_FK", nullable = false)
     private InventoryModel inventory;
     
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinTable(
         name = "T_PRODUCT_CATEGORY_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
         inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID", nullable = false))
+    @Fetch(FetchMode.SUBSELECT)
     private List<CategoryModel> categoryList;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALLER_FK", nullable = false)
-    private PersonModel saller;
-
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "COMPANY_FK", nullable = false)
     private PublishingCompanyModel company;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(
         name = "T_PRODUCT_AUTHOR_JOIN", 
         joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
         inverseJoinColumns = @JoinColumn(name = "AUTHOR_ID", nullable = false))
     private List<AuthorModel> authorList;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "T_PRODUCT_EVALUATE_JOIN", 
+        joinColumns = @JoinColumn(name = "PRODUCT_ID", nullable = false), 
+        inverseJoinColumns = @JoinColumn(name = "EVALUATE_ID", nullable = false))
     private List<EvaluateModel> evaluateList; 
 
     public boolean addCategoryToCategoryList(CategoryModel categoryModel) {
@@ -127,14 +127,14 @@ public abstract class ProductModel {
         return false;
     }
 
-    public boolean addImageToImageList(String imageBase64) throws FullListException {
+    public boolean addImageToImageList(ImageModel image) throws FullListException {
         if(imageList == null) {
             imageList = new ArrayList<>();
-            addImageToImageList(imageBase64);
+            addImageToImageList(image);
         }
 
         if(imageList.size() < 2) {
-            imageList.add(imageBase64);
+            imageList.add(image);
             return true;
         } else {
             throw new FullListException("The list have 2 items");
@@ -146,9 +146,26 @@ public abstract class ProductModel {
             throw new NotFoundException();
         }
 
-        String removed = imageList.remove(index.intValue());
+        ImageModel removed = imageList.remove(index.intValue());
         if(removed != null) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean addEvaluateToEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            evaluateList.add(evaluateModel);
+        } else {
+            evaluateList = new ArrayList<>();
+            addEvaluateToEvaluateList(evaluateModel);
+        }
+        return true;
+    }
+
+    public boolean removeEvaluateFromEvaluateList(EvaluateModel evaluateModel) {
+        if(evaluateModel != null) {
+            return evaluateList.remove(evaluateModel);
         }
         return false;
     }
@@ -162,6 +179,15 @@ public abstract class ProductModel {
             return (total / evaluateList.size());
         }
         return 0;
+    }
+
+    public ImageModel findImageByContent(String contente){
+        for(ImageModel image: imageList){
+            if(image.getBase64().equals(contente)){
+                return image;
+            }
+        }
+        return null;
     }
 
     @Override

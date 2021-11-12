@@ -5,12 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.bookstore.backend.domain.model.product.ProductModel;
-import com.bookstore.backend.domain.model.user.UserModel;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,14 +29,6 @@ public class EvaluateModel {
     
     @Column(name = "COMMENT", nullable = false)
     private String comment;
-
-    @ManyToOne
-    @JoinColumn(name = "USER_FK", nullable = false)
-    private UserModel user;
-
-    @ManyToOne
-    @JoinColumn(name = "PRODUCT_FK", nullable = false)
-    private ProductModel product;
 
     @Override
     public String toString() {
