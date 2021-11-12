@@ -1,7 +1,9 @@
 <template>
   <header class="header">
     <nav>
-      <img src="@/image/logoBookStore.png" alt="Logo" />
+      <router-link to="/">
+        <img src="@/image/logoBookStore.png" alt="Logo" />
+      </router-link>
       <nav id="box-btn-input">
         <input class="field" type="text" placeholder=" Search" />
         <button class="btn search">&#x1F50D;</button>
