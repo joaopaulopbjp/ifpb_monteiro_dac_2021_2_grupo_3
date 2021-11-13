@@ -1,6 +1,7 @@
 <template>
     <div class="profile">
         <Nav-bar/>
+        <Side-bar/>
         <section>
             <div class="headSection">
                 <h1>Overview</h1>
@@ -77,10 +78,11 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
+import SideBar from '@/components/SideBar.vue'
 
 export default {
     name: "Profile",
-    components: {NavBar, Footer}
+    components: {NavBar, Footer, SideBar}
 }
 </script>
 

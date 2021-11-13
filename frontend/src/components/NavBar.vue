@@ -1,5 +1,32 @@
 <template>
-  <header class="header">
+  <div style="background-color: #955DBC">
+    <div class="container">
+    <b-navbar toggleable="lg" type="dark">
+      <b-navbar-brand href="/">
+          <img src="@/image/logoBookStore.png" alt="Logo" width=100/>
+      </b-navbar-brand>
+      <b-navbar-nav class="ml-auto">
+          <b-nav-form>
+              <b-form-input class="mr-sm-2" placeholder="Search" style="width:400px"></b-form-input>
+              <b-button variant="warning" class="my-2 my-sm-0" type="submit">
+                  <i class="fas fa-search"></i>
+              </b-button>
+          </b-nav-form>
+          <b-nav-item>
+              <b-button variant="outline-light">
+                  <i class="fas fa-shopping-cart" style="width: 50"></i>
+              </b-button>
+          </b-nav-item>
+          <b-nav-item>
+              <b-button variant="outline-light" v-b-toggle.sidebar-right>
+                  <i class="fas fa-bars"></i>
+              </b-button>
+          </b-nav-item>
+      </b-navbar-nav>
+    </b-navbar>
+    </div>
+  </div>
+  <!-- <header class="header">
     <nav>
       <router-link to="/">
         <img src="@/image/logoBookStore.png" alt="Logo" />
@@ -38,23 +65,22 @@
       </div>
     
     </nav>
-  </header>
+  </header> -->
 </template>
 
 <script>
 export default {
-  name: 'Header',
+  name: "Header",
   data() {
     return {
-      menuActive: false
-    }
-  }
-  
+      menuActive: false,
+    };
+  },
 };
 </script>
 
 <style scoped>
-.header {
+/* .header {
   width: 100%;
   height: 80px;
   background-color: #955abe;
@@ -79,7 +105,7 @@ nav {
   color: #fff;
 }
 img {
-  height:50px;
+  height: 50px;
 }
 
 .icon-menu {
@@ -152,7 +178,8 @@ input::placeholder {
   justify-content: space-evenly;
 }
 
-ul ,.box-profile {
+ul,
+.box-profile {
   width: 100%;
   height: 15vh;
 }
@@ -166,17 +193,22 @@ ul {
   text-align: center;
 }
 
-ul , li {
-  margin: 15px 0; 
+ul,
+li {
+  margin: 15px 0;
 }
 
-ul, li, a {
+ul,
+li,
+a {
   color: #fff;
 }
-ul, li, h3 {
+ul,
+li,
+h3 {
   color: black;
 }
-
+ */
 /* @media only screen and (max-width: 800px) {
   .header {
     padding: 1em 1em;
