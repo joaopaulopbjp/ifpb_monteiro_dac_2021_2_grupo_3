@@ -5,6 +5,71 @@
         <div class="container mt-2 mb-5">
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
+                    <h4><i class="fas fa-user-cog"></i> Workspace ADM</h4>
+                </div>
+                <div class="d-flex justify-content-start mb-4">
+                    <div>
+                        <h6>Target Product</h6>
+                        <b-button-group vertical>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Product
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-trash-alt"></i> Delete Product
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-edit"></i> Update Product
+                            </b-button>
+                        </b-button-group>
+                    </div>
+                    <div class="ml-3">
+                        <h6>Target Author</h6>
+                        <b-button-group vertical>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Author
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-trash-alt"></i> Delete Author
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-edit"></i> Update Author
+                            </b-button>
+                        </b-button-group>
+                    </div>
+                    <div class="ml-3">
+                        <h6>Target category</h6>
+                        <b-button-group vertical>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Category
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-trash-alt"></i> Delete Category
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-edit"></i> Update Category
+                            </b-button>
+                        </b-button-group>
+                    </div>
+                    <div class="ml-3">
+                        <h6>Target company</h6>
+                        <b-button-group vertical>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Company
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-trash-alt"></i> Delete Company
+                            </b-button>
+                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-edit"></i> Update Company
+                            </b-button>
+                        </b-button-group>
+                    </div>
+                </div>
+            </b-card>
+        </div>
+        <div class="container mt-2 mb-5">
+            <b-card>
+                <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-user-circle"></i> Overview</h4>
                     <b-button variant="warning" class="my-2 my-sm-0" type="submit">
                     <i class="fas fa-pen"></i>
@@ -30,7 +95,21 @@
                     <h4><i class="fas fa-shopping-basket"></i> Requests</h4>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                    <b-form-input type="text" placeholder="Fulano beltrano" style="width: 400px" disabled></b-form-input>
+                    <router-link class="text-decoration-none text-dark" to="">
+                        <b-card class="border border-dark rounded text-center" style="background-color: #D1B1E8; width: 250px;">
+                            <h5>A garota do lago</h5>
+                            <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+                            <h5>R$: 17,90</h5>
+                        </b-card>
+                    </router-link>
+                    <router-link class="text-decoration-none text-dark" to="">
+                        <b-card class="border border-dark rounded ml-3 text-center" style="background-color: #D1B1E8; width: 250px;">
+                            <h5>A garota do lago</h5>
+                            <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+                            <h5>R$: 17,90</h5>
+                        </b-card>
+                    </router-link>
+                    
                 </div>
             </b-card>
         </div>
@@ -39,81 +118,56 @@
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
                     <b-button variant="warning" class="my-2 my-sm-0" type="submit">
-                    <i class="fas fa-pen"></i>
+                    <i class="fas fa-pen"></i> Add new address
                     </b-button>
+                </div>
+                <div class="d-flex justify-content-start mb-4">
+                        <b-card class="border border-dark rounded text-center" style="background-color: #D1B1E8; width: 280px;">
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="Av principal Nº 12"></b-form-input>
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="centro" ></b-form-input>
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="monteiro" ></b-form-input>
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="58540-123" ></b-form-input>
+                            <b-form-input class="sm-12 form-control-plaintext" type="text" placeholder="paraiba" ></b-form-input>
+                            <div class="d-flex justify-content-end mt-2">
+                                <b-button variant="outline-danger" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="fas fa-times"></i>
+                                </b-button>
+                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="fas fa-pen"></i>
+                                </b-button>
+                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="fas fa-trash-alt"></i>
+                                </b-button>
+                                <b-button variant="success" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="far fa-save"></i> Save
+                                </b-button>
+                            </div>
+                        </b-card>
+                        <b-card class="border border-dark rounded text-center ml-3" style="background-color: #D1B1E8; width: 280px;">
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="Av principal Nº 12"></b-form-input>
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="centro" ></b-form-input>
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="monteiro" ></b-form-input>
+                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="58540-123" ></b-form-input>
+                            <b-form-input class="sm-12 form-control-plaintext" type="text" placeholder="paraiba" ></b-form-input>
+                            <div class="d-flex justify-content-end mt-2">
+                                <b-button variant="outline-danger" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="fas fa-times"></i>
+                                </b-button>
+                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="fas fa-pen"></i>
+                                </b-button>
+                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="fas fa-trash-alt"></i>
+                                </b-button>
+                                <b-button variant="success" class="my-2 my-sm-0 mr-2" type="submit">
+                                    <i class="far fa-save"></i> Save
+                                </b-button>
+                            </div>
+                        </b-card>
                 </div>
             </b-card>
         </div>
         <Footer/>
-       <!--  <section>
-            <div class="headSection">
-                <h1>Overview</h1>
-                <button type="submit">Edit</button>
-            </div>
-            <div>
-                <input type="text" name="" id="" placeholder="Brito Silva" disabled>
-                <input type="text" name="" id="" placeholder="britosilva@gmail.com" disabled >
-            </div>
-            <div>
-                <input type="text" name="" id="" placeholder="old password" disabled>
-                <input type="text" name="" id="" placeholder="new password" disabled>
-                <input type="text" name="" id="" placeholder="confirm password" disabled>
-            </div>
-            <button class="btnSave" type="submit">Save</button>
-        </section>
-       
-        <section id="boxRequests">
-            <div class="headSection">
-                <h1>Requests</h1>
-            </div>
-            <section id="boxProduct">
-                <div>
-                    <p>A garota do lago</p>
-                    <img id="imgProduct" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-                    <p>R$ 16,90</p>
-                </div>
-            </section>
-            <section id="boxProduct">
-                <div>
-                    <p>A garota do lago</p>
-                    <img id="imgProduct" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-                    <p>R$ 16,90</p>
-                </div>
-            </section>
-        </section>
-
-        <section >
-            <div class="headSection">
-                <h1>Address</h1>
-                <button class="btnAddAddress" type="submit">Add new Address</button>
-            </div>
-            <div class="headSection">
-                <section id="boxProduct">
-                    <div>
-                        <p>Av principal</p>
-                        <p>Alto de cima</p>
-                        <p>monteiro, paraiba</p>
-                        <p>Brasil</p>
-                    </div>
-                </section>
-                <section id="boxProduct">
-                    <div>
-                        <p>Av principal</p>
-                        <p>Alto de cima</p>
-                        <p>monteiro, paraiba</p>
-                        <p>Brasil</p>
-                    </div>
-                </section>
-                <section id="boxProduct">
-                    <div>
-                        <p>Av principal</p>
-                        <p>Alto de cima</p>
-                        <p>monteiro, paraiba</p>
-                        <p>Brasil</p>
-                    </div>
-                </section>
-            </div>
-        </section> -->
     </div>
 </template>
 
@@ -129,58 +183,5 @@ export default {
 </script>
 
 <style scoped>
-/* section {
-    display: flexbox;
-    margin-top: 30px;
-    margin-bottom: 30px;
-    padding: 10px 30px;
-    justify-content: space-between;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    background: white;
-    border-radius: 5px;
-    border: 1px solid rgb(170, 170, 170);
-
-}
-
-#boxProduct {
-    display: flex;
-    width: 20%;
-    margin-inline-start: 0;
-    justify-content: center;
-}
-
-#boxRequests {
-    display: flex;
-}
-
-#imgProduct {
-    max-width: 120px;
-}
-
-.headSection {
-    display: flex;
-    justify-content: space-between;
-}
-
-.btnAddAddress, .btnSave {
-    padding: 8px 8px;
-    background: #FCB13A;
-    border-radius: 5px;
-    border: 1px rgb(170, 170, 170);
-}
-
-input {
-    margin: 20px;
-    padding: 8px 8px;
-    border-radius: 5px;
-    border: 1px solid rgb(170, 170, 170);
-    background: #B17FD5;
-}
-
-p {
-    margin: 10px;
-} */
 
 </style>

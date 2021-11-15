@@ -4,7 +4,7 @@
       <div class="p-3">
           <div class="d-flex align-items-center flex-column">
               <router-link to="Profile">
-                    <b-avatar variant="dark" text="PS" class="mb-3" size="5rem"></b-avatar>
+                    <b-avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></b-avatar>
               </router-link>
               <h4 id="sidebar-no-header-title">Fulano Beltrano</h4>
               <div class="divider-menu mb-3"></div>
