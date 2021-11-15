@@ -2,7 +2,7 @@ import Vue from "vue"
 import Router from "vue-router"
 import Home from "./views/Home"
 import Profile from "./views/Profile"
-import Telateste from "./views/Telateste"
+import RegisterProduct from "./views/RegisterProduct"
 Vue.use(Router)
 
 export default new Router ({
@@ -14,7 +14,7 @@ export default new Router ({
         name:"Profile",
         component: Profile
     },{
-        path:"/Telateste",
-        component: Telateste
+        path:"/RegisterProduct",
+        component: RegisterProduct
     }]
 })
