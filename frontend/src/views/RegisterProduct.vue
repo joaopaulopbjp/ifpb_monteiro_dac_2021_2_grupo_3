@@ -1,6 +1,7 @@
 <template>
     <div class="registerProduct">
         <Nav-bar/>
+        <Side-bar/>
         <div class="container mt-2 mb-5">
             <b-card>
                 <div class="d-flex justify-content-between ml-5"><h1>Register a Book</h1></div>
@@ -55,10 +56,11 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
+import SideBar from '@/components/SideBar.vue'
 
 export default {
     name: "Register Product",
-    components: {NavBar, Footer},
+    components: {NavBar, Footer,SideBar},
     
     data() {
       return {
