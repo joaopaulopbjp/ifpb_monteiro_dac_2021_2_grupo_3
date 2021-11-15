@@ -1,8 +1,51 @@
 <template>
-    <div class="profile">
+    <div>
         <Nav-bar/>
         <Side-bar/>
-        <section>
+        <div class="container mt-2 mb-5">
+            <b-card>
+                <div class="d-flex justify-content-between mb-4">
+                    <h4><i class="fas fa-user-circle"></i> Overview</h4>
+                    <b-button variant="warning" class="my-2 my-sm-0" type="submit">
+                    <i class="fas fa-pen"></i>
+                    </b-button>
+                </div>
+                <div class="d-flex justify-content-start mb-4">
+                    <b-form-input type="text" placeholder="Fulano beltrano" style="width: 400px" disabled></b-form-input>
+                    <b-form-input class="ml-4" type="text" placeholder="fulanobeltrano@gmail.com" style="width: 500px" disabled></b-form-input>
+                </div>
+                <div class="d-flex justify-content-start mb-4">
+                    <b-form-input type="text" placeholder="Old password" style="width: 250px" disabled></b-form-input>
+                    <b-form-input class="ml-4" type="text" placeholder="New password" style="width: 250px" disabled></b-form-input>
+                    <b-form-input class="ml-4" type="text" placeholder="Confirm password" style="width: 250px" disabled></b-form-input>
+                </div>
+                <b-button variant="outline-success" class="my-2 my-sm-0" type="submit">
+                  <i class="far fa-save"></i> Save
+                </b-button>
+            </b-card>
+        </div>
+        <div class="container mt-2 mb-5">
+            <b-card>
+                <div class="d-flex justify-content-between mb-4">
+                    <h4><i class="fas fa-shopping-basket"></i> Requests</h4>
+                </div>
+                <div class="d-flex justify-content-start mb-4">
+                    <b-form-input type="text" placeholder="Fulano beltrano" style="width: 400px" disabled></b-form-input>
+                </div>
+            </b-card>
+        </div>
+        <div class="container mt-2 mb-2">
+            <b-card>
+                <div class="d-flex justify-content-between mb-4">
+                    <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
+                    <b-button variant="warning" class="my-2 my-sm-0" type="submit">
+                    <i class="fas fa-pen"></i>
+                    </b-button>
+                </div>
+            </b-card>
+        </div>
+        <Footer/>
+       <!--  <section>
             <div class="headSection">
                 <h1>Overview</h1>
                 <button type="submit">Edit</button>
@@ -70,8 +113,7 @@
                     </div>
                 </section>
             </div>
-        </section>
-        <Footer/>
+        </section> -->
     </div>
 </template>
 
@@ -87,7 +129,7 @@ export default {
 </script>
 
 <style scoped>
-section {
+/* section {
     display: flexbox;
     margin-top: 30px;
     margin-bottom: 30px;
@@ -139,6 +181,6 @@ input {
 
 p {
     margin: 10px;
-}
+} */
 
 </style>
