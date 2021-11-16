@@ -7,8 +7,8 @@
                 <div class="d-flex justify-content-between ml-5"><h1>Register a Book</h1></div>
                 <div class="d-flex justify-content-start mb-4">
                     <b-form-input type="text" placeholder="Title" style="width: 65%" class="ml-5"></b-form-input>
-                    <b-form-input type="text" placeholder="YearLaunch" style="width: 40%" class="ml-5"></b-form-input>
-                    <b-form-input type="text" placeholder="Page" style="width: 40%" class="ml-5 mr-5"></b-form-input>
+                    <b-form-input type="number" placeholder="YearLaunch" style="width: 40%" class="ml-5"></b-form-input>
+                    <b-form-input type="number" placeholder="Page" style="width: 40%" class="ml-5 mr-5"></b-form-input>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
                     <b-form-input type="number" placeholder="Price" style="width: 30%" class="ml-5"></b-form-input>
@@ -40,11 +40,11 @@
                         v-model="selected"
                         :options="categories"
                         :aria-describedby="ariaDescribedby"
-                        name="flavour-1a"
                         stacked></b-form-checkbox-group>
                     </b-card>
                 </div>
                 <div class="d-flex justify-content-center">
+                    <b-button variant="danger" class="mt-4 mr-2">Cancel</b-button>
                     <b-button variant="warning" class="mt-4">Register Book</b-button>
                 </div>
             </b-card>
