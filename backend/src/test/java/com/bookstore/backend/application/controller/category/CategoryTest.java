@@ -3,15 +3,12 @@ package com.bookstore.backend.application.controller.category;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.PrintWriter;
-
-import javax.servlet.ServletOutputStream;
-
 import com.bookstore.backend.application.controller.TestsController;
 import com.bookstore.backend.presentation.dto.category.CategoryDTO;
+import com.bookstore.backend.presentation.dto.person.UserDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import org.json.JSONObject;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -27,13 +24,38 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class CategoryTest extends TestsController {
 
     @Test
-    public void saveCategory() throws JsonProcessingException, Exception {
+    @Order(1)
+    public void saveAdminCategory() throws JsonProcessingException, Exception {
         CategoryDTO dto = new CategoryDTO(0l, "horror");
-
-        JSONObject jsonLogin = new JSONObject(this.login("admin", "admin").getResponse().getContentAsString());
         
         mockMvc.perform(post(URLbase + "/category")
-            .header("Authorization", "Bearer " + jsonLogin.getString("response"))
+            .header("Authorization", this.getToken("admin", "admin"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isCreated());
+    }
+
+    @Test
+    @Order(2)
+    public void saveUserCategory() throws JsonProcessingException, Exception {
+        saveUser();
+
+        CategoryDTO dto = new CategoryDTO(0l, "action");
+        
+        mockMvc.perform(post(URLbase + "/category")
+            .header("Authorization", this.getToken("user", "userPass"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isUnauthorized());
+    }
+
+    private void saveUser() throws JsonProcessingException, Exception {
+        UserDTO dto = new UserDTO();
+        dto.setUsername("user");
+        dto.setPassword("userPass");
+        dto.setEmail("user@gmail.com");
+
+        mockMvc.perform(post(URLbase + "/user/save")
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isCreated());
