@@ -94,10 +94,10 @@ public class AddressController {
     }
     
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody AddressDTO dto){
+    public ResponseEntity<?> update(@RequestBody AddressDTO dto, Principal principal){
         try {
             AddressModel address = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
-            address = addressService.update(address);
+            address = addressService.update(address,principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(address);
         } catch(NotFoundException e) {
             Response response = new Response(e.getMessage());
