@@ -19,6 +19,11 @@ import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRep
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class BookService {
@@ -31,9 +36,6 @@ public class BookService {
 
     @Autowired
     private AuthorRepositoryService authorRepositoryService;
-
-    @Autowired
-    private AdminRepositoryService adminRepositoryService;
 
     @Autowired
     private AdminRepositoryService adminRepositoryService;
