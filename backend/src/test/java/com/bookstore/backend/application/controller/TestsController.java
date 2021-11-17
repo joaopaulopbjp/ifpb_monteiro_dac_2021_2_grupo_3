@@ -1,8 +1,6 @@
 package com.bookstore.backend.application.controller;
 
 import com.bookstore.backend.configs.ConfigClass;
-import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;
-import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.presentation.dto.author.AuthorDTO;
 import com.bookstore.backend.presentation.dto.category.CategoryDTO;
 import com.bookstore.backend.presentation.dto.company.PublishingCompanyDTO;
@@ -57,17 +55,19 @@ public class TestsController {
         return "Bearer " + jsonLogin.getString("response");
     }
 
-    protected void saveUser() throws JsonProcessingException, Exception {
+    protected MvcResult saveUser() throws JsonProcessingException, Exception {
         UserDTO dto = new UserDTO();
         dto.setUsername("user");
         dto.setPassword("userPass");
         dto.setEmail("user@gmail.com");
 
-        mockMvc.perform(post(URLbase + "/user/save")
-            .header("Authorization", this.getToken("admin", "admin"))
+        MvcResult result = mockMvc.perform(post(URLbase + "/user/save")
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)))
-            .andExpect(status().isCreated());
+            .andExpect(status().isCreated())
+            .andReturn();
+
+        return result;
     }
 
     protected MvcResult saveBook() throws JsonProcessingException, Exception {
