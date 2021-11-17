@@ -24,7 +24,7 @@ public class CategoryTest extends TestsController {
 
     @Test
     @Order(1)
-    public void saveAdminCategory() throws JsonProcessingException, Exception {
+    public void saveAdminCategorySucess() throws JsonProcessingException, Exception {
         CategoryDTO dto = new CategoryDTO(0l, "horror");
         
         mockMvc.perform(post(URLbase + "/category")
@@ -36,9 +36,8 @@ public class CategoryTest extends TestsController {
 
     @Test
     @Order(2)
-    public void saveUserCategory() throws JsonProcessingException, Exception {
+    public void saveUserCategoryErrorUnauthorized() throws JsonProcessingException, Exception {
         this.saveUser();
-
         CategoryDTO dto = new CategoryDTO(0l, "action");
         
         mockMvc.perform(post(URLbase + "/category")
@@ -46,5 +45,24 @@ public class CategoryTest extends TestsController {
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    @Order(3)
+    public void findAllCategorySucess() throws JsonProcessingException, Exception {
+        mockMvc.perform(get(URLbase + "/category/find-all")
+            .header("Authorization", this.getToken("user", "userPass"))
+            .contentType("application/json")
+            .content(""))
+            .andExpect(status().isFound());
+    }
+
+    @Test
+    @Order(4)
+    public void findAllCategoryErroForbbiden() throws JsonProcessingException, Exception {
+        mockMvc.perform(get(URLbase + "/category/find-all")
+            .contentType("application/json")
+            .content(""))
+            .andExpect(status().isForbidden());
     }
 }
