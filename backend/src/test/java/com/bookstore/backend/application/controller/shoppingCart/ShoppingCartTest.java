@@ -31,12 +31,11 @@ public class ShoppingCartTest extends TestsController{
     @Test
     @Order(1)
     public void saveShoppingCart() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{
-        
-
+        this.saveUser();
         List<ItemOrderDTO> list = new ArrayList<>();
         list.add(new ItemOrderDTO(0l, 3, null, 1l));
         
-        mockMvc.perform(post(URLbase + "/????????")
+        mockMvc.perform(post(URLbase + "/shopping-cart/add")
             .header("Authorization", this.getToken("user", "userPass"))
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(list)))
