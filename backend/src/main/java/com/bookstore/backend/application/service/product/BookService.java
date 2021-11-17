@@ -11,6 +11,7 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
+import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.InvalidValueException;
@@ -18,6 +19,7 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
@@ -42,6 +44,9 @@ public class BookService {
     private UserRepositoryService userRepositoryService;
 
     @Autowired
+    private AdminRepositoryService adminRepositoryService;
+
+    @Autowired
     private SaleRepositoryService saleRepositoryService;
 
     @Autowired
@@ -51,10 +56,10 @@ public class BookService {
     private AdminVerify adminVerify;
 
     public BookModel save(BookModel book, List<Long> categoryListId, Long companyId, List<Long> authorListId, String username) throws NotFoundException, Exception {
-        if(adminVerify.isAdmin(username)){
-            throw new Exception("Admins cannot save books");
+        if(!adminVerify.isAdmin(username)){
+            throw new Exception("user cannot save books");
         }
-        Optional<UserModel> personModelOp = userRepositoryService.getInstance().findByUsername(username);
+        Optional<AdminModel> personModelOp = adminRepositoryService.getInstance().findByUsername(username);
         Optional<PublishingCompanyModel> companyOp = companyRepositoryService.getInstance().findById(companyId);
         List<CategoryModel> categoryRecoveredList = new ArrayList<>();
         List<AuthorModel> authorRecoveredList = new ArrayList<>();
@@ -99,7 +104,7 @@ public class BookService {
         book.setCompany(companyOp.get());
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
         personModelOp.get().addProductToProductList(bookSaved);
-        userRepositoryService.getInstance().save(personModelOp.get());
+        adminRepositoryService.getInstance().save(personModelOp.get());
 
         SaleModel sale = new SaleModel(0l, bookSaved, 0);
         saleRepositoryService.getInstance().save(sale);

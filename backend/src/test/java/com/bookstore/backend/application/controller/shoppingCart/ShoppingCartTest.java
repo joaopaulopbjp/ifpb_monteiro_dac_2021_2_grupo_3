@@ -10,11 +10,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.bookstore.backend.application.controller.TestsController;
 import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
+import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.json.JSONException;
-import org.junit.Test;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -32,13 +34,20 @@ public class ShoppingCartTest extends TestsController{
     @Order(1)
     public void saveShoppingCart() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{
         this.saveUser();
+
+        ShoppingCartDTO dto = new ShoppingCartDTO();
+        
+        JSONObject jsonBook = new JSONObject(this.saveBook().getResponse().getContentAsString());
+
         List<ItemOrderDTO> list = new ArrayList<>();
-        list.add(new ItemOrderDTO(0l, 3, null, 1l));
+        list.add(new ItemOrderDTO(0l, 3, null, jsonBook.getLong("id")));
+
+        dto.setItemList(list);
         
         mockMvc.perform(post(URLbase + "/shopping-cart/add")
             .header("Authorization", this.getToken("user", "userPass"))
             .contentType("application/json")
-            .content(objectMapper.writeValueAsString(list)))
-            .andExpect(status().isCreated());
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isOk());
     }
 }
