@@ -1,14 +1,18 @@
 package com.bookstore.backend.application.controller.shoppingCart;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bookstore.backend.application.controller.TestsController;
-import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
-import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
-import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import com.bookstore.backend.application.controller.TestsController;
+import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+
+import org.json.JSONException;
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.TestInstance;
@@ -26,11 +30,16 @@ public class ShoppingCartTest extends TestsController{
     
     @Test
     @Order(1)
-    public void saveShoppingCart(){
-        mockMvc.perform(post(URLbase + "/category")
-            .header("Authorization", this.getToken("admin", "admin"))
+    public void saveShoppingCart() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{
+        
+
+        List<ItemOrderDTO> list = new ArrayList<>();
+        list.add(new ItemOrderDTO(0l, 3, null, 1l));
+        
+        mockMvc.perform(post(URLbase + "/????????")
+            .header("Authorization", this.getToken("user", "userPass"))
             .contentType("application/json")
-            .content(""itemList":[{"amount":3,"idProduct":1}]"));
+            .content(objectMapper.writeValueAsString(list)))
             .andExpect(status().isCreated());
     }
 }

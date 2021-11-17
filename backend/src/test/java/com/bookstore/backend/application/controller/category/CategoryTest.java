@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.bookstore.backend.application.controller.TestsController;
 import com.bookstore.backend.presentation.dto.category.CategoryDTO;
-import com.bookstore.backend.presentation.dto.person.UserDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.junit.jupiter.api.Order;
@@ -38,7 +37,7 @@ public class CategoryTest extends TestsController {
     @Test
     @Order(2)
     public void saveUserCategory() throws JsonProcessingException, Exception {
-        saveUser();
+        this.saveUser();
 
         CategoryDTO dto = new CategoryDTO(0l, "action");
         
@@ -47,17 +46,5 @@ public class CategoryTest extends TestsController {
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isUnauthorized());
-    }
-
-    private void saveUser() throws JsonProcessingException, Exception {
-        UserDTO dto = new UserDTO();
-        dto.setUsername("user");
-        dto.setPassword("userPass");
-        dto.setEmail("user@gmail.com");
-
-        mockMvc.perform(post(URLbase + "/user/save")
-            .contentType("application/json")
-            .content(objectMapper.writeValueAsString(dto)))
-            .andExpect(status().isCreated());
     }
 }
