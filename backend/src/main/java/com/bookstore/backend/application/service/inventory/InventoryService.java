@@ -8,6 +8,8 @@ import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.inventory.InventoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,12 +21,15 @@ public class InventoryService {
 
     @Autowired
     private BookRepositoryService bookRepositoryService;
+    
+    @Autowired
+    private AdminVerify adminVerify;
 
     public InventoryModel update(InventoryModel inventoryModel) throws NotFoundException {
         return inventoryRepositoryService.update(inventoryModel);
     }
 
-    public InventoryModel findById(Long id, String username) throws Exception {
+    public InventoryModel findById(Long id) throws Exception {
         Optional<InventoryModel> inventory = inventoryRepositoryService.getInstance().findById(id);
         if(inventory == null){
             throw new NotFoundException();
@@ -38,6 +43,9 @@ public class InventoryService {
     }
 
     public void incremet(Integer value, Long id, String username) throws Exception {
+    	if(!adminVerify.isAdmin(username)) {
+    		throw new Exception("You cannot increment an inventory because you are a user");
+    	}
         Optional<BookModel> book = bookRepositoryService.getInstance().findById(id);
         if(!book.isPresent()){
             throw new NotFoundException("Book with id " + id + " not found");
@@ -51,6 +59,9 @@ public class InventoryService {
     }
     
     public void decrement(Integer value, Long id, String username) throws Exception {
+    	if(!adminVerify.isAdmin(username)) {
+    		throw new Exception("You cannot decrement an inventory because you are a user");
+    	}
         Optional<BookModel> book = bookRepositoryService.getInstance().findById(id);
         if(!book.isPresent()){
             throw new NotFoundException("Book with id " + id + " not found");
