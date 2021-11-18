@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.service.sale.order;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import com.bookstore.backend.domain.model.sale.ItemOrderModel;
 import com.bookstore.backend.domain.model.sale.OrderModel;
 import com.bookstore.backend.domain.model.sale.RevenuesModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
+import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
@@ -18,6 +20,7 @@ import com.bookstore.backend.infrastructure.persistence.service.person.UserRepos
 import com.bookstore.backend.infrastructure.persistence.service.sale.OrderRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
 import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +47,9 @@ public class OrderService {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
+    @Autowired
+    private ShoppingCartRepositoryService shoppingCartRepositoryService;
+
     public OrderModel save(String username) throws Exception {
         if(adminVerify.isAdmin(username))
             throw new Exception("You can't save an order because you are an admin");
@@ -51,9 +57,13 @@ public class OrderService {
         OrderModel order = new OrderModel();
 
         List<ItemOrderModel> itemList = new ArrayList<>();
-        for(ItemOrderModel item : shoppingCartService.findShoppingCart(username).getItemList()) {
+        ShoppingCartModel shoppingCart = shoppingCartService.findShoppingCart(username);
+        for(ItemOrderModel item : shoppingCart.getItemList()) {
             itemList.add(item);
         }
+        
+        if(itemList.isEmpty())
+            throw new Exception("You can't realize an order with shopping cart empty");
 
         Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
 
@@ -67,6 +77,10 @@ public class OrderService {
         order = orderRepositoryService.getInstance().save(order);
         user.get().getSaleHistory().addOrderToOrderList(order);
         userRepositoryService.getInstance().save(user.get());
+
+        shoppingCart.getItemList().clear();
+        shoppingCart.setTotalPrice(new BigDecimal(0));
+        shoppingCartRepositoryService.getInstance().save(shoppingCart);
 
         List<SaleModel> saleList = new ArrayList<>();
         Optional<SaleModel> saleOp = null;

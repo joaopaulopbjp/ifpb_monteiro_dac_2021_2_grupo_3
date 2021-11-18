@@ -30,20 +30,27 @@ public class OrderTest extends TestsController {
     
     @Test
     @Order(1)
-    public void orderSave() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
+    public void orderSaveSucess() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
         saveProductShoppingCart();
         
-        OrderDTO dto = new OrderDTO();
-
-        List<Long> idItemList = new ArrayList<>();
-        idItemList.add(1l);
-
-        dto.setIdItemList(idItemList);
-        
         mockMvc.perform(post(URLbase + "/order")
-            .header("Authorization", this.getToken("user", "userPass"))
-            .contentType("application/json")
-            .content(objectMapper.writeValueAsString(dto)))
+            .header("Authorization", this.getToken("user", "userPass")))
             .andExpect(status().isCreated());
+    }
+
+    @Test
+    @Order(2)
+    public void orderSaveErroAdmin() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
+        mockMvc.perform(post(URLbase + "/order")
+            .header("Authorization", this.getToken("admin", "admin")))
+            .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @Order(3)
+    public void orderSaveErroShoppingEmpty() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
+        mockMvc.perform(post(URLbase + "/order")
+            .header("Authorization", this.getToken("user", "userPass")))
+            .andExpect(status().isBadRequest());
     }
 }

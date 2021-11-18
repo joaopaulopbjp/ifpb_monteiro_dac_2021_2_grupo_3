@@ -91,6 +91,23 @@ public class ShoppingCartService {
         return shopping;
     }
 
+    public ShoppingCartModel removeAll(String username) throws NotFoundException, Exception {
+        if(adminVerify.isAdmin(username)){
+            throw new Exception("You can't remove items to shopping cart because you are an admin");
+        }
+        Optional<UserModel> opPerson = userRepositoryService.getInstance().findByUsername(username);
+
+        if(!opPerson.isPresent())
+            throw new NotFoundException("User " + username + " not found");
+        
+        for(ItemOrderModel itemOrder : opPerson.get().getShoppingCart().getItemList()) {
+            itemOrderRepositoryService.getInstance().delete(itemOrder);
+        }
+        opPerson.get().getShoppingCart().getItemList().clear();
+        ShoppingCartModel shopping = shoppingCartRepositoryService.getInstance().save(opPerson.get().getShoppingCart());
+        return shopping;
+    }
+
     public ShoppingCartModel findShoppingCart(String username) throws NotFoundException, Exception {
         if(adminVerify.isAdmin(username)){
             throw new Exception("You can't find any shopping cart because you are an admin");
