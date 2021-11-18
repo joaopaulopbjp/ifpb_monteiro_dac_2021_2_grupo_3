@@ -9,6 +9,8 @@ import com.bookstore.backend.presentation.dto.inventory.InventoryDTO;
 import com.bookstore.backend.presentation.dto.login.CredentialsDTO;
 import com.bookstore.backend.presentation.dto.person.UserDTO;
 import com.bookstore.backend.presentation.dto.product.BookDTO;
+import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
+import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootTest
 public class TestsController {
@@ -153,6 +156,27 @@ public class TestsController {
             .andExpect(status().isCreated())
             .andReturn();
 
+        return result;
+    }
+
+    protected MvcResult saveProductShoppingCart() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
+        this.saveUser();
+
+        ShoppingCartDTO dto = new ShoppingCartDTO();
+        
+        JSONObject jsonBook = new JSONObject(this.saveBook().getResponse().getContentAsString());
+
+        List<ItemOrderDTO> list = new ArrayList<>();
+        list.add(new ItemOrderDTO(0l, 3, null, jsonBook.getLong("id")));
+
+        dto.setItemList(list);
+        
+        MvcResult result = mockMvc.perform(post(URLbase + "/shopping-cart/add")
+            .header("Authorization", this.getToken("user", "userPass"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isOk())
+            .andReturn();
         return result;
     }
 }

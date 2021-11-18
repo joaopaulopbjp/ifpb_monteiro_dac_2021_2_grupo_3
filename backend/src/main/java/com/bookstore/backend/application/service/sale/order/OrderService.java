@@ -50,7 +50,10 @@ public class OrderService {
 
         OrderModel order = new OrderModel();
 
-        List<ItemOrderModel> itemList = shoppingCartService.findShoppingCart(username).getItemList();
+        List<ItemOrderModel> itemList = new ArrayList<>();
+        for(ItemOrderModel item : shoppingCartService.findShoppingCart(username).getItemList()) {
+            itemList.add(item);
+        }
 
         Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
 
@@ -58,9 +61,9 @@ public class OrderService {
             user.get().setSaleHistory(new UserSaleHistoryModel());
         }
         
-        order.setItemList(itemList);
         order.setDateOrder(LocalDate.now());
         order.setStatus(OrderStatus.PROCESSING);
+        order.setItemList(itemList);
         order = orderRepositoryService.getInstance().save(order);
         user.get().getSaleHistory().addOrderToOrderList(order);
         userRepositoryService.getInstance().save(user.get());
