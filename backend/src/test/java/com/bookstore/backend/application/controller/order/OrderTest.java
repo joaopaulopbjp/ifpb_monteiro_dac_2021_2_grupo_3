@@ -28,7 +28,7 @@ public class OrderTest extends TestsController {
     @Test
     @Order(1)
     public void orderSaveSucess() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
-        saveProductShoppingCart();
+        this.saveProductShoppingCart();
         
         mockMvc.perform(post(URLbase + "/order/save")
             .header("Authorization", this.getToken("user", "userPass")))
@@ -38,15 +38,15 @@ public class OrderTest extends TestsController {
     @Test
     @Order(2)
     public void orderSaveErroAdmin() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
-        mockMvc.perform(post(URLbase + "/order")
+        mockMvc.perform(post(URLbase + "/order/save")
             .header("Authorization", this.getToken("admin", "admin")))
-            .andExpect(status().isBadRequest());
+            .andExpect(status().isUnauthorized());
     }
 
     @Test
     @Order(3)
     public void orderSaveErroShoppingEmpty() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
-        mockMvc.perform(post(URLbase + "/order")
+        mockMvc.perform(post(URLbase + "/order/save")
             .header("Authorization", this.getToken("user", "userPass")))
             .andExpect(status().isBadRequest());
     }
