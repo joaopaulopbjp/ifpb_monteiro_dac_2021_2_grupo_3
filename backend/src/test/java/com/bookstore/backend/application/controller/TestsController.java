@@ -179,4 +179,25 @@ public class TestsController {
             .andReturn();
         return result;
     }
+
+    public MvcResult addShoppingCart() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{        
+        this.saveUser();
+        
+        ShoppingCartDTO dto = new ShoppingCartDTO();
+        
+        JSONObject jsonBook = new JSONObject(this.saveBook().getResponse().getContentAsString());
+
+        List<ItemOrderDTO> list = new ArrayList<>();
+        list.add(new ItemOrderDTO(0l, 10, null, jsonBook.getLong("id")));
+
+        dto.setItemList(list);
+        
+        MvcResult result = mockMvc.perform(post(URLbase + "/shopping-cart/add")
+            .header("Authorization", this.getToken("user", "userPass"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isOk()).andReturn();
+
+        return result;
+    }
 }
