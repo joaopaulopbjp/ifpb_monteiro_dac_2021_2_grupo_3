@@ -1,7 +1,6 @@
 package com.bookstore.backend.application.service.author;
 
 import static org.junit.Assert.fail;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,7 +15,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bookstore.backend.domain.model.author.AuthorModel;
-import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.author.AuthorRepository;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 
