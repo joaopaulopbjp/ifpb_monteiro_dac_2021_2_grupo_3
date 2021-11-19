@@ -3,19 +3,18 @@ package com.bookstore.backend.application.service.inventory;
 import static org.hamcrest.CoreMatchers.theInstance;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,6 @@ import com.bookstore.backend.infrastructure.utils.AdminVerify;
 public class InventoryTest {
 	
 	@Mock
-	@InjectMocks
 	private InventoryRepositoryService inventoryRepositoryService;
 	@Mock
 	private InventoryRepository inventoryRepository;
@@ -115,24 +113,6 @@ public class InventoryTest {
 		verify(bookList, never()).add(book3);
 			
 	}
-	
-	@Test
-	@Order(3)
-	public void verifyIncrementInInventory() throws Exception {
-		InventoryModel inventory = mock(InventoryModel.class);
-		when(inventory.getId()).thenReturn(1L);
-		when(inventory.getStatus()).thenReturn(InventoryStatus.AVAILABLE);
-		when(inventory.getAmount()).thenReturn(4);
-		
-		BookModel book = mock(BookModel.class);
-		when(book.getId()).thenReturn(1L);
-		when(book.getTitle()).thenReturn("A Garota do lago");
-		when(book.getInventory()).thenReturn(inventory);
-		
-		
-		verify(inventoryRepositoryService, times(1)).getInstance().save(inventory);
-	}
-	
 	
 }
 
