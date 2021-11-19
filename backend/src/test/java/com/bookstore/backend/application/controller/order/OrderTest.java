@@ -30,7 +30,7 @@ public class OrderTest extends TestsController {
     public void orderSaveSucess() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
         saveProductShoppingCart();
         
-        mockMvc.perform(post(URLbase + "/order")
+        mockMvc.perform(post(URLbase + "/order/save")
             .header("Authorization", this.getToken("user", "userPass")))
             .andExpect(status().isCreated());
     }

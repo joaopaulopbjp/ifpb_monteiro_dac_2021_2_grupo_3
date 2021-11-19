@@ -57,6 +57,12 @@ public class OrderService {
         List<ItemOrderModel> itemList = new ArrayList<>();
         ShoppingCartModel shoppingCart = shoppingCartService.findShoppingCart(username);
         for(ItemOrderModel item : shoppingCart.getItemList()) {
+            if(item.getProduct().getInventory().getAmount() > item.getAmount()) {
+                throw new Exception(item.getProduct().getTitle()
+                + " have "
+                + item.getProduct().getInventory().getAmount()
+                + "available. You can't buy " + item.getAmount() + " of that.");
+            }
             itemList.add(item);
         }
         
