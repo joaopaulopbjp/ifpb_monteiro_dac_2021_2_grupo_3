@@ -37,7 +37,7 @@ public class ItemOrderModel {
 	@Column(name = "AMOUNT", nullable = false)
 	private Integer amount;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private ProductModel product;
 
