@@ -51,9 +51,7 @@ public class OrderService {
     private ShoppingCartRepositoryService shoppingCartRepositoryService;
 
     public OrderModel save(String username) throws Exception {
-        if(adminVerify.isAdmin(username))
-            throw new Exception("You can't save an order because you are an admin");
-
+        
         OrderModel order = new OrderModel();
 
         List<ItemOrderModel> itemList = new ArrayList<>();
@@ -123,10 +121,14 @@ public class OrderService {
     }
 
     public List<OrderModel> findAll(String username) throws NotFoundException, Exception {
-        if(!adminVerify.isAdmin(username))
-            throw new Exception("You can't find all orders because you are an user");
+        List<OrderModel> orderList;
+        if(!adminVerify.isAdmin(username)){
+            UserModel user = userRepositoryService.getInstance().findByUsername(username).get();
+            orderList = user.getSaleHistory().getOrderList();
+        }else{
+            orderList = orderRepositoryService.getInstance().findAll();
+        }
 
-        List<OrderModel> orderList = orderRepositoryService.getInstance().findAll();
         if(orderList.isEmpty()){
             throw new NotFoundException();
         }
