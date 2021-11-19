@@ -7,11 +7,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.bookstore.backend.application.controller.TestsController;
-import com.bookstore.backend.presentation.dto.sale.OrderDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.json.JSONException;
