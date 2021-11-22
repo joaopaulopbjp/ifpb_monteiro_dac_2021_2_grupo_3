@@ -2,24 +2,12 @@ package com.bookstore.backend.application.service.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-<<<<<<< HEAD
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doAnswer;
-=======
-import static org.mockito.ArgumentMatchers.anyInt;
->>>>>>> c619125ceecdaf4e47997059158ca3e5a710cfc8
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-<<<<<<< HEAD
-
-=======
->>>>>>> c619125ceecdaf4e47997059158ca3e5a710cfc8
 import java.util.List;
 
 import org.junit.jupiter.api.Order;
