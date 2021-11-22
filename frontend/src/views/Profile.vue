@@ -11,7 +11,7 @@
                     <div>
                         <h6>Target Product</h6>
                         <b-button-group vertical>
-                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-plus-circle"></i> Register Product
                             </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">

@@ -44,7 +44,7 @@
                     </b-card>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <b-button variant="danger" class="mt-4 mr-2">Cancel</b-button>
+                    <b-button to="Profile" variant="danger" class="mt-4 mr-2">Cancel</b-button>
                     <b-button variant="warning" class="mt-4">Register Book</b-button>
                 </div>
             </b-card>

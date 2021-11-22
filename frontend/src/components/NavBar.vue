@@ -26,46 +26,7 @@
     </b-navbar>
     </div>
   </div>
-  <!-- <header class="header">
-    <nav>
-      <router-link to="/">
-        <img src="@/image/logoBookStore.png" alt="Logo" />
-      </router-link>
-      <nav id="box-btn-input">
-        <input class="field" type="text" placeholder=" Search" />
-        <button class="btn search">&#x1F50D;</button>
-      </nav>
-      
-      <button class="btn car">&#x1F6D2;</button>
-      <img @click="menuActive = !menuActive" alt="men" class="btn menu" src="https://raw.githubusercontent.com/william-costa/wdev-mock-site-resources/master/assets/images/menu.svg" >
-
-      <div @click="menuActive = !menuActive" class="menu-overlay" v-if="menuActive"></div>
-      <div class="menu-items" v-if="menuActive">
-          <ul>
-            <div class="box-profile">
-                <router-link to="Profile">
-                    <img alt="men" class="icon-menu" src="https://cdn-icons-png.flaticon.com/512/64/64572.png">
-                    <h3>Profile</h3>
-                </router-link>
-            </div>
-            <h3>Highlights</h3>
-            <li><a href="/">Best Sellers</a></li>
-            <li><a href="/">Cheaper</a></li>
-            <h3>Cartegory</h3>
-            <li><a href="/">Adventury</a></li>
-            <li><a href="/">Romantic</a></li>
-            <li><a href="/">Supernatural</a></li>
-            <li><a href="/">Fantasy</a></li>
-            <h3>Filter</h3>
-            <li><a href="/">Adventury</a></li>
-            <li><a href="/">Romantic</a></li>
-            <li><a href="/">Supernatural</a></li>
-            <li><a href="/">Fantasy</a></li>
-          </ul>
-      </div>
-    
-    </nav>
-  </header> -->
+ 
 </template>
 
 <script>
