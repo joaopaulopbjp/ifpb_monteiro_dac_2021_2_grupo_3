@@ -59,7 +59,7 @@ import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
 export default {
-    name: "Register Product",
+    name: "RegisterProduct",
     components: {NavBar, Footer,SideBar},
     
     data() {
