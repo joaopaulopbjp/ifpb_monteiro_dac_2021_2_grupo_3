@@ -36,7 +36,7 @@ public class PublishingCompanyController {
             PublishingCompanyModel company = (PublishingCompanyModel)ModelMapperService.convertToModel(dto, PublishingCompanyModel.class);
             company = publishingCompanyService.save(company);
             dto = (PublishingCompanyDTO)ModelMapperService.convertToDTO(company, PublishingCompanyDTO.class);
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(dto);
         } catch (IllegalArgumentException e) {
             Response response = new Response(e.getMessage());
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

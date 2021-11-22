@@ -30,7 +30,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService; 
     
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<?> save(Principal principal){
         try {
             OrderModel order = orderService.save(principal.getName());

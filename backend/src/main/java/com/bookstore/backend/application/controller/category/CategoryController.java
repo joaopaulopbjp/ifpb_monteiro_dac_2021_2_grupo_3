@@ -87,7 +87,7 @@ public class CategoryController {
     public ResponseEntity<?> findAll(){
         try {
             List<CategoryModel> categoryList = categoryService.findAll();
-            return ResponseEntity.status(HttpStatus.OK).body(categoryList);
+            return ResponseEntity.status(HttpStatus.FOUND).body(categoryList);
         }catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }catch (Exception e) {
