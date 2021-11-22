@@ -6,21 +6,21 @@
             <b-card>
                 <div class="d-flex justify-content-between ml-5"><h1>Register a Book</h1></div>
                 <div class="d-flex justify-content-start mb-4">
-                    <b-form-input type="text" placeholder="Title" style="width: 65%" class="ml-5"></b-form-input>
-                    <b-form-input type="number" placeholder="YearLaunch" style="width: 40%" class="ml-5"></b-form-input>
-                    <b-form-input type="number" placeholder="Page" style="width: 40%" class="ml-5 mr-5"></b-form-input>
+                    <b-form-input type="text" placeholder="Title" style="width: 65%" class="ml-3"></b-form-input>
+                    <b-form-input type="number" placeholder="YearLaunch" style="width: 40%" class="ml-2"></b-form-input>
+                    <b-form-input type="number" placeholder="Page" style="width: 40%" class="ml-2 mr-3"></b-form-input>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                    <b-form-input type="number" placeholder="Price" style="width: 30%" class="ml-5"></b-form-input>
-                    <b-form-input type="number" placeholder="Inventory" style="width: 40%" class="ml-5"></b-form-input>
+                    <b-form-input type="number" placeholder="Price" style="width: 30%" class="ml-3"></b-form-input>
+                    <b-form-input type="number" placeholder="Inventory" style="width: 40%" class="ml-2"></b-form-input>
 
-                    <b-form-select v-model="campanySelected" :options="companys" style="width: 45%" class="ml-5"></b-form-select>
+                    <b-form-select v-model="campanySelected" :options="companys" style="width: 45%" class="ml-2"></b-form-select>
 
-                    <b-form-file v-model="Array" style="width: 45%" class="ml-5 mr-5"></b-form-file>
+                    <b-form-file v-model="Array" style="width: 45%" class="ml-2 mr-3"></b-form-file>
                     
                 </div>
                 <div class="d-flex justify-content-between mb-4">
-                    <b-card class="ml-5 mr-5 w-45 p-3">
+                    <b-card class="ml-3 mr-3 w-45 p-3">
                         <h4>Authors</h4>
                         
                         <b-form-checkbox-group
@@ -34,7 +34,7 @@
 
                     <b-form-textarea v-model="text" placeholder="Description" class="md-textarea p-3" style="width: 45%; "></b-form-textarea>
 
-                    <b-card class="ml-5 mr-5 w-45 p-3">
+                    <b-card class="ml-3 mr-3 w-45 p-3">
                         <h4>Categories</h4>
                         <b-form-checkbox-group
                         v-model="selected"
