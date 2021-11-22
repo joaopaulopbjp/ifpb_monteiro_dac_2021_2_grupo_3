@@ -1,7 +1,7 @@
 
 <template>
   <div>
-    <b-button @click="openModal" pill variant="warning" class="my-2 mb-3" type="submit">
+    <b-button @click="openModal" pill variant="warning" class="my-2 mb-3" id="button" type="submit">
       <i class="fas fa-plus-circle"></i> Register Author
     </b-button>
     <b-modal style="background-color: #955DBC" header-bg-variant="warning" body-bg-variant="warning" footer-bg-variant="warning" centered ref="meu_modal">
@@ -37,6 +37,7 @@ export default {
       }
   },
 }
+  // Vue.loadScript("../script/compiled/registerAuthor.js");
 </script>
 
 <style scoped>
