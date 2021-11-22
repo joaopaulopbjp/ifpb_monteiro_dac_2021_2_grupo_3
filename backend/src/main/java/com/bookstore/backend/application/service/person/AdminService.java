@@ -36,7 +36,7 @@ public class AdminService {
     private void init() {
         List<AdminModel> adminlist = adminRepositoryService.getInstance().findAll();
         if(adminlist.isEmpty()) {
-            AdminModel admin = new AdminModel(0l, "admin", "admin@email.com", "12345", null, null, null);
+            AdminModel admin = new AdminModel(0l, "admin", "admin@email.com", "admin", null, null, null);
             adminRepositoryService.getInstance().save(admin);
         }
     }

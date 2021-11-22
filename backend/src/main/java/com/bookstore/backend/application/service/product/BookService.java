@@ -11,17 +11,16 @@ import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.domain.model.image.ImageModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
-import com.bookstore.backend.domain.model.user.UserModel;
+import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.infrastructure.enumerator.status.Status;
 import com.bookstore.backend.infrastructure.exception.InvalidValueException;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.category.CategoryRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
-import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +38,7 @@ public class BookService {
     private AuthorRepositoryService authorRepositoryService;
 
     @Autowired
-    private UserRepositoryService userRepositoryService;
+    private AdminRepositoryService adminRepositoryService;
 
     @Autowired
     private SaleRepositoryService saleRepositoryService;
@@ -47,14 +46,8 @@ public class BookService {
     @Autowired
     private PublishingCompanyRepositoryService companyRepositoryService;
 
-    @Autowired
-    private AdminVerify adminVerify;
-
     public BookModel save(BookModel book, List<Long> categoryListId, Long companyId, List<Long> authorListId, String username) throws NotFoundException, Exception {
-        if(adminVerify.isAdmin(username)){
-            throw new Exception("Admins cannot save books");
-        }
-        Optional<UserModel> personModelOp = userRepositoryService.getInstance().findByUsername(username);
+        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByUsername(username);
         Optional<PublishingCompanyModel> companyOp = companyRepositoryService.getInstance().findById(companyId);
         List<CategoryModel> categoryRecoveredList = new ArrayList<>();
         List<AuthorModel> authorRecoveredList = new ArrayList<>();
@@ -98,22 +91,15 @@ public class BookService {
         book.setAuthorList(authorRecoveredList);
         book.setCompany(companyOp.get());
         BookModel bookSaved = bookRepositoryService.getInstance().save(book);
-        personModelOp.get().addProductToProductList(bookSaved);
-        userRepositoryService.getInstance().save(personModelOp.get());
+        adminOp.get().addProductToProductList(bookSaved);
+        adminRepositoryService.getInstance().save(adminOp.get());
 
         SaleModel sale = new SaleModel(0l, bookSaved, 0);
         saleRepositoryService.getInstance().save(sale);
         return bookSaved;
     }
 
-    public BookModel update(BookModel book, String username) throws NotFoundException {
-        if(!adminVerify.isAdmin(username)){
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getProductForSaleList().stream().filter(personBook -> personBook.getId()==book.getId()).findFirst().isPresent();
-            if(!flag){
-                throw new NotFoundException("You can't update this book because it belongs to another user");
-            }
-        }
+    public BookModel update(BookModel book) throws NotFoundException {
         validate(book);
 
         BookModel bookUpdated = bookRepositoryService.update(book);
@@ -127,23 +113,15 @@ public class BookService {
             throw new NotFoundException("Not found book with id " + id);
         
         BookModel book = bookRepositoryService.getInstance().findById(id).get();
-        Optional<UserModel> userOp = null;
-        if(!adminVerify.isAdmin(username)){
-            userOp = userRepositoryService.getInstance().findByUsername(username);
-            flag = userOp.get().getProductForSaleList().stream().filter(personBook -> personBook.getId()==book.getId()).findFirst().isPresent();
-            if(!flag){
-                throw new NotFoundException("You can't delete this book because it belongs to another user");
-            }
-        }else{
-            userOp = userRepositoryService.getInstance().findByProductId(id);
-        }
 
-        if(book.getStatus()==Status.INACTIVE){
+        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByUsername(username);
+
+        if(book.getStatus()==Status.INACTIVE) {
             throw new Exception("You can't delete this Book with id " + id + " because it is inactive.");
         }
         book.setStatus(Status.INACTIVE);
-        userOp.get().removeProductFromProductList(book);
-        userRepositoryService.getInstance().save(userOp.get());
+        adminOp.get().removeProductFromProductList(book);
+        adminRepositoryService.getInstance().save(adminOp.get());
         bookRepositoryService.getInstance().save(book);
     }
 

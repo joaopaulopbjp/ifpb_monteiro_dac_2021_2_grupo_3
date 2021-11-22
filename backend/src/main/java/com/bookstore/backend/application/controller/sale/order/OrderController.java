@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.bookstore.backend.application.service.sale.order.OrderService;
 import com.bookstore.backend.domain.model.sale.OrderModel;
+import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
 import com.bookstore.backend.presentation.dto.sale.OrderDTO;
@@ -29,7 +30,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService; 
     
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<?> save(Principal principal){
         try {
             OrderModel order = orderService.save(principal.getName());
@@ -43,9 +44,9 @@ public class OrderController {
     }
     
     @PutMapping
-    public ResponseEntity<?> updateStatus(@RequestBody OrderDTO dto, Principal principal){
+    public ResponseEntity<?> cancel(@RequestBody OrderDTO dto, Principal principal){
         try {
-            OrderModel order = orderService.updateStatus(dto.getId(), dto.getIdStatus(), principal.getName());
+            OrderModel order = orderService.updateStatus(dto.getId(), OrderStatus.CANCELED.getStatus(), principal.getName());
             OrderDTO orderDTO = (OrderDTO) ModelMapperService.convertToDTO(order, OrderDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(orderDTO);
         } catch (IllegalArgumentException e) {

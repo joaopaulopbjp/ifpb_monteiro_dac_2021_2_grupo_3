@@ -1,16 +1,12 @@
 package com.bookstore.backend.application.service.inventory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
-import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.inventory.InventoryRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.product.BookRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
@@ -25,10 +21,7 @@ public class InventoryService {
 
     @Autowired
     private BookRepositoryService bookRepositoryService;
-
-    @Autowired
-    private UserRepositoryService userRepositoryService;
-
+    
     @Autowired
     private AdminVerify adminVerify;
 
@@ -36,37 +29,23 @@ public class InventoryService {
         return inventoryRepositoryService.update(inventoryModel);
     }
 
-    public InventoryModel findById(Long id, String username) throws Exception {
+    public InventoryModel findById(Long id) throws Exception {
         Optional<InventoryModel> inventory = inventoryRepositoryService.getInstance().findById(id);
         if(inventory == null){
             throw new NotFoundException();
         }
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getProductForSaleList()
-                .stream().filter(product -> product.getInventory().getId() == id)
-                .findFirst().isPresent();
 
-            if(!flag)
-                throw new Exception("You can't get this inventory because it belongs to another user");
-        }
         return inventory.get();
     }
 
-    public List<InventoryModel> findAll(String username) {
-        List<InventoryModel> inventory = new ArrayList<>();
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            inventory = userOp.get().getProductForSaleList().stream()
-                .map(product -> product.getInventory())
-                .collect(Collectors.toList());
-        } else {
-            inventory = inventoryRepositoryService.getInstance().findAll();
-        }
-        return inventory;
+    public List<InventoryModel> findAll() {
+        return inventoryRepositoryService.getInstance().findAll();
     }
 
     public void incremet(Integer value, Long id, String username) throws Exception {
+    	if(!adminVerify.isAdmin(username)) {
+    		throw new Exception("You cannot increment an inventory because you are a user");
+    	}
         Optional<BookModel> book = bookRepositoryService.getInstance().findById(id);
         if(!book.isPresent()){
             throw new NotFoundException("Book with id " + id + " not found");
@@ -75,19 +54,14 @@ public class InventoryService {
             throw new IllegalArgumentException("value must be greater than 0.");
         }
 
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getProductForSaleList().stream()
-                .map(product -> product.getInventory())
-                .findFirst().isPresent();
-            if(!flag)
-                throw new Exception("You can't incremet this inventory because it belongs to another user");
-        }
         book.get().getInventory().addAmount(value);
         bookRepositoryService.getInstance().save(book.get());
     }
     
     public void decrement(Integer value, Long id, String username) throws Exception {
+    	if(!adminVerify.isAdmin(username)) {
+    		throw new Exception("You cannot decrement an inventory because you are a user");
+    	}
         Optional<BookModel> book = bookRepositoryService.getInstance().findById(id);
         if(!book.isPresent()){
             throw new NotFoundException("Book with id " + id + " not found");
@@ -96,14 +70,6 @@ public class InventoryService {
             throw new IllegalArgumentException("value must be greater than 0.");
         }
 
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getProductForSaleList().stream()
-                .map(product -> product.getInventory())
-                .findFirst().isPresent();
-            if(!flag)
-                throw new Exception("You can't incremet this inventory because it belongs to another user");
-        }
         book.get().getInventory().removerAmount(value);
         bookRepositoryService.getInstance().save(book.get());
         

@@ -1,5 +1,6 @@
 package com.bookstore.backend.application.service.sale.order;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import com.bookstore.backend.domain.model.sale.ItemOrderModel;
 import com.bookstore.backend.domain.model.sale.OrderModel;
 import com.bookstore.backend.domain.model.sale.RevenuesModel;
 import com.bookstore.backend.domain.model.sale.SaleModel;
+import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.enumerator.orderModel.OrderStatus;
@@ -18,6 +20,7 @@ import com.bookstore.backend.infrastructure.persistence.service.person.UserRepos
 import com.bookstore.backend.infrastructure.persistence.service.sale.OrderRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.RevenuesRepositoryServices;
 import com.bookstore.backend.infrastructure.persistence.service.sale.SaleRepositoryService;
+import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,13 +47,27 @@ public class OrderService {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    public OrderModel save(String username) throws Exception {
-        if(adminVerify.isAdmin(username))
-            throw new Exception("You can't save an order because you are an admin");
+    @Autowired
+    private ShoppingCartRepositoryService shoppingCartRepositoryService;
 
+    public OrderModel save(String username) throws Exception {
+        
         OrderModel order = new OrderModel();
 
-        List<ItemOrderModel> itemList = shoppingCartService.findShoppingCart(username).getItemList();
+        List<ItemOrderModel> itemList = new ArrayList<>();
+        ShoppingCartModel shoppingCart = shoppingCartService.findShoppingCart(username);
+        for(ItemOrderModel item : shoppingCart.getItemList()) {
+            if(item.getAmount().intValue() > item.getProduct().getInventory().getAmount().intValue()) {
+                throw new Exception(item.getProduct().getTitle()
+                + " have "
+                + item.getProduct().getInventory().getAmount()
+                + "available. You can't buy " + item.getAmount() + " of that.");
+            }
+            itemList.add(item);
+        }
+        
+        if(itemList.isEmpty())
+            throw new Exception("You can't realize an order with shopping cart empty");
 
         Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
 
@@ -58,12 +75,16 @@ public class OrderService {
             user.get().setSaleHistory(new UserSaleHistoryModel());
         }
         
-        order.setItemList(itemList);
         order.setDateOrder(LocalDate.now());
         order.setStatus(OrderStatus.PROCESSING);
+        order.setItemList(itemList);
         order = orderRepositoryService.getInstance().save(order);
         user.get().getSaleHistory().addOrderToOrderList(order);
         userRepositoryService.getInstance().save(user.get());
+
+        shoppingCart.getItemList().clear();
+        shoppingCart.setTotalPrice(new BigDecimal(0));
+        shoppingCartRepositoryService.getInstance().save(shoppingCart);
 
         List<SaleModel> saleList = new ArrayList<>();
         Optional<SaleModel> saleOp = null;
@@ -106,10 +127,14 @@ public class OrderService {
     }
 
     public List<OrderModel> findAll(String username) throws NotFoundException, Exception {
-        if(!adminVerify.isAdmin(username))
-            throw new Exception("You can't find all orders because you are an user");
+        List<OrderModel> orderList;
+        if(!adminVerify.isAdmin(username)){
+            UserModel user = userRepositoryService.getInstance().findByUsername(username).get();
+            orderList = user.getSaleHistory().getOrderList();
+        }else{
+            orderList = orderRepositoryService.getInstance().findAll();
+        }
 
-        List<OrderModel> orderList = orderRepositoryService.getInstance().findAll();
         if(orderList.isEmpty()){
             throw new NotFoundException();
         }

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,20 +52,6 @@ public class EvaluateController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
-        }
-    }
-
-    @PutMapping
-    public ResponseEntity<?> update(@RequestBody EvaluateDTO dto){
-        try {
-            EvaluateModel evaluate = (EvaluateModel) ModelMapperService.convertToModel(dto, EvaluateModel.class);
-            evaluate = evaluateService.update(evaluate);
-            dto = (EvaluateDTO)ModelMapperService.convertToDTO(evaluate, EvaluateDTO.class);
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
     }
 

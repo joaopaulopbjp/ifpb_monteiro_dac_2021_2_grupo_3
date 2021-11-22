@@ -26,6 +26,9 @@ public class AuthorService {
     private BookService bookService;
 
     public AuthorModel save(AuthorModel authorModel){
+        if(authorModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
+        }
         return authorRepositoryService.getInstance().save(authorModel);
     }
 
@@ -47,6 +50,9 @@ public class AuthorService {
     }
 
     public AuthorModel update(AuthorModel authorModel) throws NotFoundException{
+        if(authorModel.getName().isEmpty()){
+            throw new IllegalArgumentException("name can't not be Empty");
+        }
         return authorRepositoryService.update(authorModel);
     }
 
@@ -66,7 +72,7 @@ public class AuthorService {
         return author;
     }
 
-    public List<AuthorModel> findAll(){
-        return authorRepositoryService.getInstance().findAll();
+    public List<AuthorModel> findAll(int numberPages) throws NotFoundException{
+        return authorRepositoryService.findAll(numberPages);
     }
 }
