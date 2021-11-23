@@ -2,11 +2,16 @@
     <div>
     <b-sidebar id="sidebar-right" right shadow bg-variant='warning' backdrop backdrop-variant="dark">
       <div class="p-3">
-          <div class="d-flex align-items-center flex-column">
+          <div v-if="logged === true" class="d-flex align-items-center flex-column">
               <router-link to="Profile">
                     <b-avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></b-avatar>
               </router-link>
               <h4 id="sidebar-no-header-title">Fulano Beltrano</h4>
+              <div class="divider-menu mb-3"></div>
+          </div>
+          <div v-else-if="logged === false" class="d-flex align-items-center flex-column">
+                   <button @click="openModal"><b-avatar variant="dark" class="text-decoration-none mb-3" size="5rem"></b-avatar></button> 
+              <h4 id="sidebar-no-header-title">Não logado</h4>
               <div class="divider-menu mb-3"></div>
           </div>
          <nav>
@@ -29,7 +34,12 @@
 
 <script>
 export default {
-    name: "SideBar"    
+    props: {'logged': Boolean, isDisplay: String},
+    methods: {
+        openModel(){
+            this.props.isDisplay = "display: flex;"
+        }
+    },
 }
 </script>
 
