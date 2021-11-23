@@ -29,16 +29,11 @@
 </template>
 
 <script>
-import { api as apiImport } from "../service/compiled/api.js";
-let api = new apiImport();
-
 export default {
   name: "RegisterAuthorModal",
   methods: {
       async openModal(){
           this.$refs.meu_modal.show()
-          api.login();
-          // alert("teu pai");
       }
   }
 }

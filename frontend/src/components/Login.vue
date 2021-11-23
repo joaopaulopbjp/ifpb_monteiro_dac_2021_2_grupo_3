@@ -4,11 +4,11 @@
       <button class="closed" @click="closeModelLogin">x</button>
       <i class="fas fa-user-lock mb-3 fa-3x" ></i>
       <h4>Sign-in</h4>
-      <b-form-input class="mt-4" v-model="text" placeholder="username"></b-form-input>
+      <b-form-input id="usernameInput" class="mt-4" v-model="text" placeholder="username"></b-form-input>
       <b-form @submit.stop.prevent>
-          <b-form-input class="mt-3" type="password" id="text-password" placeholder="password" aria-describedby="password-help-block"></b-form-input>
+          <b-form-input id="passwordInput" class="mt-3" type="password" placeholder="password" aria-describedby="password-help-block"></b-form-input>
       </b-form>
-      <b-button class="mt-3" block variant="outline-warning">Login</b-button>
+      <b-button @click="login" class="mt-3" block variant="outline-warning">Login</b-button>
       <div class="d-flex justify-content-between text-light mt-2">
         <p><input type="checkbox" name="remember" id=""> Remember me</p>
         <router-link class="text-decoration-none text-white" to="" >
@@ -27,13 +27,18 @@
 </template>
 
 <script>
-export default {
-  methods: {
-        closeModelLogin(){
-            this.$emit('click')
-        }
-    },
-};
+  import { LoginApi as LoginApiImport } from "../service/compiled/login/LoginApi.js";
+  let LoginApi = new LoginApiImport();
+  export default {
+    methods: {
+          login() {
+            LoginApi.login();
+          },
+          closeModelLogin(){
+              this.$emit('click')
+          }
+      },
+  };
 </script>
 
 <style scoped>
