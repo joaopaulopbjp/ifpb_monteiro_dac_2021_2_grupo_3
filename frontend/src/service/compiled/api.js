@@ -16,6 +16,7 @@ class api {
         }).catch(error => {
             alert(error);
         });
+        rawResponse;
     }
 }
 exports.api = api;

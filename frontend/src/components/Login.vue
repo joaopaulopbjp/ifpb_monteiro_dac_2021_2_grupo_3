@@ -70,7 +70,6 @@ export default {
   width: 50px;
   height: 50px;
   border:  solid #955DBC;
-  box-shadow: 0 1px 1px 0 ;
   cursor: pointer;
   font-size: 1.4em;
 }
