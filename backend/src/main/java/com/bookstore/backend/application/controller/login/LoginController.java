@@ -27,7 +27,7 @@ public class LoginController {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(loginService.fazerLogin(credentials));
         } catch (InvalidCredentialsException e){
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new Response(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 }
