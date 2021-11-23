@@ -10,7 +10,7 @@
               <div class="divider-menu mb-3"></div>
           </div>
           <div v-else-if="logged === false" class="d-flex align-items-center flex-column">
-                   <button @click="openModelLogin()"><b-avatar variant="dark" class="text-decoration-none mb-3" size="5rem"></b-avatar></button> 
+                   <button class="styleButton" @click="openModelLogin()"><b-avatar variant="dark" class="text-decoration-none mb-3" size="5rem"></b-avatar></button> 
               <h4 id="sidebar-no-header-title">Não logado</h4>
               <div class="divider-menu mb-3"></div>
           </div>
@@ -52,5 +52,10 @@ export default {
 .divider-menu {
     border: 1px solid rgb(0, 0, 0);
     width: 100%;
+}
+
+.styleButton {
+    background-color: transparent;
+    border: none;
 }
 </style>
