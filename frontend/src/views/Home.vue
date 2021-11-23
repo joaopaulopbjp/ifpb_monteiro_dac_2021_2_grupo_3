@@ -1,8 +1,8 @@
 <template>
   <div>
     <Nav-bar/>
-    <Side-bar :logged="logged" :isDisplay="isDisplay"/>
-    <Login :style="isDisplay" />
+    <Side-bar :logged="logged" @click="openModelHome" />
+    <Login :style="isDisplay" @click="closeModalHome"/>
     <br>
     <Footer/>
   </div>
@@ -24,8 +24,11 @@ export default {
       }
     },
     methods: {
-      closeModal(){
-        return "display: none;"
+      closeModalHome(){
+        this.isDisplay = "display: none;"
+      },
+      openModelHome() {
+        this.isDisplay = "display: flex;"
       }
     },
 }

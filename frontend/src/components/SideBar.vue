@@ -10,7 +10,7 @@
               <div class="divider-menu mb-3"></div>
           </div>
           <div v-else-if="logged === false" class="d-flex align-items-center flex-column">
-                   <button @click="openModal"><b-avatar variant="dark" class="text-decoration-none mb-3" size="5rem"></b-avatar></button> 
+                   <button @click="openModelLogin()"><b-avatar variant="dark" class="text-decoration-none mb-3" size="5rem"></b-avatar></button> 
               <h4 id="sidebar-no-header-title">Não logado</h4>
               <div class="divider-menu mb-3"></div>
           </div>
@@ -34,10 +34,11 @@
 
 <script>
 export default {
-    props: {'logged': Boolean, isDisplay: String},
+    props: ['logged'],
     methods: {
-        openModel(){
-            this.props.isDisplay = "display: flex;"
+        openModelLogin(){
+            this.$emit('click')
+            
         }
     },
 }
