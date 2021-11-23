@@ -29,13 +29,18 @@
 </template>
 
 <script>
+import { api as apiImport } from "../service/compiled/api.js";
+let api = new apiImport();
+
 export default {
   name: "RegisterAuthorModal",
   methods: {
-      openModal(){
+      async openModal(){
           this.$refs.meu_modal.show()
+          api.login();
+          // alert("teu pai");
       }
-  },
+  }
 }
   // Vue.loadScript("../script/compiled/registerAuthor.js");
 </script>

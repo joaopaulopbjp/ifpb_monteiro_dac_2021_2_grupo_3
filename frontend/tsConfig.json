@@ -3,8 +3,8 @@
         "target": "ES2019",
         "module": "CommonJS",
         "lib": ["ESNext", "dom"],
-        "outDir": "./src/script/compiled",
-        "rootDir": "./src/script",
+        "outDir": "./src/service/compiled",
+        "rootDir": "./src/service",
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true
     },
