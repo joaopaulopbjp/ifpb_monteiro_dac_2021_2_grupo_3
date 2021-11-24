@@ -43,7 +43,8 @@ export default {
             this.$emit('click')
         },
         loggedVerify() {
-            if (window.localStorage.getItem("token").length > 0)
+            let token = window.localStorage.getItem("token");
+            if (token == null || token.length > 0)
                 return true;
             return false;
         },
