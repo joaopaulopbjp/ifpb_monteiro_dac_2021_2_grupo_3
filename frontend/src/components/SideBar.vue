@@ -14,8 +14,8 @@
               <h4 id="sidebar-no-header-title">Não logado</h4>
               <div class="divider-menu mb-3"></div>
           </div>
-         <nav>
-             <b-nav vertical>
+         <nav class="d-box">
+             <b-nav class="d-flex align-items-center" vertical>
                  <h5><strong>Highlights</strong></h5>
                  <b-nav-item>Best Sellers</b-nav-item>
                  <b-nav-item>Cheaper</b-nav-item>
@@ -24,10 +24,10 @@
                  <b-nav-item>Romantic</b-nav-item>
                  <b-nav-item>Supernatural</b-nav-item>
                  <b-nav-item>Fantasy</b-nav-item>
-                 <div v-if=loggedVerify()>
-                    <b-nav-item @click="logout"><strong>Logout</strong></b-nav-item>
-                </div>
              </b-nav>
+                 <div class="d-flex align-items-end flex-column bd-highlight mb-3" v-if=loggedVerify()>
+                    <b-button size="sm" @click="logout" class="mt-auto" block variant="dark">Logout</b-button>
+                </div>
          </nav>
          
       </div>
