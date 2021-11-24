@@ -4,10 +4,13 @@
       <button class="closed" @click="closeModelLogin">x</button>
       <i class="fas fa-user-lock mb-3 fa-3x" ></i>
       <h4>Sign-in</h4>
-      <b-form-input id="usernameInput" class="mt-4" v-model="text" placeholder="username"></b-form-input>
+      <b-form-input id="usernameInput" class="mt-4" v-model="text" placeholder="username" ></b-form-input>
       <b-form @submit.stop.prevent>
-          <b-form-input id="passwordInput" class="mt-3" type="password" placeholder="password" aria-describedby="password-help-block"></b-form-input>
+          <b-form-input id="passwordInput" class="mt-3" type="password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
       </b-form>
+      <div id="error-mensage" style="display: none;">
+        <p class="justify-content-start d-flex font-red">Username or password is incorrect</p>
+      </div>
       <b-button @click="login" class="mt-3" block variant="outline-warning">Login</b-button>
       <div class="d-flex justify-content-between text-light mt-2">
         <p><input type="checkbox" name="remember" id=""> Remember me</p>
@@ -42,6 +45,10 @@
 </script>
 
 <style scoped>
+
+.font-red {
+  color: red;
+}
 
 .boxextern {
   width: 100vw;
