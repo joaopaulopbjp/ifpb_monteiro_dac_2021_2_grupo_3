@@ -5,6 +5,7 @@ import Profile from "./views/Profile.vue"
 import RegisterProduct from "./views/RegisterProduct.vue"
 import ShoppingCart from "./views/ShoppingCart.vue"
 import Login from "./modal/Login.vue"
+import RegisterUser from "./modal/RegisterUser.vue"
 Vue.use(Router)
 
 export default new Router ({
@@ -28,5 +29,9 @@ export default new Router ({
         path:"/Login",
         name:"Login",
         component: Login
+    },{
+        path:"/RegisterUser",
+        name:"RegisterUser",
+        component: RegisterUser
     }]
 })
