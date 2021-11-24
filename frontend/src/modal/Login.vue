@@ -79,13 +79,13 @@
 }
 
 .closed {
-  background: #955DBC;
+  background: transparent;
   position: absolute;
   top: 0px;
   right: 0px;
   width: 50px;
   height: 50px;
-  border:  solid #955DBC;
+  border: none;
   cursor: pointer;
   font-size: 1.4em;
 }
