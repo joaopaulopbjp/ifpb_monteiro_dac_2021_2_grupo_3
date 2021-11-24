@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.authorizeRequests()
             .antMatchers("/api/category/find-all").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
@@ -55,13 +55,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
-            .logout(logout -> logout.logoutUrl("/logout"))
+            .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
             .authorizeRequests()
             .antMatchers("/api/user/save",
                 "/api/login",
                 "/api/book/find").permitAll()
             .anyRequest().authenticated()
             .and()
+            
             .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
                 @Override
                 public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

@@ -1,14 +1,17 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button class="closed" @click="closeModelLogin">x</button>
-      <i class="far fa-user-circle fa-4x text-white"></i>
-      <h4 class="text-white">Sign-in</h4>
-      <b-form-input class="mt-4" placeholder="username"></b-form-input>
+      <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
+      <i class="fas fa-user-lock mb-3 fa-3x" ></i>
+      <h4>Sign-in</h4>
+      <b-form-input id="usernameInput" class="mt-4" placeholder="username" ></b-form-input>
       <b-form @submit.stop.prevent>
-          <b-form-input class="mt-3" type="password" id="text-password" placeholder="password" aria-describedby="password-help-block"></b-form-input>
+          <b-form-input id="passwordInput" class="mt-3" type="password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
       </b-form>
-      <b-button class="mt-3" block variant="outline-warning">Login</b-button>
+      <div id="error-mensage" style="display: none;">
+        <p class="justify-content-start d-flex font-red">Username or password is incorrect</p>
+      </div>
+      <b-button @click="login" class="mt-3" block variant="outline-warning">Login</b-button>
       <div class="d-flex justify-content-between text-light mt-2">
         <p><input type="checkbox" name="remember" id=""> Remember me</p>
         <router-link class="text-decoration-none text-white" to="" >
@@ -27,16 +30,27 @@
 </template>
 
 <script>
-export default {
-  methods: {
-        closeModelLogin(){
-            this.$emit('click')
-        }
-    },
-};
+  import { LoginApi as LoginApiImport } from "../service/compiled/login/LoginApi.js";
+  let loginApi = new LoginApiImport();
+  export default {
+    methods: {
+          login() {
+            loginApi.login().then(() => {
+              window.location.reload();
+            });
+          },
+          closeModelLogin(){
+              this.$emit('click');
+          }
+      },
+  };
 </script>
 
 <style scoped>
+
+.font-red {
+  color: red;
+}
 
 .boxextern {
   width: 100vw;
