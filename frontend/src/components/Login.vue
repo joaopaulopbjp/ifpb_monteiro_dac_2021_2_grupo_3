@@ -4,7 +4,7 @@
       <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
       <i class="fas fa-user-lock mb-3 fa-3x" ></i>
       <h4>Sign-in</h4>
-      <b-form-input id="usernameInput" class="mt-4" v-model="text" placeholder="username" ></b-form-input>
+      <b-form-input id="usernameInput" class="mt-4" placeholder="username" ></b-form-input>
       <b-form @submit.stop.prevent>
           <b-form-input id="passwordInput" class="mt-3" type="password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
       </b-form>
@@ -35,8 +35,10 @@
   export default {
     methods: {
           login() {
-            loginApi.login().then(() => {
-              window.location.reload();
+            loginApi.login().then(status => {
+              if(status) {
+                window.location.reload();
+              }
             });
           },
           closeModelLogin(){

@@ -1,7 +1,7 @@
 <template>
   <div>
     <Nav-bar/>
-    <Side-bar :logged="logged" @click="openModelHome" />
+    <Side-bar @click="openModelHome" />
     <Login :style="isDisplay" @click="closeModalHome"/>
     <br>
     <Footer/>
@@ -19,7 +19,6 @@ export default {
     components: { NavBar , SideBar, Footer, Login},
     data() {
       return {
-        logged: false,
         isDisplay: "display: none;"
       }
     },
