@@ -50,8 +50,8 @@
                 </div>
             </b-card>
         </div>
-        <div class="container d-grid justify-content-end w-25 h-auto rounded-bottom">
-            <div class="row rounded-top w-100 h-75 mt-4 mb-0 pl-4 pt-3" style="background-color: white;">
+        <div class="container d-grid w-25 rounded-bottom sticky">
+            <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
                 <div class="">
                     <h4>Order:</h4>
                     <h5>Subtotal: R$: 0,0</h5>
@@ -66,6 +66,15 @@
     <Footer/>
   </div>
 </template>
+
+<style>
+    .sticky {
+        position: sticky;
+        top: 1%;
+        width: 10px;
+        height: 10px;
+    }
+</style>
 
 <script>
 import NavBar from '@/components/NavBar.vue'
