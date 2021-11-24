@@ -37,7 +37,6 @@
 
 <script>
 export default {
-    props: ['logged'],
     methods: {
         openModelLogin(){
             this.loggedVerify();

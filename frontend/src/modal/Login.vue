@@ -35,8 +35,10 @@
   export default {
     methods: {
           login() {
-            loginApi.login().then(() => {
-              window.location.reload();
+            loginApi.login().then(status => {
+              if(status) {
+                window.location.reload();
+              }
             });
           },
           closeModelLogin(){
