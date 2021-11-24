@@ -2,8 +2,8 @@
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
       <button class="closed" @click="closeModelLogin">x</button>
-      <i class="fas fa-user-lock mb-3 fa-3x" ></i>
-      <h4>Sign-in</h4>
+      <i class="far fa-user-circle fa-4x text-white"></i>
+      <h4 class="text-white">Sign-in</h4>
       <b-form-input class="mt-4" v-model="text" placeholder="username"></b-form-input>
       <b-form @submit.stop.prevent>
           <b-form-input class="mt-3" type="password" id="text-password" placeholder="password" aria-describedby="password-help-block"></b-form-input>
