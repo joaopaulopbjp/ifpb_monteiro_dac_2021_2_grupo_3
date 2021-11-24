@@ -3,7 +3,7 @@
         <Nav-bar/>
         <Side-bar/>
         <div class="container mt-2 mb-5">
-            <b-card>
+            <b-card v-if="isAdmin()">
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-user-cog"></i> Workspace ADM</h4>
                 </div>
@@ -169,10 +169,17 @@ import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
+import { ProfileApi } from "../service/compiled/profile/ProfileApi.js";
+let profileApi = new ProfileApi();
 
 export default {
     name: "Profile",
-    components: {NavBar, Footer, SideBar}
+    components: {NavBar, Footer, SideBar},
+    methods: {
+        isAdmin() {
+            return profileApi.isAdmin();
+        }
+    }
 }
 </script>
 

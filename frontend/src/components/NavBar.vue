@@ -13,7 +13,7 @@
               </b-button>
           </b-nav-form>
           <b-nav-item>
-              <b-button variant="outline-light">
+              <b-button variant="outline-light" to="ShoppingCart">
                   <i class="fas fa-shopping-cart" style="width: 50"></i>
               </b-button>
           </b-nav-item>
