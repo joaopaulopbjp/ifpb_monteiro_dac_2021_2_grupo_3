@@ -25,7 +25,6 @@
                     <div class="ml-3">
                         <h6>Target Author</h6>
                         <b-button-group vertical>
-                            <RegisterAuthorModal/>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Author
                             </b-button>
@@ -169,14 +168,11 @@
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
-import RegisterAuthorModal from '@/modal/RegisterAuthorModal.vue'
-import RegisterCategoryModal from '@/modal/RegisterCategoryModal.vue'
-import RegisterCompanyModal from '@/modal/RegisterCompanyModal.vue'
+
 
 export default {
     name: "Profile",
-    components: {NavBar, Footer, SideBar, 
-                RegisterAuthorModal, RegisterCategoryModal, RegisterCompanyModal}
+    components: {NavBar, Footer, SideBar}
 }
 </script>
 

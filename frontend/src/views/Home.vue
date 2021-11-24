@@ -12,7 +12,7 @@
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '../components/SideBar.vue'
-import Login from '../components/Login.vue'
+import Login from '../modal/Login.vue'
 
 export default {
     name: "Home",
