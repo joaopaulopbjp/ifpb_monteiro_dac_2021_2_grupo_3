@@ -17,10 +17,10 @@
         </defs>
         </svg>
 
-      <b-form-input id="usernameInput" class="mt-4" placeholder="username" ></b-form-input>
-      <b-form-input id="emailInput" class="mt-4" placeholder="Email" ></b-form-input>
+      <b-form-input id="usernameInput" class="form-input mt-4" placeholder="Username" ></b-form-input>
+      <b-form-input id="emailInput" class="form-input mt-4" placeholder="Email" ></b-form-input>
       <b-form @submit.stop.prevent>
-          <b-form-input id="passwordInput" class="mt-4" type="password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
+          <b-form-input id="passwordInput" class="form-input mt-4" type="Password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
       </b-form>
       <div id="error-mensage" style="display: none;">
         <p class="justify-content-start d-flex font-red">Username or password is incorrect</p>
@@ -88,6 +88,20 @@ export default {
 .divider-menu {
     border: 1px solid rgb(255, 255, 255);
     width: 100%;
+}
+
+.form-input {
+  color: white;
+  background: #9539D5;
+  border: none;
+}
+.form-input::placeholder {
+  color: white;
+}
+.form-input:focus {
+  color: white;
+  background: #9539D5;
+  outline: none;
 }
 
 </style>
