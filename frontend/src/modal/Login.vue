@@ -81,12 +81,11 @@
 }
 
 .boxintern {
-  background: #955DBC;
+  background: linear-gradient(138.08deg, #531A7B -13.53%, rgba(110, 38, 161, 0.66) 54.75%, rgba(149, 57, 213, 0.46) 111.81%, rgba(161, 60, 232, 0) 165.13%), #FFFFFF;;
   width: 40%;
   min-width: 300px;
   max-height: 500px;
   padding: 20px;
-  border: 1px solid black;
   border-radius: 8px;
   position: relative;
 }
