@@ -6,7 +6,8 @@ class LoginApi {
         let usernameInput = document.getElementById("usernameInput");
         let passwordInput = document.getElementById("passwordInput");
         let errorMensage = document.getElementById("error-mensage");
-        fetch('http://localhost:8080/api/login', {
+        let closeButton = document.getElementById("closeButton");
+        let logged = fetch('http://localhost:8080/api/login', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -25,12 +26,20 @@ class LoginApi {
                     window.localStorage.setItem("token", content["response"]);
                     window.localStorage.setItem("username", usernameInput.value);
                 });
+                closeButton.click();
+                return true;
             }
             else if (apiResponse.status === 400) {
                 errorMensage.style.cssText = "";
                 usernameInput.classList.add("is-invalid");
                 passwordInput.classList.add("is-invalid");
+                window.localStorage.setItem("token", "");
+                window.localStorage.setItem("username", "");
+                return false;
             }
+        });
+        return logged.then(logeedStatus => {
+            return logeedStatus;
         });
     }
 }

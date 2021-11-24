@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button class="closed" @click="closeModelLogin">x</button>
+      <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
       <i class="fas fa-user-lock mb-3 fa-3x" ></i>
       <h4>Sign-in</h4>
       <b-form-input id="usernameInput" class="mt-4" v-model="text" placeholder="username" ></b-form-input>
@@ -31,14 +31,16 @@
 
 <script>
   import { LoginApi as LoginApiImport } from "../service/compiled/login/LoginApi.js";
-  let LoginApi = new LoginApiImport();
+  let loginApi = new LoginApiImport();
   export default {
     methods: {
           login() {
-            LoginApi.login();
+            loginApi.login().then(() => {
+              window.location.reload();
+            });
           },
           closeModelLogin(){
-              this.$emit('click')
+              this.$emit('click');
           }
       },
   };
