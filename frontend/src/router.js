@@ -10,7 +10,10 @@ import RegisterAuthor from "./modal/RegisterAuthor.vue"
 import RegisterCompany from "./modal/RegisterCompany.vue"
 import RegisterCategory from "./modal/RegisterCategory.vue"
 import RegisterAddress from "./modal/RegisterAddress.vue"
+import Recovery from "./modal/Recovery.vue"
 
+import Login from "./components/Login.vue"
+import Product from "./views/Product.vue"
 Vue.use(Router)
 
 export default new Router ({
@@ -54,5 +57,13 @@ export default new Router ({
         path:"/RegisterAddress",
         name:"RegisterAddress",
         component: RegisterAddress
+    },{
+        path:"/Recovery",
+        name:"Recovery",
+        component: Recovery
+    },{
+        path:"/Product",
+        name:"Product",
+        component: Product
     }]
 })

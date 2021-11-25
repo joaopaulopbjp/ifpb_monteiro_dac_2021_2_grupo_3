@@ -1,8 +1,8 @@
 <template>
-    <div id="" class="boxextern">
-    <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
-      <svg width="380" height="100" viewBox="0 0 417 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div class="boxextern">
+    <div class="boxintern text-center p-5">
+      <button id="closeButton" class="closed">x</button>
+      <svg width="70%" viewBox="0 0 417 140" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="209" cy="52" r="51" stroke="white" stroke-width="2"/>
         <g clip-path="url(#clip0_8_93)">
         <path d="M176 84V85H177H242H243V84V76C243 72.9667 241.449 70.3877 239.12 68.2712C236.797 66.1603 233.629 64.4385 230.185 63.0798C223.296 60.3627 215.046 59 209.5 59C203.954 59 195.704 60.3627 188.815 63.0798C185.371 64.4385 182.203 66.1603 179.88 68.2712C177.551 70.3877 176 72.9667 176 76V84ZM209.5 53C219.016 53 226.75 45.4068 226.75 36C226.75 26.5932 219.016 19 209.5 19C199.984 19 192.25 26.5932 192.25 36C192.25 45.4068 199.984 53 209.5 53Z" stroke="white" stroke-width="2"/>
@@ -17,17 +17,10 @@
         </defs>
         </svg>
 
-      <b-form-input id="usernameInput" class="form-input mt-4" placeholder="Username" ></b-form-input>
-      <b-form-input id="emailInput" class="form-input mt-4" placeholder="Email" ></b-form-input>
-      <b-form @submit.stop.prevent>
-          <b-form-input id="passwordInput" class="form-input mt-4" type="Password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
-      </b-form>
-      <div id="error-mensage" style="display: none;">
-        <p class="justify-content-start d-flex font-red ">Username or password is incorrect</p>
-      </div>
-      <b-button @click="login" class="mt-3" block variant="outline-warning">Register</b-button>
-      <div class="d-flex justify-content-between text-light mt-2">
-      </div>
+      <b-form-input id="createName" class="form-input mt-4" placeholder="Username" ></b-form-input>
+      <b-form-input id="createEmail" class="form-input mt-4" placeholder="Email" ></b-form-input>
+      <b-form-input type="password" id="createPassword" class="form-input mt-4"  placeholder="password"></b-form-input>
+      <b-button class="mt-3" block variant="outline-warning">Register</b-button>
       <div class="d-flex divider-menu mt-3 mb-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">
           <p>Have account?</p>
