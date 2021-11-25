@@ -20,18 +20,20 @@
                     
                 </div>
                 <div class="d-flex justify-content-between mb-4">
-                    <b-card class="ml-3 mr-3 w-45 p-3">
-                        <h4 class="row">Authors</h4>
-                        <input class="row" type="checkbox" name="" id="authorCheckBox">Lewis
-                        <input class="row" type="checkbox" name="" id="authorCheckBox">Brito
+                    <b-card class="align-baseline ml-3 mr-3 w-45 p-3">
+                        <h4 class="">Authors</h4>
+                        <input type="checkbox" name="Lewis" id="authorCheckBox"> Lewis
+                        <br>
+                        <input type="checkbox" name="Brito" id="authorCheckBox"> Brito
                     </b-card>
 
                     <b-form-textarea v-model="text" placeholder="Description" id="descriptionInput" class="md-textarea p-3" style="width: 45%; "></b-form-textarea>
 
                     <b-card class="ml-3 mr-3 w-45 p-3">
-                        <h4 class="row">Categories</h4>
-                        <span class="row"><input type="checkbox" name="" id="categoriesCheckBox">Adventure</span>
-                        <span class="row"><input type="checkbox" name="" id="categoriesCheckBox">Classic</span>
+                        <h4>Categories</h4>
+                        <input type="checkbox" name="" id="categoriesCheckBox"> Adventure
+                        <br>
+                        <input type="checkbox" name="" id="categoriesCheckBox"> Classic
                     </b-card>
                 </div>
                 <div class="d-flex justify-content-center">
