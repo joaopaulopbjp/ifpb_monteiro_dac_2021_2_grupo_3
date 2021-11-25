@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfileApi = void 0;
-const sha_js_1 = require("../utils/sha.js");
+const Sha_1 = require("../utils/Sha");
 class ProfileApi {
     isAdmin() {
         let isAdmin = window.localStorage.getItem("isAdmin");
@@ -68,7 +68,7 @@ class ProfileApi {
     }
     saveButtonEvent() {
         let saveButton = document.getElementById("saveButton");
-        let sha = new sha_js_1.Sha();
+        let sha = new Sha_1.Sha();
         let json = this.getInfoUser();
         let password = json['password'];
         saveButton.addEventListener("click", () => {

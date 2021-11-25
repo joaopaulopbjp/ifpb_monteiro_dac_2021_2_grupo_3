@@ -1,6 +1,5 @@
 class LoginApi {
     login() {
-
         let usernameInput =  document.getElementById("usernameInput") as HTMLInputElement;
         let passwordInput = document.getElementById("passwordInput") as HTMLInputElement;
         let errorMensage = document.getElementById("error-mensage");

@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.service.person;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -11,6 +13,7 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
+import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -29,14 +32,17 @@ public class AdminService {
     @Autowired
     private AdminVerify adminVerify;
 
+    private Utils utils = new Utils();
+
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
         Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
     @EventListener(ApplicationReadyEvent.class)
-    private void init() {
+    private void init() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         List<AdminModel> adminlist = adminRepositoryService.getInstance().findAll();
         if(adminlist.isEmpty()) {
             AdminModel admin = new AdminModel(0l, "admin", "admin@email.com", "admin", null, null, null);
+            admin.setPassword(utils.shar256(admin.getPassword()));
             adminRepositoryService.getInstance().save(admin);
         }
     }

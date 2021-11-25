@@ -11,59 +11,57 @@ import RegisterCompany from "./modal/RegisterCompany.vue"
 import RegisterCategory from "./modal/RegisterCategory.vue"
 import RegisterAddress from "./modal/RegisterAddress.vue"
 import Recovery from "./modal/Recovery.vue"
-
-import Login from "./components/Login.vue"
 import Product from "./views/Product.vue"
 Vue.use(Router)
 
-export default new Router ({
+export default new Router({
     routes: [{
-        path:"/",
-        name:"Home",
+        path: "/",
+        name: "Home",
         component: Home
-    },{
-        path:"/Profile",
-        name:"Profile",
+    }, {
+        path: "/Profile",
+        name: "Profile",
         component: Profile
-    },{
-        path:"/RegisterProduct",
-        name:"RegisterProduct",
+    }, {
+        path: "/RegisterProduct",
+        name: "RegisterProduct",
         component: RegisterProduct
-    },{
-        path:"/ShoppingCart",
-        name:"ShoppingCart",
+    }, {
+        path: "/ShoppingCart",
+        name: "ShoppingCart",
         component: ShoppingCart
-    },{
-        path:"/Login",
-        name:"Login",
+    }, {
+        path: "/Login",
+        name: "Login",
         component: Login
-    },{
-        path:"/RegisterUser",
-        name:"RegisterUser",
+    }, {
+        path: "/RegisterUser",
+        name: "RegisterUser",
         component: RegisterUser
-    },{
-        path:"/RegisterAuthor",
-        name:"RegisterAuthor",
+    }, {
+        path: "/RegisterAuthor",
+        name: "RegisterAuthor",
         component: RegisterAuthor
-    },{
-        path:"/RegisterCompany",
-        name:"RegisterCompany",
+    }, {
+        path: "/RegisterCompany",
+        name: "RegisterCompany",
         component: RegisterCompany
-    },{
-        path:"/RegisterCategory",
-        name:"RegisterCategory",
+    }, {
+        path: "/RegisterCategory",
+        name: "RegisterCategory",
         component: RegisterCategory
-    },{
-        path:"/RegisterAddress",
-        name:"RegisterAddress",
+    }, {
+        path: "/RegisterAddress",
+        name: "RegisterAddress",
         component: RegisterAddress
-    },{
-        path:"/Recovery",
-        name:"Recovery",
+    }, {
+        path: "/Recovery",
+        name: "Recovery",
         component: Recovery
-    },{
-        path:"/Product",
-        name:"Product",
+    }, {
+        path: "/Product",
+        name: "Product",
         component: Product
     }]
 })

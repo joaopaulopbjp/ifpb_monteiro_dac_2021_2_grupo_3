@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.service.person;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -11,6 +13,7 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
+import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -31,7 +34,9 @@ public class UserService {
     @Autowired
     private AdminVerify adminVerify;
 
-    public UserModel save(UserModel user) throws IllegalArgumentException {
+    private Utils utils = new Utils();
+
+    public UserModel save(UserModel user) throws IllegalArgumentException, NoSuchAlgorithmException, UnsupportedEncodingException {
 
         if(user.getUsername().equals(null))
             throw new IllegalArgumentException();
@@ -57,9 +62,11 @@ public class UserService {
         shoppingCart = shoppingCartRepositoryService.getInstance().save(shoppingCart);
         user.setShoppingCart(shoppingCart);
 
-        user = userRepositoryService.getInstance().save(user);
-        try {
+        user.setPassword(utils.shar256(user.getPassword()));
 
+        try {
+            user = userRepositoryService.getInstance().save(user);
+            
         } catch (DataIntegrityViolationException e) {
             shoppingCartRepositoryService.getInstance().delete(shoppingCart);
             throw e;

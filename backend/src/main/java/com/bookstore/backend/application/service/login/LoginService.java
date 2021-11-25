@@ -4,6 +4,7 @@ import com.bookstore.backend.infrastructure.exception.InvalidCredentialsExceptio
 import com.bookstore.backend.infrastructure.security.auth.JwtUtils;
 import com.bookstore.backend.infrastructure.security.service.UserSecurityService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
+import com.bookstore.backend.infrastructure.utils.Utils;
 import com.bookstore.backend.presentation.dto.login.CredentialResponse;
 import com.bookstore.backend.presentation.dto.login.CredentialsDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,16 @@ public class LoginService {
 
     @Autowired
     private AdminVerify adminVerify;
+
+    private Utils utils = new Utils();
     
     public CredentialResponse fazerLogin(CredentialsDTO credentials) throws InvalidCredentialsException {
-        String username = credentials.getUsername();
-        String password = credentials.getPassword();
-
+        String username = "";
+        String password = "";
         try {
+            username = credentials.getUsername();
+            password = utils.shar256(credentials.getPassword());
+
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         } catch (Exception e) {
