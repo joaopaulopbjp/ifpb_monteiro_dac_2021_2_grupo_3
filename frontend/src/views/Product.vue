@@ -3,18 +3,18 @@
         <Nav-bar/>
         <Side-bar/>
         <div class="container justify-content-center mt-2 mb-5">
-            <b-card class="row justify-content-center">
+            <b-card class="row justify-content-center" id="head">
                 <h3 style="color: #FCB13A;">{{title}}</h3>
                 <h5 style="color: #FCB13A;">{{subtitle}}</h5>
             </b-card>
             <div class="row d-flex justify-content-between mt-3">
-                <b-card class="col justify-content-center" style="">
+                <b-card class="col justify-content-center" id="imagemMedia">
                     <b-img :src="link" class="row w-50" style="margin: auto;"/>
                     <b-form-rating class="row" id="media" inline color="#FCB13A" value="4" style="margin-left: 10vw;margin-right: 10vw;border: none;"/>
                 </b-card>
                 <div class="col ml-5">
-                    <b-card class="row justify-content-start">
-                        <dir class="row ml-5">
+                    <b-card class="row justify-content-start h-75" id="pricesContent">
+                        <dir class="row ml-5 mt-3">
                             <h4 class="" style="font-size: larger;color: gray;text-decoration: line-through;font-weight: bolder;">R$ {{desconto}}</h4>
                         </dir>
                         <div class="row ml-4">
@@ -22,25 +22,25 @@
                                 <h5 style="padding: auto;margin: auto;">R$ {{preco}}</h5>
                             </div>
                         </div>
-                        <div class="ml-3 mt-3 mb-3">
+                        <div class="ml-3 mt-3 mb-3 mt-5">
                             <i class="far fa-credit-card fa-2x" style="color: rebeccapurple;"/><span style="color: gray;font-size: large;">Credicard: R$ {{preco}}</span>
                         </div>
                         <b-button class="col rounded" style="background-color: #FCB13A;">ADD TO CART</b-button>
                     </b-card>
-                    <b-card class="row mt-2">
+                    <b-card class="row mt-2" id="delivery">
                         <span class="d-flex justify-content-center" style="color: #FCB13A;align-items: center;">Calcule Delivery
                             <b-form-input class="w-50 ml-1" style="background: #ECECEC;border-radius: 10px 0px 0px 10px;"/>
                             <b-button class="" style="background: #FCB13A;border-radius: 0px 10px 10px 0px;">Calculate</b-button></span>
                     </b-card>
                 </div>
             </div>
-            <b-card class="row mt-3">
+            <b-card class="row mt-3" id="description">
                 <span><h5>Description</h5></span>
                 <p>{{description}}</p>
             </b-card>
-            <b-card class="row mt-3">
+            <b-card class="row mt-3" id="characteristics">
                 <span><h5>Characteristics</h5></span>
-                <div id="characteristics">
+                <div id="characteristicsContent">
                     <div class="d-flex justify-content-between" >
                         <b-card class="d-flex w-50 border border-end">
                             Finishing
@@ -59,7 +59,7 @@
                     </div>
                 </div>
             </b-card>
-            <b-card class="row mt-3 border border-5 p-4">
+            <b-card class="row mt-3 border border-5 p-4" id="evaluate">
                 <h4 class="row">Evaluate</h4>
                 <div class="col">
                     <div class="row m-3 mt-4">
@@ -111,5 +111,7 @@ export default {
 </script>
 
 <style scoped>
-
+    #head, #imagemMedia,#pricesContent,#delivery,#description,#characteristics,#evaluate{
+        border-radius: 25px;
+    }
 </style>
