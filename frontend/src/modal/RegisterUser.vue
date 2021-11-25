@@ -23,7 +23,7 @@
           <b-form-input id="passwordInput" class="form-input mt-4" type="Password" placeholder="password" aria-describedby="password-help-block" required></b-form-input>
       </b-form>
       <div id="error-mensage" style="display: none;">
-        <p class="justify-content-start d-flex font-red">Username or password is incorrect</p>
+        <p class="justify-content-start d-flex font-red ">Username or password is incorrect</p>
       </div>
       <b-button @click="login" class="mt-3" block variant="outline-warning">Register</b-button>
       <div class="d-flex justify-content-between text-light mt-2">

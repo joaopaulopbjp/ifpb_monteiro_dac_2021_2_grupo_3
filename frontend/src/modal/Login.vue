@@ -2,7 +2,7 @@
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
       <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
-      <svg width="380" height="100" viewBox="0 0 383 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width="70%"  viewBox="0 0 383 140" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="189" cy="52" r="51" stroke="white" stroke-width="2"/>
       <g clip-path="url(#clip0_9_11)">
       <path d="M156 84V85H157H222H223V84V76C223 72.9667 221.449 70.3877 219.12 68.2712C216.797 66.1603 213.629 64.4385 210.185 63.0798C203.296 60.3627 195.046 59 189.5 59C183.954 59 175.704 60.3627 168.815 63.0798C165.371 64.4385 162.203 66.1603 159.88 68.2712C157.551 70.3877 156 72.9667 156 76V84ZM189.5 53C199.016 53 206.75 45.4068 206.75 36C206.75 26.5932 199.016 19 189.5 19C179.984 19 172.25 26.5932 172.25 36C172.25 45.4068 179.984 53 189.5 53Z" stroke="white" stroke-width="2"/>
