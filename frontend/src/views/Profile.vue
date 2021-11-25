@@ -175,9 +175,24 @@ let profileApi = new ProfileApi();
 export default {
     name: "Profile",
     components: {NavBar, Footer, SideBar},
+    mounted() {
+        this.getInfo()
+    },
+    beforeMount() {
+        this.loggedVerify();
+    },
     methods: {
         isAdmin() {
             return profileApi.isAdmin();
+        },
+        getInfo() {
+            profileApi.getInfo();
+        },
+        loggedVerify() {
+            let usernameLocal = window.localStorage.getItem("username");
+            if(usernameLocal === null || usernameLocal === ""){
+                window.location.replace("/")
+            }
         }
     }
 }
