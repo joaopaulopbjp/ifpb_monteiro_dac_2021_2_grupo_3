@@ -108,7 +108,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @PostMapping("/find-by-id")
     public ResponseEntity<?> getById(@RequestBody AdminDTO dto) {
         try {
             AdminModel admin = adminService.findById(dto.getId());
@@ -121,7 +121,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/find-by-email")
+    @PostMapping("/find-by-email")
     public ResponseEntity<?> getByEmail(@RequestBody AdminDTO dto) {
         try {
             AdminModel admin = adminService.findByEmail(dto.getEmail());
@@ -134,7 +134,7 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/find-by-username")
+    @PostMapping("/find-by-username")
     public ResponseEntity<?> getByUsername(@RequestBody AdminDTO dto) {
         try {
             AdminModel admin = adminService.findByUsername(dto.getUsername());

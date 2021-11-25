@@ -64,18 +64,18 @@
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-user-circle"></i> Overview</h4>
-                    <b-button variant="warning" class="my-2 my-sm-0" type="submit">
+                    <b-button variant="warning" class="my-2 my-sm-0" id="editButton" value="disabled" type="submit">
                     <i class="fas fa-pen"></i>
                     </b-button>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                    <b-form-input type="text" placeholder="Fulano beltrano" style="width: 400px" disabled></b-form-input>
-                    <b-form-input class="ml-4" type="text" placeholder="fulanobeltrano@gmail.com" style="width: 500px" disabled></b-form-input>
+                    <b-form-input type="text" style="width: 400px" id="usernameInput" disabled></b-form-input>
+                    <b-form-input class="ml-4" type="text" style="width: 500px" id="emailInput" disabled></b-form-input>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                    <b-form-input type="text" placeholder="Old password" style="width: 250px" disabled></b-form-input>
-                    <b-form-input class="ml-4" type="text" placeholder="New password" style="width: 250px" disabled></b-form-input>
-                    <b-form-input class="ml-4" type="text" placeholder="Confirm password" style="width: 250px" disabled></b-form-input>
+                    <b-form-input type="password" placeholder="Old password" style="width: 250px" id="oldPasswordInput" disabled></b-form-input>
+                    <b-form-input class="ml-4" type="password" placeholder="New password" id="newPasswordInput" style="width: 250px" disabled></b-form-input>
+                    <b-form-input class="ml-4" type="password" placeholder="Confirm password" style="width: 250px" id="confirmNewPasswordInput" disabled></b-form-input>
                 </div>
                 <b-button variant="outline-success" class="my-2 my-sm-0" type="submit">
                   <i class="far fa-save"></i> Save
@@ -177,6 +177,7 @@ export default {
     components: {NavBar, Footer, SideBar},
     mounted() {
         this.getInfo()
+        profileApi.editButtonEvent();
     },
     beforeMount() {
         this.loggedVerify();
