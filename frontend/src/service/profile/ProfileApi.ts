@@ -1,4 +1,4 @@
-import { Sha } from '../utils/sha.js';
+import { Sha } from '../utils/Sha';
 class ProfileApi {
 
     isAdmin() {
