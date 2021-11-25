@@ -48,11 +48,11 @@ public class AdminController {
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody AdminDTO dto) {
+    public ResponseEntity<?> update(@RequestBody AdminDTO dto, Principal principal) {
         AdminModel adminModel = (AdminModel) ModelMapperService.convertToModel(dto, AdminModel.class);
 
         try {
-            AdminModel admin = adminService.update(adminModel);
+            AdminModel admin = adminService.update(adminModel, principal.getName());
             dto = (AdminDTO) ModelMapperService.convertToDTO(admin, AdminDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
