@@ -20,7 +20,7 @@
                         <div class="d-grid ml-4">
                             <h4>A garota do lago</h4>
                             <h6>Author: Charlie Donlea</h6>
-                            <div class="row justify-content-center mt-5 w-10 rounded m-" style="background-color: #9652C6;color: white;align-items: center;">
+                            <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
                                 <h5>R$: 17,90</h5>
                             </div>
                         </div>
@@ -39,7 +39,7 @@
                             <img class="" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
                         </router-link>
                         <div class="d-grid ml-4">
-                            <h4>A garota do lago</h4>
+                            <h4 class="w-10">A garota do lago</h4>
                             <h6>Author: Charlie Donlea</h6>
                             <div class="row justify-content-center mt-5 w-10 rounded m-" style="background-color: #9652C6;color: white;align-items: center;">
                                 <h5>R$: 17,90</h5>

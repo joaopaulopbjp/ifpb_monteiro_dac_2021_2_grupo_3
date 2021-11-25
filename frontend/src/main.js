@@ -15,6 +15,7 @@ import Login from "./modal/Login.vue"
 import NavBar from "./components/NavBar.vue"
 import SideBar from "./components/SideBar.vue"
 import Footer from "./components/Footer.vue"
+import Product from "./views/Product.vue"
 import { BootstrapVue} from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -36,6 +37,7 @@ Vue.component("RegisterCategory",RegisterCategory);
 Vue.component("RegisterCompany",RegisterCompany);
 Vue.component("Recovery",Recovery);
 Vue.component("Login",Login);
+Vue.component("Product",Product);
 Vue.config.productionTip = false;
 
 new Vue({
