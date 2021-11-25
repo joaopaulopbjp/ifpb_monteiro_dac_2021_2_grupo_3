@@ -8,6 +8,7 @@ import Login from "./modal/Login.vue"
 import RegisterUser from "./modal/RegisterUser.vue"
 import RegisterAuthor from "./modal/RegisterAuthor.vue"
 import RegisterCompany from "./modal/RegisterCompany.vue"
+import RegisterCategory from "./modal/RegisterCategory.vue"
 
 
 Vue.use(Router)
@@ -45,5 +46,9 @@ export default new Router ({
         path:"/RegisterCompany",
         name:"RegisterCompany",
         component: RegisterCompany
+    },{
+        path:"/RegisterCategory",
+        name:"RegisterCategory",
+        component: RegisterCategory
     }]
 })
