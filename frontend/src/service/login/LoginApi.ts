@@ -23,7 +23,8 @@ class LoginApi {
                 passwordInput.classList.remove("is-invalid");
 
                 apiResponse.json().then(content => {
-                    window.localStorage.setItem("token", content["response"]);
+                    window.localStorage.setItem("token", content["token"]);
+                    window.localStorage.setItem("isAdmin", content["admin"]);
                     window.localStorage.setItem("username", usernameInput.value);
                 })
                 closeButton.click();
@@ -33,8 +34,6 @@ class LoginApi {
                 errorMensage.style.cssText = "";
                 usernameInput.classList.add("is-invalid");
                 passwordInput.classList.add("is-invalid");
-                window.localStorage.setItem("token", "");
-                window.localStorage.setItem("username", "");
                 return false;
             }
         });
