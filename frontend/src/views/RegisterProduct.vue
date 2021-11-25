@@ -20,27 +20,20 @@
                     
                 </div>
                 <div class="d-flex justify-content-between mb-4">
-                    <b-card class="ml-3 mr-3 w-45 p-3">
-                        <h4>Authors</h4>
-                        
-                        <b-form-checkbox-group id="authorsInput"
-                        v-model="selected"
-                        :options="authors"
-                        :aria-describedby="ariaDescribedby"
-                        name="flavour-1a"
-                        stacked
-                        ></b-form-checkbox-group>
+                    <b-card class="align-baseline ml-3 mr-3 w-45 p-3">
+                        <h4 class="">Authors</h4>
+                        <input type="checkbox" name="Lewis" id="authorCheckBox"> Lewis
+                        <br>
+                        <input type="checkbox" name="Brito" id="authorCheckBox"> Brito
                     </b-card>
 
                     <b-form-textarea v-model="text" placeholder="Description" id="descriptionInput" class="md-textarea p-3" style="width: 45%; "></b-form-textarea>
 
                     <b-card class="ml-3 mr-3 w-45 p-3">
                         <h4>Categories</h4>
-                        <b-form-checkbox-group id="categoriesInput"
-                        v-model="selected"
-                        :options="categories"
-                        :aria-describedby="ariaDescribedby"
-                        stacked></b-form-checkbox-group>
+                        <input type="checkbox" name="" id="categoriesCheckBox"> Adventure
+                        <br>
+                        <input type="checkbox" name="" id="categoriesCheckBox"> Classic
                     </b-card>
                 </div>
                 <div class="d-flex justify-content-center">
@@ -64,23 +57,14 @@ let productApi = new ProductApi();
 export default {
     name: "RegisterProduct",
     components: {NavBar, Footer,SideBar},
-    
     data() {
       return {
         // parte que coloca os autores no b-card do authors
-        authors: [
-          { text: 'Lewis', value: '1'},
-          { text: 'Clives', value: '2' },
-        ],
-        categories:[
-            {text: "Adventure", value: "1"},
-            {text: "Horror", value: "2"}
-        ],
         companys: [
             {value: null, text: "Please select an company"},
             {value: "1", text: "saraiva"}
         ],
-        campanySelected: null,
+        campanySelected: [],
       }
     },
     methods: {
