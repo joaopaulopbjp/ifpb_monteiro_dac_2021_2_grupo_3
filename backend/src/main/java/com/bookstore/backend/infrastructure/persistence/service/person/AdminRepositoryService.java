@@ -29,10 +29,10 @@ public class AdminRepositoryService {
         return adminRepository;
     }
 
-    public AdminModel update(AdminModel adminModel) throws NotFoundException {
+    public AdminModel update(AdminModel adminModel, String username) throws NotFoundException {
         AdminModel adminDB = null;
         try {
-            adminDB = adminRepository.findById(adminModel.getId()).get();
+            adminDB = adminRepository.findByUsername(username).get();
 
         } catch (NoSuchElementException e) {
             throw new NotFoundException();

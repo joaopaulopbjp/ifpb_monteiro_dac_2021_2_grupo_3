@@ -60,10 +60,7 @@ public class AdminService {
         return adminSaved;
     }
     
-    public AdminModel update(AdminModel admin) throws NotFoundException {
-        if(!adminRepositoryService.getInstance().existsById(admin.getId()))
-            throw new NotFoundException("admin with id " + admin.getId() + " not found");
-
+    public AdminModel update(AdminModel admin, String username) throws NotFoundException {
         if(admin.getEmail() != null && !validate(admin.getEmail()))
             throw new IllegalArgumentException(admin.getEmail() + " is a invalid Email");
         
@@ -75,7 +72,7 @@ public class AdminService {
             throw new IllegalArgumentException("Password must be at least 5 characters");
         }    
 
-        admin = adminRepositoryService.update(admin);
+        admin = adminRepositoryService.update(admin, username);
         return admin;
     }
 
