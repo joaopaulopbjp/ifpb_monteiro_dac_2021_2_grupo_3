@@ -12,42 +12,64 @@ class ProfileApi {
         let url = "/admin/find-by-username";
         let usernameLocal = window.localStorage.getItem("username");
 
+        let emailInput = document.getElementById("emailInput") as HTMLInputElement;
+        let usernameInput = document.getElementById("usernameInput") as HTMLInputElement;
+
         if(!this.isAdmin()) {
             url = "/user/find-by-username";
         }
 
-        let logged = fetch('http://localhost:8080/api' + url, {
+        fetch('http://localhost:8080/api' + url, {
             method: 'POST',
             headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
             },
             body: JSON.stringify({
                 username: usernameLocal
             })
-        }).then(apiResponse => {
-            apiResponse;
-            // if(apiResponse.status === 200) {
-            //     errorMensage.style.cssText = "display: none";
-            //     usernameInput.classList.remove("is-invalid");
-            //     passwordInput.classList.remove("is-invalid");
-
-            //     apiResponse.json().then(content => {
-            //         window.localStorage.setItem("token", content["token"]);
-            //         window.localStorage.setItem("isAdmin", content["admin"]);
-            //         window.localStorage.setItem("username", usernameInput.value);
-            //     })
-            //     closeButton.click();
-            //     return true;
-
-            // } else if(apiResponse.status === 400) {
-            //     errorMensage.style.cssText = "";
-            //     usernameInput.classList.add("is-invalid");
-            //     passwordInput.classList.add("is-invalid");
-            //     return false;
-            // }
+        }).then(async apiResponse => {
+            let json = await apiResponse.json();
+            if(apiResponse.status === 200) {
+                emailInput.value = json["email"];
+                usernameInput.value = json["username"];
+            }
         });
-        logged;
+    }
+
+    editButtonEvent() {
+        let editButton = document.getElementById("editButton");
+
+        let emailInput = document.getElementById("emailInput");
+        let usernameInput = document.getElementById("usernameInput");
+        let oldPasswordInput = document.getElementById("oldPasswordInput");
+        let newPasswordInput = document.getElementById("newPasswordInput");
+        let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput");
+
+        editButton.addEventListener("click", () => {
+            if((editButton as HTMLInputElement).value === "disabled") {
+                emailInput.attributes.removeNamedItem("disabled");
+                usernameInput.attributes.removeNamedItem("disabled");
+                oldPasswordInput.attributes.removeNamedItem("disabled");
+                newPasswordInput.attributes.removeNamedItem("disabled");
+                confirmNewPasswordInput.attributes.removeNamedItem("disabled");
+
+                (editButton as HTMLInputElement).value = "enabled";
+                
+            } else {
+                emailInput.setAttribute("disabled", "");
+                usernameInput.setAttribute("disabled", "");
+                oldPasswordInput.setAttribute("disabled", "");
+                newPasswordInput.setAttribute("disabled", "");
+                confirmNewPasswordInput.setAttribute("disabled", "");
+
+                this.getInfo();
+
+                (editButton as HTMLInputElement).value = "disabled";
+            }
+        });
     }
 }
+
 export { ProfileApi };
