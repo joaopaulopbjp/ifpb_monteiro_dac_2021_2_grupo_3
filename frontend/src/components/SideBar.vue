@@ -6,12 +6,12 @@
               <router-link to="Profile">
                     <b-avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></b-avatar>
               </router-link>
-              <h4 id="sidebar-no-header-title">Fulano Beltrano</h4>
+              <h4 id="sidebar-no-header-title">{{getUsername()}}</h4>
               <div class="divider-menu mb-3"></div>
           </div>
           <div v-if=!loggedVerify() class="d-flex align-items-center flex-column">
                    <button class="styleButton" @click="openModelLogin"><b-avatar variant="dark" class="text-decoration-none mb-3" size="5rem"></b-avatar></button> 
-              <h4 id="sidebar-no-header-title">Não logado</h4>
+              <h4 id="sidebar-no-header-title">Sign in</h4>
               <div class="divider-menu mb-3"></div>
           </div>
          <nav class="d-box">
@@ -47,6 +47,9 @@ export default {
             if (token == null || token.length > 0)
                 return true;
             return false;
+        },
+        getUsername() {
+            return window.localStorage.getItem("username");
         },
         logout() {
             window.localStorage.setItem("token", "");
