@@ -4,6 +4,12 @@ import router from './router'
 import Home from "./views/Home.vue"
 import Profile from "./views/Profile.vue"
 import RegisterProduct from "./views/RegisterProduct.vue"
+import RegisterUser from "./modal/RegisterUser.vue"
+import RegisterAddress from "./modal/RegisterAddress.vue"
+import RegisterAuthor from "./modal/RegisterAuthor.vue"
+import RegisterCategory from "./modal/RegisterCategory.vue"
+import RegisterCompany from "./modal/RegisterCompany.vue"
+import Recovery from "./modal/Recovery.vue"
 import ShoppingCart from "./views/ShoppingCart.vue"
 import Login from "./modal/Login.vue"
 import NavBar from "./components/NavBar.vue"
@@ -23,6 +29,12 @@ Vue.component("ShoppingCart",ShoppingCart);
 Vue.component("NavBar",NavBar);
 Vue.component("SideBar",SideBar);
 Vue.component("Footer",Footer);
+Vue.component("RegisterUser",RegisterUser);
+Vue.component("RegisterAddress",RegisterAddress);
+Vue.component("RegisterAuthor",RegisterAuthor);
+Vue.component("RegisterCategory",RegisterCategory);
+Vue.component("RegisterCompany",RegisterCompany);
+Vue.component("Recovery",Recovery);
 Vue.component("Login",Login);
 Vue.config.productionTip = false;
 

@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
+      <button id="closeButton" class="closed">x</button>
       <svg class="mb-4" width="70%" viewBox="0 0 411 140" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="206" cy="52" r="51" stroke="white" stroke-width="2"/>
       <g clip-path="url(#clip0_8_260)">

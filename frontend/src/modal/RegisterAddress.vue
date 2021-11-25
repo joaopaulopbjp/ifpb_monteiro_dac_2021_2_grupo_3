@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
+      <button id="closeButton" class="closed">x</button>
       <svg width="70%" viewBox="0 0 453 129" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="224" cy="41" r="40" stroke="white" stroke-width="2"/>
       <path d="M224 21C212.943 21 204 27.26 204 35C204 45.5 224 61 224 61C224 61 244 45.5 244 35C244 27.26 235.057 21 224 21ZM224 40C220.057 40 216.857 37.76 216.857 35C216.857 32.24 220.057 30 224 30C227.943 30 231.143 32.24 231.143 35C231.143 37.76 227.943 40 224 40Z" fill="white"/>
