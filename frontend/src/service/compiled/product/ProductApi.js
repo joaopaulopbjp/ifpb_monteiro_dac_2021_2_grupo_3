@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductApi = void 0;
 class ProductApi {
     saveEvent() {
+        // let base64 = new Base64();
         let savebutton = document.getElementById("saveButton");
         // let titleInput = document.getElementById("titleInput") as HTMLInputElement;
         // let yearLaunchInput = document.getElementById("yearLaunchInput") as HTMLInputElement;
@@ -36,7 +37,7 @@ class ProductApi {
             //         },
             //         idCompany: companyInput.value,
             //         imageList: [{
-            //             base64: this.urlToBase64(imageInput.files[0])
+            //             base64: base64.urlToBase64(imageInput.value)
             //         }],
             //         idAuthorList: []
             //     })
@@ -60,15 +61,6 @@ class ProductApi {
             //     }
             // });
         });
-    }
-    async urlToBase64(url) {
-        let imageBase64 = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(url);
-            reader.onload = () => resolve(reader.result);
-            reader.onerror = reject;
-        });
-        return imageBase64;
     }
 }
 exports.ProductApi = ProductApi;

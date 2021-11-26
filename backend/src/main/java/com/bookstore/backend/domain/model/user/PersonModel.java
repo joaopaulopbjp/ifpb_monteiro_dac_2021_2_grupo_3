@@ -49,7 +49,7 @@ public abstract class PersonModel {
     @Column(name = "USERNAME", nullable = false, unique = true)
     private String username;
 
-    @Column(name = "IMAGE")
+    @Column(name = "IMAGE", columnDefinition="TEXT")
     private String image;
 
     @Column(name = "EMAIL", nullable = false, unique = true)

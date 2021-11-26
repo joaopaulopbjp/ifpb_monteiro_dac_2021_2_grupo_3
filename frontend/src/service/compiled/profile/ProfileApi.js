@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfileApi = void 0;
 const Sha_1 = require("../utils/Sha");
 const LoginApi_1 = require("../login/LoginApi");
+const Base64_1 = require("../utils/Base64");
 class ProfileApi {
     isAdmin() {
         let isAdmin = window.localStorage.getItem("isAdmin");
@@ -47,6 +48,7 @@ class ProfileApi {
         let oldPasswordInput = document.getElementById("oldPasswordInput");
         let newPasswordInput = document.getElementById("newPasswordInput");
         let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput");
+        let imageInput = document.getElementById("imageInput");
         editButton.addEventListener("click", () => {
             if (editButton.value === "disabled") {
                 emailInput.attributes.removeNamedItem("disabled");
@@ -54,6 +56,7 @@ class ProfileApi {
                 oldPasswordInput.attributes.removeNamedItem("disabled");
                 newPasswordInput.attributes.removeNamedItem("disabled");
                 confirmNewPasswordInput.attributes.removeNamedItem("disabled");
+                imageInput.attributes.removeNamedItem("disabled");
                 editButton.value = "enabled";
             }
             else {
@@ -62,6 +65,7 @@ class ProfileApi {
                 oldPasswordInput.setAttribute("disabled", "");
                 newPasswordInput.setAttribute("disabled", "");
                 confirmNewPasswordInput.setAttribute("disabled", "");
+                imageInput.setAttribute("disabled", "");
                 this.setInfoOnVue();
                 editButton.value = "disabled";
             }
@@ -70,6 +74,7 @@ class ProfileApi {
     saveButtonEvent() {
         let saveButton = document.getElementById("saveButton");
         let sha = new Sha_1.Sha();
+        let base64 = new Base64_1.Base64();
         let json = this.getInfoUser();
         let password = json['password'];
         saveButton.addEventListener("click", () => {
@@ -78,7 +83,9 @@ class ProfileApi {
             let oldPasswordInput = document.getElementById("oldPasswordInput");
             let newPasswordInput = document.getElementById("newPasswordInput");
             let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput");
+            let imageInput = document.getElementById("imageInput");
             let passwordVar = null;
+            let imageVar = null;
             let flag = true;
             if (emailInput.value === "") {
                 emailInput.classList.add("is-invalid");
@@ -98,6 +105,40 @@ class ProfileApi {
                 passwordVar = newPasswordInput.value;
                 flag = false;
             }
+            if (imageInput.files[0] !== undefined) {
+                base64.urlToBase64(imageInput.files[0]).then(async function (image) {
+                    imageVar = await image;
+                }).then(() => {
+                    if (flag) {
+                        let url = "/admin";
+                        if (!this.isAdmin()) {
+                            url = "/user";
+                        }
+                        fetch('http://localhost:8080/api' + url, {
+                            method: 'PUT',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                username: usernameInput.value,
+                                email: emailInput.value,
+                                image: imageVar,
+                                password: passwordVar
+                            })
+                        }).then(response => {
+                            if (response.ok) {
+                                let login = new LoginApi_1.LoginApi();
+                                login.logout();
+                            }
+                            else {
+                                this.setInfoOnVue();
+                            }
+                        });
+                    }
+                });
+            }
             if (flag) {
                 let url = "/admin";
                 if (!this.isAdmin()) {
@@ -113,11 +154,17 @@ class ProfileApi {
                     body: JSON.stringify({
                         username: usernameInput.value,
                         email: emailInput.value,
+                        image: imageVar,
                         password: passwordVar
                     })
-                }).then(() => {
-                    let login = new LoginApi_1.LoginApi();
-                    login.logout();
+                }).then(response => {
+                    if (response.ok) {
+                        let login = new LoginApi_1.LoginApi();
+                        login.logout();
+                    }
+                    else {
+                        this.setInfoOnVue();
+                    }
                 });
             }
         });

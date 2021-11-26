@@ -22,6 +22,8 @@ public class PersonDTO {
 
     private String username;
 
+    private String image;
+
     private String email;
 
     private String password;

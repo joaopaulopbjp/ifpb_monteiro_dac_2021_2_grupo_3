@@ -1,5 +1,6 @@
 import { Sha } from '../utils/Sha';
 import { LoginApi } from '../login/LoginApi';
+import { Base64 } from '../utils/Base64';
 class ProfileApi {
 
     isAdmin() {
@@ -53,6 +54,7 @@ class ProfileApi {
         let oldPasswordInput = document.getElementById("oldPasswordInput") as HTMLInputElement;
         let newPasswordInput = document.getElementById("newPasswordInput") as HTMLInputElement;
         let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput") as HTMLInputElement;
+        let imageInput = document.getElementById("imageInput") as HTMLInputElement;
 
         editButton.addEventListener("click", () => {
             if((editButton as HTMLInputElement).value === "disabled") {
@@ -61,6 +63,7 @@ class ProfileApi {
                 oldPasswordInput.attributes.removeNamedItem("disabled");
                 newPasswordInput.attributes.removeNamedItem("disabled");
                 confirmNewPasswordInput.attributes.removeNamedItem("disabled");
+                imageInput.attributes.removeNamedItem("disabled");
 
                 (editButton as HTMLInputElement).value = "enabled";
                 
@@ -70,6 +73,7 @@ class ProfileApi {
                 oldPasswordInput.setAttribute("disabled", "");
                 newPasswordInput.setAttribute("disabled", "");
                 confirmNewPasswordInput.setAttribute("disabled", "");
+                imageInput.setAttribute("disabled", "");
 
                 this.setInfoOnVue();
 
@@ -81,6 +85,7 @@ class ProfileApi {
     saveButtonEvent() {
         let saveButton = document.getElementById("saveButton");
         let sha = new Sha();
+        let base64 = new Base64();
 
         let json = this.getInfoUser();
         let password = json['password'];
@@ -91,8 +96,10 @@ class ProfileApi {
             let oldPasswordInput = document.getElementById("oldPasswordInput") as HTMLInputElement;
             let newPasswordInput = document.getElementById("newPasswordInput") as HTMLInputElement;
             let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput") as HTMLInputElement;
+            let imageInput = document.getElementById("imageInput") as HTMLInputElement;
             
             let passwordVar = null;
+            let imageVar = null;
 
 
             let flag = true;
@@ -116,6 +123,40 @@ class ProfileApi {
                 flag = false;
             }
 
+            
+            if(imageInput.files[0] !== undefined) {
+                base64.urlToBase64(imageInput.files[0]).then(async function(image) {
+                    imageVar = await image;
+                }).then(() => {
+                    if(flag) {
+                        let url = "/admin";
+                        if(!this.isAdmin()) {
+                            url = "/user";
+                        }
+                        fetch('http://localhost:8080/api' + url, {
+                            method: 'PUT',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                username: usernameInput.value,
+                                email: emailInput.value,
+                                image: imageVar,
+                                password: passwordVar
+                            })
+                        }).then(response => {
+                            if(response.ok) {
+                                let login = new LoginApi();
+                                login.logout();
+                            } else {
+                                this.setInfoOnVue();
+                            }
+                        });
+                    }
+                })
+            }
             if(flag) {
                 let url = "/admin";
                 if(!this.isAdmin()) {
@@ -131,11 +172,16 @@ class ProfileApi {
                     body: JSON.stringify({
                         username: usernameInput.value,
                         email: emailInput.value,
+                        image: imageVar,
                         password: passwordVar
                     })
-                }).then(() => {
-                    let login = new LoginApi();
-                    login.logout();
+                }).then(response => {
+                    if(response.ok) {
+                        let login = new LoginApi();
+                        login.logout();
+                    } else {
+                        this.setInfoOnVue();
+                    }
                 });
             }
         })
