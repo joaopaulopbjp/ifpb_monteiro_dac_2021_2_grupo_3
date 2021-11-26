@@ -42,10 +42,10 @@ public class UserModel extends PersonModel{
         inverseJoinColumns = @JoinColumn(name = "EVALUATE_ID", nullable = false))
     private List<EvaluateModel> evaluateList;
 
-    public UserModel(Long id, String username, String email, String password, List<AddressModel> addressList,
+    public UserModel(Long id, String username, String image, String email, String password, List<AddressModel> addressList,
         UserSaleHistoryModel saleHistory, ShoppingCartModel shoppingCart,
         List<EvaluateModel> evaluation) {
-        super(id, username, email, password, addressList, saleHistory);
+        super(id, username, image, email, password, addressList, saleHistory);
         this.shoppingCart = shoppingCart;
         this.evaluateList = evaluation;
     }

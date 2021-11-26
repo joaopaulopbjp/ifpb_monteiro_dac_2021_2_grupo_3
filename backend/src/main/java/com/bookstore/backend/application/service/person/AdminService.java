@@ -41,7 +41,7 @@ public class AdminService {
     private void init() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         List<AdminModel> adminlist = adminRepositoryService.getInstance().findAll();
         if(adminlist.isEmpty()) {
-            AdminModel admin = new AdminModel(0l, "admin", "admin@email.com", "admin", null, null, null);
+            AdminModel admin = new AdminModel(0l, "admin", null, "admin@email.com", "admin", null, null, null);
             admin.setPassword(utils.shar256(admin.getPassword()));
             adminRepositoryService.getInstance().save(admin);
         }
@@ -54,6 +54,7 @@ public class AdminService {
 
         AdminModel admin = new AdminModel(userOp.get().getId(),
             userOp.get().getUsername(),
+            userOp.get().getImage(),
             userOp.get().getEmail(),
             userOp.get().getPassword(),
             userOp.get().getAddressList(),
