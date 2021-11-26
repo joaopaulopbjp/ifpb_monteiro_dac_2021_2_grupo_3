@@ -16,7 +16,7 @@
 
                     <b-form-select v-model="campanySelected" :options="companys" id="companyInput" style="width: 45%" class="ml-2"></b-form-select>
 
-                    <b-form-file accept="image/jpeg, image/png" v-model="File" id="imageInput" style="width: 45%" class="ml-2 mr-3"></b-form-file>
+                    <b-form-file accept="image/jpeg, image/png" id="imageInput" style="width: 45%" class="ml-2 mr-3"></b-form-file>
                     
                 </div>
                 <div class="d-flex justify-content-between mb-4">
@@ -27,7 +27,7 @@
                         <input type="checkbox" name="Brito" id="authorCheckBox"> Brito
                     </b-card>
 
-                    <b-form-textarea v-model="text" placeholder="Description" id="descriptionInput" class="md-textarea p-3" style="width: 45%; "></b-form-textarea>
+                    <b-form-textarea placeholder="Description" id="descriptionInput" class="md-textarea p-3" style="width: 45%; "></b-form-textarea>
 
                     <b-card class="ml-3 mr-3 w-45 p-3">
                         <h4>Categories</h4>

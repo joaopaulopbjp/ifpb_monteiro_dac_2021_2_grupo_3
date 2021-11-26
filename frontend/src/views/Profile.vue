@@ -36,7 +36,6 @@
                     <div class="ml-3">
                         <h6>Target category</h6>
                         <b-button-group vertical>
-                            <RegisterCategoryModal/>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Category
                             </b-button>
@@ -48,7 +47,6 @@
                     <div class="ml-3">
                         <h6>Target company</h6>
                         <b-button-group vertical>
-                            <RegisterCompanyModal/>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Company
                             </b-button>
@@ -174,7 +172,7 @@ let profileApi = new ProfileApi();
 
 export default {
     name: "Profile",
-    components: {NavBar, Footer, SideBar},
+    components: { NavBar, Footer, SideBar},
     mounted() {
         this.setInfoOnVue()
         profileApi.editButtonEvent();
