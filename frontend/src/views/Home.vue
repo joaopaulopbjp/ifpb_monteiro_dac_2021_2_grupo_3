@@ -7,7 +7,10 @@
     <div class="container d-flex flex-wrap justify-content-center p-2">
         
         <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 20%; border-radius: 5px" >
-          <img style="height: 15vw" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+           <!-- <img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
+            AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
+                9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" /> -->
           <h6 class="mt-2">A garota do lago</h6>
           <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
           <div class="d-flex justify-content-center" style="height: 8vh;">

@@ -75,6 +75,9 @@
                     <b-form-input class="ml-4" type="password" placeholder="New password" id="newPasswordInput" style="width: 250px" disabled></b-form-input>
                     <b-form-input class="ml-4" type="password" placeholder="Confirm password" style="width: 250px" id="confirmNewPasswordInput" disabled></b-form-input>
                 </div>
+                <div class="d-flex justify-content-start mb-4">
+                    <b-form-file accept="image/jpeg, image/png" id="imageInput" style="width: 25%" class=" mr-3"></b-form-file>
+                </div>
                 <b-button variant="outline-success" class="my-2 my-sm-0" id="saveButton" type="submit">
                   <i class="far fa-save"></i> Save
                 </b-button>
