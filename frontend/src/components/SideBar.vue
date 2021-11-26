@@ -36,6 +36,9 @@
 </template>
 
 <script>
+import { LoginApi } from '../service/compiled/login/LoginApi.js';
+let login = new LoginApi();
+
 export default {
     methods: {
         openModelLogin(){
@@ -52,10 +55,7 @@ export default {
             return window.localStorage.getItem("username");
         },
         logout() {
-            window.localStorage.setItem("token", "");
-            window.localStorage.setItem("isAdmin", "");
-            window.localStorage.setItem("username", "");
-            window.location.reload();
+            login.logout();
         }
     },
 }
