@@ -13,8 +13,9 @@
               </b-button>
           </b-nav-form>
           <b-nav-item>
-              <b-button variant="outline-light" to="ShoppingCart">
+              <b-button class="align-items-left" variant="outline-light" to="ShoppingCart">
                   <i class="fas fa-shopping-cart" style="width: 50"></i>
+                  <b-badge class="ml-2 mt-0" variant="danger"> 0</b-badge>
               </b-button>
           </b-nav-item>
           <b-nav-item>
