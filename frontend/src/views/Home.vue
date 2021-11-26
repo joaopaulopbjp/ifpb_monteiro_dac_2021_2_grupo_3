@@ -4,23 +4,43 @@
     <Side-bar @click="openModelLogin" />
     <Login :style="isDisplay" @click="closeModalLogin"/>
     <RegisterUser :style="isDisplayRegister"/>
-    <div class="container row d-flex justify-content-center">
-      <div class="container col d-flex justify-content-between">
-        <div class="p-5" style="background-color: white;border-color: #FCB13A;">
-            <img class="row w-25" src="https://www.thebookshop.pl/images/thebookshop/8000-9000/The-Complete-Chronicles-of-Narnia-by-C-S-Lewis_[8525]_568.jpg" alt="" style="margin: auto;">
-            <p class="row" style="margin: auto;">As cronicas de Nárnia</p>
-            <p class="row" style="margin: auto;">Author: Lewis, Clives, Staples</p>
-            <b-form-rating class="row w-50 h-25" id="media" inline color="#FCB13A" value="4" style="border: none;margin: auto;"/>
-            <div class="row " style="margin: auto;">
-              <div class="col p-2" style="box-shadow: 15px 1px 10px black;background-color: #9652C6;color: white;border-radius: 10px 0px 0px 10px;">
-                <h5 class="col" style="padding: auto;margin: auto;">R$ 37,90</h5>
-              </div>
-              <b-button class="col" style="border-radius: 0px 10px 10px 0px; background-color: #FCB13A;">ADD TO CART</b-button>
-            </div>
-        </div>
-        
-      </div>
-      
+    <div class="container d-flex p-2">
+        <b-card class="border border-warning rounded text-center ml-2" style="width: 25vw;">
+          <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+          <h6>A garota do lago</h6>
+          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none;"/>
+          <div class="d-flex justify-content-center">
+            <b-button style="border-radius: 10px 0px 0px 10px; background-color: #955DBC;">R$: 17,90</b-button>
+            <b-button style="border-radius: 0px 10px 10px 0px; background-color: #FCB13A;">ADD TO CART</b-button>
+          </div>
+        </b-card>
+        <b-card class="border border-warning rounded text-center ml-2" style="width: 25vw;">
+          <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+          <h6>A garota do lago</h6>
+          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none;"/>
+          <div class="d-flex justify-content-center">
+            <b-button style="border-radius: 10px 0px 0px 10px; background-color: #955DBC;">R$: 17,90</b-button>
+            <b-button style="border-radius: 0px 10px 10px 0px; background-color: #FCB13A;">ADD TO CART</b-button>
+          </div>
+        </b-card>
+        <b-card class="border border-warning rounded text-center ml-2" style="width: 25vw;">
+          <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+          <h6>A garota do lago</h6>
+          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none;"/>
+          <div class="d-flex justify-content-center">
+            <b-button style="border-radius: 10px 0px 0px 10px; background-color: #955DBC;">R$: 17,90</b-button>
+            <b-button style="border-radius: 0px 10px 10px 0px; background-color: #FCB13A;">ADD TO CART</b-button>
+          </div>
+        </b-card>
+        <b-card class="border border-warning rounded text-center ml-2" style="width: 25vw;">
+          <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+          <h6>A garota do lago</h6>
+          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none;"/>
+          <div class="d-flex justify-content-center">
+            <b-button style="border-radius: 10px 0px 0px 10px; background-color: #955DBC;">R$: 17,90</b-button>
+            <b-button style="border-radius: 0px 10px 10px 0px; background-color: #FCB13A;">ADD TO CART</b-button>
+          </div>
+        </b-card>   
     </div>
     <Footer/>
   </div>
