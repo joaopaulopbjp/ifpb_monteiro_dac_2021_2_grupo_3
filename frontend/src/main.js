@@ -16,6 +16,7 @@ import NavBar from "./components/NavBar.vue"
 import SideBar from "./components/SideBar.vue"
 import Footer from "./components/Footer.vue"
 import Product from "./views/Product.vue"
+import Payment from "./views/Payment.vue"
 import { BootstrapVue} from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -38,6 +39,7 @@ Vue.component("RegisterCompany",RegisterCompany);
 Vue.component("Recovery",Recovery);
 Vue.component("Login",Login);
 Vue.component("Product",Product);
+Vue.component("Payment",Payment);
 Vue.config.productionTip = false;
 
 new Vue({
