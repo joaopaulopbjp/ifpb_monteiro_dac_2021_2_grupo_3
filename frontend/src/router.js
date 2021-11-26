@@ -4,7 +4,6 @@ import Home from "./views/Home.vue"
 import Profile from "./views/Profile.vue"
 import RegisterProduct from "./views/RegisterProduct.vue"
 import ShoppingCart from "./views/ShoppingCart.vue"
-import Login from "./modal/Login.vue"
 import RegisterUser from "./modal/RegisterUser.vue"
 import RegisterAuthor from "./modal/RegisterAuthor.vue"
 import RegisterCompany from "./modal/RegisterCompany.vue"
@@ -34,7 +33,10 @@ export default new Router({
     }, {
         path: "/Login",
         name: "Login",
-        component: Login
+        redirect: {
+            name: "Home",
+            component: Home,
+        },
     }, {
         path: "/RegisterUser",
         name: "RegisterUser",

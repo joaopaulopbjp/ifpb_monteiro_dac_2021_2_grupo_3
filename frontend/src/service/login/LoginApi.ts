@@ -41,5 +41,12 @@ class LoginApi {
             return logeedStatus;
         })
     }
+
+    logout() {
+        window.localStorage.setItem("token", "");
+        window.localStorage.setItem("isAdmin", "");
+        window.localStorage.setItem("username", "");
+        window.location.reload();
+    }
 }
 export { LoginApi };

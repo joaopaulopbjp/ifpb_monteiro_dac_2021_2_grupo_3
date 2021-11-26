@@ -1,5 +1,5 @@
 <template>
-  <div id="" class="boxextern">
+  <div id="LoginVue" class="boxextern">
     <div class=" boxintern text-center p-5">
       <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
       <svg width="70%"  viewBox="0 0 383 140" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,4 +1,5 @@
 import { Sha } from '../utils/Sha';
+import { LoginApi } from '../login/LoginApi';
 class ProfileApi {
 
     isAdmin() {
@@ -132,34 +133,9 @@ class ProfileApi {
                         email: emailInput.value,
                         password: passwordVar
                     })
-                }).then(async reponse => {
-                    this.setInfoOnVue();
-                    let json = await reponse.json();
-                    fetch('http://localhost:8080/api/login', {
-                        method: 'POST',
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            username: json["username"],
-                            password: json["password"]
-                        })
-                    }).then(apiResponse => {
-                        if(apiResponse.status === 200) {
-                            apiResponse.json().then(content => {
-                                window.localStorage.setItem("token", content["token"]);
-                                window.localStorage.setItem("isAdmin", content["admin"]);
-                                window.localStorage.setItem("username", usernameInput.value);
-
-                                let usernameSideBar = document.getElementById("sidebar-no-header-title");
-                                usernameSideBar.innerText = usernameInput.value;
-                            })
-                        }
-                    });
-                    let editButton = document.getElementById("editButton");
-                    if((editButton as HTMLInputElement).value === "enabled")
-                        editButton.click();
+                }).then(() => {
+                    let login = new LoginApi();
+                    login.logout();
                 });
             }
         })
