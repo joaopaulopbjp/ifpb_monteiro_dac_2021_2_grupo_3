@@ -45,9 +45,7 @@ class ProductApi {
                             idCompany: companyInput.value,
                             idAuthorList: idAuthorArray
                         })
-                    }).then(response => {
-                        alert(response.status)
-                    })
+                    });
                 })
             }
         });

@@ -22,7 +22,7 @@
                 <div class="d-flex justify-content-between mb-4">
                     <b-card class="align-baseline ml-3 mr-3 w-45 p-3">
                         <h4 class="">Authors</h4>
-                        <div id="authorsOptions">
+                        <div class="checkboxWidth" id="authorsOptions" style="overflow-y:scroll">
                         </div>
                     </b-card>
 
@@ -30,8 +30,7 @@
 
                     <b-card class="ml-3 mr-3 w-45 p-3">
                         <h4>Categories</h4>
-                        <div id="categoriesOptions">
-
+                        <div class="checkboxWidth" id="categoriesOptions" style="overflow-y:scroll">
                         </div>
                     </b-card>
                 </div>
@@ -111,10 +110,30 @@ export default {
                 }
                 element.innerHTML = html;
             });
+        },
+        authorScrollPage() {
+            let authorOp = document.getElementById("authorsOptions");
+            authorOp.addEventListener("scroll", () => {
+                if(authorOp.scrollTop + authorOp.clientHeight == authorOp.scrollHeight) {
+                    pageNumberAuthor++;
+                    this.setAuthorOnVue(pageNumberAuthor);
+                }
+            })
+        },
+        categoryScrollPage() {
+            let categoryOp = document.getElementById("categoriesOptions");
+            categoryOp.addEventListener("scroll", () => {
+                if(categoryOp.scrollTop + categoryOp.clientHeight == categoryOp.scrollHeight) {
+                    pageNumberCategories++;
+                    this.setCategoriesOnVue(pageNumberCategories);
+                }
+            })
         }
     },
     mounted() {
         this.save();
+        this.authorScrollPage();
+        this.categoryScrollPage();
         this.setAuthorOnVue(pageNumberAuthor);
         this.setCategoriesOnVue(pageNumberCategories);
     }
@@ -122,5 +141,8 @@ export default {
 </script>
 
 <style scoped>
-    
+    .checkboxWidth {
+        height: 15vh;
+        width: 15vw;
+    }
 </style>
