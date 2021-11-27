@@ -14,15 +14,17 @@
                     <b-form-input type="number" placeholder="Price" id="priceInput" style="width: 30%" class="ml-3"></b-form-input>
                     <b-form-input type="number" placeholder="Inventory" id="inventoryInput" style="width: 40%" class="ml-2"></b-form-input>
 
-                    <b-form-select v-model="campanySelected" :options="companys" id="companyInput" style="width: 45%" class="ml-2"></b-form-select>
+                    <select name="companys" id="companyInput" style="width: 45%" class="ml-2">
+                        <option value="">saraiva</option>
+                    </select>
 
                     <b-form-file accept="image/jpeg, image/png" id="imageInput" style="width: 45%" class="ml-2 mr-3"></b-form-file>
                     
                 </div>
                 <div class="d-flex justify-content-between mb-4">
-                    <b-card class="align-baseline ml-3 mr-3 w-45 p-3">
+                    <b-card  class="align-baseline ml-3 mr-3 w-45 p-3">
                         <h4 class="">Authors</h4>
-                        <div class="checkboxWidth" id="authorsOptions" style="overflow-y:scroll">
+                        <div class="checkboxWidth" id="authorsOptions">
                         </div>
                     </b-card>
 
@@ -30,7 +32,7 @@
 
                     <b-card class="ml-3 mr-3 w-45 p-3">
                         <h4>Categories</h4>
-                        <div class="checkboxWidth" id="categoriesOptions" style="overflow-y:scroll">
+                        <div class="checkboxWidth" id="categoriesOptions">
                         </div>
                     </b-card>
                 </div>
@@ -60,11 +62,7 @@ export default {
     components: {NavBar, Footer, SideBar},
     data() {
       return {
-        // parte que coloca os autores no b-card do authors
-        companys: [
-            {value: "1", text: "saraiva"}
-        ],
-        campanySelected: [],
+        
       }
     },
     methods: {
@@ -144,5 +142,24 @@ export default {
     .checkboxWidth {
         height: 15vh;
         width: 15vw;
+    }
+
+    #categorie,#authors{
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    #companys{
+        border: none;
+        outline: 0;
+        background: transparent;
+        border-image: none;
+        outline-offset: -2px;
+        border-color: transparent;
+        outline-color: transparent;
+        box-shadow: none;
+    }
+    li{
+        list-style-type: none;
     }
 </style>
