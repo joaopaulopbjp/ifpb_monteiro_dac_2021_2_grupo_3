@@ -14,8 +14,8 @@
                     <b-form-input type="number" placeholder="Price" id="priceInput" style="width: 30%" class="ml-3"></b-form-input>
                     <b-form-input type="number" placeholder="Inventory" id="inventoryInput" style="width: 40%" class="ml-2"></b-form-input>
 
-                    <select name="companys" id="companyInput" style="width: 45%" class="ml-2">
-                        <option value="">saraiva</option>
+                    <select id="companyInput" style="width: 45%" class="ml-2 companys">
+                        <option selected disabled value="">Select a company</option>
                     </select>
 
                     <b-form-file accept="image/jpeg, image/png" id="imageInput" style="width: 45%" class="ml-2 mr-3"></b-form-file>
@@ -109,6 +109,26 @@ export default {
                 element.innerHTML = html;
             });
         },
+        setCompaniesOnVue() {
+            let element = document.getElementById("companyInput");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/company/find-all`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<option value="${json[count]["id"]}">${json[count]["name"]}</option>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
         authorScrollPage() {
             let authorOp = document.getElementById("authorsOptions");
             authorOp.addEventListener("scroll", () => {
@@ -133,6 +153,7 @@ export default {
         this.authorScrollPage();
         this.categoryScrollPage();
         this.setAuthorOnVue(pageNumberAuthor);
+        this.setCompaniesOnVue();
         this.setCategoriesOnVue(pageNumberCategories);
     }
 }
@@ -144,22 +165,15 @@ export default {
         width: 15vw;
     }
 
-    #categorie,#authors{
+    #categoriesOptions,#authorsOptions{
         overflow-x: hidden;
         overflow-y: auto;
     }
 
-    #companys{
-        border: none;
-        outline: 0;
-        background: transparent;
-        border-image: none;
-        outline-offset: -2px;
-        border-color: transparent;
-        outline-color: transparent;
-        box-shadow: none;
-    }
-    li{
-        list-style-type: none;
+    .companys{
+        color: gray;
+        padding-left: 0.5vw;
+        border-color: rgba(146, 146, 146, 0.507);
+        border-radius: 5px;
     }
 </style>
