@@ -1,5 +1,7 @@
 package com.bookstore.backend.infrastructure.persistence.service.person;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -25,6 +27,8 @@ public class UserRepositoryService {
     @Value("${numberOfItemsPerPage}")
     private String numberOfItemsPerPage;
 
+    private Utils utils = new Utils();
+
     public UserRepository getInstance() {
         return userRepository;
     }
@@ -36,6 +40,14 @@ public class UserRepositoryService {
 
         } catch (NoSuchElementException e) {
             throw new NotFoundException();
+        }
+
+        if(userModel.getPassword() != null) {
+            try {
+                userModel.setPassword(utils.shar256(userModel.getPassword()));
+            } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
         }
 
         BeanUtils.copyProperties(userModel, userDB, Utils.getNullPropertyNames(userModel));

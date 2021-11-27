@@ -1,79 +1,66 @@
+import { Base64 } from '../utils/Base64';
 class ProductApi {
     saveEvent() {
+        // let base64 = new Base64();
         let savebutton = document.getElementById("saveButton");
 
-        // let titleInput = document.getElementById("titleInput") as HTMLInputElement;
-        // let yearLaunchInput = document.getElementById("yearLaunchInput") as HTMLInputElement;
-        // let pageInput = document.getElementById("pageInput") as HTMLInputElement;
-        // let priceInput = document.getElementById("priceInput") as HTMLInputElement;
-        // let inventoryInput = document.getElementById("inventoryInput") as HTMLInputElement;
-        // let companyInput = document.getElementById("companyInput") as HTMLInputElement;
-        // let imageInput = document.getElementById("imageInput") as HTMLInputElement;
-        let authorsInput = document.getElementById("authorsInput") as HTMLInputElement;
-        let descriptionInput = document.getElementById("descriptionInput") as HTMLInputElement;
-        let categoriesInput = document.getElementById("categoriesInput") as HTMLInputElement;
-        
+        let titleInput = document.getElementById("titleInput") as HTMLInputElement;
+        let yearLaunchInput = document.getElementById("yearLaunchInput") as HTMLInputElement;
+        let pageInput = document.getElementById("pageInput") as HTMLInputElement;
+        let priceInput = document.getElementById("priceInput") as HTMLInputElement;
+        let inventoryInput = document.getElementById("inventoryInput") as HTMLInputElement;
+        let companyInput = document.getElementById("companyInput") as HTMLInputElement;
+        let imageInput = document.getElementById("imageInput") as HTMLInputElement;
+        let descriptionInput = document.getElementById("descriptionInput") as HTMLInputElement;        
 
         savebutton.addEventListener("click", async () => {
-            authorsInput;
-            descriptionInput;
-            categoriesInput;
-            alert(document.getElementById("checkbox"));
-            alert(document.querySelectorAll(".checkbox").length);
+            let base64 = new Base64();
 
-        //     fetch('http://localhost:8080/api/book', {
-        //     method: 'POST',
-        //     headers: {
-        //     'Accept': 'application/json',
-        //     'Content-Type': 'application/json'
-        //     },
-        //     body: JSON.stringify({
-        //         title: titleInput.value,
-        //         yearLaunch: yearLaunchInput.value,
-        //         pages: pageInput.value,
-        //         price: priceInput.value,
-        //         inventory: {
-        //             amount: inventoryInput.value
-        //         },
-        //         idCompany: companyInput.value,
-        //         imageList: [{
-        //             base64: this.urlToBase64(imageInput.files[0])
-        //         }],
-        //         idAuthorList: []
+            let idAuthorArray = this.getIdListFromCheckboxId("authorCheckBox");
+            let idCategoryArray = this.getIdListFromCheckboxId("categoriesCheckBox");
+            
 
-        //     })
-        // }).then(apiResponse => {
-        //     if(apiResponse.status === 200) {
-        //         errorMensage.style.cssText = "display: none";
-        //         usernameInput.classList.remove("is-invalid");
-        //         passwordInput.classList.remove("is-invalid");
-
-        //         apiResponse.json().then(content => {
-        //             window.localStorage.setItem("token", content["token"]);
-        //             window.localStorage.setItem("isAdmin", content["admin"]);
-        //             window.localStorage.setItem("username", usernameInput.value);
-        //         })
-        //         closeButton.click();
-        //         return true;
-
-        //     } else if(apiResponse.status === 400) {
-        //         errorMensage.style.cssText = "";
-        //         usernameInput.classList.add("is-invalid");
-        //         passwordInput.classList.add("is-invalid");
-        //         return false;
-        //     }
-        // });
-        })
+            if(imageInput.files[0] !== undefined) {
+                base64.urlToBase64(imageInput.files[0]).then(async function(image) {
+                    fetch('http://localhost:8080/api/book', {
+                        method: 'POST',
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                        },
+                        body: JSON.stringify({
+                            title: titleInput.value,
+                            description: descriptionInput.value,
+                            yearLaunch: yearLaunchInput.value,
+                            pages: pageInput.value,
+                            price: priceInput.value,
+                            inventory: {
+                                amount: inventoryInput.value
+                            },
+                            imageList: [{
+                                base64: image
+                            }],
+                            idCategoryList: idCategoryArray,
+                            idCompany: companyInput.value,
+                            idAuthorList: idAuthorArray
+                        })
+                    });
+                })
+            }
+        });
     }
 
-    private async urlToBase64(url) {
-        let imageBase64 = await new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.readAsDataURL(url);
-            reader.onload = () => resolve(reader.result as string);
-            reader.onerror = reject;
+    private getIdListFromCheckboxId(id) {
+        let idArray : Array<Number> = [];
+        let elementArray
+        document.querySelectorAll(`#${id}`).forEach(element => {
+            elementArray = element as HTMLInputElement;
+            if(elementArray.checked) {
+                idArray.push(elementArray.value);
+            }
         });
-        return imageBase64;
+        return idArray;
     }
 }
 

@@ -11,6 +11,7 @@ import RegisterCategory from "./modal/RegisterCategory.vue"
 import RegisterAddress from "./modal/RegisterAddress.vue"
 import Recovery from "./modal/Recovery.vue"
 import Product from "./views/Product.vue"
+import Payment from "./views/Payment.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -65,5 +66,9 @@ export default new Router({
         path: "/Product",
         name: "Product",
         component: Product
+    },{
+        path: "/Payment",
+        name: "Payment",
+        component: Payment
     }]
 })

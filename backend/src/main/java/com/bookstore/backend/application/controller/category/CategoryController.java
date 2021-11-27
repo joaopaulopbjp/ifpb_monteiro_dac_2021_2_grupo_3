@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -83,11 +84,11 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/find-all")
-    public ResponseEntity<?> findAll(){
+    @GetMapping("/find/find-all/{page}")
+    public ResponseEntity<?> findAll(@PathVariable("page") int page){
         try {
-            List<CategoryModel> categoryList = categoryService.findAll();
-            return ResponseEntity.status(HttpStatus.FOUND).body(categoryList);
+            List<CategoryModel> categoryList = categoryService.findAll(page);
+            return ResponseEntity.status(HttpStatus.OK).body(categoryList);
         }catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getCause().getCause().getMessage()));
         }catch (Exception e) {
@@ -95,7 +96,7 @@ public class CategoryController {
         }
     }
     
-    @GetMapping("/find-by-id")
+    @PostMapping("/find/find-by-id/")
     public ResponseEntity<?> findById(@RequestBody CategoryDTO dto){
         CategoryModel category;
         try {
@@ -111,7 +112,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/find-by-name")
+    @PostMapping("/find/find-by-name")
     public ResponseEntity<?> findByName(@RequestBody CategoryDTO dto){
         try {
             List<CategoryModel> categoryList = categoryService.findByName(dto.getName());

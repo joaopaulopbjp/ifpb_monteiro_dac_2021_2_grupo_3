@@ -71,7 +71,7 @@ public class CategoryService {
         return categories;
     }
 
-    public List<CategoryModel> findAll(){
-        return categoryRepositoryService.getInstance().findAll();
+    public List<CategoryModel> findAll(int page) throws NotFoundException{
+        return categoryRepositoryService.findAll(page);
     }
 }

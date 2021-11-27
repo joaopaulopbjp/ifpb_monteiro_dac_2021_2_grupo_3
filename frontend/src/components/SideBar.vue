@@ -4,7 +4,8 @@
       <div class="p-3">
           <div v-if=loggedVerify() class="d-flex align-items-center flex-column">
               <router-link to="Profile">
-                    <b-avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></b-avatar>
+                  <div id="profileImage">
+                  </div>
               </router-link>
               <h4 id="sidebar-no-header-title">{{getUsername()}}</h4>
               <div class="divider-menu mb-3"></div>
@@ -39,7 +40,13 @@
 import { LoginApi } from '../service/compiled/login/LoginApi.js';
 let login = new LoginApi();
 
+import { SideBarApi } from '../service/compiled/sideBar/SideBarApi.js';
+let sideBarApi = new SideBarApi();
+
 export default {
+    mounted() {
+        this.profileImageShow();
+    },
     methods: {
         openModelLogin(){
             this.loggedVerify();
@@ -56,6 +63,9 @@ export default {
         },
         logout() {
             login.logout();
+        },
+        profileImageShow() {
+            sideBarApi.showImage();
         }
     },
 }
