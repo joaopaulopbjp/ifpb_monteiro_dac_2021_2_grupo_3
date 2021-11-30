@@ -1,4 +1,4 @@
-package com.bookstore.backend.TestsMocks.controller.shoppingCart;
+package com.bookstore.backend.IntegrationsTests.controller.shoppingCart;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;

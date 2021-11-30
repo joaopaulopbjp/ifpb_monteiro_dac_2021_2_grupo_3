@@ -1,4 +1,4 @@
-package com.bookstore.backend.TestsMocks.controller.category;
+package com.bookstore.backend.IntegrationsTests.controller.category;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
