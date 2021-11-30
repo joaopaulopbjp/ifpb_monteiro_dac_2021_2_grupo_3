@@ -50,11 +50,11 @@ public class CategoryTest extends TestsController {
     @Test
     @Order(3)
     public void findAllCategorySucess() throws JsonProcessingException, Exception {
-        mockMvc.perform(get(URLbase + "/category/find-all")
-            .header("Authorization", this.getToken("user", "userPass"))
+        mockMvc.perform(get(URLbase + "/category/find/find-all/0")
+            .header("Authorization", this.getToken("admin", "admin"))
             .contentType("application/json")
             .content(""))
-            .andExpect(status().isFound());
+            .andExpect(status().isOk());
     }
 
     @Test
