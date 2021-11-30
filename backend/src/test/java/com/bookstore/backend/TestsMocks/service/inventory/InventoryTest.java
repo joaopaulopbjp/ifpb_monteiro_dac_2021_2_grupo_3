@@ -1,4 +1,4 @@
-package com.bookstore.backend.application.service.inventory;
+package com.bookstore.backend.TestsMocks.service.inventory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -19,6 +19,7 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.bookstore.backend.application.service.inventory.InventoryService;
 import com.bookstore.backend.domain.model.inventory.InventoryModel;
 import com.bookstore.backend.domain.model.product.BookModel;
 import com.bookstore.backend.infrastructure.enumerator.InventoryStatus;

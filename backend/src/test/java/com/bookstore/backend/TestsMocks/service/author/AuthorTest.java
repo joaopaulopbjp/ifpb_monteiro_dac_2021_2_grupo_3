@@ -1,4 +1,4 @@
-package com.bookstore.backend.application.service.author;
+package com.bookstore.backend.TestsMocks.service.author;
 
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.times;
@@ -14,6 +14,7 @@ import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.bookstore.backend.application.service.author.AuthorService;
 import com.bookstore.backend.domain.model.author.AuthorModel;
 import com.bookstore.backend.infrastructure.persistence.repository.author.AuthorRepository;
 import com.bookstore.backend.infrastructure.persistence.service.author.AuthorRepositoryService;

@@ -1,4 +1,4 @@
-package com.bookstore.backend.application.controller;
+package com.bookstore.backend.TestsMocks.controller;
 
 import com.bookstore.backend.configs.ConfigClass;
 import com.bookstore.backend.presentation.dto.author.AuthorDTO;
@@ -55,7 +55,7 @@ public class TestsController {
     public String getToken(String username, String password) throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception {
         JSONObject jsonLogin = new JSONObject(this.login(username, password).getResponse().getContentAsString());
         
-        return "Bearer " + jsonLogin.getString("response");
+        return "Bearer " + jsonLogin.getString("token");
     }
 
     protected MvcResult saveUser() throws JsonProcessingException, Exception {

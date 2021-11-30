@@ -1,4 +1,4 @@
-package com.bookstore.backend.application.service.company;
+package com.bookstore.backend.TestsMocks.service.company;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.bookstore.backend.application.service.company.PublishingCompanyService;
 import com.bookstore.backend.domain.model.company.PublishingCompanyModel;
 import com.bookstore.backend.infrastructure.persistence.repository.company.PublishingCompanyRepository;
 import com.bookstore.backend.infrastructure.persistence.service.company.PublishingCompanyRepositoryService;
