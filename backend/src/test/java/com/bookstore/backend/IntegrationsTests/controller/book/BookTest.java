@@ -1,5 +1,6 @@
 package com.bookstore.backend.IntegrationsTests.controller.book;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -28,6 +29,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,14 +86,22 @@ public class BookTest extends TestsController{
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)));
 
-        MvcResult list = mockMvc.perform(get(URLbase + "/book/find/find-all/0")
-            .header("Authorization", this.getToken("admin", "admin")))
+        BookDTO dtoCopy = dto;
+        dto = new BookDTO();
+        dto.setId(1L);
+        MvcResult book = mockMvc.perform(get(URLbase + "/book/find/find-by-id")
+            .header("Authorization", this.getToken("admin", "admin"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isOk())
             .andReturn();
             
 
-        JSONObject bookList = new JSONObject(objectMapper.writeValueAsString();
-        // System.out.println(bookList);
+        JSONObject myBook = new JSONObject(book.getResponse().getContentAsString());
+        assertEquals(dtoCopy.getTitle(), myBook.getString("title"));
+        assertEquals(10, myBook.getJSONObject("inventory").getInt("amount"));
+        assertNotNull(myBook.getString("description"));
+        
 
     }
 
