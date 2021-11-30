@@ -56,7 +56,6 @@ public class ShoppingCartTest extends TestsController{
     @Test
     @Order(2)
     public void addShoppingCartAmountZeroInvalid() throws JsonProcessingException, Exception{
-        this.saveUser();
 
         ShoppingCartDTO dto = new ShoppingCartDTO();
         
@@ -76,7 +75,6 @@ public class ShoppingCartTest extends TestsController{
 
     @Order(3)
     public void addShoppingCartAmountAdminUnauthorized() throws JsonProcessingException, Exception{
-        this.saveUser();
 
         ShoppingCartDTO dto = new ShoppingCartDTO();
         
