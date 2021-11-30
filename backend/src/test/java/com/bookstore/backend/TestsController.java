@@ -1,4 +1,4 @@
-package com.bookstore.backend.TestsMocks.controller;
+package com.bookstore.backend;
 
 import com.bookstore.backend.configs.ConfigClass;
 import com.bookstore.backend.presentation.dto.author.AuthorDTO;

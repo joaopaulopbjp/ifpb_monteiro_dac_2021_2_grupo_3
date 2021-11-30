@@ -3,7 +3,7 @@ package com.bookstore.backend.TestsMocks.controller.category;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.bookstore.backend.TestsMocks.controller.TestsController;
+import com.bookstore.backend.TestsController;
 import com.bookstore.backend.presentation.dto.category.CategoryDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 

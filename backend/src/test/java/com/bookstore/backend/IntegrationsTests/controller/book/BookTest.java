@@ -1,6 +1,4 @@
-package com.bookstore.backend.IntegrationsTests.controller;
-
-import com.bookstore.backend.TestsMocks.controller.TestsController;
+package com.bookstore.backend.IntegrationsTests.controller.book;
 
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -9,6 +7,7 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.bookstore.backend.TestsController;
 import com.bookstore.backend.configs.ConfigClass;
 import com.bookstore.backend.presentation.dto.author.AuthorDTO;
 import com.bookstore.backend.presentation.dto.category.CategoryDTO;
@@ -84,13 +83,14 @@ public class BookTest extends TestsController{
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)));
 
-        MvcResult list = mockMvc.perform(get(URLbase + "/find/find-all/0")
+        MvcResult list = mockMvc.perform(get(URLbase + "/book/find/find-all/0")
             .header("Authorization", this.getToken("admin", "admin")))
             .andExpect(status().isOk())
             .andReturn();
             
-        JSONObject bookList = new JSONObject(list.getResponse().getContentAsString());
-        System.out.println(bookList);        
+
+        JSONObject bookList = new JSONObject(objectMapper.writeValueAsString();
+        // System.out.println(bookList);
 
     }
 

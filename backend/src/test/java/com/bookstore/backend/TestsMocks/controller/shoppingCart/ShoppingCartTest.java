@@ -8,7 +8,7 @@ import java.util.List;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.bookstore.backend.TestsMocks.controller.TestsController;
+import com.bookstore.backend.TestsController;
 import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
 import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;

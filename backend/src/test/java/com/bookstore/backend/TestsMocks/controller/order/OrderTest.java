@@ -8,7 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.UnsupportedEncodingException;
 
-import com.bookstore.backend.TestsMocks.controller.TestsController;
+import com.bookstore.backend.TestsController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.json.JSONException;
