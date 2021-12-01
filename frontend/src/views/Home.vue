@@ -38,12 +38,11 @@ export default {
         isDisplayRegister: "display: none;",
         currentPageNumber: 1,
         rows: 0,
-        perPage: 5
+        perPage: 1
       }
     },
     mounted() {
       this.initPageSize();
-      this.initPageNav();
       homeService.renderbook(0);
     },
     methods: {
@@ -62,6 +61,7 @@ export default {
       initPageSize() {
         homeService.getTotalPages().then(num => {
           this.rows = num;
+          this.initPageNav();
         })
       },
       initPageNav() {

@@ -8,8 +8,8 @@ class HomeService {
         this.getBooks(pageNumber).then(async function (response) {
             let json = await response.json();
             json.forEach(element => {
-                html += `<div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-            <img style="height: 30vh; width:12vw" src="${element["imageList"][0]["base64"]}" alt="">
+                html += `<div class="text-center border border-warning mb-3 ml-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
+            <img style="height: 30vh; width:12vw;" src="${element["imageList"][0]["base64"]}" alt="">
             <h6 class="mt-2">${element["title"]}</h6>
             <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
             <div class="d-flex justify-content-center">
@@ -27,7 +27,6 @@ class HomeService {
         })
             .then(async function (response) {
             let json = await response.json();
-            alert(json['response']);
             return json['response'];
         });
     }
