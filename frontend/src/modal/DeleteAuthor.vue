@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalUpdateAuthor()">x</button>
+      <button id="closeButton" class="closed" @click="closeModalDeleteAuthor()">x</button>
       
       <svg width="70%" class="mb-3" viewBox="0 0 481 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="351" y1="120" x2="481" y2="120" stroke="white" stroke-width="2"/>
@@ -33,7 +33,7 @@
 <script>
   export default{
     methods:{
-      closeModalUpdateAuthor(){
+      closeModalDeleteAuthor(){
         this.$emit('click');
       }
     }
