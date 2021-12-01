@@ -12,6 +12,7 @@ import RegisterAddress from "./modal/RegisterAddress.vue"
 import Recovery from "./modal/Recovery.vue"
 import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
+import UpdateAuthor from "./modal/UpdateAuthor.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -59,6 +60,10 @@ export default new Router({
         name: "RegisterAddress",
         component: RegisterAddress
     }, {
+        path: "/UpdateAuthor",
+        name: "UpdateAuthor",
+        component: UpdateAuthor
+    },{
         path: "/Recovery",
         name: "Recovery",
         component: Recovery
