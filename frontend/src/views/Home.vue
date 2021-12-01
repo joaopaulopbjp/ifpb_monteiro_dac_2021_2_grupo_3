@@ -4,13 +4,10 @@
     <Side-bar @click="openModelLogin" />
     <Login :style="isDisplay" @click="closeModalLogin"/>
     <RegisterUser :style="isDisplayRegister"/>
-    <div class="container d-flex flex-wrap justify-content-center p-2">
+    <div class="container d-flex flex-wrap justify-content-center p-2" id="books-div">
         
         <div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
           <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-           <!-- <img src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUA
-            AAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO
-                9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Red dot" /> -->
           <h6 class="mt-2">A garota do lago</h6>
           <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
           <div class="d-flex justify-content-center" style="height: 8vh;">
@@ -85,13 +82,13 @@
   
     </div>
     <div>
-      <b-pagination-nav
-        v-model="currentPage"
-        :number-of-pages="pages"
-        base-url="#"
+        <b-pagination id="navegation-pages"
+        v-model="currentPageNumber"
+        :total-rows="rows"
+        :per-page="perPage"
         first-number
         align="center"
-      ></b-pagination-nav>
+      ></b-pagination>
     </div>
     <Footer/>
   </div>
@@ -104,6 +101,9 @@ import SideBar from '../components/SideBar.vue'
 import Login from '../modal/Login.vue'
 import RegisterUser from '../modal/RegisterUser.vue'
 
+import { HomeService } from '../service/compiled/home/HomeService'
+let homeService = new HomeService();
+
 export default {
     name: "Home",
     components: { NavBar , SideBar, Footer, Login, RegisterUser},
@@ -111,9 +111,15 @@ export default {
       return {
         isDisplay: "display: none;",
         isDisplayRegister: "display: none;",
-        pages: 100,
-        currentPage: 5
+        currentPageNumber: 1,
+        rows: 10,
+        perPage: 1
       }
+    },
+    mounted() {
+      this.initPageSize();
+      this.initPageNav();
+      homeService.renderbook(0);
     },
     methods: {
       closeModalLogin(){
@@ -127,6 +133,18 @@ export default {
       },
       openModelRegister() {
         this.isDisplayRegister = "display: flex;"
+      },
+      initPageSize() {
+        homeService.getTotalPages().then(num => {
+          this.rows = num;
+        })
+      },
+      initPageNav() {
+        document.getElementById("navegation-pages").addEventListener("click", () => {
+          if(this.currentPageNumber <= this.rows) {
+            homeService.renderbook(this.currentPageNumber - 1);
+          }
+        })
       }
     },
 }

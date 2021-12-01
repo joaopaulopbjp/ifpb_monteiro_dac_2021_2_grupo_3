@@ -30,7 +30,7 @@ class SideBarApi {
             let divProfile = document.getElementById("profileImage");
 
             let json = await apiResponse.json();
-            if(json['image'] !== null) {
+            if(json['image'] !== undefined) {
                 divProfile.innerHTML = 
                     `<img src="${json["image"]}" width="150vw" height="150vw" style="border-radius: 50%"/>`
             } else {
