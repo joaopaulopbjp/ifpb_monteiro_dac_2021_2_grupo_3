@@ -85,4 +85,5 @@ export default {
     background-color: transparent;
     border: none;
 }
+
 </style>

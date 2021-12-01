@@ -1,6 +1,6 @@
 <template>
     <footer class="page-footer" style="background-color: #955DBC">
-        <div class="bg-warning">
+        <div style="background-color: #FCB13A">
             <div class="container">
                 <div class="row py-4 d-flex align-items-center">
                     <div class="col-md-12 text-center">
