@@ -84,6 +84,15 @@
         
   
     </div>
+    <div>
+      <b-pagination-nav
+        v-model="currentPage"
+        :number-of-pages="pages"
+        base-url="#"
+        first-number
+        align="center"
+      ></b-pagination-nav>
+    </div>
     <Footer/>
   </div>
 </template>
@@ -101,7 +110,9 @@ export default {
     data() {
       return {
         isDisplay: "display: none;",
-        isDisplayRegister: "display: none;"
+        isDisplayRegister: "display: none;",
+        pages: 100,
+        currentPage: 5
       }
     },
     methods: {
