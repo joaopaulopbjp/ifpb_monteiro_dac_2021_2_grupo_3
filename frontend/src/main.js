@@ -14,6 +14,7 @@ import UpdateCategory from "./modal/UpdateCategory.vue"
 import UpdateCompany from "./modal/UpdateCompany.vue"
 import DeleteAuthor from "./modal/DeleteAuthor.vue"
 import DeleteCategory from "./modal/DeleteCategory.vue"
+import DeleteCompany from "./modal/DeleteCompany.vue"
 import Recovery from "./modal/Recovery.vue"
 import ShoppingCart from "./views/ShoppingCart.vue"
 import Login from "./modal/Login.vue"
@@ -46,6 +47,7 @@ Vue.component("UpdateCategory",UpdateCategory);
 Vue.component("UpdateCompany",UpdateCompany);
 Vue.component("DeleteAuthor",DeleteAuthor);
 Vue.component("DeleteCategory",DeleteCategory);
+Vue.component("DeleteCompany",DeleteCompany);
 Vue.component("Recovery",Recovery);
 Vue.component("Login",Login);
 Vue.component("Product",Product);
