@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed">x</button>
+      <button id="closeButton" class="closed" @click="closeModalRegisCategory()">x</button>
       <svg width="70%" viewBox="0 0 528 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="398" y1="118" x2="528" y2="118" stroke="white" stroke-width="2"/>
       <line y1="118" x2="130" y2="118" stroke="white" stroke-width="2"/>
@@ -17,7 +17,13 @@
 </template>
 
 <script>
-  
+  export default{
+    methods:{
+      closeModalRegisCategory(){
+        this.$emit('click');
+      }
+    }
+  };
 </script>
 
 <style scoped>

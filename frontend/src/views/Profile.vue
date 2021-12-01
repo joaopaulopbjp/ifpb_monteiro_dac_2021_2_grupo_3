@@ -2,6 +2,9 @@
     <div>
         <Nav-bar/>
         <Side-bar/>
+        <Register-author :style="isDisplayAuthor" @click="closeModalRegisAuthor"/>
+        <Register-category :style="isDisplayCategory" @click="closeModalRegisCategory"/>
+        <Register-company :style="isDisplayCompany" @click="closeModalRegisCompany"/>
         <div class="container mt-2 mb-5">
             <b-card v-if="isAdmin()">
                 <div class="d-flex justify-content-between mb-4">
@@ -25,7 +28,7 @@
                     <div class="ml-3">
                         <h6>Target Author</h6>
                         <b-button-group vertical>
-                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
+                            <b-button @click="openModelRegisAuthor()" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-plus-circle"></i> Register Author
                             </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
@@ -37,9 +40,9 @@
                         </b-button-group>
                     </div>
                     <div class="ml-3">
-                        <h6>Target category</h6>
+                        <h6>Target Category</h6>
                         <b-button-group vertical>
-                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
+                            <b-button @click="openModelRegisCategory()" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-plus-circle"></i> Register Category
                             </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
@@ -51,9 +54,9 @@
                         </b-button-group>
                     </div>
                     <div class="ml-3">
-                        <h6>Target company</h6>
+                        <h6>Target Company</h6>
                         <b-button-group vertical>
-                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
+                            <b-button @click="openModelRegisCompany()" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-plus-circle"></i> Register Company
                             </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
@@ -178,13 +181,16 @@
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
+import RegisterAuthor from "../modal/RegisterAuthor.vue";
+import RegisterCompany from "../modal/RegisterCompany.vue";
 
 import { ProfileApi } from "../service/compiled/profile/ProfileApi.js";
+import RegisterCategory from '../modal/RegisterCategory.vue';
 let profileApi = new ProfileApi();
 
 export default {
     name: "Profile",
-    components: { NavBar, Footer, SideBar},
+    components: { NavBar, RegisterAuthor, Footer, SideBar, RegisterCategory, RegisterCompany},
     mounted() {
         this.setInfoOnVue()
         profileApi.editButtonEvent();
@@ -192,6 +198,13 @@ export default {
     },
     beforeMount() {
         this.loggedVerify();
+    },
+    data() {
+        return {
+            isDisplayAuthor:"display: none;",
+            isDisplayCategory:"display: none;",
+            isDisplayCompany:"display: none;",
+        }
     },
     methods: {
         isAdmin() {
@@ -205,6 +218,24 @@ export default {
             if(usernameLocal === null || usernameLocal === ""){
                 window.location.replace("/")
             }
+        },
+        closeModalRegisAuthor(){
+            this.isDisplayAuthor = "display: none;"
+        },
+        openModelRegisAuthor() {
+            this.isDisplayAuthor = "display: flex;"
+        },
+        closeModalRegisCategory(){
+            this.isDisplayCategory = "display: none;"
+        },
+        openModelRegisCategory() {
+            this.isDisplayCategory = "display: flex;"
+        },
+        closeModalRegisCompany(){
+            this.isDisplayCompany = "display: none;"
+        },
+        openModelRegisCompany() {
+            this.isDisplayCompany = "display: flex;"
         }
     }
 }
