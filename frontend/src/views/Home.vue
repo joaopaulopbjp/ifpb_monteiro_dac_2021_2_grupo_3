@@ -5,82 +5,6 @@
     <Login :style="isDisplay" @click="closeModalLogin"/>
     <RegisterUser :style="isDisplayRegister"/>
     <div class="container d-flex flex-wrap justify-content-center p-2" id="books-div">
-        
-        <div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-       
-        
-  
     </div>
     <div>
         <b-pagination id="navegation-pages"
@@ -113,8 +37,8 @@ export default {
         isDisplay: "display: none;",
         isDisplayRegister: "display: none;",
         currentPageNumber: 1,
-        rows: 10,
-        perPage: 1
+        rows: 0,
+        perPage: 5
       }
     },
     mounted() {

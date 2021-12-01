@@ -7,13 +7,13 @@ class HomeService {
         this.getBooks(pageNumber).then(async function(response) {
           let json = await response.json();
           json.forEach(element => {
-            html += `<div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" value="${element["id"]}" >
-            <img style="height: 15vw;" src="${element["imageList"]["base64"]}" alt="">
+            html += `<div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
+            <img style="height: 30vh; width:12vw" src="${element["imageList"][0]["base64"]}" alt="">
             <h6 class="mt-2">${element["title"]}</h6>
             <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-            <div class="d-flex justify-content-center" style="height: 8vh;">
-              <b-button class="btn-sm" variant="dark" style="border-radius: 10px 0px 0px 10px; background-color: #955DBC;">R$: ${element["price"]}</b-button>
-              <b-button class="btn-sm " style="border-radius: 0px 10px 10px 0px; background-color: #FCB13A;">ADD TO CART</b-button>
+            <div class="d-flex justify-content-center">
+              <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: ${element["price"]}</span>
+              <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
             </div>
           </div>`
           });
@@ -27,6 +27,7 @@ class HomeService {
         })
         .then(async function(response) {
           let json = await response.json();
+          alert(json['response'])
           return json['response']
         });
     }
