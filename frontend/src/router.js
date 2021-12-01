@@ -12,6 +12,12 @@ import RegisterAddress from "./modal/RegisterAddress.vue"
 import Recovery from "./modal/Recovery.vue"
 import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
+import UpdateAuthor from "./modal/UpdateAuthor.vue"
+import UpdateCategory from "./modal/UpdateCategory.vue"
+import UpdateCompany from "./modal/UpdateCompany.vue"
+import DeleteAuthor from "./modal/DeleteAuthor.vue"
+import DeleteCategory from "./modal/DeleteCategory.vue"
+import DeleteCompany from "./modal/DeleteCompany.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -59,6 +65,30 @@ export default new Router({
         name: "RegisterAddress",
         component: RegisterAddress
     }, {
+        path: "/UpdateAuthor",
+        name: "UpdateAuthor",
+        component: UpdateAuthor
+    }, {
+        path: "/UpdateCategory",
+        name: "UpdateCategory",
+        component: UpdateCategory
+    }, {
+        path: "/UpdateCompany",
+        name: "UpdateCompany",
+        component: UpdateCompany
+    }, {
+        path: "/DeleteAuthor",
+        name: "DeleteAuthor",
+        component: DeleteAuthor
+    }, {
+        path: "/DeleteCategory",
+        name: "DeleteCategory",
+        component: DeleteCategory
+    }, {
+        path: "/DeleteCompany",
+        name: "DeleteCompany",
+        component: DeleteCompany
+    },{
         path: "/Recovery",
         name: "Recovery",
         component: Recovery

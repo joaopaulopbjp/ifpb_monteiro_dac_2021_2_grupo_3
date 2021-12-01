@@ -37,7 +37,7 @@ public class BookRepositoryService {
     }
 
     public Integer getTotalPages() {
-        return (int) Math.floor(bookRepository.findAll().size() / Integer.parseInt(numberOfItemsPerPage));
+        return (int) Math.ceil(((float) (bookRepository.findAll().size()) / Float.parseFloat(numberOfItemsPerPage)));
     }
 
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {

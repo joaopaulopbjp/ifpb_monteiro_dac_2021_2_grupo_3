@@ -28,13 +28,14 @@ class SideBarApi {
         }).then(async function (apiResponse) {
             let divProfile = document.getElementById("profileImage");
             let json = await apiResponse.json();
-            if (json['image'] !== null) {
+            if (json['image'] !== undefined) {
                 divProfile.innerHTML =
                     `<img src="${json["image"]}" width="150vw" height="150vw" style="border-radius: 50%"/>`;
             }
             else {
                 divProfile.innerHTML =
-                    '<b-avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></b-avatar>';
+                    // '<b-avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></b-avatar>'
+                    '<img src="${json["image"]}" width="150vw" height="150vw" style="border-radius: 50%"/>';
             }
         });
     }

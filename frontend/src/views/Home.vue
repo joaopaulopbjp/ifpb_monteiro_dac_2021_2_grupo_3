@@ -4,92 +4,16 @@
     <Side-bar @click="openModelLogin" />
     <Login :style="isDisplay" @click="closeModalLogin"/>
     <RegisterUser :style="isDisplayRegister"/>
-    <div class="container d-flex flex-wrap justify-content-center p-2">
-        
-        <div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-        <div class="text-center border border-warning ml-3 mb-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
-          <img style="height: 15vw;" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-          <h6 class="mt-2">A garota do lago</h6>
-          <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
-          <div class="d-flex justify-content-center">
-            <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: 17,90</span>
-            <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
-          </div>
-        </div>
-       
-        
-  
+    <div class="container d-flex flex-wrap justify-content-center p-2" id="books-div">
     </div>
     <div>
-      <b-pagination-nav
-        v-model="currentPage"
-        :number-of-pages="pages"
-        base-url="#"
+        <b-pagination id="navegation-pages"
+        v-model="currentPageNumber"
+        :total-rows="rows"
+        :per-page="perPage"
         first-number
         align="center"
-      ></b-pagination-nav>
+      ></b-pagination>
     </div>
     <Footer/>
   </div>
@@ -102,6 +26,9 @@ import SideBar from '../components/SideBar.vue'
 import Login from '../modal/Login.vue'
 import RegisterUser from '../modal/RegisterUser.vue'
 
+import { HomeService } from '../service/compiled/home/HomeService'
+let homeService = new HomeService();
+
 export default {
     name: "Home",
     components: { NavBar , SideBar, Footer, Login, RegisterUser},
@@ -109,9 +36,14 @@ export default {
       return {
         isDisplay: "display: none;",
         isDisplayRegister: "display: none;",
-        pages: 100,
-        currentPage: 5
+        currentPageNumber: 1,
+        rows: 0,
+        perPage: 1
       }
+    },
+    mounted() {
+      this.initPageSize();
+      homeService.renderbook(0);
     },
     methods: {
       closeModalLogin(){
@@ -125,6 +57,19 @@ export default {
       },
       openModelRegister() {
         this.isDisplayRegister = "display: flex;"
+      },
+      initPageSize() {
+        homeService.getTotalPages().then(num => {
+          this.rows = num;
+          this.initPageNav();
+        })
+      },
+      initPageNav() {
+        document.getElementById("navegation-pages").addEventListener("click", () => {
+          if(this.currentPageNumber <= this.rows) {
+            homeService.renderbook(this.currentPageNumber - 1);
+          }
+        })
       }
     },
 }
