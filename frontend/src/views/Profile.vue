@@ -25,6 +25,9 @@
                     <div class="ml-3">
                         <h6>Target Author</h6>
                         <b-button-group vertical>
+                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Author
+                            </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Author
                             </b-button>
@@ -36,6 +39,9 @@
                     <div class="ml-3">
                         <h6>Target category</h6>
                         <b-button-group vertical>
+                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Category
+                            </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Category
                             </b-button>
@@ -47,6 +53,9 @@
                     <div class="ml-3">
                         <h6>Target company</h6>
                         <b-button-group vertical>
+                            <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
+                                <i class="fas fa-plus-circle"></i> Register Company
+                            </b-button>
                             <b-button pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Company
                             </b-button>
