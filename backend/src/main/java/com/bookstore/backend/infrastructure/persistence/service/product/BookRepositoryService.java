@@ -36,6 +36,10 @@ public class BookRepositoryService {
         return bookRepository;
     }
 
+    public Integer getTotalPages() {
+        return (int) Math.floor(bookRepository.findAll().size() / Integer.parseInt(numberOfItemsPerPage));
+    }
+
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 

@@ -175,6 +175,10 @@ public class BookService {
         return bookRepositoryService.findBooksUnavailable(pageNumber);
     }
 
+    public Integer getTotalPages() {
+        return bookRepositoryService.getTotalPages();
+    }
+
     private void validate(BookModel book) throws IllegalArgumentException{
         
         if(book.getPrice() != null && book.getPrice().doubleValue() < 0){

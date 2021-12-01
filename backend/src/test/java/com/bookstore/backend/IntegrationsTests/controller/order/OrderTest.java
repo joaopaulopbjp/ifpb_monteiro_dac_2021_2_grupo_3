@@ -1,4 +1,4 @@
-package com.bookstore.backend.TestsMocks.controller.order;
+package com.bookstore.backend.IntegrationsTests.controller.order;
 
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.boot.test.context.SpringBootTest;
