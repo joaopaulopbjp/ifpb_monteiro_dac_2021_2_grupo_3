@@ -16,6 +16,7 @@ import UpdateAuthor from "./modal/UpdateAuthor.vue"
 import UpdateCategory from "./modal/UpdateCategory.vue"
 import UpdateCompany from "./modal/UpdateCompany.vue"
 import DeleteAuthor from "./modal/DeleteAuthor.vue"
+import DeleteCategory from "./modal/DeleteCategory.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -78,6 +79,10 @@ export default new Router({
         path: "/DeleteAuthor",
         name: "DeleteAuthor",
         component: DeleteAuthor
+    }, {
+        path: "/DeleteCategory",
+        name: "DeleteCategory",
+        component: DeleteCategory
     },{
         path: "/Recovery",
         name: "Recovery",

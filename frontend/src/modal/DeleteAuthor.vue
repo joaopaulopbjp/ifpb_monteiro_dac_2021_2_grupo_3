@@ -19,7 +19,7 @@
       </svg>
 
       
-      <div id="authorsOptions" class="p-3 form-input d-flex flex-column m-auto rounded" style="width: 55%">
+      <div id="authorsOptions" class="p-3 form-input d-flex flex-column m-auto rounded" style="width: 55%;height: 30vh;">
         <span><input type="checkbox" name="" id="nameInput"> Brito</span>
         <span><input type="checkbox" name="" id="nameInput"> Brito</span>
         <span><input type="checkbox" name="" id="nameInput"> Brito</span>
