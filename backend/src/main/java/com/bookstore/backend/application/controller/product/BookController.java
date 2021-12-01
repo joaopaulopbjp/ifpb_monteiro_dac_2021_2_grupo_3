@@ -197,4 +197,14 @@ public class BookController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
     }
+
+    @GetMapping("/find/get-total-page")
+    public ResponseEntity<?> findBookstotalpage(){
+        try {
+            Integer total = bookServices.getTotalPages();
+            return ResponseEntity.status(HttpStatus.OK).body(total);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
 }
