@@ -14,6 +14,7 @@ import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
 import UpdateAuthor from "./modal/UpdateAuthor.vue"
 import UpdateCategory from "./modal/UpdateCategory.vue"
+import UpdateCompany from "./modal/UpdateCompany.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -68,6 +69,10 @@ export default new Router({
         path: "/UpdateCategory",
         name: "UpdateCategory",
         component: UpdateCategory
+    }, {
+        path: "/UpdateCompany",
+        name: "UpdateCompany",
+        component: UpdateCompany
     },{
         path: "/Recovery",
         name: "Recovery",

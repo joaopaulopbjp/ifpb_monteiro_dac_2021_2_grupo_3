@@ -12,7 +12,7 @@
       </defs>
       </svg>
       
-      <select id="companyInput" class="mt-4 p-2 form-input" style="width: 55%">
+      <select id="authorInput" class="mt-4 p-2 form-input" style="width: 55%">
         <option selected disabled value="">Select a Author</option>
       </select>
       <input type="text" id="nameInput" class="mt-4 p-2 form-input" style="width: 55%" placeholder="New Name">
