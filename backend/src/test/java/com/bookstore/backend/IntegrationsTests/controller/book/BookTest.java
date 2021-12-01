@@ -1,6 +1,5 @@
 package com.bookstore.backend.IntegrationsTests.controller.book;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -9,24 +8,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 
 import com.bookstore.backend.TestsController;
-import com.bookstore.backend.configs.ConfigClass;
-import com.bookstore.backend.presentation.dto.author.AuthorDTO;
-import com.bookstore.backend.presentation.dto.category.CategoryDTO;
-import com.bookstore.backend.presentation.dto.company.PublishingCompanyDTO;
 import com.bookstore.backend.presentation.dto.image.ImageDTO;
 import com.bookstore.backend.presentation.dto.inventory.InventoryDTO;
-import com.bookstore.backend.presentation.dto.login.CredentialsDTO;
-import com.bookstore.backend.presentation.dto.person.UserDTO;
 import com.bookstore.backend.presentation.dto.product.BookDTO;
-import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
-import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.Assert.assertEquals;
@@ -34,17 +21,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(OrderAnnotation.class)
 public class BookTest extends TestsController{
 
-    
     @Test
     @Order(1)
     public void testSaveBook() throws JsonProcessingException, Exception {
