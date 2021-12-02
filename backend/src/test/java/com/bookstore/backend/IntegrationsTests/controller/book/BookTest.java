@@ -1,6 +1,5 @@
 package com.bookstore.backend.IntegrationsTests.controller.book;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -92,12 +91,15 @@ public class BookTest extends TestsController{
     }
     @Test
     @Order(2)
-    public void findByTitle() throws JsonProcessingException, Exception {
-        String varTitle = "Em busca da batata perdida";
+    public void updateBook() throws JsonProcessingException, Exception {
+        String varTitle = "A mordida do boi banguela";
         
         BookDTO dto = new BookDTO();
+        dto.setId(1L);
         dto.setTitle(varTitle);
-        MvcResult book = mockMvc.perform(post(URLbase + "/book/find/find-by-title")
+        dto.setYearLaunch(2020);
+        
+        MvcResult bookUpdate = mockMvc.perform(put(URLbase+"/book")
             .header("Authorization", this.getToken("admin", "admin"))
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)))
@@ -105,11 +107,30 @@ public class BookTest extends TestsController{
             .andReturn();
             
 
-        JSONObject myBook = new JSONObject(book.getResponse().getContentAsString());
+        JSONObject myBook = new JSONObject(bookUpdate.getResponse().getContentAsString());
         assertNotNull(myBook);
         assertEquals(varTitle.length(), myBook.getString("title").length());
+        assertEquals(2020, myBook.getInt("yearLaunch"));
         assertTrue(varTitle.equals(myBook.getString("title")));
     
+    }
+
+    @Test
+    @Order(3)
+    public void deleteBook() throws JsonProcessingException, Exception {
+        
+        BookDTO dto = new BookDTO();
+        dto.setId(1L);
+        
+        MvcResult book = mockMvc.perform(delete(URLbase +"/book")
+            .header("Authorization", this.getToken("admin", "admin"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isOk())
+            .andReturn();
+
+        assertTrue(book.getResponse().getContentAsString().equals(""));
+        
     }
 
 
