@@ -17,7 +17,7 @@ class ProfileApi {
         let usernameLocal = window.localStorage.getItem("username");
 
         if(!this.isAdmin()) {
-            url = "/user/find-by-username";
+            url = "/user/find/find-by-username";
         }
 
         return fetch('http://localhost:8080/api' + url, {

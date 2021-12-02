@@ -15,7 +15,7 @@ class HomeService {
               <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
               <div class="d-flex justify-content-center">
                 <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: ${element["price"]}</span>
-                <button style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
+                <button id="addCartButton" value="${element["id"]}" style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
               </div>
             </div>`;
             });
@@ -25,6 +25,27 @@ class HomeService {
               (element as HTMLButtonElement).addEventListener("click", () => {
                 window.localStorage.setItem("productId", element.attributes.getNamedItem("value").value);
                 window.location.replace("http://localhost:8081/#/product");
+              })
+            });
+            bookDiv.querySelectorAll('[id=addCartButton]').forEach(element => {
+              element;
+              (element as HTMLButtonElement).addEventListener("click", () => {
+                if(window.localStorage.getItem("isAdmin") !== "true") {
+                  fetch('http://localhost:8080/api/shopping-cart/add', {
+                      method: 'POST',
+                      headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                      },
+                      body: JSON.stringify({
+                        itemList: [{
+                          amount: 1,
+                          idProduct: (element as HTMLButtonElement).value
+                        }]
+                      })
+                  });
+                }
               })
             });
         })

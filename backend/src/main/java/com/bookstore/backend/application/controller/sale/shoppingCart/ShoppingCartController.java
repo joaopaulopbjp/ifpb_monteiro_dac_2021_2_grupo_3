@@ -7,6 +7,7 @@ import com.bookstore.backend.domain.model.sale.ShoppingCartModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
 import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
+import com.bookstore.backend.presentation.response.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,9 +38,9 @@ public class ShoppingCartController {
             dto = (ShoppingCartDTO) ModelMapperService.convertToDTO(shoppingCartModel, ShoppingCartDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
@@ -52,9 +53,9 @@ public class ShoppingCartController {
             dto = (ShoppingCartDTO) ModelMapperService.convertToDTO(shoppingCartModel, ShoppingCartDTO.class);
             return ResponseEntity.status(HttpStatus.OK).body(dto);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
@@ -64,9 +65,21 @@ public class ShoppingCartController {
             ShoppingCartModel shoppingCart = shoppingCartService.findShoppingCart(principal.getName());
             return ResponseEntity.status(HttpStatus.OK).body(shoppingCart);
         } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/get-total")
+    public ResponseEntity<?> getTotal(Principal principal){
+        try {
+            Integer num = shoppingCartService.getTotal(principal.getName());
+            return ResponseEntity.status(HttpStatus.OK).body(new Response(num.toString()));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 }
