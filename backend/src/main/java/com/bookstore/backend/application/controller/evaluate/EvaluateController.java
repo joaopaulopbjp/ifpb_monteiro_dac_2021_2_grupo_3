@@ -36,10 +36,8 @@ public class EvaluateController {
             evaluate = evaluateService.save(evaluate, dto.getIdBook(), principal.getName());
             dto = (EvaluateDTO) ModelMapperService.convertToDTO(evaluate, EvaluateDTO.class);
             return ResponseEntity.status(HttpStatus.CREATED).body(dto);
-        } catch (NotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(new Response(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         } 
     }
 
@@ -63,7 +61,7 @@ public class EvaluateController {
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
 
