@@ -122,7 +122,7 @@ public class BookController {
         }
     }
     
-    @GetMapping("/find/find-by-id")
+    @PostMapping("/find/find-by-id")
     public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
         try {
             BookModel book = bookServices.findById(dto.getId());
@@ -137,7 +137,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find/find-by-title")
+    @PostMapping("/find/find-by-title")
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
             List<BookModel> book = bookServices.findByTitle(dto.getTitle());

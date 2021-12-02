@@ -1,5 +1,6 @@
 package com.bookstore.backend.IntegrationsTests.controller.book;
 
+import org.junit.Assert;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -17,6 +18,8 @@ import org.json.JSONObject;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,7 +40,7 @@ public class BookTest extends TestsController{
         dto.setDescription("description");
         dto.setYearLaunch(2000);
         dto.setPages(10);
-        dto.setPrice(new BigDecimal(10.50));
+        dto.setPrice(new BigDecimal(10));
         InventoryDTO inventory = new InventoryDTO();
         inventory.setAmount(10);
         dto.setInventory(inventory);
@@ -73,7 +76,7 @@ public class BookTest extends TestsController{
         BookDTO dtoCopy = dto;
         dto = new BookDTO();
         dto.setId(1L);
-        MvcResult book = mockMvc.perform(get(URLbase + "/book/find/find-by-id")
+        MvcResult book = mockMvc.perform(post(URLbase + "/book/find/find-by-id")
             .header("Authorization", this.getToken("admin", "admin"))
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto)))
@@ -82,12 +85,38 @@ public class BookTest extends TestsController{
             
 
         JSONObject myBook = new JSONObject(book.getResponse().getContentAsString());
-        assertEquals(dtoCopy.getTitle(), myBook.getString("title"));
+        assertEquals(dtoCopy.getPages(), myBook.getInt("pages"));
         assertEquals(10, myBook.getJSONObject("inventory").getInt("amount"));
         assertNotNull(myBook.getString("description"));
-        
-
+    
     }
+    @Test
+    @Order(2)
+    public void findByTitle() throws JsonProcessingException, Exception {
+        String varTitle = "Em busca da batata perdida";
+        
+        BookDTO dto = new BookDTO();
+        dto.setTitle(varTitle);
+        MvcResult book = mockMvc.perform(post(URLbase + "/book/find/find-by-title")
+            .header("Authorization", this.getToken("admin", "admin"))
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isOk())
+            .andReturn();
+            
+
+        JSONObject myBook = new JSONObject(book.getResponse().getContentAsString());
+        assertNotNull(myBook);
+        assertEquals(varTitle.length(), myBook.getString("title").length());
+        assertTrue(varTitle.equals(myBook.getString("title")));
+    
+    }
+
+
+
+    
+
+
 
     
 }
