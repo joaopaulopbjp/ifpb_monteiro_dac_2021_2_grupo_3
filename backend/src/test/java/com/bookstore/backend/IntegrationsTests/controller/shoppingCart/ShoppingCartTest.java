@@ -1,7 +1,6 @@
 package com.bookstore.backend.IntegrationsTests.controller.shoppingCart;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +9,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.bookstore.backend.TestsController;
-import com.bookstore.backend.presentation.dto.product.BookDTO;
 import com.bookstore.backend.presentation.dto.sale.ItemOrderDTO;
 import com.bookstore.backend.presentation.dto.sale.ShoppingCartDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -67,16 +65,6 @@ public class ShoppingCartTest extends TestsController{
     @Test
     @Order(2)
     public void addShoppingCartDois() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{
-
-        BookDTO dto = new BookDTO();
-        dto.setTitle("Em busca da batata perdida");
-
-        MvcResult result = mockMvc.perform(get(URLbase + "/book/find/find-by-title")
-            .header("Authorization", this.getToken("admin", "admin"))
-            .contentType("application/json")
-            .content(objectMapper.writeValueAsString(dto)))
-            .andExpect(status().isOk())
-            .andReturn();
 
         ShoppingCartDTO dto1 = new ShoppingCartDTO();
 
