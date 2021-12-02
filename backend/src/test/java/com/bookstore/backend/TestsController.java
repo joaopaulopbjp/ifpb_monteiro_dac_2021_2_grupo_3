@@ -62,7 +62,7 @@ public class TestsController {
         UserDTO dto = new UserDTO();
         dto.setUsername("user");
         dto.setPassword("userPass");
-        dto.setEmail("user@gmail.com");
+        dto.setEmail("userTest@gmail.com");
 
         MvcResult result = mockMvc.perform(post(URLbase + "/user/save")
             .contentType("application/json")
@@ -181,14 +181,22 @@ public class TestsController {
     }
 
     public MvcResult addShoppingCart() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{        
+        /* UserDTO user = new UserDTO();
+        user.setUsername("user");
+        user.setPassword("user123456");
+        user.setEmail("user@gmail.com");
+
+        mockMvc.perform(post(URLbase + "/user/save")
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(user)))
+            .andExpect(status().isCreated()); */
         this.saveUser();
-        
         ShoppingCartDTO dto = new ShoppingCartDTO();
         
         JSONObject jsonBook = new JSONObject(this.saveBook().getResponse().getContentAsString());
 
         List<ItemOrderDTO> list = new ArrayList<>();
-        list.add(new ItemOrderDTO(0l, 10, null, jsonBook.getLong("id")));
+        list.add(new ItemOrderDTO(0l, 5, null, jsonBook.getLong("id")));
 
         dto.setItemList(list);
         
