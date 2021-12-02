@@ -3,11 +3,11 @@
     <Nav-bar/>
     <Side-bar/>
     <div class="container d-flex justify-content-between mt-2 mb-5">
-        <div class="container d-grid justify-content-start w-75 h-100">
+        <div class="container d-grid justify-content-start w-75 h-100" id="itemsDiv">
             <b-card class="d-grid justify-content-start rounded">
                 <b-form-checkbox>Select all</b-form-checkbox>
             </b-card>
-            <b-card class="container rounded mt-2">
+            <!-- <b-card class="container rounded mt-2">
                 <div class="d-flex justify-content-between">
                     <b-form-checkbox></b-form-checkbox>
                     <b-button variant="outline-dark border-0"><i class="far fa-trash-alt w-100 h-100"></i></b-button>
@@ -48,7 +48,7 @@
                     </div>
                     <b-form-spinbutton class="mt-4" id="sb-inline" v-model="quantidade" inline style="background-color: #FCB13A;"></b-form-spinbutton>
                 </div>
-            </b-card>
+            </b-card> -->
         </div>
         <div class="container d-grid w-25 rounded-bottom sticky">
             <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
@@ -81,6 +81,9 @@ import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '../components/SideBar.vue'
 
+import { ShoppingCartService } from '../service/compiled/shoppingCart/ShoppingCartService';
+let shoppingCartService = new ShoppingCartService();
+
 export default {
     name: "ShoppingCart",
     components: { NavBar , SideBar, Footer},
@@ -94,6 +97,9 @@ export default {
             ],
             quantidade: 1,
         }
+    },
+    mounted() {
+        shoppingCartService.renderItens();
     }
 }
 </script>

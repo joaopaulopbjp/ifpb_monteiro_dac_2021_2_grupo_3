@@ -104,4 +104,9 @@ public class ShoppingCartService {
 
         return userOp.get().getShoppingCart();
     }
+
+    public Integer getTotal(String username) throws NotFoundException, Exception {
+        
+        return findShoppingCart(username).getItemList().size();
+    }
 }

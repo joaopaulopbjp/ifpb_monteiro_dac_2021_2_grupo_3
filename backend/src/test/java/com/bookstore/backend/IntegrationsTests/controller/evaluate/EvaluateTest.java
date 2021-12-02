@@ -48,4 +48,35 @@ public class EvaluateTest extends TestsController {
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isUnauthorized());
     }
+
+    @Test
+    @Order(3)
+    public void saveEvaluateForbidden() throws JsonProcessingException, Exception {
+        EvaluateDTO dto = new EvaluateDTO(0l, 5, "Muito bom", 1l, null);
+        
+        mockMvc.perform(post(URLbase + "/evaluate")
+            .contentType("application/json")
+            .content(objectMapper.writeValueAsString(dto)))
+            .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @Order(4)
+    public void saveEvaluateBadRequest() throws JsonProcessingException, Exception {
+        EvaluateDTO[] list = {new EvaluateDTO(0l, 0, "Muito bom", 1l, null),
+            new EvaluateDTO(0l, 6, "Muito bom", 1l, null),
+            new EvaluateDTO(0l, 5, "M", 1l, null),
+            new EvaluateDTO(0l, 5, "", 1l, null),
+            new EvaluateDTO(0l, 5, null, 1l, null),
+            new EvaluateDTO(0l, 5, "Muito bom", 0l, null)};
+
+        for (EvaluateDTO evaluateDTO : list) {
+            mockMvc.perform(post(URLbase + "/evaluate")
+                .header("Authorization", this.getToken("user", "userPass"))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(evaluateDTO)))
+                .andExpect(status().isBadRequest());
+        }
+        
+    }
 }

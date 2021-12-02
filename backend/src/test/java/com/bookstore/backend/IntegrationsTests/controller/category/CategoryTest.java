@@ -51,18 +51,30 @@ public class CategoryTest extends TestsController {
     @Order(3)
     public void findAllCategorySucess() throws JsonProcessingException, Exception {
         mockMvc.perform(get(URLbase + "/category/find/find-all/0")
-            .header("Authorization", this.getToken("admin", "admin"))
-            .contentType("application/json")
-            .content(""))
+            .header("Authorization", this.getToken("admin", "admin")))
             .andExpect(status().isOk());
     }
 
     @Test
     @Order(4)
     public void findAllCategoryErroForbbiden() throws JsonProcessingException, Exception {
-        mockMvc.perform(get(URLbase + "/category/find-all")
-            .contentType("application/json")
-            .content(""))
+        mockMvc.perform(get(URLbase + "/category/find-all"))
             .andExpect(status().isForbidden());
     }
+
+    @Test
+    @Order(5)
+    public void saveAdminCategoryError() throws JsonProcessingException, Exception {
+        CategoryDTO[] list = {new CategoryDTO(0l, ""),
+            new CategoryDTO(0l, null)};
+        
+        for (CategoryDTO categoryDTO : list) {
+            mockMvc.perform(post(URLbase + "/category")
+                .header("Authorization", this.getToken("admin", "admin"))
+                .contentType("application/json")
+                .content(objectMapper.writeValueAsString(categoryDTO)))
+                .andExpect(status().isBadRequest());
+        }
+    }
+
 }

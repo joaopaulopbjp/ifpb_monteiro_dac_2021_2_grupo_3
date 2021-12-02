@@ -15,7 +15,7 @@
           <b-nav-item>
               <b-button class="align-items-left" variant="outline-light" to="ShoppingCart">
                   <i class="fas fa-shopping-cart" style="width: 50"></i>
-                  <b-badge class="ml-2 mt-0" variant="danger"> 0</b-badge>
+                  <b-badge class="ml-2 mt-0" variant="danger">{{shoppingCartSize}}</b-badge>
               </b-button>
           </b-nav-item>
           <b-nav-item>
@@ -36,8 +36,29 @@ export default {
   data() {
     return {
       menuActive: false,
+      shoppingCartSize: "0"
     };
   },
+  mounted() {
+    this.getShoppingCartSize()
+  },
+  methods: {
+    async getShoppingCartSize() {
+      if(window.localStorage.getItem("token") !== null && window.localStorage.getItem("token") !== "" ) {
+        this.shoppingCartSize = await fetch('http://localhost:8080/api/shopping-cart/get-total', {
+            method: 'GET',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+            }
+        }).then(async function(response) {
+          let json = await response.json();
+          return json["response"];
+        });
+      }
+    }
+  }
 };
 </script>
 
