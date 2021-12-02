@@ -140,9 +140,12 @@ public class BookController {
     @PostMapping("/find/find-by-title")
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
-            List<BookModel> book = bookServices.findByTitle(dto.getTitle());
-            dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
+            List<BookModel> bookList = bookServices.findByTitle(dto.getTitle());
+            List<BookDTO> dtoList = new ArrayList<>();
+            for (BookModel bookModel : bookList) {
+                dtoList.add(((BookDTO) ModelMapperService.convertToDTO(bookModel, BookDTO.class)));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(dtoList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (DataIntegrityViolationException e) {
