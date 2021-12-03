@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed">x</button>
+      <button id="closeButton" class="closed" @click="closeModalRecovery()">x</button>
       <svg class="mb-4" width="70%" viewBox="0 0 411 140" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="206" cy="52" r="51" stroke="white" stroke-width="2"/>
       <g clip-path="url(#clip0_8_260)">
@@ -19,22 +19,26 @@
 
       <b-form-input id="emailInput" class="form-input" placeholder="Email"></b-form-input>
       <b-form-input id="codeInput" class="form-input" placeholder="Code"></b-form-input>
-      <b-form-input id="passwordInput" class="form-input" placeholder="Password"></b-form-input>
-      <b-form-input id="confirmInput" class="form-input mt-4" placeholder="Confirm Password"></b-form-input>
+      <b-form-input id="passwordInputRecovery" class="form-input" placeholder="Password"></b-form-input>
+      <b-form-input id="confirmInputRecovery" class="form-input mt-4" placeholder="Confirm Password"></b-form-input>
       <b-button class="mt-3" block variant="outline-warning">Send</b-button>
       <div class="d-flex divider-menu mt-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">
           <p>Return to </p>
-          <router-link class="text-decoration-none text-warning ml-2" to="Login" >
-            <p style="font-size: 1.1em">Login</p>
-          </router-link>
+          <p class="text-decoration-none text-warning ml-2" @click="closeModalRecovery()" style="font-size: 1.1em">Login</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  
+  export default {
+  methods: {
+      closeModalRecovery(){
+          this.$emit('click');
+      }
+    },
+  }
 </script>
 
 <style scoped>

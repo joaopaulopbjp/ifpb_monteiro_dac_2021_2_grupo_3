@@ -64,7 +64,7 @@ public class ShoppingCartTest extends TestsController{
 
     @Test
     @Order(2)
-    public void addShoppingCartDois() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{
+    public void addShoppingCartDoisError() throws JsonProcessingException, JSONException, UnsupportedEncodingException, Exception{
 
         ShoppingCartDTO dto1 = new ShoppingCartDTO();
 
@@ -79,7 +79,7 @@ public class ShoppingCartTest extends TestsController{
             .contentType("application/json")
             .content(objectMapper.writeValueAsString(dto1)))
             .andExpect(status().isBadRequest());
-
+        
     }
 
     @Test
@@ -193,6 +193,4 @@ public class ShoppingCartTest extends TestsController{
             .content(objectMapper.writeValueAsString(dto)))
             .andExpect(status().isNotFound());
     }
-
-    
 }
