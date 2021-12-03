@@ -56,6 +56,8 @@ class ProfileApi {
         let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput") as HTMLInputElement;
         let imageInput = document.getElementById("imageInput") as HTMLInputElement;
 
+        let saveButton = document.getElementById("saveButton");
+
         editButton.addEventListener("click", () => {
             if((editButton as HTMLInputElement).value === "disabled") {
                 emailInput.attributes.removeNamedItem("disabled");
@@ -64,6 +66,8 @@ class ProfileApi {
                 newPasswordInput.attributes.removeNamedItem("disabled");
                 confirmNewPasswordInput.attributes.removeNamedItem("disabled");
                 imageInput.attributes.removeNamedItem("disabled");
+
+                saveButton.style.display = "inline";
 
                 (editButton as HTMLInputElement).value = "enabled";
                 
@@ -74,6 +78,8 @@ class ProfileApi {
                 newPasswordInput.setAttribute("disabled", "");
                 confirmNewPasswordInput.setAttribute("disabled", "");
                 imageInput.setAttribute("disabled", "");
+
+                saveButton.style.display = "none";
 
                 this.setInfoOnVue();
 

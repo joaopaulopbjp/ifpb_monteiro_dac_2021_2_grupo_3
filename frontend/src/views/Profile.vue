@@ -96,7 +96,7 @@
                 <div class="d-flex justify-content-start mb-4">
                     <b-form-file accept="image/jpeg, image/png" id="imageInput" style="width: 25%" class=" mr-3" disabled></b-form-file>
                 </div>
-                <b-button variant="outline-success" class="my-2 my-sm-0" id="saveButton" type="submit">
+                <b-button variant="outline-success" class="my-2 my-sm-0" id="saveButton" style="display: none" type="submit">
                   <i class="far fa-save"></i> Save
                 </b-button>
             </b-card>

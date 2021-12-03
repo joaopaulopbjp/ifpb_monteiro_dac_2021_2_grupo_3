@@ -34,8 +34,8 @@ class SideBarApi {
             }
             else {
                 divProfile.innerHTML =
-                     '<h6>Profile</h6>'
-                    //`<img src='../image/menu-aberto.png' width=\"150vw\" height=\"150vh\">`;
+                    '<avatar variant="dark" text="PS" class="text-decoration-none mb-3" size="5rem"></avatar>';
+                //`<img src='../image/menu-aberto.png' width=\"150vw\" height=\"150vh\">`
             }
         });
     }

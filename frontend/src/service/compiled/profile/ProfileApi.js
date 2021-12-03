@@ -49,6 +49,7 @@ class ProfileApi {
         let newPasswordInput = document.getElementById("newPasswordInput");
         let confirmNewPasswordInput = document.getElementById("confirmNewPasswordInput");
         let imageInput = document.getElementById("imageInput");
+        let saveButton = document.getElementById("saveButton");
         editButton.addEventListener("click", () => {
             if (editButton.value === "disabled") {
                 emailInput.attributes.removeNamedItem("disabled");
@@ -57,6 +58,7 @@ class ProfileApi {
                 newPasswordInput.attributes.removeNamedItem("disabled");
                 confirmNewPasswordInput.attributes.removeNamedItem("disabled");
                 imageInput.attributes.removeNamedItem("disabled");
+                saveButton.style.display = "inline";
                 editButton.value = "enabled";
             }
             else {
@@ -66,6 +68,7 @@ class ProfileApi {
                 newPasswordInput.setAttribute("disabled", "");
                 confirmNewPasswordInput.setAttribute("disabled", "");
                 imageInput.setAttribute("disabled", "");
+                saveButton.style.display = "none";
                 this.setInfoOnVue();
                 editButton.value = "disabled";
             }
