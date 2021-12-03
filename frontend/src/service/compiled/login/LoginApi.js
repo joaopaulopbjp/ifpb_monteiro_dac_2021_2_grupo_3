@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LoginApi = void 0;
 class LoginApi {
     login() {
-        let usernameInput = document.getElementById("usernameInput");
-        let passwordInput = document.getElementById("passwordInput");
+        let usernameInput = document.getElementById("usernameInputLogin");
+        let passwordInput = document.getElementById("passwordInputLogin");
         let errorMensage = document.getElementById("error-mensage");
         let closeButton = document.getElementById("closeButton");
         let logged = fetch('http://localhost:8080/api/login', {

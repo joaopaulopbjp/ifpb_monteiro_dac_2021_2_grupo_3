@@ -19,8 +19,8 @@
 
       <b-form-input id="emailInput" class="form-input" placeholder="Email"></b-form-input>
       <b-form-input id="codeInput" class="form-input" placeholder="Code"></b-form-input>
-      <b-form-input id="passwordInput" class="form-input" placeholder="Password"></b-form-input>
-      <b-form-input id="confirmInput" class="form-input mt-4" placeholder="Confirm Password"></b-form-input>
+      <b-form-input id="passwordInputRecovery" class="form-input" placeholder="Password"></b-form-input>
+      <b-form-input id="confirmInputRecovery" class="form-input mt-4" placeholder="Confirm Password"></b-form-input>
       <b-button class="mt-3" block variant="outline-warning">Send</b-button>
       <div class="d-flex divider-menu mt-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">

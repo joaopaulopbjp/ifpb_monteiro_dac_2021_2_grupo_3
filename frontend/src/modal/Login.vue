@@ -19,9 +19,9 @@
       </defs>
       </svg>
 
-      <b-form-input id="usernameInput" class="mt-4 form-input" placeholder="Username"></b-form-input>
+      <b-form-input id="usernameInputLogin" class="mt-4 form-input" placeholder="Username"></b-form-input>
       <b-form @submit.stop.prevent>
-          <b-form-input id="passwordInput" class="mt-3 form-input" type="password" placeholder="Password" aria-describedby="password-help-block" required></b-form-input>
+          <b-form-input id="passwordInputLogin" class="mt-3 form-input" type="password" placeholder="Password" aria-describedby="password-help-block" required></b-form-input>
       </b-form>
       <div id="error-mensage" style="display: none;">
         <p class="justify-content-start d-flex font-red" style="font-size: 2vh">Username or password is incorrect</p>
