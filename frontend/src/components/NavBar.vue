@@ -12,7 +12,7 @@
                   <i class="fas fa-search"></i>
               </b-button>
           </b-nav-form>
-          <b-nav-item>
+          <b-nav-item v-if="!isAdmin() && isLogged()">
               <b-button class="align-items-left" variant="outline-light" to="ShoppingCart">
                   <i class="fas fa-shopping-cart" style="width: 50"></i>
                   <b-badge class="ml-2 mt-0" variant="danger">{{shoppingCartSize}}</b-badge>
@@ -31,6 +31,8 @@
 </template>
 
 <script>
+import { ProfileApi } from "../service/compiled/profile/ProfileApi.js";
+let profileApi = new ProfileApi();
 export default {
   name: "Header",
   data() {
@@ -57,7 +59,17 @@ export default {
           return json["response"];
         });
       }
-    }
+    },
+    isAdmin() {
+      return profileApi.isAdmin();
+    },
+    isLogged() {
+        let usernameLocal = window.localStorage.getItem("token");
+        if(usernameLocal === null || usernameLocal === ""){
+            return false;
+        }
+        return true;
+    },
   }
 };
 </script>
