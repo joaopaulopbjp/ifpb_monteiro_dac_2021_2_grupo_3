@@ -107,21 +107,11 @@
                     <h4><i class="fas fa-shopping-basket"></i> Requests</h4>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                    <router-link class="text-decoration-none text-dark" to="">
-                        <b-card class="border border-dark rounded text-center" style="background-color: #D1B1E8; width: 250px;">
+                        <div class="border border-dark rounded text-center p-2" style="background-color: #D1B1E8; width: 250px;">
                             <h5>A garota do lago</h5>
-                            <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
+                            <button style=" background: transparent; border: none !important; font-size:0;"><img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt=""></button> 
                             <h5>R$: 17,90</h5>
-                        </b-card>
-                    </router-link>
-                    <router-link class="text-decoration-none text-dark" to="">
-                        <b-card class="border border-dark rounded ml-3 text-center" style="background-color: #D1B1E8; width: 250px;">
-                            <h5>A garota do lago</h5>
-                            <img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-                            <h5>R$: 17,90</h5>
-                        </b-card>
-                    </router-link>
-                    
+                        </div>
                 </div>
             </b-card>
         </div>
@@ -134,48 +124,20 @@
                     </b-button>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                        <b-card class="border border-dark rounded text-center" style="background-color: #D1B1E8; width: 280px;">
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="Av principal Nº 12"></b-form-input>
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="centro" ></b-form-input>
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="monteiro" ></b-form-input>
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="58540-123" ></b-form-input>
-                            <b-form-input class="sm-12 form-control-plaintext" type="text" placeholder="paraiba" ></b-form-input>
+                        
+                        <div class="border border-dark rounded text-center ml-3 p-3" style="background-color: #D1B1E8; width: 280px;">
+                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="Av principal Nº 12">
+                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="centro">
+                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="monteiro">
+                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="58540-123">
+                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="paraiba">
                             <div class="d-flex justify-content-end mt-2">
-                                <b-button variant="outline-danger" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="fas fa-times"></i>
-                                </b-button>
-                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="fas fa-pen"></i>
-                                </b-button>
-                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="fas fa-trash-alt"></i>
-                                </b-button>
-                                <b-button variant="success" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="far fa-save"></i> Save
-                                </b-button>
+                                <button class="style-btn-red" style="margin-left: 3px;"><i class="fas fa-times"></i></button>
+                                <button class="style-btn-yellow" style="margin-left: 3px;"><i class="fas fa-pen"></i></button>
+                                <button class="style-btn-dark" style="margin-left: 3px;"><i class="fas fa-trash-alt"></i></button>
+                                <button class="style-btn-green" style="margin-left: 3px;"><i class="far fa-save"></i></button>
                             </div>
-                        </b-card>
-                        <b-card class="border border-dark rounded text-center ml-3" style="background-color: #D1B1E8; width: 280px;">
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="Av principal Nº 12"></b-form-input>
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="centro" ></b-form-input>
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="monteiro" ></b-form-input>
-                            <b-form-input class="col-sm-12 form-control-plaintext" type="text" placeholder="58540-123" ></b-form-input>
-                            <b-form-input class="sm-12 form-control-plaintext" type="text" placeholder="paraiba" ></b-form-input>
-                            <div class="d-flex justify-content-end mt-2">
-                                <b-button variant="outline-danger" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="fas fa-times"></i>
-                                </b-button>
-                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="fas fa-pen"></i>
-                                </b-button>
-                                <b-button variant="outline-dark" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="fas fa-trash-alt"></i>
-                                </b-button>
-                                <b-button variant="success" class="my-2 my-sm-0 mr-2" type="submit">
-                                    <i class="far fa-save"></i> Save
-                                </b-button>
-                            </div>
-                        </b-card>
+                        </div>
                 </div>
             </b-card>
         </div>
@@ -300,5 +262,69 @@ export default {
 </script>
 
 <style scoped>
+
+.style-btn-red {
+    padding: 5px;
+    width: 3vw;
+    border-radius: 4px;
+    background-color: rgb(255, 0, 0);
+    color: rgb(255, 255, 255);
+    border: 2px solid #b44301; 
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.style-btn-red:hover {
+    background-color: #ffffff; /* Green */
+    color: rgb(255, 2, 2);
+}
+
+.style-btn-green {
+    padding: 5px;
+    width: 3vw;
+    border-radius: 4px;
+    background-color: rgb(21, 138, 11);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(11, 122, 1); /* Green */
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.style-btn-green:hover {
+    background-color: #ffffff; /* Green */
+    color: rgb(21, 138, 11);
+}
+
+.style-btn-dark {
+    padding: 5px;
+    width: 3vw;
+    border-radius: 4px;
+    background-color: rgb(49, 49, 49);
+    color: rgb(255, 255, 255);
+    border: 2px solid rgb(0, 0, 0); /* Green */
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.style-btn-dark:hover {
+    background-color: #ffffff; /* Green */
+    color: rgb(2, 2, 2);
+}
+
+.style-btn-yellow {
+    padding: 5px;
+    width: 3vw;
+    border-radius: 4px;
+    background-color: #E0A800;
+    color: rgb(255, 255, 255);
+    border: 2px solid #aa8000; /* Green */
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.style-btn-yellow:hover {
+    background-color: #ffffff; /* Green */
+    color: #E0A800;
+}
 
 </style>
