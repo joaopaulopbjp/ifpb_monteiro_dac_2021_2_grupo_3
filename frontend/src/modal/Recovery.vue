@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed">x</button>
+      <button id="closeButton" class="closed" @click="closeModalRecovery()">x</button>
       <svg class="mb-4" width="70%" viewBox="0 0 411 140" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="206" cy="52" r="51" stroke="white" stroke-width="2"/>
       <g clip-path="url(#clip0_8_260)">
@@ -25,16 +25,20 @@
       <div class="d-flex divider-menu mt-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">
           <p>Return to </p>
-          <router-link class="text-decoration-none text-warning ml-2" to="Login" >
-            <p style="font-size: 1.1em">Login</p>
-          </router-link>
+          <p class="text-decoration-none text-warning ml-2" @click="closeModalRecovery()" style="font-size: 1.1em">Login</p>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  
+  export default {
+  methods: {
+      closeModalRecovery(){
+          this.$emit('click');
+      }
+    },
+  }
 </script>
 
 <style scoped>

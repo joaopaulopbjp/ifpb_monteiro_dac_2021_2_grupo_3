@@ -1,7 +1,9 @@
 <template>
   <div id="LoginVue" class="boxextern">
+    <Register-user :style="isDisplayRegisterUser" @click="closeModalRegisterUser" />
+    <Recovery :style="isDisplayRecovery" @click="closeModalRecovery" />
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModelLogin">x</button>
+      <button id="closeButton" class="closed" @click="closeModelLogin()">x</button>
       <svg width="70%"  viewBox="0 0 383 140" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="189" cy="52" r="51" stroke="white" stroke-width="2"/>
       <g clip-path="url(#clip0_9_11)">
@@ -28,15 +30,13 @@
       <div class="d-flex justify-content-between text-light mt-2">
         <p><input type="checkbox" name="remember" id=""> Remember me</p>
         <router-link class="text-decoration-none text-white" to="" >
-          <p>Forget password?</p>
+          <p @click="openModalRecovery()">Forget password?</p>
         </router-link>
       </div>
       <div class="d-flex divider-menu mb-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">
-          <p>Not a member?</p>
-          <router-link class="text-decoration-none text-warning ml-2" to="RegisterUser" >
-            <p style="font-size: 1.1em">create account</p>
-          </router-link>
+            <p>Not a member?</p>
+            <p class="text-decoration-none text-warning ml-2" style="font-size: 1.1em" @click="openModalRegisterUser()">Create account</p>
       </div>
     </div>
   </div>
@@ -46,6 +46,12 @@
   import { LoginApi as LoginApiImport } from "../service/compiled/login/LoginApi.js";
   let loginApi = new LoginApiImport();
   export default {
+    data() {
+      return {
+        isDisplayRegisterUser:"display: none;",
+        isDisplayRecovery:"display: none;",
+      }
+    },
     methods: {
           login() {
             loginApi.login().then(status => {
@@ -56,6 +62,18 @@
           },
           closeModelLogin(){
               this.$emit('click');
+          },
+          closeModalRegisterUser(){
+            this.isDisplayRegisterUser = "display: none;"
+          },
+          openModalRegisterUser() {
+              this.isDisplayRegisterUser = "display: flex;"
+          },
+          closeModalRecovery(){
+            this.isDisplayRecovery = "display: none;"
+          },
+          openModalRecovery() {
+              this.isDisplayRecovery = "display: flex;"
           }
       },
   };

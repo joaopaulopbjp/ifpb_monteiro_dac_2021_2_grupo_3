@@ -1,7 +1,7 @@
 <template>
     <div class="boxextern">
     <div class="boxintern text-center p-5">
-      <button id="closeButton" class="closed">x</button>
+      <button id="closeButton" class="closed" @click="closeModalRegisterUser()">x</button>
       <svg width="70%" viewBox="0 0 417 140" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="209" cy="52" r="51" stroke="white" stroke-width="2"/>
         <g clip-path="url(#clip0_8_93)">
@@ -24,9 +24,7 @@
       <div class="d-flex divider-menu mt-3 mb-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">
           <p>Have account?</p>
-          <router-link class="text-decoration-none text-warning ml-2" to="Login" >
-            <p style="font-size: 1.1em">Login</p>
-          </router-link>
+          <p class="text-decoration-none text-warning ml-2" style="font-size: 1.1em" @click="closeModalRegisterUser()">Login</p>
       </div>
     </div>
   </div>
@@ -34,6 +32,11 @@
 
 <script>
 export default {
+  methods: {
+    closeModalRegisterUser(){
+        this.$emit('click');
+    }
+  },
 }
 </script>
 
