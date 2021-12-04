@@ -75,15 +75,6 @@ public class UserService {
     }
     
     public UserModel update(UserModel user, String username) throws Exception {
-        if(!userRepositoryService.getInstance().existsById(user.getId()))
-            throw new NotFoundException("User with id " + user.getId() + " not found");
-
-        boolean isAdmin = adminVerify.isAdmin(username);
-        if(!isAdmin) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findById(user.getId());
-            if(userOp.get().getUsername().equals(username))
-                throw new Exception("You can't update this user");
-        }
 
         if(user.getEmail() != null && !validate(user.getEmail()))
             throw new IllegalArgumentException(user.getEmail() + " is a invalid Email");
@@ -96,7 +87,7 @@ public class UserService {
             throw new IllegalArgumentException("Password must be at least 5 characters");
         }    
 
-        user = userRepositoryService.update(user);
+        user = userRepositoryService.update(user, username);
         return user;
     }
 

@@ -33,21 +33,21 @@ public class UserRepositoryService {
         return userRepository;
     }
 
-    public UserModel update(UserModel userModel) throws NotFoundException {
+    public UserModel update(UserModel userModel, String username) throws NotFoundException {
         UserModel userDB = null;
         try {
-            userDB = userRepository.findById(userModel.getId()).get();
+            userDB = userRepository.findByUsername(username).get();
 
         } catch (NoSuchElementException e) {
             throw new NotFoundException();
         }
 
-        if(userModel.getPassword() != null) {
-            try {
+        try {
+            if(userModel.getPassword() != null && utils.shar256(userModel.getPassword()) != userDB.getPassword()) {
                 userModel.setPassword(utils.shar256(userModel.getPassword()));
-            } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-                e.printStackTrace();
             }
+        } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         BeanUtils.copyProperties(userModel, userDB, Utils.getNullPropertyNames(userModel));
