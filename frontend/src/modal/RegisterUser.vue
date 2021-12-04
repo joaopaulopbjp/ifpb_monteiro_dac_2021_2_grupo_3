@@ -1,7 +1,7 @@
 <template>
     <div class="boxextern">
     <div class="boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalRegisterUser()">x</button>
+      <button id="closeButtonRegister" class="closed" @click="closeModalRegisterUser()">x</button>
       <svg width="70%" viewBox="0 0 417 140" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="209" cy="52" r="51" stroke="white" stroke-width="2"/>
         <g clip-path="url(#clip0_8_93)">
@@ -20,7 +20,7 @@
       <b-form-input id="createName" class="form-input mt-4" placeholder="Username" ></b-form-input>
       <b-form-input id="createEmail" class="form-input mt-4" placeholder="Email" ></b-form-input>
       <b-form-input type="password" id="createPassword" class="form-input mt-4"  placeholder="password"></b-form-input>
-      <b-button class="mt-3" block variant="outline-warning">Register</b-button>
+      <b-button @click="register()" class="mt-3" block variant="outline-warning">Register</b-button>
       <div class="d-flex divider-menu mt-3 mb-3"></div>
       <div class="d-flex justify-content-center text-light mt-2">
           <p>Have account?</p>
@@ -31,10 +31,15 @@
 </template>
 
 <script>
+import { RegisterUser } from "../service/compiled/registerUser/RegisterUser";
+let registerUser = new RegisterUser();
 export default {
   methods: {
     closeModalRegisterUser(){
         this.$emit('click');
+    },
+    register() {
+      registerUser.register();
     }
   },
 }

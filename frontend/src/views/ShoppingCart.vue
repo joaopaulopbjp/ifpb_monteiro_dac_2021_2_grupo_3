@@ -8,12 +8,12 @@
                 <b-form-checkbox>Select all</b-form-checkbox>
             </div>
             <div id="itemsDiv" class="container rounded mt-2 p-3" style="background-color: white;border-radius: 1px solid black;">
-                </div>
             </div>
         </div>
         <div class="container d-grid w-25 rounded-bottom sticky" id="containerValue">
              
         </div>
+    </div>
     <Footer/>
   </div>
 </template>
