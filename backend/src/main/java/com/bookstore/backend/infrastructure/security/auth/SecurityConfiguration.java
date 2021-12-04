@@ -43,7 +43,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().disable().authorizeRequests()
             .antMatchers("/api/category/find-all").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/book").hasAnyAuthority("ADMIN")
             .antMatchers("/api/shopping-cart/**").hasAnyAuthority("USER")
             .antMatchers("/api/order/save").hasAnyAuthority("USER")
-            .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN")
+            .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())

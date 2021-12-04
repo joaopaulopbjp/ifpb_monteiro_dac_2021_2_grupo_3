@@ -18,6 +18,7 @@ class ProfileApi {
         if (!this.isAdmin()) {
             url = "/user/find/find-by-username";
         }
+        alert(`${url}`);
         return fetch('http://localhost:8080/api' + url, {
             method: 'POST',
             headers: {
@@ -78,9 +79,9 @@ class ProfileApi {
         let saveButton = document.getElementById("saveButton");
         let sha = new Sha_1.Sha();
         let base64 = new Base64_1.Base64();
-        let json = this.getInfoUser();
-        let password = json['password'];
         saveButton.addEventListener("click", () => {
+            let json = this.getInfoUser();
+            let password = json['password'];
             let emailInput = document.getElementById("emailInput");
             let usernameInput = document.getElementById("usernameInput");
             let oldPasswordInput = document.getElementById("oldPasswordInput");

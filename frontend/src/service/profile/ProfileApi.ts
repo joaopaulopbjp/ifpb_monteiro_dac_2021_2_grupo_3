@@ -20,6 +20,8 @@ class ProfileApi {
             url = "/user/find/find-by-username";
         }
 
+        alert(`${url}`)
+
         return fetch('http://localhost:8080/api' + url, {
             method: 'POST',
             headers: {
@@ -93,10 +95,10 @@ class ProfileApi {
         let sha = new Sha();
         let base64 = new Base64();
 
-        let json = this.getInfoUser();
-        let password = json['password'];
-        
         saveButton.addEventListener("click", () => {
+            let json = this.getInfoUser();
+            let password = json['password'];
+
             let emailInput = document.getElementById("emailInput") as HTMLInputElement;
             let usernameInput = document.getElementById("usernameInput") as HTMLInputElement;
             let oldPasswordInput = document.getElementById("oldPasswordInput") as HTMLInputElement;
