@@ -12,7 +12,6 @@ import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
-import com.bookstore.backend.infrastructure.utils.AdminVerify;
 import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +29,6 @@ public class UserService {
 
     @Autowired
     private ShoppingCartRepositoryService shoppingCartRepositoryService;
-
-    @Autowired
-    private AdminVerify adminVerify;
 
     private Utils utils = new Utils();
 
