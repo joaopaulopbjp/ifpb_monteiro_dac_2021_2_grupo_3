@@ -94,7 +94,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-by-id")
+    @PostMapping("/find/find-by-id")
     public ResponseEntity<?> getById(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findById(dto.getId());
@@ -107,7 +107,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-by-email")
+    @PostMapping("/find/find-by-email")
     public ResponseEntity<?> getByEmail(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findByEmail(dto.getEmail());
@@ -120,7 +120,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/find/find-by-username")
+    @PostMapping("/find/find-by-username")
     public ResponseEntity<?> getByUsername(@RequestBody UserDTO dto) {
         try {
             UserModel user = userService.findByUsername(dto.getUsername());

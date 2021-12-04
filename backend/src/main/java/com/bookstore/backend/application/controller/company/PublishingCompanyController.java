@@ -94,7 +94,7 @@ public class PublishingCompanyController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @PostMapping("/find-by-id")
     public ResponseEntity<?> findById(@RequestBody PublishingCompanyDTO dto){
         try {
             PublishingCompanyModel company = publishingCompanyService.findById(dto.getId());
@@ -109,7 +109,7 @@ public class PublishingCompanyController {
         }
     }
 
-    @GetMapping("/find-by-name")
+    @PostMapping("/find-by-name")
     public ResponseEntity<?> findByName(@RequestBody PublishingCompanyDTO dto){
         try {
             List<PublishingCompanyModel> companyList = publishingCompanyService.findByName(dto.getName());

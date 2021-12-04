@@ -18,7 +18,6 @@ class ProfileApi {
         if (!this.isAdmin()) {
             url = "/user/find/find-by-username";
         }
-        alert(`${url}`);
         return fetch('http://localhost:8080/api' + url, {
             method: 'POST',
             headers: {

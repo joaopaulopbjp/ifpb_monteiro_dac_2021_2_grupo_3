@@ -102,7 +102,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find/find-by-category")
+    @PostMapping("/find/find-by-category")
     public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
             List<BookModel> bookList = bookServices.findByCategoryId(dto.getIdCategory());

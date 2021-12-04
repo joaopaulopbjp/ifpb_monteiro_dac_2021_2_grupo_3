@@ -23,38 +23,38 @@ import SideBar from "./components/SideBar.vue"
 import Footer from "./components/Footer.vue"
 import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
-import { BootstrapVue} from 'bootstrap-vue'
+import { BootstrapVue } from 'bootstrap-vue'
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(BootstrapVue);
-Vue.component("Home",Home);
-Vue.component("Profile",Profile);
-Vue.component("RegisterProduct",RegisterProduct);
-Vue.component("ShoppingCart",ShoppingCart);
-Vue.component("ShoppingCart",ShoppingCart);
-Vue.component("NavBar",NavBar);
-Vue.component("SideBar",SideBar);
-Vue.component("Footer",Footer);
-Vue.component("RegisterUser",RegisterUser);
-Vue.component("RegisterAddress",RegisterAddress);
-Vue.component("RegisterAuthor",RegisterAuthor);
-Vue.component("RegisterCategory",RegisterCategory);
-Vue.component("RegisterCompany",RegisterCompany);
-Vue.component("UpdateAuthor",UpdateAuthor);
-Vue.component("UpdateCategory",UpdateCategory);
-Vue.component("UpdateCompany",UpdateCompany);
-Vue.component("DeleteAuthor",DeleteAuthor);
-Vue.component("DeleteCategory",DeleteCategory);
-Vue.component("DeleteCompany",DeleteCompany);
-Vue.component("Recovery",Recovery);
-Vue.component("Login",Login);
-Vue.component("Product",Product);
-Vue.component("Payment",Payment);
+Vue.component("Home", Home);
+Vue.component("Profile", Profile);
+Vue.component("RegisterProduct", RegisterProduct);
+Vue.component("ShoppingCart", ShoppingCart);
+Vue.component("ShoppingCart", ShoppingCart);
+Vue.component("NavBar", NavBar);
+Vue.component("SideBar", SideBar);
+Vue.component("Footer", Footer);
+Vue.component("RegisterUser", RegisterUser);
+Vue.component("RegisterAddress", RegisterAddress);
+Vue.component("RegisterAuthor", RegisterAuthor);
+Vue.component("RegisterCategory", RegisterCategory);
+Vue.component("RegisterCompany", RegisterCompany);
+Vue.component("UpdateAuthor", UpdateAuthor);
+Vue.component("UpdateCategory", UpdateCategory);
+Vue.component("UpdateCompany", UpdateCompany);
+Vue.component("DeleteAuthor", DeleteAuthor);
+Vue.component("DeleteCategory", DeleteCategory);
+Vue.component("DeleteCompany", DeleteCompany);
+Vue.component("Recovery", Recovery);
+Vue.component("Login", Login);
+Vue.component("Product", Product);
+Vue.component("Payment", Payment);
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app')

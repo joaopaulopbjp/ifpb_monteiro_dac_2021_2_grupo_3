@@ -65,7 +65,7 @@ public class EvaluateController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @PostMapping("/find-by-id")
     public ResponseEntity<?> findById(@RequestBody EvaluateDTO dto, Principal principal){
         try {
             EvaluateModel evaluate = evaluateService.findById(dto.getId(), principal.getName());
