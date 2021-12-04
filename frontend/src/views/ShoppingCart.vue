@@ -8,45 +8,11 @@
                 <b-form-checkbox>Select all</b-form-checkbox>
             </div>
             <div id="itemsDiv" class="container rounded mt-2 p-3" style="background-color: white;border-radius: 1px solid black;">
-                <div class="d-flex justify-content-between p-1">
-                    <input type="checkbox" name="" id="" style=" width: 2vw;height: 2vh;">
-                    <button variant="outline-dark" class="border-0 far fa-trash-alt" style="background-color: rgba(0, 0, 0, 0);border: none;font-size: 3vh"/>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex justify-content-between">
-                        <button class="text-decoration-none text-dark " style="background-color: rgba(0, 0, 0, 0);border:none;">
-                            <img class="" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000">
-                        </button>
-                        <div class="d-grid ml-4">
-                            <h4>A garota do lago</h4>
-                            <h6>Author: Charlie Donlea</h6>
-                            <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
-                                <h5>R$: 17,90</h5>
-                            </div>
-                        </div>
-                        <b-form-spinbutton class="mt-4" id="sb-inline" v-model="quantidade" inline style="background-color: #FCB13A;"></b-form-spinbutton>
-                    </div>
-                </div> 
-
-                    <div class=" mt-4" inline >
-                        <button class="text-center buttonMinus rounded-left">-</button>
-                        <input class="text-center rounded inputMeio" type="number" min="1" value="1" >
-                        <button class="text-center buttonPlus rounded-right">+</button>
-                    </div>
                 </div>
             </div>
         </div>
         <div class="container d-grid w-25 rounded-bottom sticky" id="containerValue">
-             <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
-                <div class="">
-                    <h4>Order:</h4>
-                    <h5>Subtotal: R$: 0,0</h5>
-                    <h5>Transport: R$: 0,0</h5>
-                    <hr class="ml-5 w-50">
-                    <h5>Total: R$: 0,0</h5>
-                </div>
-            </div>
-            <button class="row d-flex justify-content-center p-1 rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
+             
         </div>
     <Footer/>
   </div>

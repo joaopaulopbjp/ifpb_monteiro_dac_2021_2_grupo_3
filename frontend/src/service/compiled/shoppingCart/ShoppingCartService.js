@@ -20,25 +20,29 @@ class ShoppingCartService {
             json["itemList"].forEach(element => {
                 html += `
               <div id="bookShoppingcart" class="container rounded mt-2 p-3" style="background-color: white;border-radius: 1px solid black;" name="${element["id"]}">
+                <div class="d-flex justify-content-between p-1">
+                <input type="checkbox" name="" id="" style=" width: 2vw;height: 2vh;">
+                <button id="trashButtonShoppingcart" value="${element["id"]}" variant="outline-dark" class="border-0 far fa-trash-alt" style="background-color: rgba(0, 0, 0, 0);border: none;font-size: 3vh"/>
+            </div>
+            <div class="d-flex justify-content-between">
                 <div class="d-flex justify-content-between">
-                    <input type="checkbox" name="" id="" class="fa-2x">
-                    <button id="trashButtonShoppingcart" value="${element["id"]}" variant="outline-dark" class="border-0 fa-2x" style="background-color: rgba(0, 0, 0, 0);border: none;"><i class="far fa-trash-alt w-100 h-100"></i></button>
-                </div>
-                <div class="d-flex justify-content-between">
-                    <div class="d-flex justify-content-between">
-                        <button class="text-decoration-none text-dark " style="background-color: rgba(0, 0, 0, 0);border:none;">
-                            <img id="bookShoppingcartImage" value=${element["product"]["id"]} class="" width=200vw height=180vh style="max-width: 120px" src="${element["product"]["imageList"][0]["base64"]}" alt="">
-                        </button>
-                        <div class="d-grid ml-4">
-                            <h4>${element["product"]["title"]}</h4>
-                            <h6>Author: ${element["product"]["authorList"][0]["name"]}</h6>
-                            <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
-                                <h5>R$: ${element["product"]["price"]}</h5>
-                            </div>
+                    <button class="text-decoration-none text-dark " style="background-color: rgba(0, 0, 0, 0);border:none;">
+                        <img id="bookShoppingcartImage" value=${element["product"]["id"]} class="" width=200vw height=180vh style="max-width: 120px" src="${element["product"]["imageList"][0]["base64"]}">
+                    </button>
+                    <div class="d-grid ml-4">
+                        <h4>${element["product"]["title"]}</h4>
+                        <h6>Author: ${element["product"]["authorList"][0]["name"]}</h6>
+                        <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
+                            <h5>R$: ${element["product"]["price"]}</h5>
                         </div>
                     </div>
-                    <b-form-spinbutton class="mt-4" id="sb-inline" v-model="quantidade" inline style="background-color: #FCB13A;"></b-form-spinbutton>
+                    <div class=" mt-4" inline >
+                        <button class="text-center buttonMinus rounded-left">-</button>
+                        <input class="text-center rounded inputMeio" type="number" min="1" value="1" >
+                        <button class="text-center buttonPlus rounded-right">+</button>
+                    </div>
                 </div>
+            </div> 
             </div>`;
                 subTotal += element["product"]["price"];
             });
