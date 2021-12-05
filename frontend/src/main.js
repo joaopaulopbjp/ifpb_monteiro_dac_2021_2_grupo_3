@@ -25,9 +25,14 @@ import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
 import { BootstrapVue } from 'bootstrap-vue'
 
+import { VueMaskDirective } from 'v-mask';
+import { VueMaskFilter } from 'v-mask'
+
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.filter('VMask', VueMaskFilter)
+Vue.directive("mask", VueMaskDirective);
 Vue.use(BootstrapVue);
 Vue.component("Home", Home);
 Vue.component("Profile", Profile);

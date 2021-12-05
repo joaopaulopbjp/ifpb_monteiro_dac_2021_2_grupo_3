@@ -24,12 +24,12 @@
                 <h4 style="font-weight: bold;">Payment Method</h4>
                 <div class="d-flex justify-content-start mb-4">
                     <b-form-input id="namePayment" class="" placeholder="Name"/>
-                    <b-form-input id="cpfPayment" class="ml-4" placeholder="CPF"/>
+                    <b-form-input id="cpfPayment" v-mask="'###.###.###-##'" v-model="maskCpf" class="ml-4" placeholder="CPF"/>
                 </div>
                 <div class="d-flex justify-content-start mb-4">
-                    <b-form-input id="ccnPayment" type="number" class="" placeholder="Credit Card Number"/>
-                    <b-form-input id="dataPayment" type="month" class="ml-4" />
-                    <b-form-input id="cvcPayment" type="number" class="w-25 ml-4" placeholder="CVC"/>
+                    <b-form-input id="ccnPayment" v-mask="'##### #### #### ####'" v-model="maskCCN" value="" type="text" class="" placeholder="Credit Card Number"/>
+                    <b-form-input id="dataPayment" type="month" value="" class="ml-4" />
+                    <b-form-input id="cvcPayment" type="number" value="" class="w-25 ml-4" placeholder="CVC"/>
                 </div>
             </b-card>
             <b-card id="orderReview" class="mt-4 p-3">
@@ -95,7 +95,9 @@ export default {
     data() {
       return {
         isDisplay: "display: none;",
-        isDisplayRegister: "display: none;"
+        isDisplayRegister: "display: none;",
+        maskCCN:'##### #### #### ####',
+        maskCpf:'###.###.###-##',
       }
     },
     methods: {
@@ -112,7 +114,8 @@ export default {
         this.isDisplayRegister = "display: flex;"
       }
     },
-}
+};
+
 </script>
 
 <style scoped>

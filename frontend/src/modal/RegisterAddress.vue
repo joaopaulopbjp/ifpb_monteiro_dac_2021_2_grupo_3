@@ -14,7 +14,7 @@
         <b-form-input type="number" id="numberInputAddress" class="mt-4 ml-2 form-input" placeholder="Number"></b-form-input>
       </div>
       <div class="d-flex">
-        <b-form-input id="zipInputAddress" class="mt-4 form-input" placeholder="Zip-Code"></b-form-input>
+        <b-form-input type="text" id="zipInputAddress" class="mt-4 form-input" v-mask="'#####-###'" v-model="CepModel" placeholder="Zip-Code"></b-form-input>
         <b-form-input id="districtInputAddress" class="mt-4 ml-2 form-input" placeholder="District"></b-form-input>
       </div>
       <div class="d-flex">
@@ -35,18 +35,24 @@
   let addressService = new AddressService();
 
   export default {
+    data() {
+      return {
+          CepModel:"#####-###"
+      }
+    },
     methods: {
           closeModelLogin(){
               this.$emit('click');
           },
           closeModalRegisAddres(){
             this.$emit('click');
-          }
+          },
       },
       mounted() {
         addressService.registerButtonListener();
       }
   };
+  
 </script>
 
 <style scoped>
