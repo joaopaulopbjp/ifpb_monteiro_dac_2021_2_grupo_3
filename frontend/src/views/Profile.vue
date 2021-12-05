@@ -11,6 +11,7 @@
         <Delete-author :style="isDisplayDeleteAuthor" @click="closeModalDeleteAuthor"/>
         <Delete-category :style="isDisplayDeleteCategory" @click="closeModalDeleteCategory"/>
         <Delete-Company :style="isDisplayDeleteCompany" @click="closeModalDeleteCompany"/>
+        <RegisterAddress :style="isDisplayRegisterAddress" @click="closeModalRegisterAddress"/>
         <div class="container mt-2 mb-5">
             <b-card v-if="isAdmin()">
                 <div class="d-flex justify-content-between mb-4">
@@ -119,7 +120,7 @@
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
-                    <b-button variant="warning" class="my-2 my-sm-0" type="submit">
+                    <b-button @click="openModalRegisterAddress()" variant="warning" class="my-2 my-sm-0" type="submit">
                     <i class="fas fa-pen"></i> Add new address
                     </b-button>
                 </div>
@@ -160,14 +161,13 @@ import DeleteCategory from '../modal/DeleteCategory.vue';
 import DeleteCompany from '../modal/DeleteCompany.vue';
 
 import { ProfileApi } from "../service/compiled/profile/ProfileApi.js";
+import RegisterAddress from '../modal/RegisterAddress.vue';
 
 let profileApi = new ProfileApi();
 
 export default {
     name: "Profile",
-    components: { NavBar, Footer, SideBar, 
-    RegisterAuthor, RegisterCategory, RegisterCompany, UpdateAuthor, UpdateCategory, UpdateCompany,
-    DeleteAuthor, DeleteCategory, DeleteCompany},
+    components: { NavBar, Footer, SideBar, RegisterAuthor, RegisterCategory, RegisterCompany, UpdateAuthor, UpdateCategory, UpdateCompany, DeleteAuthor, DeleteCategory, DeleteCompany, RegisterAddress },
     mounted() {
         
         this.setInfoOnVue()
@@ -188,6 +188,7 @@ export default {
             isDisplayDeleteAuthor:"display: none;",
             isDisplayDeleteCategory:"display: none;",
             isDisplayDeleteCompany:"display: none;",
+            isDisplayRegisterAddress:"display: none;",
         }
     },
     methods: {
@@ -256,7 +257,13 @@ export default {
         },
         openModalDeleteCompany() {
             this.isDisplayDeleteCompany = "display: flex;"
-        }
+        },
+        closeModalRegisterAddress(){
+            this.isDisplayRegisterAddress = "display: none;"
+        },
+        openModalRegisterAddress() {
+            this.isDisplayRegisterAddress = "display: flex;"
+        },
     }
 }
 </script>
