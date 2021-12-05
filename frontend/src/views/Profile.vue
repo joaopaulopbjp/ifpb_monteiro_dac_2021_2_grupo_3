@@ -124,21 +124,7 @@
                     <i class="fas fa-pen"></i> Add new address
                     </b-button>
                 </div>
-                <div class="d-flex justify-content-start mb-4">
-                        
-                        <div class="border border-dark rounded text-center ml-3 p-3" style="background-color: #D1B1E8; width: 280px;">
-                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="Av principal Nº 12">
-                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="centro">
-                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="monteiro">
-                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="58540-123">
-                            <input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="" placeholder="paraiba">
-                            <div class="d-flex justify-content-end mt-2">
-                                <button class="style-btn-red" style="margin-left: 3px;"><i class="fas fa-times"></i></button>
-                                <button class="style-btn-yellow" style="margin-left: 3px;"><i class="fas fa-pen"></i></button>
-                                <button class="style-btn-dark" style="margin-left: 3px;"><i class="fas fa-trash-alt"></i></button>
-                                <button class="style-btn-green" style="margin-left: 3px;"><i class="far fa-save"></i></button>
-                            </div>
-                        </div>
+                <div id="addressDiv" class="d-flex justify-content-start mb-4">
                 </div>
             </b-card>
         </div>
@@ -173,6 +159,7 @@ export default {
         this.setInfoOnVue()
         profileApi.editButtonEvent();
         profileApi.saveButtonEvent();
+        profileApi.addAddressOnVue();
     },
     beforeMount() {
         this.loggedVerify();
@@ -268,7 +255,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 .style-btn-red {
     padding: 5px;

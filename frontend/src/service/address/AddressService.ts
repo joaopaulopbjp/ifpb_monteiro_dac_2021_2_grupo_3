@@ -1,8 +1,10 @@
+import { ProfileApi } from '../profile/ProfileApi';
 class AddressService {
     registerButtonListener() {
         document.getElementById("registerButtonAddress")
         .addEventListener("click", () => {
             let closeButtonAddress = document.getElementById("closeButtonAddress") as HTMLInputElement;
+            let profileApi = new ProfileApi();
 
             let streetInputAddress = document.getElementById("streetInputAddress") as HTMLInputElement;
             let numberInputAddress = document.getElementById("numberInputAddress") as HTMLInputElement;
@@ -32,7 +34,14 @@ class AddressService {
                     cityInputAddress.classList.remove("is-invalid");
                     districtInputAddress.classList.remove("is-invalid");
 
+                    profileApi.addAddressOnVue();
                     closeButtonAddress.click();
+
+                    streetInputAddress.value = "";
+                    numberInputAddress.value = "";
+                    zipInputAddress.value = "";
+                    cityInputAddress.value = "";
+                    districtInputAddress.value  = "";
 
                 } else if(apiResponse.status === 400) {
                     streetInputAddress.classList.add("is-invalid");
@@ -43,6 +52,21 @@ class AddressService {
                 }
             });
         });
+    }
+
+    getRegisterInfo() {
+        return fetch('http://localhost:8080/api/address/find-all', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(apiResponse => {
+                if(apiResponse.status === 200) {
+                    return apiResponse;
+                } else if(apiResponse.status === 404) {
+                   return null;
+                }
+            });
     }
 }
 
