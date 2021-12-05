@@ -44,6 +44,21 @@ class AddressService {
             });
         });
     }
+
+    getRegisterInfo() {
+        return fetch('http://localhost:8080/api/address/find-all', {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(apiResponse => {
+                if(apiResponse.status === 200) {
+                    return apiResponse;
+                } else if(apiResponse.status === 404) {
+                   return null;
+                }
+            });
+    }
 }
 
 export { AddressService };

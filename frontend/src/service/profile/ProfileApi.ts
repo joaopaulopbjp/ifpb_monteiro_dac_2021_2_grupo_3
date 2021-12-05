@@ -1,6 +1,7 @@
 import { Sha } from '../utils/Sha';
 import { LoginApi } from '../login/LoginApi';
 import { Base64 } from '../utils/Base64';
+import { AddressService } from '../address/AddressService';
 class ProfileApi {
 
     isAdmin() {
@@ -189,6 +190,125 @@ class ProfileApi {
                         this.setInfoOnVue();
                     }
                 });
+            }
+        })
+    }
+
+    addAddressOnVue() {
+        let addressService = new AddressService();
+        addressService.getRegisterInfo().then(async (response) => {
+            if(response !== null) {
+                let json = await response.json();
+                let addressDiv = document.getElementById("addressDiv");
+                let html = '';
+
+                json.forEach(element => {
+                    html += `
+                    <div class="border border-dark rounded text-center ml-3 p-3" style="background-color: #D1B1E8; width: 280px;">
+                            <abbr title="street"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="streetAdress${element["id"]}" disabled value='${element["street"]}'></abbr>
+                            <abbr title="number"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="numberAdress${element["id"]}" disabled value='${element["number"]}'></abbr>
+                            <abbr title="city"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="cityAdress${element["id"]}" disabled value='${element["city"]}'></abbr>
+                            <abbr title="zipCode"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="zipcodeAdress${element["id"]}" disabled value='${element["zipCode"]}'></abbr>
+                            <abbr title="district"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="districtAdress${element["id"]}" disabled value='${element["district"]}'></abbr>
+                            <div class="d-flex justify-content-end mt-2">
+                                <button id="editButtonAddress" class="style-btn-yellow" name='${element["id"]}' value="disabled" style="margin-left: 3px;"><i class="fas fa-pen"></i></button>
+                                <button class="style-btn-dark" id='trashbuttonAddress${element["id"]}' style="margin-left: 3px;"><i class="fas fa-trash-alt"></i></button>
+                                <button id='savebuttonAddress${element["id"]}' class="style-btn-green" name='${element["id"]}' style="margin-left: 3px; display: none;"><i class="far fa-save"></i></button>
+                            </div>
+                        </div>
+                    `
+                });
+                addressDiv.innerHTML = html;
+
+                addressDiv.querySelectorAll('[id=editButtonAddress]').forEach(element => {
+                    element;
+                    let input = element as HTMLInputElement;
+
+                    let streetAddress = document.getElementById(`streetAdress${input.name}`);
+                    let numberAdress = document.getElementById(`numberAdress${input.name}`);
+                    let cityAdress = document.getElementById(`cityAdress${input.name}`);
+                    let zipcodeAdress = document.getElementById(`zipcodeAdress${input.name}`);
+                    let districtAdress = document.getElementById(`districtAdress${input.name}`);
+
+                    let savebutton = document.getElementById(`savebuttonAddress${input.name}`);
+                    let trashbutton = document.getElementById(`trashbuttonAddress${input.name}`);
+
+                    (element as HTMLButtonElement).addEventListener("click", () => {
+                        if((element as HTMLInputElement).value === "disabled") {
+                            streetAddress.attributes.removeNamedItem("disabled");
+                            numberAdress.attributes.removeNamedItem("disabled");
+                            cityAdress.attributes.removeNamedItem("disabled");
+                            zipcodeAdress.attributes.removeNamedItem("disabled");
+                            districtAdress.attributes.removeNamedItem("disabled");
+            
+                            savebutton.style.display = "inline";
+            
+                            (element as HTMLInputElement).value = "enabled";
+                            
+                        } else {
+                            streetAddress.setAttribute("disabled", "");
+                            numberAdress.setAttribute("disabled", "");
+                            cityAdress.setAttribute("disabled", "");
+                            zipcodeAdress.setAttribute("disabled", "");
+                            districtAdress.setAttribute("disabled", "");
+            
+                            savebutton.style.display = "none";
+            
+                            this.setInfoOnVue();
+            
+                            (element as HTMLInputElement).value = "disabled";
+                        }
+                    })
+
+                    savebutton.addEventListener("click", () => {
+
+                        fetch('http://localhost:8080/api/address', {
+                            method: 'PUT',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                id: `${input.name}`,
+                                street: `${(streetAddress as HTMLInputElement).value}`,
+                                number: `${(numberAdress as HTMLInputElement).value}`,
+                                zipCode: `${(zipcodeAdress as HTMLInputElement).value}`,
+                                city: `${(cityAdress as HTMLInputElement).value}`,
+                                district: `${(districtAdress as HTMLInputElement).value}`
+                            })
+                        }).then(apiResponse => {
+                            if(apiResponse.status === 200) {
+                                this.addAddressOnVue();
+                            } else if(apiResponse.status === 400) {
+                                streetAddress.classList.add("is-invalid");
+                                numberAdress.classList.add("is-invalid");
+                                cityAdress.classList.add("is-invalid");
+                                zipcodeAdress.classList.add("is-invalid");
+                                districtAdress.classList.add("is-invalid");
+                            }
+                        });
+                    })
+
+                    trashbutton.addEventListener("click", () => {
+
+                        fetch('http://localhost:8080/api/address', {
+                            method: 'DELETE',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                id: `${input.name}`
+                            })
+                        }).then(apiResponse => {
+                            if(apiResponse.status === 200) {
+                                this.addAddressOnVue();
+                            }
+                        });
+                    })
+                  });
             }
         })
     }
