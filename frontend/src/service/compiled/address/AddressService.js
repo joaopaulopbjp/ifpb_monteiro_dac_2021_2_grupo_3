@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AddressService = void 0;
+const ProfileApi_1 = require("../profile/ProfileApi");
 class AddressService {
     registerButtonListener() {
         document.getElementById("registerButtonAddress")
             .addEventListener("click", () => {
             let closeButtonAddress = document.getElementById("closeButtonAddress");
+            let profileApi = new ProfileApi_1.ProfileApi();
             let streetInputAddress = document.getElementById("streetInputAddress");
             let numberInputAddress = document.getElementById("numberInputAddress");
             let zipInputAddress = document.getElementById("zipInputAddress");
@@ -32,7 +34,13 @@ class AddressService {
                     zipInputAddress.classList.remove("is-invalid");
                     cityInputAddress.classList.remove("is-invalid");
                     districtInputAddress.classList.remove("is-invalid");
+                    profileApi.addAddressOnVue();
                     closeButtonAddress.click();
+                    streetInputAddress.value = "";
+                    numberInputAddress.value = "";
+                    zipInputAddress.value = "";
+                    cityInputAddress.value = "";
+                    districtInputAddress.value = "";
                 }
                 else if (apiResponse.status === 400) {
                     streetInputAddress.classList.add("is-invalid");
