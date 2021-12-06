@@ -330,7 +330,7 @@ class ProfileApi {
                 json.forEach(element => {
                     element["itemList"].forEach(itemList => {
                         html += `
-                        <div class="border border-dark rounded text-center p-2" style="background-color: #D1B1E8; width: 250px;">
+                        <div class="border border-dark rounded text-center m-2 p-2" style="background-color: #D1B1E8; width:15vw;">
                             <h5>${itemList["product"]["title"]}</h5>
                             <button id="buttonImageprofile" value="${itemList["product"]["id"]}" style=" background: transparent; border: none !important; font-size:0;"><img class="mt-2 mb-2" style="height: 25vh; width:10vw;" src="${itemList["product"]["imageList"][0]["base64"]}" alt=""></button> 
                             <h5>Amount: ${itemList["amount"]}</h5>

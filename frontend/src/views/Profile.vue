@@ -78,7 +78,7 @@
             </b-card>
         </div>
         <div class="container mt-2 mb-5">
-            <b-card>
+            <b-card class="pl-4">
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-user-circle"></i> Overview</h4>
                     <b-button variant="warning" class="my-2 my-sm-0" id="editButton" value="disabled" type="submit">
@@ -107,7 +107,7 @@
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-shopping-basket"></i> Requests</h4>
                 </div>
-                <div id="requestprofile" class="d-flex justify-content-start mb-4">
+                <div id="requestprofile" class="container d-flex flex-wrap mb-4">
                 </div>
             </b-card>
         </div>
