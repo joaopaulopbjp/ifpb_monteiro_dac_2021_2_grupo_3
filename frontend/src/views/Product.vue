@@ -10,9 +10,15 @@
                 </div>
             </div>
             <div class="row d-flex justify-content-between mt-3">
-                <div class="col text-center" id="imagemMedia" style="background-color: white;border:2px solid rgb(232, 232, 232)">
-                    <img :src="link" class="row w-50" style="margin: auto;">
-                    <b-form-rating class="row" id="media" inline color="#FCB13A" value="4" style="margin-left: 10vw;margin-right: 10vw;border: none;"/>
+                <div class="col align-items-center text-center" id="imagemMedia" style="background-color: white;border:2px solid rgb(232, 232, 232)">
+                    <img :src="link" class="row w-50 mt-4" style="margin-left: auto;margin-right: auto;">
+                    <fieldset class="rating mb-4">
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
+                    </fieldset>
                 </div>
                 <div class="col ml-5">
                     <div class="row justify-content-start p-3 h-75" id="pricesContent" style="background-color: white;border:2px solid rgb(232, 232, 232)">
@@ -74,7 +80,13 @@
                             <i class="fas fa-user-circle fa-5x" style="color: #FCB13A;"></i>
                             
                             <div class="col justify-content-start pl-5">
-                                <b-form-rating class="row" id="rating-inline" inline color="#FCB13A" value="4" style="border: none;padding: 0px;"/>
+                                <fieldset class="rating">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                    <span class="fa fa-star"></span>
+                                </fieldset>
                                 <span class="row">Cool</span>
                             </div>
                         </div>
@@ -82,7 +94,13 @@
                             <i class="fas fa-user-circle fa-5x" style="color: #FCB13A;"></i>
                             
                             <div class="col justify-content-start pl-5">
-                                <b-form-rating class="row mt-" id="rating-inline" inline color="#FCB13A" value="4" style="border: none;padding: 0px;"/>
+                                <fieldset class="rating">
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star checked"></span>
+                                    <span class="fa fa-star"></span>
+                                </fieldset>
                                 <span class="row">Great</span>
                             </div>
                         </div>
@@ -123,4 +141,8 @@ export default {
     #head, #imagemMedia,#pricesContent,#delivery,#description,#characteristics,#evaluate{
         border-radius: 25px;
     }
+    .checked {
+        color: orange;
+    }
+
 </style>
