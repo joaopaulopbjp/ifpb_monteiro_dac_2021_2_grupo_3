@@ -182,7 +182,7 @@ class ProfileApi {
                 let html = '';
                 json.forEach(element => {
                     html += `
-                    <div class="border border-dark rounded text-center ml-3 p-3" style="background-color: #D1B1E8; width: 280px;">
+                    <div class="border border-dark rounded text-center ml-3 mt-3 p-3" style="background-color: #D1B1E8; width: 280px;">
                             <abbr title="street"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="streetAdress${element["id"]}" disabled value='${element["street"]}'></abbr>
                             <abbr title="number"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="numberAdress${element["id"]}" disabled value='${element["number"]}'></abbr>
                             <abbr title="city"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="cityAdress${element["id"]}" disabled value='${element["city"]}'></abbr>
@@ -224,7 +224,7 @@ class ProfileApi {
                             zipcodeAdress.setAttribute("disabled", "");
                             districtAdress.setAttribute("disabled", "");
                             savebutton.style.display = "none";
-                            this.setInfoOnVue();
+                            this.addAddressOnVue();
                             element.value = "disabled";
                         }
                     });
@@ -273,6 +273,42 @@ class ProfileApi {
                                 this.addAddressOnVue();
                             }
                         });
+                    });
+                });
+            }
+        });
+    }
+    addRequestOnVue() {
+        fetch('http://localhost:8080/api/order/find-all', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+            }
+        }).then(async (apiResponse) => {
+            if (apiResponse.status === 200) {
+                let json = await apiResponse.json();
+                let requestprofileDiv = document.getElementById("requestprofile");
+                let html = "";
+                json.forEach(element => {
+                    element["itemList"].forEach(itemList => {
+                        html += `
+                        <div class="border border-dark rounded text-center m-2 p-2" style="background-color: #D1B1E8; width:15vw;">
+                            <h5>${itemList["product"]["title"]}</h5>
+                            <button id="buttonImageprofile" value="${itemList["product"]["id"]}" style=" background: transparent; border: none !important; font-size:0;"><img class="mt-2 mb-2" style="height: 25vh; width:10vw;" src="${itemList["product"]["imageList"][0]["base64"]}" alt=""></button> 
+                            <h5>Amount: ${itemList["amount"]}</h5>
+                            <h5>Total: R$ ${itemList["totalPrice"]}</h5>
+                        </div>
+                        `;
+                    });
+                });
+                requestprofileDiv.innerHTML = html;
+                requestprofileDiv.querySelectorAll('[id=buttonImageprofile]').forEach(element => {
+                    element;
+                    element.addEventListener("click", () => {
+                        window.localStorage.setItem("productId", element.attributes.getNamedItem("value").value);
+                        window.location.replace("http://localhost:8081/#/product");
                     });
                 });
             }
