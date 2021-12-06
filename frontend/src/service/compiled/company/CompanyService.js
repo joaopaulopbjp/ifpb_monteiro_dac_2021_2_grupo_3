@@ -28,5 +28,33 @@ class CompanyService {
             });
         });
     }
+    deleteCompanyListener() {
+        document.getElementById("buttonDeleteCompanyModal").addEventListener("click", () => {
+            let element = document.getElementById("companyOptions");
+            let idArray = [];
+            let elementArray;
+            element.querySelectorAll(`#companyCheckedBoxDelete`).forEach(element => {
+                elementArray = element;
+                if (elementArray.checked) {
+                    idArray.push(elementArray.value);
+                }
+            });
+            idArray.forEach(element => {
+                fetch('http://localhost:8080/api/company', {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        id: `${element}`,
+                    })
+                });
+            });
+            document.getElementById("closeButtonCompanyDelete").click();
+            window.location.reload();
+        });
+    }
 }
 exports.CompanyService = CompanyService;

@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalDeleteCompany()">x</button>
+      <button id="closeButtonCompanyDelete" class="closed" @click="closeModalDeleteCompany()">x</button>
       
       <svg width="80%" class="mb-3" viewBox="0 0 528 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="398" y1="118" x2="528" y2="118" stroke="white" stroke-width="2"/>
@@ -12,21 +12,59 @@
       </svg>
 
       
-      <div id="CategoryOptions" class="p-3 form-input d-flex flex-column m-auto rounded" style="width: 60%;height: 30vh;">
-        <span><input type="checkbox" name="" id="nameInput"> Saraiva</span>
-        
+      <div id="companyOptions" class="p-3 form-input d-flex flex-column align-items-start m-auto rounded" style="width: 60%;height: 30vh;">
       </div>
-      <b-button class="mt-3" block variant="outline-warning">Delete</b-button>
+      <b-button id="buttonDeleteCompanyModal" class="mt-3" block variant="outline-warning">Delete</b-button>
     </div>
   </div>
 </template>
 
 <script>
+import { CompanyService } from "../service/compiled/company/CompanyService"
+let companyService = new CompanyService();
+var pageNumberCompanys = 0;
   export default{
     methods:{
       closeModalDeleteCompany(){
         this.$emit('click');
-      }
+      },
+
+      setCompaniesOnVue() {
+            let element = document.getElementById("companyOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/company/find-all/`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<span><input type="checkbox" value="${json[count]["id"]}" id="companyCheckedBoxDelete"> ${json[count]["name"]}</span>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+
+         companyScrollPage() {
+            let companyOp = document.getElementById("companyOptions");
+            companyOp.addEventListener("scroll", () => {
+                if(companyOp.scrollTop + companyOp.clientHeight == companyOp.scrollHeight) {
+                    pageNumberCompanys++;
+                    this.setCompaniesOnVue(pageNumberCompanys);
+                }
+            })
+        }
+    },
+    
+    mounted() {
+        this.setCompaniesOnVue(0);
+        this.companyScrollPage();
+        companyService.deleteCompanyListener()
     }
   };
 </script>

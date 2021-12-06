@@ -26,5 +26,36 @@ class CategoryService {
             });
         });
     }
+
+    deleteCategoryListener() {
+            document.getElementById("buttonDeleteCategoryModal").addEventListener("click", ()=> {
+                    let element = document.getElementById("categoryOptions");
+                    let idArray : Array<Number> = [];
+                    let elementArray;
+                    element.querySelectorAll(`#categoryCheckedBoxDelete`).forEach(element => {
+                        elementArray = element as HTMLInputElement;
+                        if(elementArray.checked) {
+                            idArray.push(elementArray.value);
+                        }
+                    });
+                    
+                    idArray.forEach(element => {
+                        fetch('http://localhost:8080/api/category', {
+                                method: 'DELETE',
+                                headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                                },
+                                body: JSON.stringify({
+                                    id: `${element}`,
+                                })
+                            })
+                            
+                    });
+                    document.getElementById("closeButtonCategoryDelete").click();
+                    window.location.reload();
+            });
+    }
 }
 export { CategoryService };

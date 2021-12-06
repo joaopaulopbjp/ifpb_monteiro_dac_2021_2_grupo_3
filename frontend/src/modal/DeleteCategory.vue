@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalDeleteCategory()">x</button>
+      <button id="closeButtonCategoryDelete" class="closed" @click="closeModalDeleteCategory()">x</button>
       
       <svg width="80%" class="mb-3" viewBox="0 0 528 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="398" y1="118" x2="528" y2="118" stroke="white" stroke-width="2"/>
@@ -12,23 +12,57 @@
       </svg>
 
       
-      <div id="CategoryOptions" class="p-3 form-input d-flex flex-column m-auto rounded" style="width: 60%;height: 30vh;">
-        <span><input type="checkbox" name="" id="nameInput"> Adventure</span>
-        <span><input type="checkbox" name="" id="nameInput"> Horror</span>
-        <span><input type="checkbox" name="" id="nameInput"> Science Fiction</span>
-        
+      <div id="categoryOptions" class="p-3 form-input d-flex flex-column align-items-start m-auto rounded" style="width: 60%;height: 30vh;">
       </div>
-      <b-button class="mt-3" block variant="outline-warning">Delete</b-button>
+      <b-button id="buttonDeleteCategoryModal" class="mt-3" block variant="outline-warning">Delete</b-button>
     </div>
   </div>
 </template>
 
 <script>
+import { CategoryService } from "../service/compiled/category/CategoryService"
+let categoryService = new CategoryService();
+var pageNumberCategories = 0;
   export default{
     methods:{
       closeModalDeleteCategory(){
         this.$emit('click');
-      }
+      },
+       setCategoriesOnVue(pageNumber) {
+            let element = document.getElementById("categoryOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/category/find/find-all/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<span><input type="checkbox" value="${json[count]["id"]}" id="categoryCheckedBoxDelete"> ${json[count]["name"]}</span>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+         categoryScrollPage() {
+            let categoryOp = document.getElementById("categoryOptions");
+            categoryOp.addEventListener("scroll", () => {
+                if(categoryOp.scrollTop + categoryOp.clientHeight == categoryOp.scrollHeight) {
+                    pageNumberCategories++;
+                    this.setCategoriesOnVue(pageNumberCategories);
+                }
+            })
+        }
+    },
+    
+    mounted() {
+        this.setCategoriesOnVue(0);
+        this.categoryScrollPage();
+        categoryService.deleteCategoryListener();
     }
   };
 </script>
