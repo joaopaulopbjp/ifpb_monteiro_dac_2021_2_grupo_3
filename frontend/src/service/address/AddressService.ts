@@ -54,7 +54,7 @@ class AddressService {
         });
     }
 
-    getRegisterInfo() {
+    getAddressInfo() {
         return fetch('http://localhost:8080/api/address/find-all', {
                 method: 'GET',
                 headers: {

@@ -175,7 +175,7 @@ class ProfileApi {
     }
     addAddressOnVue() {
         let addressService = new AddressService_1.AddressService();
-        addressService.getRegisterInfo().then(async (response) => {
+        addressService.getAddressInfo().then(async (response) => {
             if (response !== null) {
                 let json = await response.json();
                 let addressDiv = document.getElementById("addressDiv");

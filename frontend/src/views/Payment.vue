@@ -8,17 +8,6 @@
         <div class="container d-grid justify-content-start w-75 h-100">
             <b-card id="address" class="mt-3 p-3">
                 <h4 style="font-weight: bold;">Shipping Information</h4>
-                <div class="d-flex justify-content-between mt-5">
-                    <div class="">
-                        <h5 class="">Sicrano Beltrano Silva</h5>
-                        <h5 class="mt-3">Av principal, 204</h5>
-                        <h5>Centro</h5>
-                        <h5>Monteiro, paraiba, Brasil, 58550-000</h5>
-                    </div>
-                    <div class="">
-                        <b-button style="background-color: transparent;color: orange;border: none;">select another address</b-button>
-                    </div>
-                </div>
             </b-card>
             <b-card id="paymentMethod" class="mt-4 p-3">
                 <h4 style="font-weight: bold;">Payment Method</h4>
@@ -34,46 +23,13 @@
             </b-card>
             <b-card id="orderReview" class="mt-4 p-3">
                 <h4 style="font-weight: bold;">Order review</h4>
-                <div class="d-grid justify-content-between">
-                    <div class="d-flex justify-content-start m-3">
-                        <router-link class="text-decoration-none text-dark" to="">
-                            <img class="" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-                        </router-link>
-                        <div class="d-grid ml-4">
-                            <h4>A garota do lago</h4>
-                            <h6>Author: Charlie Donlea</h6>
-                            <h6>Amount order: 1</h6>
-                            <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
-                                <h5>R$: 17,90</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start m-3">
-                        <router-link class="text-decoration-none text-dark" to="">
-                            <img class="" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt="">
-                        </router-link>
-                        <div class="d-grid ml-4">
-                            <h4>A garota do lago</h4>
-                            <h6>Author: Charlie Donlea</h6>
-                            <h6>Amount order: 1</h6>
-                            <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
-                                <h5>R$: 17,90</h5>
-                            </div>
-                        </div>
-                    </div>
+                <div id="orderList" class="d-grid justify-content-between">
                 </div>
                 
             </b-card>
         </div>
         <div class="container d-grid w-25 mt-3 sticky">
             <div id="orderSummary" class="row w-100 mb-0 pl-4 pt-3" style="background-color: white;">
-                <div class="">
-                    <h3 class="p-2">Order Summary</h3>
-                    <h5>value: R$: 0,0</h5>
-                    <h5>shipping: R$: 0,0</h5>
-                    <hr class="ml-4 w-75">
-                    <h5>Total: R$: 0,0</h5>
-                </div>
             </div>
             <button id="checkout" class="row d-flex justify-content-center w-100">Checkout</button>
         </div>
@@ -88,6 +44,9 @@ import Footer from '@/components/Footer.vue'
 import SideBar from '../components/SideBar.vue'
 import Login from '../modal/Login.vue'
 import RegisterUser from '../modal/RegisterUser.vue'
+
+import { PaymentService } from '../service/compiled/payment/PaymentService';
+let paymentService = new PaymentService();
 
 export default {
     name: "Home",
@@ -114,11 +73,16 @@ export default {
         this.isDisplayRegister = "display: flex;"
       }
     },
+    mounted() {
+        paymentService.addAddressOnVue();
+        paymentService.addOrderlistOnVue();
+        paymentService.addCheckoutEvent();
+    }
 };
 
 </script>
 
-<style scoped>
+<style>
     #address,#paymentMethod,#orderReview{
         border-radius: 25px;
     }

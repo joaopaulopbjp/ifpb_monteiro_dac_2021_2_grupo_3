@@ -85,13 +85,10 @@ class ShoppingCartService {
                   });
               })
           });
+    
           document.getElementById("buyButtonShoppingcart")
           .addEventListener("click", () => {
-              let idList = [];
-            itemDiv.querySelectorAll('[id=bookShoppingcart]').forEach(element => {
-                idList.push(element.attributes.getNamedItem("name").value);
-              });
-            alert(idList);
+              window.location.replace("#/Payment");
           })
         });
     }
