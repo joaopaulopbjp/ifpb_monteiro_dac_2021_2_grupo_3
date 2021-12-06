@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButtonAuthor" class="closed" @click="closeModalDeleteAuthor()">x</button>
+      <button id="closeButtonAuthorDelete" class="closed" @click="closeModalDeleteAuthor()">x</button>
       
       <svg width="70%" class="mb-3" viewBox="0 0 481 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="351" y1="120" x2="481" y2="120" stroke="white" stroke-width="2"/>
@@ -21,7 +21,7 @@
       
       <div id="authorsOptions" class="p-3 form-input d-flex flex-column align-items-start m-auto rounded" style="width: 55%;height: 30vh;">
       </div>
-      <b-button id="buttonDeleteAuthor" class="mt-3" block variant="outline-warning">Delete</b-button>
+      <b-button id="buttonDeleteAuthorModal" class="mt-3" block variant="outline-warning">Delete</b-button>
     </div>
   </div>
 </template>

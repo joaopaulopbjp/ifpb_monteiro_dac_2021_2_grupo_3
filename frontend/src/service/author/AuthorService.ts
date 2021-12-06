@@ -19,6 +19,7 @@ class AuthorService {
                 if(apiResponse.status === 201) {
                     authorNameInput.classList.remove("is-invalid");
                     closeButtonAuthor.click();
+                    window.location.reload();
 
                 } else if(apiResponse.status === 400) {
                     authorNameInput.classList.add("is-invalid");
@@ -28,10 +29,19 @@ class AuthorService {
     }
 
     deleteAuthorListener() {
-        document.getElementById("buttonDeleteAuthor").addEventListener("click", () => {
-            let idAuthorArray = this.getIdListFromCheckboxId(document.getElementById("authorCheckedBoxDelete"));
-            alert("elewrglkwrngt");
-            idAuthorArray.forEach(element => {
+        document.getElementById("buttonDeleteAuthorModal").addEventListener("click", () => {
+            let element = document.getElementById("authorsOptions");
+
+            let idArray : Array<Number> = [];
+            let elementArray;
+            element.querySelectorAll(`#authorCheckedBoxDelete`).forEach(element => {
+                elementArray = element as HTMLInputElement;
+                if(elementArray.checked) {
+                    idArray.push(elementArray.value);
+                }
+            });
+
+            idArray.forEach(element => {
                 fetch('http://localhost:8080/api/author', {
                         method: 'DELETE',
                         headers: {
@@ -45,23 +55,10 @@ class AuthorService {
                     })
                     
             });
-            document.getElementById("closeButtonAuthor").click();
-
-
+            document.getElementById("closeButtonAuthorDelete").click();
+            window.location.reload();
         })
 
-    }
-
-    private getIdListFromCheckboxId(id) {
-        let idArray : Array<Number> = [];
-        let elementArray
-        document.querySelectorAll(`#${id}`).forEach(element => {
-            elementArray = element as HTMLInputElement;
-            if(elementArray.checked) {
-                idArray.push(elementArray.value);
-            }
-        });
-        return idArray;
     }
 }
 export { AuthorService };
