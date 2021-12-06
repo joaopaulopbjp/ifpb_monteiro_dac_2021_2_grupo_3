@@ -26,5 +26,42 @@ class AuthorService {
             });
         });
     }
+
+    deleteAuthorListener() {
+        document.getElementById("buttonDeleteAuthor").addEventListener("click", () => {
+            let idAuthorArray = this.getIdListFromCheckboxId(document.getElementById("authorCheckedBoxDelete"));
+            alert("elewrglkwrngt");
+            idAuthorArray.forEach(element => {
+                fetch('http://localhost:8080/api/author', {
+                        method: 'DELETE',
+                        headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                        },
+                        body: JSON.stringify({
+                            id: `${element}`,
+                        })
+                    })
+                    
+            });
+            document.getElementById("closeButtonAuthor").click();
+
+
+        })
+
+    }
+
+    private getIdListFromCheckboxId(id) {
+        let idArray : Array<Number> = [];
+        let elementArray
+        document.querySelectorAll(`#${id}`).forEach(element => {
+            elementArray = element as HTMLInputElement;
+            if(elementArray.checked) {
+                idArray.push(elementArray.value);
+            }
+        });
+        return idArray;
+    }
 }
 export { AuthorService };

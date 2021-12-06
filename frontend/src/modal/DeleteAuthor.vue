@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalDeleteAuthor()">x</button>
+      <button id="closeButtonAuthor" class="closed" @click="closeModalDeleteAuthor()">x</button>
       
       <svg width="70%" class="mb-3" viewBox="0 0 481 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="351" y1="120" x2="481" y2="120" stroke="white" stroke-width="2"/>
@@ -19,24 +19,57 @@
       </svg>
 
       
-      <div id="authorsOptions" class="p-3 form-input d-flex flex-column m-auto rounded" style="width: 55%;height: 30vh;">
-        <span><input type="checkbox" name="" id="nameInput"> Brito</span>
-        <span><input type="checkbox" name="" id="nameInput"> Brito</span>
-        <span><input type="checkbox" name="" id="nameInput"> Brito</span>
-        <span><input type="checkbox" name="" id="nameInput"> Brito</span>
+      <div id="authorsOptions" class="p-3 form-input d-flex flex-column align-items-start m-auto rounded" style="width: 55%;height: 30vh;">
       </div>
-      <b-button class="mt-3" block variant="outline-warning">Delete</b-button>
+      <b-button id="buttonDeleteAuthor" class="mt-3" block variant="outline-warning">Delete</b-button>
     </div>
   </div>
 </template>
 
 <script>
+import { AuthorService } from '../service/compiled/author/AuthorService';
+let authorService = new AuthorService(); 
+var pageNumberAuthor = 0;
   export default{
     methods:{
       closeModalDeleteAuthor(){
         this.$emit('click');
-      }
-    }
+      },
+      setAuthorOnVue(pageNumber) {
+            let element = document.getElementById("authorsOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/author/find/find-all/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<span><input type="checkbox" value="${json[count]["id"]}" id="authorCheckedBoxDelete"> ${json[count]["name"]}</span>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+        authorScrollPage() {
+            let authorOp = document.getElementById("authorsOptions");
+            authorOp.addEventListener("scroll", () => {
+                if(authorOp.scrollTop + authorOp.clientHeight == authorOp.scrollHeight) {
+                    pageNumberAuthor++;
+                    this.setAuthorOnVue(pageNumberAuthor);
+                }
+            })
+        },
+    },
+    mounted() {
+        this.setAuthorOnVue(0);
+        this.authorScrollPage();
+        authorService.deleteAuthorListener();
+    },
   };
 </script>
 
