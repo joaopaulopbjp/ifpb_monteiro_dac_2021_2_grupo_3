@@ -312,6 +312,46 @@ class ProfileApi {
             }
         })
     }
+
+    addRequestOnVue() {
+        fetch('http://localhost:8080/api/order/find-all', {
+            method: 'GET',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+            }
+        }).then(async apiResponse => {
+            if(apiResponse.status === 200) {
+                let json = await apiResponse.json();
+                let requestprofileDiv = document.getElementById("requestprofile");
+                let html = "";
+
+                json.forEach(element => {
+                    element["itemList"].forEach(itemList => {
+                        html += `
+                        <div class="border border-dark rounded text-center p-2" style="background-color: #D1B1E8; width: 250px;">
+                            <h5>${itemList["product"]["title"]}</h5>
+                            <button id="buttonImageprofile" value="${itemList["product"]["id"]}" style=" background: transparent; border: none !important; font-size:0;"><img class="mt-2 mb-2" style="height: 25vh; width:10vw;" src="${itemList["product"]["imageList"][0]["base64"]}" alt=""></button> 
+                            <h5>Amount: ${itemList["amount"]}</h5>
+                            <h5>Total: R$ ${itemList["totalPrice"]}</h5>
+                        </div>
+                        `;
+                    });
+                });
+                requestprofileDiv.innerHTML = html;
+
+                requestprofileDiv.querySelectorAll('[id=buttonImageprofile]').forEach(element => {
+                    element;
+                    (element as HTMLButtonElement).addEventListener("click", () => {
+                      window.localStorage.setItem("productId", element.attributes.getNamedItem("value").value);
+                      window.location.replace("http://localhost:8081/#/product");
+                    })
+                });
+
+            }
+        });
+    }
 }
 
 export { ProfileApi };

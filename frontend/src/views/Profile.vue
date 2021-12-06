@@ -107,12 +107,7 @@
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-shopping-basket"></i> Requests</h4>
                 </div>
-                <div class="d-flex justify-content-start mb-4">
-                        <div class="border border-dark rounded text-center p-2" style="background-color: #D1B1E8; width: 250px;">
-                            <h5>A garota do lago</h5>
-                            <button style=" background: transparent; border: none !important; font-size:0;"><img class="mt-2 mb-2" style="max-width: 120px" src="https://lojasaraiva.vteximg.com.br/arquivos/ids/12109069/1006574337.jpg?v=637142248039070000" alt=""></button> 
-                            <h5>R$: 17,90</h5>
-                        </div>
+                <div id="requestprofile" class="d-flex justify-content-start mb-4">
                 </div>
             </b-card>
         </div>
@@ -160,6 +155,7 @@ export default {
         profileApi.editButtonEvent();
         profileApi.saveButtonEvent();
         profileApi.addAddressOnVue();
+        profileApi.addRequestOnVue();
     },
     beforeMount() {
         this.loggedVerify();
