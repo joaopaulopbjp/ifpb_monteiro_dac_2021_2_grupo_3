@@ -24,6 +24,7 @@ import Footer from "./components/Footer.vue"
 import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
 import UpdateProduct from "./views/UpdateProduct.vue"
+import DeleteProduct from "./modal/DeleteProduct.vue"
 import { BootstrapVue } from 'bootstrap-vue'
 
 import { VueMaskDirective } from 'v-mask';
@@ -59,6 +60,7 @@ Vue.component("Login", Login);
 Vue.component("Product", Product);
 Vue.component("Payment", Payment);
 Vue.component("UpdateProduct", UpdateProduct)
+Vue.component("DeleteProduct", DeleteProduct)
 Vue.config.productionTip = false;
 
 new Vue({
