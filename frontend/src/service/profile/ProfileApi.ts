@@ -254,7 +254,7 @@ class ProfileApi {
             
                             savebutton.style.display = "none";
             
-                            this.setInfoOnVue();
+                            this.addAddressOnVue();
             
                             (element as HTMLInputElement).value = "disabled";
                         }
