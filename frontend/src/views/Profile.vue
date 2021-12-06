@@ -119,7 +119,7 @@
                     <i class="fas fa-pen"></i> Add new address
                     </b-button>
                 </div>
-                <div id="addressDiv" class="d-flex justify-content-start mb-4">
+                <div id="addressDiv" class="container d-flex flex-wrap">
                 </div>
             </b-card>
         </div>

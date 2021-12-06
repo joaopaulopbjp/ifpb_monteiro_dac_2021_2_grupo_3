@@ -204,7 +204,7 @@ class ProfileApi {
 
                 json.forEach(element => {
                     html += `
-                    <div class="border border-dark rounded text-center ml-3 p-3" style="background-color: #D1B1E8; width: 280px;">
+                    <div class="border border-dark rounded text-center ml-3 mt-3 p-3" style="background-color: #D1B1E8; width: 280px;">
                             <abbr title="street"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="streetAdress${element["id"]}" disabled value='${element["street"]}'></abbr>
                             <abbr title="number"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="numberAdress${element["id"]}" disabled value='${element["number"]}'></abbr>
                             <abbr title="city"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" id="cityAdress${element["id"]}" disabled value='${element["city"]}'></abbr>
