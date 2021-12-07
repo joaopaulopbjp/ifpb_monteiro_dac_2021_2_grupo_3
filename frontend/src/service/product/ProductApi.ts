@@ -45,6 +45,10 @@ class ProductApi {
                             idCompany: companyInput.value,
                             idAuthorList: idAuthorArray
                         })
+                    }).then(apiResponse => {
+                        if(apiResponse.status === 201){
+                            document.getElementById("cancelRegisterProduct").click();
+                        }
                     });
                 })
             }
