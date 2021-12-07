@@ -60,5 +60,41 @@ class AuthorService {
         })
 
     }
+    
+    updateAuthorListener() {
+            document.getElementById("buttonUpdateAuthorModal").addEventListener("click", () => {
+                   let element = document.getElementById("authorSelectOptions") as HTMLInputElement;
+                  // let valueElementSelect = element.children[];
+                   let newName = document.getElementById("newNameAuthor") as HTMLInputElement;
+
+                   let idArray : Array<Number> = [];
+                   let elementArray;
+                   element.querySelectorAll(`#authorSelect`).forEach(element => {
+                       elementArray = element as HTMLInputElement;
+                       if(elementArray.checked) {
+                           idArray.push(elementArray.value);
+                       }
+                   });
+
+                   idArray.forEach(element => {
+                    fetch('http://localhost:8080/api/author', {
+                            method: 'PUT',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                id: `${element}`,
+                                name: `${newName.value}`,
+                            })
+                        })
+                });
+                
+                document.getElementById("closeButtonAuthorUpdate").click();
+                window.location.reload();
+            })
+    }
+
 }
 export { AuthorService };
