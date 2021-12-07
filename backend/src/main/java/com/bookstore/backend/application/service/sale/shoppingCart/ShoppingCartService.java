@@ -53,8 +53,12 @@ public class ShoppingCartService {
             throw new IllegalArgumentException("Only " + opInventory.get().getAmount() + " items for sale");
 
         for(ItemOrderModel itemOrder : opPerson.get().getShoppingCart().getItemList()) {
-            if(itemOrder.getProduct().equals(opBook.get()))
-                throw new IllegalArgumentException("This item order is present");
+            if(itemOrder.getProduct().equals(opBook.get())){
+                // throw new IllegalArgumentException("This item order is present");
+                itemOrder.setAmount(shoppingCart.getItemList().get(0).getAmount());
+                UserModel Op = userRepositoryService.getInstance().save(opPerson.get());
+                return Op.getShoppingCart();
+            }
         }
 
         ItemOrderModel itemOrder = shoppingCart.getItemList().get(0);
