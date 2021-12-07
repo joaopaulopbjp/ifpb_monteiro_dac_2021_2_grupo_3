@@ -17,6 +17,7 @@
       <input type="text" id="newNameAuthor" class="mt-4 p-2 form-input" style="width: 55%" placeholder="New Name">
       <b-button id="buttonUpdateAuthorModal" class="mt-3" block variant="outline-warning">Update</b-button>
     </div>
+    
   </div>
 </template>
 
