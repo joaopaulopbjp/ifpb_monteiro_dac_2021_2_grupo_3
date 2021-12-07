@@ -56,5 +56,27 @@ class CompanyService {
             window.location.reload();
         })
     }
+
+    updateCompanyListener() {
+        document.getElementById("buttonUpdateCompanyModal").addEventListener("click", () => {
+            let element = document.getElementById("companySelectOptions") as HTMLInputElement;
+            let newName = document.getElementById("newNameCompany") as HTMLInputElement;
+
+            fetch('http://localhost:8080/api/company', {
+                            method: 'PUT',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                id: `${element.value}`,
+                                name: `${newName.value}`,
+                            })
+            })
+                document.getElementById("closeButtonCompanyUpdate").click();
+                window.location.reload();
+        })
+    }
 }
 export { CompanyService };
