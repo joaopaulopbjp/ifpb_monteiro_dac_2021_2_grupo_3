@@ -104,7 +104,7 @@
                 </b-button>
             </b-card>
         </div>
-        <div class="container mt-2 mb-5">
+        <div  v-if="!isAdmin()" class="container mt-2 mb-5">
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-shopping-basket"></i> Requests</h4>

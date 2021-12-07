@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalUpdateCompany()">x</button>
+      <button id="closeButtonCompanyUpdate" class="closed" @click="closeModalUpdateCompany()">x</button>
       
       <svg width="80%" viewBox="0 0 528 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="398" y1="118" x2="528" y2="118" stroke="white" stroke-width="2"/>
@@ -11,22 +11,60 @@
       <path d="M276 60.3333H271V65.8889H276V60.3333ZM276 49.2222H271V54.7778H276V49.2222ZM281 71.4444H261V65.8889H266V60.3333H261V54.7778H266V49.2222H261V43.6667H281V71.4444ZM256 38.1111H251V32.5556H256V38.1111ZM256 49.2222H251V43.6667H256V49.2222ZM256 60.3333H251V54.7778H256V60.3333ZM256 71.4444H251V65.8889H256V71.4444ZM246 38.1111H241V32.5556H246V38.1111ZM246 49.2222H241V43.6667H246V49.2222ZM246 60.3333H241V54.7778H246V60.3333ZM246 71.4444H241V65.8889H246V71.4444ZM261 38.1111V27H236V77H286V38.1111H261Z" fill="white"/>
       </svg>
 
-      <select id="companyInput" class="mt-4 p-2 form-input" style="width: 55%">
-        <option selected disabled value="">Select a Company</option>
+      <select id="companySelectOptions" class="mt-4 p-2 form-input" style="width: 55%">
       </select>
-      <input type="text" id="nameInput" class="mt-4 p-2 form-input" style="width: 55%" placeholder="New Name">
-      <b-button class="mt-3" block variant="outline-warning">Update</b-button>
+      <input type="text" id="newNameCompany" class="mt-4 p-2 form-input" style="width: 55%" placeholder="New Name">
+      <b-button  id="buttonUpdateCompanyModal" class="mt-3" block variant="outline-warning">Update</b-button>
     </div>
   </div>
 </template>
 
 <script>
+var pageNumberCompanys = 0;
+import { CompanyService } from '../service/compiled/company/CompanyService'
+let companyService = new CompanyService();
   export default{
     methods:{
       closeModalUpdateCompany(){
         this.$emit('click');
-      }
-    }
+      },
+       setCompaniesOnVue() {
+            let element = document.getElementById("companySelectOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/company/find-all/`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<option  value="${json[count]["id"]}" id="companyCheckedBoxUpdate"> ${json[count]["name"]}</option>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+
+         companyScrollPage() {
+            let companyOp = document.getElementById("companySelectOptions");
+            companyOp.addEventListener("scroll", () => {
+                if(companyOp.scrollTop + companyOp.clientHeight == companyOp.scrollHeight) {
+                    pageNumberCompanys++;
+                    this.setCompaniesOnVue(pageNumberCompanys);
+                }
+            })
+        }
+    },
+
+    mounted() {
+          this.setCompaniesOnVue(0);
+          this.companyScrollPage();
+          companyService.updateCompanyListener();
+    },
   };
 </script>
 

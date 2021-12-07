@@ -314,6 +314,8 @@ class ProfileApi {
     }
 
     addRequestOnVue() {
+        if (window.localStorage.getItem("isAdmin") === 'true')
+            return;
         fetch('http://localhost:8080/api/order/find-all', {
             method: 'GET',
             headers: {

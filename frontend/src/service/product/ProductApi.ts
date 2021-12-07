@@ -1,7 +1,91 @@
 import { Base64 } from '../utils/Base64';
 class ProductApi {
+
+    private generateStarButton(starNumber : Number) {
+        let html = `<fieldset class="rating mb-4">`;
+        for (let index = 1; index <= 5; index++) {
+            if(index <= starNumber) {
+                html += `<span class="fa fa-star checked"></span>`
+            } else {
+                html += `<span class="fa fa-star"></span>`
+            }
+        }
+        html += `</fieldset>`
+        return html;
+    }
+
+    private generateStarAverage(array) {
+        let number = 0;
+        array.forEach(element => {
+            number += element["starNumber"];
+        });
+        return (number / array.length);
+    }
+
+    private generateAuthorList(array) {
+        let text = "";
+        for (let index = 0; index < array.length-1; index++) {
+            text += `${array[index]["name"]}, `
+        }
+        text += array[array.length-1]["name"];
+        return text;
+    }
+
+    addProductInfoOnVue() {
+        fetch('http://localhost:8080/api/book/find/find-by-id', {
+            method: 'POST',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+            },
+            body: JSON.stringify({
+                id: window.localStorage.getItem("productId")
+            })
+        }).then(async (apiResponse) => {
+            let json = await apiResponse.json();
+
+            document.getElementById("titleInfoProduct").innerHTML = `
+            <h3 class="row" style="color: #FCB13A;">${json["title"]}</h3>
+            <h5 class="row" style="color: #FCB13A;">${this.generateAuthorList(json["authorList"])}</h5>
+            `;
+
+            document.getElementById("imagemMediaProduct").innerHTML = `
+            <img src="${json["imageList"][0]["base64"]}" height="300vh" width="250vw" class="row mt-4" style="margin-left: auto;margin-right: auto;">
+            ${this.generateStarButton(this.generateStarAverage(json["evaluateList"]))}
+            `;
+
+            document.getElementById("priceProduct").innerHTML = `
+            <h5 style="padding: auto;margin: auto;">R$ ${json["price"]}</h5>
+            `;
+
+            document.getElementById("credicardProduct").innerHTML = `
+            <i class="far fa-credit-card fa-2x" style="color: rebeccapurple;"/><span style="color: gray;font-size: large;">Credicard: R$ ${json["price"]}</span>
+            `;
+
+            document.getElementById("descriptionProduct").innerHTML = `
+            <span><h5>Description</h5></span>
+            <p>${json["description"]}</p>
+            `
+
+            let evaluate = '';
+            json["evaluateList"].forEach(element => {
+                evaluate += `
+                <div class="row m-3 mt-4">
+                    <i class="fas fa-user-circle fa-5x" style="color: #FCB13A;"></i>
+                    
+                    <div class="col justify-content-start pl-5">
+                        ${this.generateStarButton(element["starNumber"])}
+                        <span class="row">${element["comment"]}</span>
+                    </div>
+                </div>
+                `
+            });
+            document.getElementById("evaluateProduct").innerHTML = evaluate;
+        });
+    }
+
     saveEvent() {
-        // let base64 = new Base64();
         let savebutton = document.getElementById("saveButton");
 
         let titleInput = document.getElementById("titleInput") as HTMLInputElement;
