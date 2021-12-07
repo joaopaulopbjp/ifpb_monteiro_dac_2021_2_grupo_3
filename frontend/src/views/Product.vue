@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-3 p-4" id="descriptionProduct" style="background-color: white;border:2px solid rgb(232, 232, 232)">
+            <div class="row mt-3 p-4 d-flex flex-column" id="descriptionProduct" style="background-color: white;border:2px solid rgb(232, 232, 232)">
             </div>
             <div class="row mt-3 border border-5 p-4" id="evaluate" style="background-color: white;border:2px solid rgb(232, 232, 232)">
                 <div class="col p-2">

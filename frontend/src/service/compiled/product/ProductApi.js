@@ -23,6 +23,14 @@ class ProductApi {
         });
         return (number / array.length);
     }
+    generateAuthorList(array) {
+        let text = "";
+        for (let index = 0; index < array.length - 1; index++) {
+            text += `${array[index]["name"]}, `;
+        }
+        text += array[array.length - 1]["name"];
+        return text;
+    }
     addProductInfoOnVue() {
         fetch('http://localhost:8080/api/book/find/find-by-id', {
             method: 'POST',
@@ -38,7 +46,7 @@ class ProductApi {
             let json = await apiResponse.json();
             document.getElementById("titleInfoProduct").innerHTML = `
             <h3 class="row" style="color: #FCB13A;">${json["title"]}</h3>
-            <h5 class="row" style="color: #FCB13A;">{{subtitle}}</h5>
+            <h5 class="row" style="color: #FCB13A;">${this.generateAuthorList(json["authorList"])}</h5>
             `;
             document.getElementById("imagemMediaProduct").innerHTML = `
             <img src="${json["imageList"][0]["base64"]}" height="300vh" width="250vw" class="row mt-4" style="margin-left: auto;margin-right: auto;">
