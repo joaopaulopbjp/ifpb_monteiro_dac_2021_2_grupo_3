@@ -20,6 +20,7 @@ import DeleteCategory from "./modal/DeleteCategory.vue"
 import DeleteCompany from "./modal/DeleteCompany.vue"
 import DeleteProduct from "./modal/DeleteProduct.vue"
 import UpdateProduct from "./views/UpdateProduct.vue"
+import EvaluateProduct from "./modal/EvaluateProduct.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -110,5 +111,9 @@ export default new Router({
         path: "/DeleteProduct",
         name: "DeleteProduct",
         component: DeleteProduct
+    },{
+        path: "/EvaluateProduct",
+        name: "EvaluateProduct",
+        component: EvaluateProduct
     }]
 })
