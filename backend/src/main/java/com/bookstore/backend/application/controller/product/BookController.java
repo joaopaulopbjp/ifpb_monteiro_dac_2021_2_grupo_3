@@ -82,10 +82,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find/find-all/{page}")
-    public ResponseEntity<?> findAll(@PathVariable("page") int page) {
+    @GetMapping("/find/find-all-available/{page}")
+    public ResponseEntity<?> findAllAvailable(@PathVariable("page") int page) {
         try {
-            List<BookModel> bookList = bookServices.findAll(page);
+            List<BookModel> bookList = bookServices.findAllAvailable(page);
             List<BookDTO> dtoList = new ArrayList<>();
             for (BookModel book : bookList) {
                 BookDTO dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
