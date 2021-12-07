@@ -20,6 +20,9 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
     @Query("SELECT book FROM BookModel book WHERE book.inventory.amount > 0")
     public Page<BookModel> findAllInventoryAvailable(Pageable pageable);
 
+    @Query("SELECT book FROM BookModel book WHERE book.status = 0")
+    public Page<BookModel> findAllAvailable(Pageable pageable);
+
     @Query("SELECT book FROM BookModel book WHERE book.inventory.amount <= 0")
     public Page<BookModel> findAllInventoryUnavailable(Pageable pageable);
     

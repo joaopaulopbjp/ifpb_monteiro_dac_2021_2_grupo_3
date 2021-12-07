@@ -159,8 +159,8 @@ public class BookService {
         return bookRecoveredList;
     }
 
-    public List<BookModel> findAll(int pageNumber) throws NotFoundException {
-        List<BookModel> bookRecoveredList = bookRepositoryService.findAll(pageNumber);
+    public List<BookModel> findAllAvailable(int pageNumber) throws NotFoundException {
+        List<BookModel> bookRecoveredList = bookRepositoryService.findAllAvailable(pageNumber);
 
         if(bookRecoveredList.isEmpty()) 
             throw new NotFoundException();

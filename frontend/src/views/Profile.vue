@@ -11,6 +11,7 @@
         <Delete-author :style="isDisplayDeleteAuthor" @click="closeModalDeleteAuthor"/>
         <Delete-category :style="isDisplayDeleteCategory" @click="closeModalDeleteCategory"/>
         <Delete-Company :style="isDisplayDeleteCompany" @click="closeModalDeleteCompany"/>
+        <DeleteProduct :style="isDisplayDeleteProduct" @click="closeModalDeleteProduct"/>
         <RegisterAddress :style="isDisplayRegisterAddress" @click="closeModalRegisterAddress"/>
         <div class="container mt-2 mb-5">
             <b-card v-if="isAdmin()">
@@ -24,10 +25,10 @@
                             <b-button to="RegisterProduct" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-plus-circle"></i> Register Product
                             </b-button>
-                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                            <b-button @click="openModalDeleteProduct()" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-trash-alt"></i> Delete Product
                             </b-button>
-                            <b-button pill variant="warning" class="my-2 mb-3" type="submit">
+                            <b-button to="updateProduct" pill variant="warning" class="my-2 mb-3" type="submit">
                                 <i class="fas fa-edit"></i> Update Product
                             </b-button>
                         </b-button-group>
@@ -143,12 +144,13 @@ import DeleteCompany from '../modal/DeleteCompany.vue';
 
 import { ProfileApi } from "../service/compiled/profile/ProfileApi.js";
 import RegisterAddress from '../modal/RegisterAddress.vue';
+import DeleteProduct from '../modal/DeleteProduct.vue';
 
 let profileApi = new ProfileApi();
 
 export default {
     name: "Profile",
-    components: { NavBar, Footer, SideBar, RegisterAuthor, RegisterCategory, RegisterCompany, UpdateAuthor, UpdateCategory, UpdateCompany, DeleteAuthor, DeleteCategory, DeleteCompany, RegisterAddress },
+    components: { NavBar, Footer, SideBar, RegisterAuthor, RegisterCategory, RegisterCompany, UpdateAuthor, UpdateCategory, UpdateCompany, DeleteAuthor, DeleteCategory, DeleteCompany, RegisterAddress, DeleteProduct },
     mounted() {
         
         this.setInfoOnVue()
@@ -172,6 +174,7 @@ export default {
             isDisplayDeleteCategory:"display: none;",
             isDisplayDeleteCompany:"display: none;",
             isDisplayRegisterAddress:"display: none;",
+            isDisplayDeleteProduct:"display: none;",
         }
     },
     methods: {
@@ -246,6 +249,12 @@ export default {
         },
         openModalRegisterAddress() {
             this.isDisplayRegisterAddress = "display: flex;"
+        },
+        closeModalDeleteProduct(){
+            this.isDisplayDeleteProduct = "display: none;"
+        },
+        openModalDeleteProduct() {
+            this.isDisplayDeleteProduct = "display: flex;"
         },
     }
 }

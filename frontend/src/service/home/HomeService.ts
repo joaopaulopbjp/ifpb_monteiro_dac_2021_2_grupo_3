@@ -62,7 +62,7 @@ class HomeService {
     }
 
     async getBooks(pageNumber) {
-        return await fetch(`http://localhost:8080/api/book/find/find-all/${pageNumber}`, {
+        return await fetch(`http://localhost:8080/api/book/find/find-all-available/${pageNumber}`, {
           method: 'GET'
         })
         .then(async function(response) {

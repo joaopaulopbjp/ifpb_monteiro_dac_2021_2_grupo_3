@@ -18,7 +18,7 @@ class ShoppingCartService {
             let subTotal = 0;
             let Transport = 50;
             json["itemList"].forEach(element => {
-                html += `
+                html = `
               <div id="bookShoppingcart" class="container rounded mt-2 p-3" style="background-color: white;border-radius: 1px solid black;" name="${element["id"]}">
                 <div class="d-flex justify-content-between p-1">
                 <input type="checkbox" name="" id="" style=" width: 2vw;height: 2vh;">
@@ -37,16 +37,56 @@ class ShoppingCartService {
                         </div>
                     </div>
                     <div class=" mt-4" inline >
-                        <button class="text-center buttonMinus rounded-left">-</button>
-                        <input class="text-center rounded inputMeio" type="number" min="1" value="1" >
-                        <button class="text-center buttonPlus rounded-right">+</button>
+                        <button id="leftButton${element["id"]}" name="${element["id"]}" class="text-center buttonMinus rounded-left">-</button>
+                        <input id="amount${element["id"]}" class="text-center rounded inputMeio" type="number" min="1" value="${element["amount"]}" >
+                        <button id="rightButton${element["id"]}" name="${element["id"]}" class="text-center buttonPlus rounded-right">+</button>
                     </div>
                 </div>
             </div> 
             </div>`;
+                itemDiv.innerHTML = html;
                 subTotal += element["product"]["price"];
+                document.getElementById(`leftButton${element["id"]}`)
+                    .addEventListener("click", () => {
+                    let input = document.getElementById(`amount${element["id"]}`);
+                    if ((Number(input.value) - 1) > 0) {
+                        input.value = (Number(input.value) - 1).toString();
+                    }
+                    fetch('http://localhost:8080/api/shopping-cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                        },
+                        body: JSON.stringify({
+                            itemList: [{
+                                    amount: input.value,
+                                    idProduct: element["product"]["id"]
+                                }]
+                        })
+                    });
+                });
+                document.getElementById(`rightButton${element["id"]}`)
+                    .addEventListener("click", () => {
+                    let input = document.getElementById(`amount${element["id"]}`);
+                    input.value = (Number(input.value) + 1).toString();
+                    fetch('http://localhost:8080/api/shopping-cart/add', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                        },
+                        body: JSON.stringify({
+                            itemList: [{
+                                    amount: input.value,
+                                    idProduct: element["product"]["id"]
+                                }]
+                        })
+                    });
+                });
             });
-            itemDiv.innerHTML = html;
             containerValue.innerHTML = `
             <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
                 <div class="">
