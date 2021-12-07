@@ -56,5 +56,25 @@ class CategoryService {
             window.location.reload();
         });
     }
+    updateCategoryListener() {
+        document.getElementById("buttonUpdateCategoryModal").addEventListener("click", () => {
+            let element = document.getElementById("categorySelectOptions");
+            let newName = document.getElementById("newNameCategory");
+            fetch('http://localhost:8080/api/category', {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    id: `${element.value}`,
+                    name: `${newName.value}`,
+                })
+            });
+            document.getElementById("closeButtonCategoryUpdate").click();
+            window.location.reload();
+        });
+    }
 }
 exports.CategoryService = CategoryService;

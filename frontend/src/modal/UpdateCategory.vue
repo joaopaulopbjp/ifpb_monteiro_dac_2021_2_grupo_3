@@ -1,7 +1,7 @@
 <template>
   <div id="" class="boxextern">
     <div class=" boxintern text-center p-5">
-      <button id="closeButton" class="closed" @click="closeModalUpdateCategory()">x</button>
+      <button id="closeButtonCategoryUpdate" class="closed" @click="closeModalUpdateCategory()">x</button>
       <svg width="80%" viewBox="0 0 528 137" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="398" y1="118" x2="528" y2="118" stroke="white" stroke-width="2"/>
       <line y1="118" x2="130" y2="118" stroke="white" stroke-width="2"/>
@@ -10,21 +10,60 @@
       <path d="M257.053 55.75V75.75H236V55.75H257.053ZM251.789 60.75H241.263V70.75H251.789V60.75ZM259.684 27L274.158 49.5H245.211L259.684 27ZM259.684 36.65L254.632 44.5H264.737L259.684 36.65ZM274.158 54.5C280.737 54.5 286 59.5 286 65.75C286 72 280.737 77 274.158 77C267.579 77 262.316 72 262.316 65.75C262.316 59.5 267.579 54.5 274.158 54.5ZM274.158 59.5C272.413 59.5 270.74 60.1585 269.506 61.3306C268.272 62.5027 267.579 64.0924 267.579 65.75C267.579 67.4076 268.272 68.9973 269.506 70.1694C270.74 71.3415 272.413 72 274.158 72C275.903 72 277.576 71.3415 278.81 70.1694C280.044 68.9973 280.737 67.4076 280.737 65.75C280.737 64.0924 280.044 62.5027 278.81 61.3306C277.576 60.1585 275.903 59.5 274.158 59.5Z" fill="white"/>
       </svg>
 
-      <select id="categoryInput" class="mt-4 p-2 form-input" style="width: 55%">
-        <option selected disabled value="">Select a Category</option>
+      <select id="categorySelectOptions" class="mt-4 p-2 form-input" style="width: 55%">
       </select>
-      <input type="text" id="nameInput" class="mt-4 p-2 form-input" style="width: 55%" placeholder="New Name">
-      <b-button class="mt-3" block variant="outline-warning">Update</b-button>
+      <input type="text" id="newNameCategory" class="mt-4 p-2 form-input" style="width: 55%" placeholder="New Name">
+      <b-button id="buttonUpdateCategoryModal" class="mt-3" block variant="outline-warning">Update</b-button>
     </div>
   </div>
 </template>
 
 <script>
+  var pageNumberCategories = 0;
+  import { CategoryService } from "../service/compiled/category/CategoryService"
+  let categoryService = new CategoryService();
   export default{
     methods:{
       closeModalUpdateCategory(){
         this.$emit('click');
-      }
+      },
+
+      setCategoriesOnVue(pageNumber) {
+            let element = document.getElementById("categorySelectOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/category/find/find-all/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<option  value="${json[count]["id"]}" id="categoryCheckedBoxUpdate"> ${json[count]["name"]}</option>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+
+         categoryScrollPage() {
+            let categoryOp = document.getElementById("categorySelectOptions");
+            categoryOp.addEventListener("scroll", () => {
+                if(categoryOp.scrollTop + categoryOp.clientHeight == categoryOp.scrollHeight) {
+                    pageNumberCategories++;
+                    this.setCategoriesOnVue(pageNumberCategories);
+                }
+            })
+        }
+    },
+
+    mounted() {
+          this.setCategoriesOnVue(0);
+          this.categoryScrollPage();
+          categoryService.updateCategoryListener();
     }
   };
 </script>
