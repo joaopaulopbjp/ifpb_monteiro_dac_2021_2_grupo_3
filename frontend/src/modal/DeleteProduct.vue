@@ -11,8 +11,7 @@
         <path d="M273.838 31.878V46.5122L268.432 41.6341L263.027 46.5122V31.878H252.216V70.9024H260.595C260.865 72.6098 261.676 74.3171 262.486 75.7805H246.811C243.838 75.7805 241.405 73.3415 241.405 70.9024V68.4634H236V63.5854H241.405V53.8293H236V48.9512H241.405V39.1951H236V34.3171H241.405V31.878C241.405 29.1951 243.838 27 246.811 27H279.243C281.946 27 284.649 29.439 284.649 31.878V55.7805C283.027 54.8049 281.135 54.3171 279.243 54.0732V31.878H273.838ZM241.405 68.4634H246.811V63.5854H241.405V68.4634ZM241.405 53.8293H246.811V48.9512H241.405V53.8293ZM241.405 39.1951H246.811V34.3171H241.405V39.1951ZM282.216 59.9268L276.541 65.0488L270.865 59.9268L267.081 63.3415L272.757 68.4634L267.081 73.5854L270.865 77L276.541 71.878L282.216 77L286 73.5854L280.324 68.4634L286 63.3415L282.216 59.9268Z" fill="white"/>
         </svg>
 
-        <div id="ProductOptions" class="p-3 form-input d-flex flex-column align-items-start m-auto rounded" style="width: 55%;height: 30vh;">
-            <span><input type="checkbox" name="" id="ProductInput"> 1 As cronicas de Narnia</span>
+        <div id="ProductOptionsDelete" class="p-3 form-input d-flex flex-column align-items-start m-auto rounded" style="width: 75%;height: 30vh;">
         </div>
         <b-button id="buttonDeleteProductModal" class="mt-3" block variant="outline-warning">Delete</b-button>
     </div>
@@ -20,11 +19,51 @@
 </template>
 
 <script>
+import { ProductApi } from "../service/compiled/product/ProductApi"
+let productApi = new ProductApi(); 
+var pageNumberProduct = 0;
     export default{
         methods: {
             closeModalDeleteProduct(){
                 this.$emit('click');
-            }
+            },
+
+            setProductsOnVue(pageNumber) {
+            let element = document.getElementById("ProductOptionsDelete");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/book/find/find-all-available/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<span><input type="checkbox" value="${json[count]["id"]}" id="productCheckedBoxDelete"> (ID-${json[count]["id"]})              ${json[count]["title"]}</span>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+
+         productScrollPage() {
+            let productOp = document.getElementById("ProductOptionsDelete");
+            productOp.addEventListener("scroll", () => {
+                if(productOp.scrollTop + productOp.clientHeight == productOp.scrollHeight) {
+                    pageNumberProduct++;
+                    this.setProductsOnVue(pageNumberProduct);
+                }
+            })
+        }
+        },
+
+        mounted() {
+            this.setProductsOnVue(0);
+            this.productScrollPage();
+            productApi.deleteProductListener();
         },
     }
 </script>

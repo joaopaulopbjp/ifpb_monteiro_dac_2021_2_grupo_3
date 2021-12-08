@@ -6,8 +6,7 @@
             <b-card>
                 <div class="d-flex justify-content-between ml-5"><h1>Update a Book</h1></div>
                 <b-card class="align-items-center">
-                    <select id="selectProduct" class="p-2">
-                        <option selected disabled value="">Choose the product to update</option>
+                    <select id="selectProductOptions" class="p-2" style="width: 30vw">
                     </select>
                 </b-card>
                 <b-card class="mt-4">
@@ -44,7 +43,7 @@
                     </div>
                     <div class="d-flex justify-content-center">
                         <b-button to="Profile" variant="danger" class="mt-4 mr-2">Cancel</b-button>
-                        <b-button variant="warning" class="mt-4" id="updateButton">Update Book</b-button>
+                        <b-button variant="warning" class="mt-4" id="buttonUpdateProductView">Update Book</b-button>
                     </div>
                 </b-card>
 
@@ -59,6 +58,10 @@ import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
 
+var pageNumberProducts = 0;
+import { ProductApi } from "../service/compiled/product/ProductApi";
+let productApi = new ProductApi();
+
 export default {
     name: "UpdateProduct",
     components: {NavBar, Footer, SideBar},
@@ -66,6 +69,45 @@ export default {
       return {
         
       }
+    },
+
+    methods: {
+        setProductOnVue(pageNumber) {
+            let element = document.getElementById("selectProductOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/book/find/find-all-available/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<option  value="${json[count]["id"]}" id="productOptionUpdate"> ${json[count]["title"]}</option>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+
+        productScrollPage() {
+            let productOp = document.getElementById("selectProductOptions");
+            productOp.addEventListener("scroll", () => {
+                if(productOp.scrollTop + productOp.clientHeight == productOp.scrollHeight) {
+                    pageNumberProducts++;
+                    this.setCategoriesOnVue(pageNumberProducts);
+                }
+            })
+        }
+    },
+
+    mounted() {
+        this.setProductOnVue(0);
+        this.productScrollPage();
+        productApi.updateProductListener();
     },
     
 }

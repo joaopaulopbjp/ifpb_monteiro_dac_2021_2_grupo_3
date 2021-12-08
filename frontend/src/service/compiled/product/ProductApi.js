@@ -43,9 +43,94 @@ class ProductApi {
                             idCompany: companyInput.value,
                             idAuthorList: idAuthorArray
                         })
+                    }).then(apiResponse => {
+                        if (apiResponse.status === 201) {
+                            document.getElementById("cancelRegisterProduct").click();
+                        }
                     });
                 });
             }
+        });
+    }
+    deleteProductListener() {
+        document.getElementById("buttonDeleteProductModal").addEventListener("click", () => {
+            let element = document.getElementById("ProductOptionsDelete");
+            let idArray = [];
+            let elementArray;
+            element.querySelectorAll(`#productCheckedBoxDelete`).forEach(element => {
+                elementArray = element;
+                if (elementArray.checked) {
+                    idArray.push(elementArray.value);
+                }
+            });
+            idArray.forEach(element => {
+                fetch('http://localhost:8080/api/book', {
+                    method: 'DELETE',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        id: `${element}`,
+                    })
+                });
+            });
+            document.getElementById("closeButtonCompanyDelete").click();
+            window.location.reload();
+        });
+    }
+    updateProductListener() {
+        document.getElementById("buttonUpdateProductView").addEventListener("click", () => {
+            let element = document.getElementById("selectProductOptions");
+            let newTitle = null;
+            if (document.getElementById("newTitleInput").value != "") {
+                newTitle = document.getElementById("newTitleInput").value;
+            }
+            /*       let  newYearLaunch = null;
+                  let  newPage = null;
+                  let  newPrice = null;
+                  let  newInventory = null;
+                  let  newImage = null;
+                  let  newDescription = null;
+      
+                  if((document.getElementById("newYearLaunchInput") as HTMLInputElement).value != ""){
+                      newYearLaunch = (document.getElementById("newYearLaunchInput") as HTMLInputElement).value;
+                  }
+                  if((document.getElementById("newPageInput") as HTMLInputElement).value != ""){
+                      newPage = (document.getElementById("newPageInput") as HTMLInputElement).value;
+                  }
+                  if((document.getElementById("newPriceInput") as HTMLInputElement).value != ""){
+                      newPrice = (document.getElementById("newPriceInput") as HTMLInputElement).value;
+                  }
+                  if((document.getElementById("newInventoryInput") as HTMLInputElement).value != ""){
+                      newInventory = (document.getElementById("newInventoryInput") as HTMLInputElement).value;
+                  }
+                  if((document.getElementById("newimageInput") as HTMLInputElement).value != ""){
+                      newImage = (document.getElementById("newimageInput") as HTMLInputElement).value;
+                  }
+                  if((document.getElementById("newDescriptionInput") as HTMLInputElement).value != ""){
+                      newDescription = (document.getElementById("newDescriptionInput") as HTMLInputElement).value;
+                  } */
+            fetch('http://localhost:8080/api/book', {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({
+                    id: `${element.value}`,
+                    title: `${newTitle}`,
+                    /* yearLaunch: `${newYearLaunch}`,
+                    pages: `${newPage}`,
+                    price: `${newPrice}`,
+                    inventory: `${newInventory}`,
+                    description: `${newDescription}`,
+                    image: `${newImage}`, */
+                })
+            });
+            window.location.assign("/#/Profile");
         });
     }
     getIdListFromCheckboxId(id) {
