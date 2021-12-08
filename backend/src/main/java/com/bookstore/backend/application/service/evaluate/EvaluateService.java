@@ -122,4 +122,13 @@ public class EvaluateService {
         }
         return evaluate.get();
     }
+
+    public String findImageById(Long id) throws Exception{
+        Optional<EvaluateModel> evaluate = evaluateRepositoryService.getInstance().findById(id);
+        if(!evaluate.isPresent()){
+            throw new NotFoundException("Not Found evaluate " + id);
+        }
+
+        return evaluateRepositoryService.getUserImageByEvaluateId(id);
+    }
 }

@@ -68,20 +68,36 @@ class ProductApi {
             <p>${json["description"]}</p>
             `
 
-            let evaluate = '';
             json["evaluateList"].forEach(element => {
-                evaluate += `
-                <div class="row m-3 mt-4">
-                    <i class="fas fa-user-circle fa-5x" style="color: #FCB13A;"></i>
-                    
-                    <div class="col justify-content-start pl-5">
-                        ${this.generateStarButton(element["starNumber"])}
-                        <span class="row">${element["comment"]}</span>
-                    </div>
-                </div>
-                `
+                fetch('http://localhost:8080/api/evaluate/find-image-by-id', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        id: element["id"]
+                    })
+                }).then(async (apiResponse) => {
+                    if(apiResponse.ok) {
+                        let evaluate = document.getElementById("evaluateProduct").innerHTML;
+
+                        let imageJson = await apiResponse.json();
+                        evaluate += `
+                        <div class="row m-3 mt-4">
+                            <img src="${imageJson["response"]}" width="100vw" height="100vw" style="border-radius: 50%"/>
+                            
+                            <div class="col justify-content-start pl-5">
+                                ${this.generateStarButton(element["starNumber"])}
+                                <span class="row">${element["comment"]}</span>
+                            </div>
+                        </div>
+                        `
+                        document.getElementById("evaluateProduct").innerHTML = evaluate;
+                    }
+                });
             });
-            document.getElementById("evaluateProduct").innerHTML = evaluate;
         });
     }
 
