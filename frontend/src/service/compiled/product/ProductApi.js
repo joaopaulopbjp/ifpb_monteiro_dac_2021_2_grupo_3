@@ -62,7 +62,7 @@ class ProductApi {
             <span><h5>Description</h5></span>
             <p>${json["description"]}</p>
             `;
-            json["evaluateList"].forEach(element => {
+            await json["evaluateList"].forEach(element => {
                 fetch('http://localhost:8080/api/evaluate/find-image-by-id', {
                     method: 'POST',
                     headers: {
@@ -78,7 +78,7 @@ class ProductApi {
                         let evaluate = document.getElementById("evaluateProduct").innerHTML;
                         let imageJson = await apiResponse.json();
                         evaluate += `
-                        <div class="row m-3 mt-4">
+                        <div class="row m-3 mt-4 p-3" style="border: 1px solid #D3D3D3; border-radius: 1vw">
                             <img src="${imageJson["response"]}" width="100vw" height="100vw" style="border-radius: 50%"/>
                             
                             <div class="col justify-content-start pl-5">
@@ -89,6 +89,23 @@ class ProductApi {
                         `;
                         document.getElementById("evaluateProduct").innerHTML = evaluate;
                     }
+                });
+            });
+            document.getElementById("addToCartProduct")
+                .addEventListener("click", () => {
+                fetch('http://localhost:8080/api/shopping-cart/add', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        itemList: [{
+                                amount: 1,
+                                idProduct: window.localStorage.getItem("productId")
+                            }]
+                    })
                 });
             });
         });

@@ -24,7 +24,7 @@
                             <div id="credicardProduct" class="ml-3 mt-3 mb-3 mt-5">
                                 
                             </div>
-                            <button class="col rounded p-1" style="background-color: #FCB13A;border: none;color: white;">ADD TO CART</button>
+                            <button id="addToCartProduct" class="col rounded p-1" style="background-color: #FCB13A;border: none;color: white;">ADD TO CART</button>
                         </div>
                     </div>
                     <div class="row p-2 mt-2" id="delivery" style="background-color: white;border:2px solid rgb(232, 232, 232)">
