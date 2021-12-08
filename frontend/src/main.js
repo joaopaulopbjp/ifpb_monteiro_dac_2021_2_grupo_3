@@ -25,6 +25,7 @@ import Product from "./views/Product.vue"
 import Payment from "./views/Payment.vue"
 import UpdateProduct from "./views/UpdateProduct.vue"
 import DeleteProduct from "./modal/DeleteProduct.vue"
+import EvaluateProduct from "./modal/EvaluateProduct.vue"
 import { BootstrapVue } from 'bootstrap-vue'
 
 import { VueMaskDirective } from 'v-mask';
@@ -59,8 +60,9 @@ Vue.component("Recovery", Recovery);
 Vue.component("Login", Login);
 Vue.component("Product", Product);
 Vue.component("Payment", Payment);
-Vue.component("UpdateProduct", UpdateProduct)
-Vue.component("DeleteProduct", DeleteProduct)
+Vue.component("UpdateProduct", UpdateProduct);
+Vue.component("DeleteProduct", DeleteProduct);
+Vue.component("EvaluateProduct",EvaluateProduct);
 Vue.config.productionTip = false;
 
 new Vue({
