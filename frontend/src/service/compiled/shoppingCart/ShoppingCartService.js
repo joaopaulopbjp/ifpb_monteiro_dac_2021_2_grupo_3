@@ -19,11 +19,19 @@ class ShoppingCartService {
             let arrayIdProduct = [];
             let subTotal = 0;
             let Transport = 50;
+            if (json["itemList"].length === 0) {
+                itemDiv.innerHTML = `
+                    <div class = "d-flex flex-column text-center">
+                    <i class="fas fa-cart-plus mb-3 fa-5x"></i>
+                    <h3>Shopping Cart Empty</h3>
+                    </div>
+                `;
+                return;
+            }
             json["itemList"].forEach(element => {
                 html += `
               <div id="bookShoppingcart" class="container rounded mt-2 p-3" style="background-color: white;border-radius: 1px solid black;" name="${element["id"]}">
-                <div class="d-flex justify-content-between p-1">
-                <input type="checkbox" name="" id="" style=" width: 2vw;height: 2vh;">
+                <div class="d-flex justify-content-end p-1">
                 <button id="trashButtonShoppingcart" value="${element["id"]}" variant="outline-dark" class="border-0 far fa-trash-alt" style="background-color: rgba(0, 0, 0, 0);border: none;font-size: 3vh"/>
             </div>
             <div class="d-flex justify-content-between">
@@ -34,17 +42,18 @@ class ShoppingCartService {
                     <div class="d-grid ml-4">
                         <h4>${element["product"]["title"]}</h4>
                         <h6>Author: ${element["product"]["authorList"][0]["name"]}</h6>
-                        <div class="row justify-content-center mt-5 w-10 rounded" style="background-color: #9652C6;color: white;align-items: center;">
+                        <div class="row justify-content-center mt-5  rounded" style="background-color: #9652C6;color: white;align-items: center; width: 15vw;">
                             <h5>R$: ${element["product"]["price"]}</h5>
                         </div>
                     </div>
-                    <div class=" mt-4" inline >
+                    </div>
+                    <div class=" mt-4" >
                         <button id="leftButton${element["id"]}" name="${element["id"]}" class="text-center buttonMinus rounded-left">-</button>
                         <input id="amount${element["id"]}" class="text-center rounded inputMeio" type="number" min="1" value="${element["amount"]}" >
                         <button id="rightButton${element["id"]}" name="${element["id"]}" class="text-center buttonPlus rounded-right">+</button>
                     </div>
-                </div>
-            </div> 
+                    </div> 
+                    <hr>
             </div>`;
                 subTotal += element["product"]["price"] * element["amount"];
                 arrayIdItemElement.push(`${element["id"]}`);
