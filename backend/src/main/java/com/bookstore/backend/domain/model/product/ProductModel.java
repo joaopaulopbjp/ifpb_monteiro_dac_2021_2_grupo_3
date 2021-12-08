@@ -43,7 +43,7 @@ public abstract class ProductModel {
     @Column(name = "TITLE", nullable = false)
     private String title;
 
-    @Column(name = "DESCRIPTION", nullable = false)
+    @Column(name = "DESCRIPTION", columnDefinition = "TEXT", nullable = false)
     private String description;
 
     @Column(name = "YEAR_LAUNCH", nullable = false)
