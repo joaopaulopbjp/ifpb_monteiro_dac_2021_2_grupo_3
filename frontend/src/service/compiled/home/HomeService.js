@@ -10,7 +10,7 @@ class HomeService {
             json.forEach(element => {
                 html += `<div class="text-center border border-warning mb-3 ml-3 p-2" style="background: white; width: 23%; border-radius: 5px" >
               <button style="border: none" id="buttonImage" value="${element["id"]}">
-                <img style="height: 30vh; width:12vw;" src="${element["imageList"][0]["base64"]}" alt="">
+                <img style="height: 40vh; width:12vw;" src="${element["imageList"][0]["base64"]}" alt="">
               </button>
               <h6 class="mt-2">${element["title"]}</h6>
               <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
