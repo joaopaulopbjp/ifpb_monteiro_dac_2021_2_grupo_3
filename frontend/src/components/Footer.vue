@@ -8,8 +8,8 @@
                 <div class="row py-4 d-flex align-items-center">
                     <div class="col-md-12 text-center">
                         <p class="d-inline mr-4">Get connected with us on social networks</p>
-                        <i @click="openModalLinkedin()" class="fab fa-linkedin-in text-dark mr-4 fa-2x"></i>
-                        <i @click="openModalGithub()" class="fab fa-github-alt text-dark mr-4 fa-2x"></i>
+                        <i @click="openModalLinkedin()" class="linkedin fab fa-linkedin-in text-dark mr-4 fa-2x" style="color:white;"></i>
+                        <i @click="openModalGithub()" class="github fab fa-github-alt text-dark mr-4 fa-2x"></i>
                     </div>
                 </div>
             </div>
@@ -61,12 +61,14 @@ export default {
             this.isDisplayGithub = "display: none;"
         },
     },
-    components: {Github, Linkedin }
+    components: {Github, Linkedin}
 }
 </script>
 
 <style scoped>
-
+i:hover{
+    cursor: pointer;
+}
 .footer {
     height: 160px;
     width: 100%;
