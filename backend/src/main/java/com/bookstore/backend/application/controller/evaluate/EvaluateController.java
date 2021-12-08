@@ -76,4 +76,16 @@ public class EvaluateController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
         }
     }
+
+    @PostMapping("/find-image-by-id")
+    public ResponseEntity<?> findUserImageByEvaluateId(@RequestBody EvaluateDTO dto, Principal principal){
+        try {
+            String image = evaluateService.findImageById(dto.getId());
+            return ResponseEntity.status(HttpStatus.OK).body(new Response(image));
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
+        }
+    }
 }

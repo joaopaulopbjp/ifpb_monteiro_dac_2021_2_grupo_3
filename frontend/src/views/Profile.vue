@@ -13,6 +13,7 @@
         <Delete-Company :style="isDisplayDeleteCompany" @click="closeModalDeleteCompany"/>
         <DeleteProduct :style="isDisplayDeleteProduct" @click="closeModalDeleteProduct"/>
         <RegisterAddress :style="isDisplayRegisterAddress" @click="closeModalRegisterAddress"/>
+        <EvaluateProduct :style="isDisplayEvaluate" @click="closeModalEvaluate"/>
         <div class="container mt-2 mb-5">
             <b-card v-if="isAdmin()">
                 <div class="d-flex justify-content-between mb-4">
@@ -103,12 +104,23 @@
                 </b-button>
             </b-card>
         </div>
-        <div class="container mt-2 mb-5">
+        <div  v-if="!isAdmin()" class="container mt-2 mb-5">
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-shopping-basket"></i> Requests</h4>
                 </div>
                 <div id="requestprofile" class="container d-flex flex-wrap mb-4">
+                    <div class="border border-dark rounded text-center m-2 p-2" style="background-color: #D1B1E8; width:15vw;">
+                        <h5>${itemList["product"]["title"]}</h5>
+                        <button id="buttonImageprofile" value="" Style="background: transparent; border: none !important; font-size:0;">
+                            <img class="mt-2 mb-2" style="height: 25vh; width:10vw;" src="" alt="">
+                            </button> 
+                        <h5>Amount: R$ 10</h5>
+                        <h5>Total: R$ ${itemList["totalPrice"]}</h5>
+                        <div class="d-flex justify-content-end mt-2">
+                            <button id="editButtonAddress" class="style-btn-yellow" name='${element["id"]}' value="disabled" style="margin-left: 3px;"><i class="fas fa-star"></i></button>
+                        </div>
+                    </div>
                 </div>
             </b-card>
         </div>
@@ -116,7 +128,7 @@
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
-                    <b-button @click="openModalRegisterAddress()" variant="warning" class="my-2 my-sm-0" type="submit">
+                    <b-button @click="openModal()" variant="warning" class="my-2 my-sm-0" type="submit">
                     <i class="fas fa-pen"></i> Add new address
                     </b-button>
                 </div>
@@ -145,12 +157,13 @@ import DeleteCompany from '../modal/DeleteCompany.vue';
 import { ProfileApi } from "../service/compiled/profile/ProfileApi.js";
 import RegisterAddress from '../modal/RegisterAddress.vue';
 import DeleteProduct from '../modal/DeleteProduct.vue';
+import EvaluateProduct from '../modal/EvaluateProduct.vue';
 
 let profileApi = new ProfileApi();
 
 export default {
     name: "Profile",
-    components: { NavBar, Footer, SideBar, RegisterAuthor, RegisterCategory, RegisterCompany, UpdateAuthor, UpdateCategory, UpdateCompany, DeleteAuthor, DeleteCategory, DeleteCompany, RegisterAddress, DeleteProduct },
+    components: { NavBar, Footer, SideBar, RegisterAuthor, RegisterCategory, RegisterCompany, UpdateAuthor, UpdateCategory, UpdateCompany, DeleteAuthor, DeleteCategory, DeleteCompany, RegisterAddress, DeleteProduct, EvaluateProduct },
     mounted() {
         
         this.setInfoOnVue()
@@ -175,6 +188,7 @@ export default {
             isDisplayDeleteCompany:"display: none;",
             isDisplayRegisterAddress:"display: none;",
             isDisplayDeleteProduct:"display: none;",
+            isDisplayEvaluate:"display: none;",
         }
     },
     methods: {
@@ -255,6 +269,12 @@ export default {
         },
         openModalDeleteProduct() {
             this.isDisplayDeleteProduct = "display: flex;"
+        },
+        closeModalEvaluate(){
+            this.isDisplayEvaluate = "display: none;"
+        },
+        openModalEvaluate() {
+            this.isDisplayEvaluate = "display: flex;"
         },
     }
 }
