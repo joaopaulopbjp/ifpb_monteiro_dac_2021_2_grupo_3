@@ -15,6 +15,8 @@ class ShoppingCartService {
         }).then(async function (response) {
             let json = await response.json();
             let html = "";
+            let arrayIdItemElement = [];
+            let arrayIdProduct = [];
             let subTotal = 0;
             let Transport = 50;
             json["itemList"].forEach(element => {
@@ -44,12 +46,16 @@ class ShoppingCartService {
                 </div>
             </div> 
             </div>`;
-                itemDiv.innerHTML = html;
                 subTotal += element["product"]["price"] * element["amount"];
-                document.getElementById(`leftButton${element["id"]}`)
+                arrayIdItemElement.push(`${element["id"]}`);
+                arrayIdProduct.push(`${element["product"]["id"]}`);
+            });
+            itemDiv.innerHTML = html;
+            for (let index = 0; index < arrayIdItemElement.length; index++) {
+                const idItem = arrayIdItemElement[index];
+                document.getElementById(`leftButton${idItem}`)
                     .addEventListener("click", () => {
-                    alert("olá mund");
-                    let input = document.getElementById(`amount${element["id"]}`);
+                    let input = document.getElementById(`amount${idItem}`);
                     if ((Number(input.value) - 1) > 0) {
                         input.value = (Number(input.value) - 1).toString();
                     }
@@ -63,7 +69,7 @@ class ShoppingCartService {
                         body: JSON.stringify({
                             itemList: [{
                                     amount: input.value,
-                                    idProduct: element["product"]["id"]
+                                    idProduct: arrayIdProduct[index]
                                 }]
                         })
                     }).then(response => {
@@ -83,25 +89,25 @@ class ShoppingCartService {
                                 json["itemList"].forEach(element => {
                                     subTotal += element["product"]["price"] * element["amount"];
                                     containerValue.innerHTML = `
-                                  <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
-                                      <div class="">
-                                          <h4>Order:</h4>
-                                          <h5>Subtotal: R$: ${subTotal}</h5>
-                                          <h5>Transport: R$: ${Transport}</h5>
-                                          <hr class="ml-5 w-50">
-                                          <h5>Total: R$: ${subTotal + Transport}</h5>
-                                      </div>
-                                  </div>
-                                  <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
-                              `;
+                                <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
+                                    <div class="">
+                                        <h4>Order:</h4>
+                                        <h5>Subtotal: R$: ${subTotal}</h5>
+                                        <h5>Transport: R$: ${Transport}</h5>
+                                        <hr class="ml-5 w-50">
+                                        <h5>Total: R$: ${subTotal + Transport}</h5>
+                                    </div>
+                                </div>
+                                <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
+                            `;
                                 });
                             });
                         }
                     });
                 });
-                document.getElementById(`rightButton${element["id"]}`)
+                document.getElementById(`rightButton${idItem}`)
                     .addEventListener("click", () => {
-                    let input = document.getElementById(`amount${element["id"]}`);
+                    let input = document.getElementById(`amount${idItem}`);
                     input.value = (Number(input.value) + 1).toString();
                     fetch('http://localhost:8080/api/shopping-cart/add', {
                         method: 'POST',
@@ -113,7 +119,7 @@ class ShoppingCartService {
                         body: JSON.stringify({
                             itemList: [{
                                     amount: input.value,
-                                    idProduct: element["product"]["id"]
+                                    idProduct: arrayIdProduct[index]
                                 }]
                         })
                     }).then(() => {
@@ -132,22 +138,22 @@ class ShoppingCartService {
                             json["itemList"].forEach(element => {
                                 subTotal += element["product"]["price"] * element["amount"];
                                 containerValue.innerHTML = `
-                            <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
-                                <div class="">
-                                    <h4>Order:</h4>
-                                    <h5>Subtotal: R$: ${subTotal}</h5>
-                                    <h5>Transport: R$: ${Transport}</h5>
-                                    <hr class="ml-5 w-50">
-                                    <h5>Total: R$: ${subTotal + Transport}</h5>
-                                </div>
-                            </div>
-                            <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
-                        `;
+                          <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
+                              <div class="">
+                                  <h4>Order:</h4>
+                                  <h5>Subtotal: R$: ${subTotal}</h5>
+                                  <h5>Transport: R$: ${Transport}</h5>
+                                  <hr class="ml-5 w-50">
+                                  <h5>Total: R$: ${subTotal + Transport}</h5>
+                              </div>
+                          </div>
+                          <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
+                      `;
                             });
                         });
                     });
                 });
-            });
+            }
             containerValue.innerHTML = `
             <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
                 <div class="">

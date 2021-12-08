@@ -14,6 +14,8 @@ class ShoppingCartService {
         }).then(async function(response) {
           let json = await response.json();
           let html = "";
+          let arrayIdItemElement = [];
+          let arrayIdProduct = [];
           let subTotal = 0;
           let Transport = 50;
 
@@ -45,113 +47,123 @@ class ShoppingCartService {
                 </div>
             </div> 
             </div>`;
-            itemDiv.innerHTML = html;
             subTotal += element["product"]["price"] * element["amount"];
-            document.getElementById(`leftButton${element["id"]}`)
-                .addEventListener("click", () => {
-                    alert("olá mund");
-                    let input = (document.getElementById(`amount${element["id"]}`) as HTMLInputElement);
-                    if((Number(input.value) - 1) > 0) {
-                        input.value = (Number(input.value) - 1).toString();
-                    }
-                    fetch('http://localhost:8080/api/shopping-cart/add', {
-                      method: 'POST',
-                      headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                      "Authorization": `Bearer ${window.localStorage.getItem("token")}`
-                      },
-                      body: JSON.stringify({
-                        itemList: [{
-                          amount: input.value,
-                          idProduct: element["product"]["id"]
-                        }]
-                      })
-                  }).then( response => {
-                      if(response.status === 200){
-                          let containerValue = document.getElementById("containerValue");
-                          fetch('http://localhost:8080/api/shopping-cart/find-shoppingcart', {
-                              method: 'GET',
-                              headers: {
-                              'Accept': 'application/json',
-                              'Content-Type': 'application/json',
-                              "Authorization": `Bearer ${window.localStorage.getItem("token")}`
-                              }
-                          }).then(async function(response) {
-                            let json = await response.json();
-                            let subTotal = 0;
-                            let Transport = 50;
-                  
-                            json["itemList"].forEach(element => {
-                              subTotal += element["product"]["price"] * element["amount"];
-                              containerValue.innerHTML = `
-                                  <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
-                                      <div class="">
-                                          <h4>Order:</h4>
-                                          <h5>Subtotal: R$: ${subTotal}</h5>
-                                          <h5>Transport: R$: ${Transport}</h5>
-                                          <hr class="ml-5 w-50">
-                                          <h5>Total: R$: ${subTotal + Transport}</h5>
-                                      </div>
-                                  </div>
-                                  <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
-                              `
-                            });
-                          });
-                        }
-
-                  })
-                });
-            document.getElementById(`rightButton${element["id"]}`)
-                .addEventListener("click", () => {
-                    let input = (document.getElementById(`amount${element["id"]}`) as HTMLInputElement);
-                    input.value = (Number(input.value) + 1).toString();
-                    fetch('http://localhost:8080/api/shopping-cart/add', {
-                      method: 'POST',
-                      headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': 'application/json',
-                      "Authorization": `Bearer ${window.localStorage.getItem("token")}`
-                      },
-                      body: JSON.stringify({
-                        itemList: [{
-                          amount: input.value,
-                          idProduct: element["product"]["id"]
-                        }]
-                      })
-                  }).then(() =>{
-                    let containerValue = document.getElementById("containerValue");
-                    fetch('http://localhost:8080/api/shopping-cart/find-shoppingcart', {
-                        method: 'GET',
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        "Authorization": `Bearer ${window.localStorage.getItem("token")}`
-                        }
-                    }).then(async function(response) {
-                      let json = await response.json();
-                      let subTotal = 0;
-                      let Transport = 50;
-            
-                      json["itemList"].forEach(element => {
-                        subTotal += element["product"]["price"] * element["amount"];
-                        containerValue.innerHTML = `
-                            <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
-                                <div class="">
-                                    <h4>Order:</h4>
-                                    <h5>Subtotal: R$: ${subTotal}</h5>
-                                    <h5>Transport: R$: ${Transport}</h5>
-                                    <hr class="ml-5 w-50">
-                                    <h5>Total: R$: ${subTotal + Transport}</h5>
-                                </div>
-                            </div>
-                            <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
-                        `
-                      });
-                    });
-                  })
-                });
+            arrayIdItemElement.push(`${element["id"]}`);
+            arrayIdProduct.push(`${element["product"]["id"]}`);
           });
+          
+          itemDiv.innerHTML = html;
+          for (let index= 0; index < arrayIdItemElement.length; index++) {
+              const idItem = arrayIdItemElement[index];
+              document.getElementById(`leftButton${idItem}`)
+              .addEventListener("click", () => {
+                  let input = (document.getElementById(`amount${idItem}`) as HTMLInputElement);
+                  if((Number(input.value) - 1) > 0) {
+                      input.value = (Number(input.value) - 1).toString();
+                  }
+                  fetch('http://localhost:8080/api/shopping-cart/add', {
+                    method: 'POST',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                      itemList: [{
+                        amount: input.value,
+                        idProduct: arrayIdProduct[index]
+                      }]
+                    })
+                }).then( response => {
+                    if(response.status === 200){
+                        let containerValue = document.getElementById("containerValue");
+                        fetch('http://localhost:8080/api/shopping-cart/find-shoppingcart', {
+                            method: 'GET',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                            }
+                        }).then(async function(response) {
+                          let json = await response.json();
+                          let subTotal = 0;
+                          let Transport = 50;
+                
+                          json["itemList"].forEach(element => {
+                            subTotal += element["product"]["price"] * element["amount"];
+                            containerValue.innerHTML = `
+                                <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
+                                    <div class="">
+                                        <h4>Order:</h4>
+                                        <h5>Subtotal: R$: ${subTotal}</h5>
+                                        <h5>Transport: R$: ${Transport}</h5>
+                                        <hr class="ml-5 w-50">
+                                        <h5>Total: R$: ${subTotal + Transport}</h5>
+                                    </div>
+                                </div>
+                                <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
+                            `
+                          });
+                        });
+                      }
+  
+                })
+              });
+  
+          document.getElementById(`rightButton${idItem}`)
+              .addEventListener("click", () => {
+                  let input = (document.getElementById(`amount${idItem}`) as HTMLInputElement);
+                  input.value = (Number(input.value) + 1).toString();
+                  fetch('http://localhost:8080/api/shopping-cart/add', {
+                    method: 'POST',
+                    headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                      itemList: [{
+                        amount: input.value,
+                        idProduct: arrayIdProduct[index]
+                      }]
+                    })
+                }).then(() =>{
+                  let containerValue = document.getElementById("containerValue");
+                  fetch('http://localhost:8080/api/shopping-cart/find-shoppingcart', {
+                      method: 'GET',
+                      headers: {
+                      'Accept': 'application/json',
+                      'Content-Type': 'application/json',
+                      "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                      }
+                  }).then(async function(response) {
+                    let json = await response.json();
+                    let subTotal = 0;
+                    let Transport = 50;
+          
+                    json["itemList"].forEach(element => {
+                      subTotal += element["product"]["price"] * element["amount"];
+                      containerValue.innerHTML = `
+                          <div class="row rounded-top w-100 mb-0 pl-4 pt-3" style="background-color: white;">
+                              <div class="">
+                                  <h4>Order:</h4>
+                                  <h5>Subtotal: R$: ${subTotal}</h5>
+                                  <h5>Transport: R$: ${Transport}</h5>
+                                  <hr class="ml-5 w-50">
+                                  <h5>Total: R$: ${subTotal + Transport}</h5>
+                              </div>
+                          </div>
+                          <button id="buyButtonShoppingcart" class="row d-flex justify-content-center rounded-bottom w-100" style="background-color: #FCB13A;border: none;color: white;">buy</button>
+                      `
+                    });
+                  });
+                })
+              });
+          }
+           
+          
+
+          
 
 
           containerValue.innerHTML = `
