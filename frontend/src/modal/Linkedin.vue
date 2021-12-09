@@ -1,6 +1,6 @@
 <template>
     <div class="boxextern">
-        <div class=" boxintern p-5 text-center">
+        <div class=" boxintern p-5 text-center" style="background-color: white;">
             <button id="closeButtonAuthorDelete" class="closed" @click="closeModalLinkedin()">x</button>
 
             <svg width="85%" class="mb-3" viewBox="0 0 528 130" fill="none" xmlns="http://www.w3.org/2000/svg" style="">
