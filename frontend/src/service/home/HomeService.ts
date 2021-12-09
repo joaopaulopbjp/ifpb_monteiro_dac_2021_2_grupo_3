@@ -14,7 +14,7 @@ class HomeService {
               <h6 class="mt-2">${element["title"]}</h6>
               <b-form-rating class="justify-content-center" id="media" color="#FCB13A" value="4" style="border: none; height: 5vh"/>
               <div class="d-flex justify-content-center">
-                <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: ${element["price"]}</span>
+                <span class="btn-sm p-2 text-white" variant="dark" style="border-radius: 8px 0px 0px 8px; background-color: #955DBC;">R$: ${element["price"].toFixed(2).toString().replace(".", ",")}</span>
                 <button id="addCartButton" value="${element["id"]}" style="border-radius: 0px 8px 8px 0px; background-color: #FCB13A; padding: 2px 2px">ADD TO CART</button>
               </div>
             </div>`;
