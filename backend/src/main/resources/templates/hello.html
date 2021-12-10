@@ -1,0 +1,22 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h5><span>[[${addressList}]]</span></h5>
+    <!-- <h5><span>[[${addressList.get(0).getStreet()}]]</span></h5> -->
+    <!-- [# th:each="address : ${addressList}"]
+    <div>
+        <h5>[[${address.getStreet()}]]</h5>
+    </div>
+    [/] -->
+</body>
+
+</html>
