@@ -19,7 +19,7 @@
                         <b-form-input type="number" placeholder="New Price" id="newPriceInput" style="width: 30%" class="ml-3"></b-form-input>
                         <b-form-input type="number" placeholder="New Inventory" id="newInventoryInput" style="width: 40%" class="ml-2"></b-form-input>
 
-                        <select id="newCompanyInput" style="width: 45%" class="ml-2 companys">
+                        <select id="companyInput" style="width: 45%" class="ml-2 companys">
                             <option selected disabled value="">Select New a company</option>
                         </select>
 
@@ -37,7 +37,7 @@
 
                         <b-card class="ml-3 mr-3 w-45 p-3">
                             <h4 class="text-center">Categories</h4>
-                            <div class="checkboxWidth" id="newCategoriesOptions">
+                            <div class="checkboxWidth" id="categoriesOptions">
                             </div>
                         </b-card>
                     </div>
@@ -57,9 +57,10 @@
 import NavBar from '@/components/NavBar.vue'
 import Footer from '@/components/Footer.vue'
 import SideBar from '@/components/SideBar.vue'
-
-var pageNumberProducts = 0;
 import { ProductApi } from "../service/compiled/product/ProductApi";
+var pageNumberProducts = 0;
+var pageNumberCategories = 0;
+var pageNumberAuthor = 0;
 let productApi = new ProductApi();
 
 export default {
@@ -92,6 +93,86 @@ export default {
                 element.innerHTML = html;
             });
         },
+         setAuthorOnVue(pageNumber) {
+            let element = document.getElementById("newAuthorsOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/author/find/find-all/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<input type="checkbox" value="${json[count]["id"]}" id="optionAuthor"> ${json[count]["name"]}<br>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+        setCategoriesOnVue(pageNumber) {
+            let element = document.getElementById("categoriesOptions");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/category/find/find-all/${pageNumber}`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<input type="checkbox" value="${json[count]["id"]}" id="categoryCheckedBox"> ${json[count]["name"]}<br>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+        setCompaniesOnVue() {
+            let element = document.getElementById("companyInput");
+            let html = element.innerHTML;
+            fetch(`http://localhost:8080/api/company/find-all`, {
+                method: 'GET',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                }
+            }).then(async function(apiResponse) {
+                let json = await apiResponse.json();
+                let count = 0;
+                while (json[count] !== undefined) {
+                    html = html + `<option value="${json[count]["id"]}">${json[count]["name"]}</option>`
+                    count++;
+                }
+                element.innerHTML = html;
+            });
+        },
+        authorScrollPage() {
+            let authorOp = document.getElementById("newAuthorsOptions");
+            authorOp.addEventListener("scroll", () => {
+                if(authorOp.scrollTop + authorOp.clientHeight == authorOp.scrollHeight) {
+                    pageNumberAuthor++;
+                    this.setAuthorOnVue(pageNumberAuthor);
+                }
+            })
+        },
+        categoryScrollPage() {
+            let categoryOp = document.getElementById("categoriesOptions");
+            categoryOp.addEventListener("scroll", () => {
+                if(categoryOp.scrollTop + categoryOp.clientHeight == categoryOp.scrollHeight) {
+                    pageNumberCategories++;
+                    this.setCategoriesOnVue(pageNumberCategories);
+                }
+            })
+        },
+
+        
 
         productScrollPage() {
             let productOp = document.getElementById("selectProductOptions");
@@ -105,8 +186,13 @@ export default {
     },
 
     mounted() {
-        this.setProductOnVue(0);
         this.productScrollPage();
+        this.setProductOnVue(0);
+        this.authorScrollPage();
+        this.categoryScrollPage();
+        this.setCompaniesOnVue();
+        this.setAuthorOnVue(pageNumberAuthor);
+        this.setCategoriesOnVue(pageNumberCategories);
         productApi.updateProductListener();
     },
     

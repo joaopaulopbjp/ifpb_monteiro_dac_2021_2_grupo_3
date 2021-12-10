@@ -21,6 +21,8 @@ import DeleteCompany from "./modal/DeleteCompany.vue"
 import DeleteProduct from "./modal/DeleteProduct.vue"
 import UpdateProduct from "./views/UpdateProduct.vue"
 import EvaluateProduct from "./modal/EvaluateProduct.vue"
+import Linkedin from "./modal/Linkedin.vue"
+import Github from "./modal/Github.vue"
 Vue.use(Router)
 
 export default new Router({
@@ -115,5 +117,13 @@ export default new Router({
         path: "/EvaluateProduct",
         name: "EvaluateProduct",
         component: EvaluateProduct
+    },{
+        path: "/Linkedin",
+        name: "Linkedin",
+        component: Linkedin
+    },{
+        path: "/Github",
+        name: "Github",
+        component: Github
     }]
 })

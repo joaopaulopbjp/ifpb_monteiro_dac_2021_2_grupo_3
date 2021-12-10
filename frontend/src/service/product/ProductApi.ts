@@ -207,37 +207,32 @@ class ProductApi {
         document.getElementById("buttonUpdateProductView").addEventListener("click", () => {
             let element = document.getElementById("selectProductOptions") as HTMLInputElement;
             let  newTitle = null;
+            let  newYearLaunch = null;
+            let  newPage = null;
+            let  newPrice = null;
+           let  newInventory = null;
+          // let  newImage = null;
+           let  newDescription = null;
             
             if((document.getElementById("newTitleInput") as HTMLInputElement).value != ""){
                 newTitle = (document.getElementById("newTitleInput") as HTMLInputElement).value;
             }
-      /*       let  newYearLaunch = null;
-            let  newPage = null;
-            let  newPrice = null;
-            let  newInventory = null;
-            let  newImage = null;
-            let  newDescription = null;
-
-            if((document.getElementById("newYearLaunchInput") as HTMLInputElement).value != ""){
+            if ((document.getElementById("newYearLaunchInput") as HTMLInputElement).value != "") {
                 newYearLaunch = (document.getElementById("newYearLaunchInput") as HTMLInputElement).value;
             }
             if((document.getElementById("newPageInput") as HTMLInputElement).value != ""){
                 newPage = (document.getElementById("newPageInput") as HTMLInputElement).value;
             }
-            if((document.getElementById("newPriceInput") as HTMLInputElement).value != ""){
+            if((document.getElementById("newPriceInput")as HTMLInputElement).value != ""){
                 newPrice = (document.getElementById("newPriceInput") as HTMLInputElement).value;
             }
-            if((document.getElementById("newInventoryInput") as HTMLInputElement).value != ""){
+            if((document.getElementById("newInventoryInput")as HTMLInputElement).value != ""){
                 newInventory = (document.getElementById("newInventoryInput") as HTMLInputElement).value;
             }
-            if((document.getElementById("newimageInput") as HTMLInputElement).value != ""){
-                newImage = (document.getElementById("newimageInput") as HTMLInputElement).value;
-            }
-            if((document.getElementById("newDescriptionInput") as HTMLInputElement).value != ""){
+            if((document.getElementById("newDescriptionInput")as HTMLInputElement).value != ""){
                 newDescription = (document.getElementById("newDescriptionInput") as HTMLInputElement).value;
-            } */
+            }
 
-            
             fetch('http://localhost:8080/api/book', {
                 method: 'PUT',
                 headers: {
@@ -248,12 +243,14 @@ class ProductApi {
                 body: JSON.stringify({
                     id: `${element.value}`,
                     title: `${newTitle}`,
-                    /* yearLaunch: `${newYearLaunch}`,
+                    yearLaunch: `${newYearLaunch}`,
                     pages: `${newPage}`,
                     price: `${newPrice}`,
-                    inventory: `${newInventory}`,
+                    inventory: {
+                        amount: `${newInventory}`
+                    },
                     description: `${newDescription}`,
-                    image: `${newImage}`, */
+                    
                 })
             })
             window.location.assign ("/#/Profile");

@@ -4,13 +4,10 @@
     <Side-bar/>
     <div class="container d-flex justify-content-between mt-2 mb-5">
         <div class="container d-grid justify-content-start w-75 h-100">
-            <div class="d-grid justify-content-start rounded p-4" style="background-color: white;border-radius: 1px solid black;">
-                <b-form-checkbox>Select all</b-form-checkbox>
-            </div>
             <div id="itemsDiv" class="container rounded mt-2 p-3" style="background-color: white;border-radius: 1px solid black;">
             </div>
         </div>
-        <div class="container d-grid w-25 rounded-bottom sticky" id="containerValue">
+        <div class="container d-grid w-25 mt-2 rounded-bottom sticky" id="containerValue">
              
         </div>
     </div>
