@@ -22,11 +22,11 @@ public class AddressControllerTh {
       @Autowired
       private AddressService addressService;
 
-      @GetMapping("/hello")
+      @GetMapping("/address")
       public String nameView(Model model, Principal principal) {
             try {
                   model.addAttribute("addressList", addressService.findAll(principal.getName()));
             } catch (NotFoundException e) {}
-            return "hello";
+            return "address";
       }
 }
