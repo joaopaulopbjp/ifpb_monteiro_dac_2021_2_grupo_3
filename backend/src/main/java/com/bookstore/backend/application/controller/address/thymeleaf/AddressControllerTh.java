@@ -6,6 +6,8 @@ import java.util.List;
 import com.bookstore.backend.application.service.address.AddressService;
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
+import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
+import com.bookstore.backend.presentation.dto.address.AddressDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RequestMapping("/api/addressTh")
 @CrossOrigin
@@ -35,12 +39,21 @@ public class AddressControllerTh {
             return "address";
       }
 
+      @GetMapping("/form-address")
+      public String formAddress(Model model, Principal principal) {
+            model.addAttribute("dto", new AddressDTO());
+            return "registerAddress";
+      }
+
       @PostMapping("/save")
-      public String save(@ModelAttribute("model") AddressModel addressModel , Model model, Principal principal) {
+      public String save(@ModelAttribute("dto") AddressDTO dto , Model model, Principal principal) {
             try {
-                  model.addAttribute("addressList", addressService.findAll(principal.getName()));
-            } catch (NotFoundException e) {}
-            return "";
+                  AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
+                  addressService.save(addressModel, principal.getName());
+            } catch (NotFoundException e) {
+                  e.printStackTrace();
+            }
+            return "address";
       }
 
       @PutMapping("/update")
@@ -48,4 +61,5 @@ public class AddressControllerTh {
             System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
             return "address";
       }
+      
 }
