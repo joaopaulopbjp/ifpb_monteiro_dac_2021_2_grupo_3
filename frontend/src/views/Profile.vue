@@ -124,11 +124,11 @@
                 </div>
             </b-card>
         </div>
-        <div class="container mt-2 mb-2">
+        <div id="th" class="container mt-2 mb-2">
             <b-card>
                 <div class="d-flex justify-content-between mb-4">
                     <h4><i class="fas fa-map-marker-alt"></i> Address</h4>
-                    <b-button @click="openModal()" variant="warning" class="my-2 my-sm-0" type="submit">
+                    <b-button @click="openModalRegisterAddress()" variant="warning" class="my-2 my-sm-0" type="submit">
                     <i class="fas fa-pen"></i> Add new address
                     </b-button>
                 </div>
