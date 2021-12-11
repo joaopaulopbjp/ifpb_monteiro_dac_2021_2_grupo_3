@@ -6,7 +6,6 @@ import java.util.List;
 import com.bookstore.backend.application.service.address.AddressService;
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
-import com.bookstore.backend.presentation.dto.address.AddressDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
