@@ -1,10 +1,12 @@
-<template>
+<template >
   <div>
     <Nav-bar/>
     <div id="items-wrapper container" class="mb-5">
-          <div id="items"  @wheel="carouselShow">
+          <div id="items"  @wheel="carouselShow" >
                   <div class="item"><img src="../image/carousel/slide1.png" alt=""></div>
                   <div class="item"><img src="../image/carousel/slide2.png" alt=""></div>
+                  <div class="item"><img src="../image/carousel/slide3.png" alt=""></div>
+                  <div class="item"><img src="../image/carousel/slide4.png" alt=""></div>
           </div>
     </div>
     <Side-bar @click="openModelLogin" />
@@ -83,10 +85,11 @@ export default {
             event.target.scrollBy(300,0);
           }else{
             event.target.scrollBy(-300,0);
-      }
-})
-      }
+          }
+          });
+       }
     },
+
 }
 
 </script>
