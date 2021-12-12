@@ -1,6 +1,12 @@
 <template>
   <div>
     <Nav-bar/>
+    <div id="items-wrapper container" class="mb-5">
+          <div id="items"  @wheel="carouselShow">
+                  <div class="item"><img src="../image/carousel/slide1.png" alt=""></div>
+                  <div class="item"><img src="../image/carousel/slide2.png" alt=""></div>
+          </div>
+    </div>
     <Side-bar @click="openModelLogin" />
     <Login :style="isDisplay" @click="closeModalLogin"/>
     <RegisterUser :style="isDisplayRegister"/>
@@ -70,7 +76,65 @@ export default {
             homeService.renderbook(this.currentPageNumber - 1);
           }
         })
+      },
+      carouselShow() {
+          document.querySelector("#items").addEventListener("wheel", event => {
+          if(event.deltaY > 0) {
+            event.target.scrollBy(300,0);
+          }else{
+            event.target.scrollBy(-300,0);
+      }
+})
       }
     },
 }
+
 </script>
+
+<style scoped>
+ 
+ * {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+ }
+
+ #items-wrapper {
+   width: 100vw;
+ }
+
+#items {
+   display: flex;
+   overflow-x: auto;
+   scroll-snap-type: x mandatory;
+   -webkit-overflow-scrolling: touch;
+   scroll-behavior: smooth;
+   
+}
+
+.item {
+  flex: none;
+
+  width: 100%;
+  height: 600px;
+  scroll-snap-align: start;
+  pointer-events: none;
+}
+
+ img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+ }
+
+ ::-webkit-scrollbar
+{
+    width: 0px;
+}
+::-webkit-scrollbar-track-piece
+{
+    background-color: transparent;
+    -webkit-border-radius: 6px;
+}
+
+</style>
