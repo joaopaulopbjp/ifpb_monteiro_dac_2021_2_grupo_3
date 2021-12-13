@@ -2,7 +2,7 @@
   <div>
     <Nav-bar/>
     <div id="items-wrapper container" class="mb-5">
-          <div id="items"  @wheel="carouselShow" >
+          <div id="items" >
                   <div class="item"><img src="../image/carousel/slide1.png" alt=""></div>
                   <div class="item"><img src="../image/carousel/slide2.png" alt=""></div>
                   <div class="item"><img src="../image/carousel/slide3.png" alt=""></div>
@@ -55,6 +55,7 @@ export default {
     mounted() {
       this.initPageSize();
       homeService.renderbook(0);
+      this.carouselShow();
     },
     methods: {
       closeModalLogin(){
@@ -83,26 +84,35 @@ export default {
         })
       },
       carouselShow() {
-          document.querySelector("#items").addEventListener("wheel", event => {
+        // window.onload = () => {
+
+        // }
+          document.querySelector("#items").addEventListener("mouseover", async (event) => {
           /* if(event.deltaY > 0) {
             event.target.scrollBy(300,0);
           }else{
             event.target.scrollBy(-300,0);
           } */
-          setInterval(() => {
-                
-                if(this.i !== this.qtdItems){
-                   this.moviment += 300;
-                   event.target.scrollBy(this.moviment,0);
-                   this.i++;
-                }else{
-                  event.target.scrollBy(-this.moviment,0);
-                  this.moviment = 0;
-                  this.i = 0;
-                }
-          }, 2000)
+            let flag = true;
+            while(flag) {
+
+              if(this.i !== this.qtdItems+1){
+                  this.moviment += 300;
+                  event.target.scrollBy(this.moviment,0);
+                  this.i++;
+                await this.sleep(3000);
+              }else{
+                event.target.scrollBy(-10000,0);
+                // await this.sleep(1000);
+                this.moviment = 0;
+                this.i = 0;
+              }
+            }
           });
-       }
+       },
+      sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      }
     },
 
 }
@@ -145,7 +155,7 @@ export default {
    object-fit: cover;
  }
 
- ::-webkit-scrollbar
+ /* ::-webkit-scrollbar
 {
     width: 0px;
 }
@@ -153,6 +163,6 @@ export default {
 {
     background-color: transparent;
     -webkit-border-radius: 6px;
-}
+} */
 
 </style>
