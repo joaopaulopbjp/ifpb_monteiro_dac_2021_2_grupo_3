@@ -46,7 +46,10 @@ export default {
         isDisplayRegister: "display: none;",
         currentPageNumber: 1,
         rows: 0,
-        perPage: 1
+        perPage: 1,
+        qtdItems: 4,
+        i : 0,
+        moviment: 0
       }
     },
     mounted() {
@@ -81,11 +84,23 @@ export default {
       },
       carouselShow() {
           document.querySelector("#items").addEventListener("wheel", event => {
-          if(event.deltaY > 0) {
+          /* if(event.deltaY > 0) {
             event.target.scrollBy(300,0);
           }else{
             event.target.scrollBy(-300,0);
-          }
+          } */
+          setInterval(() => {
+                
+                if(this.i !== this.qtdItems){
+                   this.moviment += 300;
+                   event.target.scrollBy(this.moviment,0);
+                   this.i++;
+                }else{
+                  event.target.scrollBy(-this.moviment,0);
+                  this.moviment = 0;
+                  this.i = 0;
+                }
+          }, 2000)
           });
        }
     },
