@@ -84,15 +84,9 @@ export default {
         })
       },
       carouselShow() {
-        // window.onload = () => {
-
-        // }
+       
           document.querySelector("#items").addEventListener("mouseover", async (event) => {
-          /* if(event.deltaY > 0) {
-            event.target.scrollBy(300,0);
-          }else{
-            event.target.scrollBy(-300,0);
-          } */
+         
             let flag = true;
             while(flag) {
 
@@ -100,10 +94,9 @@ export default {
                   this.moviment += 300;
                   event.target.scrollBy(this.moviment,0);
                   this.i++;
-                await this.sleep(3000);
+                await this.sleep(4000);
               }else{
                 event.target.scrollBy(-10000,0);
-                // await this.sleep(1000);
                 this.moviment = 0;
                 this.i = 0;
               }
@@ -155,7 +148,7 @@ export default {
    object-fit: cover;
  }
 
- /* ::-webkit-scrollbar
+ ::-webkit-scrollbar
 {
     width: 0px;
 }
@@ -163,6 +156,6 @@ export default {
 {
     background-color: transparent;
     -webkit-border-radius: 6px;
-} */
+}
 
 </style>
