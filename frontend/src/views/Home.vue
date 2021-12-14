@@ -1,6 +1,15 @@
-<template>
+<template >
   <div>
     <Nav-bar/>
+    <div id="slider" class="mb-5">
+          <figure>
+                  <img src="../image/carousel/slide1.png" alt="">
+                  <img src="../image/carousel/slide2.png" alt="">
+                  <img src="../image/carousel/slide3.png" alt="">
+                  <img src="../image/carousel/slide4.png" alt="">
+                  <img src="../image/carousel/slide1.png" alt="">
+          </figure>
+    </div>
     <Side-bar @click="openModelLogin" />
     <Login :style="isDisplay" @click="closeModalLogin"/>
     <RegisterUser :style="isDisplayRegister"/>
@@ -70,7 +79,61 @@ export default {
             homeService.renderbook(this.currentPageNumber - 1);
           }
         })
-      }
+      },
     },
+
 }
+
 </script>
+
+<style scoped>
+ 
+#slider {
+  overflow: hidden;
+}
+
+#slider figure {
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation:  20s slider infinite;
+}
+
+#slider figure img {
+  width: 20%;
+  height: 80vh;
+  float: left;
+}
+
+@keyframes slider {
+      0% {
+            left: 0;
+      }
+      20% {
+            left: 0;
+      }
+      25% {
+            left: -100%;
+      }
+      45% {
+            left: -100%;
+      }
+      50% {
+            left: -200%;
+      }
+      70% {
+            left: -200%;
+      }
+      75% {
+            left: -300%;
+      }
+      95% {
+            left: -300%;
+      }
+      100% {
+            left: -400%;
+      }
+}
+
+</style>
