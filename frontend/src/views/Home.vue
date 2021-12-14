@@ -1,13 +1,14 @@
 <template >
   <div>
     <Nav-bar/>
-    <div id="items-wrapper container" class="mb-5">
-          <div id="items" >
-                  <div class="item"><img src="../image/carousel/slide1.png" alt=""></div>
-                  <div class="item"><img src="../image/carousel/slide2.png" alt=""></div>
-                  <div class="item"><img src="../image/carousel/slide3.png" alt=""></div>
-                  <div class="item"><img src="../image/carousel/slide4.png" alt=""></div>
-          </div>
+    <div id="slider" class="mb-5">
+          <figure>
+                  <img src="../image/carousel/slide1.png" alt="">
+                  <img src="../image/carousel/slide2.png" alt="">
+                  <img src="../image/carousel/slide3.png" alt="">
+                  <img src="../image/carousel/slide4.png" alt="">
+                  <img src="../image/carousel/slide1.png" alt="">
+          </figure>
     </div>
     <Side-bar @click="openModelLogin" />
     <Login :style="isDisplay" @click="closeModalLogin"/>
@@ -46,16 +47,12 @@ export default {
         isDisplayRegister: "display: none;",
         currentPageNumber: 1,
         rows: 0,
-        perPage: 1,
-        qtdItems: 4,
-        i : 0,
-        moviment: 0
+        perPage: 1
       }
     },
     mounted() {
       this.initPageSize();
       homeService.renderbook(0);
-      this.carouselShow();
     },
     methods: {
       closeModalLogin(){
@@ -83,29 +80,6 @@ export default {
           }
         })
       },
-      carouselShow() {
-       
-          document.querySelector("#items").addEventListener("mouseover", async (event) => {
-         
-            let flag = true;
-            while(flag) {
-
-              if(this.i !== this.qtdItems+1){
-                  this.moviment += 300;
-                  event.target.scrollBy(this.moviment,0);
-                  this.i++;
-                await this.sleep(4000);
-              }else{
-                event.target.scrollBy(-10000,0);
-                this.moviment = 0;
-                this.i = 0;
-              }
-            }
-          });
-       },
-      sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-      }
     },
 
 }
@@ -114,48 +88,52 @@ export default {
 
 <style scoped>
  
- * {
-   margin: 0;
-   padding: 0;
-   box-sizing: border-box;
- }
-
- #items-wrapper {
-   width: 100vw;
- }
-
-#items {
-   display: flex;
-   overflow-x: auto;
-   scroll-snap-type: x mandatory;
-   -webkit-overflow-scrolling: touch;
-   scroll-behavior: smooth;
-   
+#slider {
+  overflow: hidden;
 }
 
-.item {
-  flex: none;
-
-  width: 100%;
-  height: 600px;
-  scroll-snap-align: start;
-  pointer-events: none;
+#slider figure {
+    position: relative;
+    width: 500%;
+    margin: 0;
+    left: 0;
+    animation:  20s slider infinite;
 }
 
- img {
-   width: 100%;
-   height: 100%;
-   object-fit: cover;
- }
-
- ::-webkit-scrollbar
-{
-    width: 0px;
+#slider figure img {
+  width: 20%;
+  height: 80vh;
+  float: left;
 }
-::-webkit-scrollbar-track-piece
-{
-    background-color: transparent;
-    -webkit-border-radius: 6px;
+
+@keyframes slider {
+      0% {
+            left: 0;
+      }
+      20% {
+            left: 0;
+      }
+      25% {
+            left: -100%;
+      }
+      45% {
+            left: -100%;
+      }
+      50% {
+            left: -200%;
+      }
+      70% {
+            left: -200%;
+      }
+      75% {
+            left: -300%;
+      }
+      95% {
+            left: -300%;
+      }
+      100% {
+            left: -400%;
+      }
 }
 
 </style>
