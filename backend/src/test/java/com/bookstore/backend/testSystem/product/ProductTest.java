@@ -16,8 +16,7 @@ public class ProductTest extends Base {
     @Order(1)
     public void ProductTestSucess() {
         autoLogin("admin", "admin");
-
-        autoSaveAuthor("Luquinha da rolimã");
+        startCategoryAuthorCompany();
     }
 
 }
