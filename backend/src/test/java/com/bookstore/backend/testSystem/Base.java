@@ -7,8 +7,10 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class Base {
       protected WebDriver driver;
+      protected Integer time;
 
-      public Base() {
+      public Base(Integer time) {
+        this.time = time;
           instanciaDriver();
       }
 
@@ -17,7 +19,7 @@ public class Base {
           this.driver = new ChromeDriver();
           this.driver.manage().window().maximize();
           driver.get("http://localhost:8081/");
-          waitScreen(2000);
+          waitScreen();
           
       }
       
@@ -28,11 +30,16 @@ public class Base {
         autoSaveCompany("Saraiva");
       }
 
+      protected void goToHome() {
+        driver.findElement(By.xpath("/html/body/div/div/div[1]/div/nav/a")).click();
+        waitScreen();
+      }
+
       protected void autoLogin(String username, String password) {
           driver.findElement(By.xpath("/html/body/div/div/div[1]/div/nav/ul/li[2]/a/button")).click();
-          waitScreen(500);
+          waitScreen();
           driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div[2]/div/div/div/button")).click();
-          waitScreen(500);
+          waitScreen();
 
           WebElement usernameInput = driver.findElement(By.xpath("/html/body/div/div/div[4]/div[3]/input"));
           usernameInput.sendKeys(username);
@@ -41,14 +48,14 @@ public class Base {
 
           driver.findElement(By.xpath("/html/body/div/div/div[4]/div[3]/button[2]")).click();
 
-          waitScreen(1000);
+          waitScreen();
       }
 
       protected void openProfile() {
         WebElement sideBarButton = driver.findElement(By.xpath("/html/body/div/div/div[1]/div/nav/ul/li[2]/a/button"));
         sideBarButton.click();
 
-        waitScreen(500);
+        waitScreen();
         WebElement profileButton = driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div[2]/div/div/div/a"));
         profileButton.click();
 
@@ -61,10 +68,10 @@ public class Base {
         
         WebElement nameInput = driver.findElement(By.xpath("/html/body/div/div/div[3]/div/input"));
         nameInput.sendKeys(name);
-        waitScreen(200);
+        waitScreen();
 
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/button[2]")).click();
-        waitScreen(500);
+        waitScreen();
       }
 
       protected void autoSaveCategory(String name) {
@@ -73,10 +80,10 @@ public class Base {
         
         WebElement nameInput = driver.findElement(By.xpath("/html/body/div/div/div[4]/div/input"));
         nameInput.sendKeys(name);
-        waitScreen(200);
+        waitScreen();
 
         driver.findElement(By.xpath("/html/body/div/div/div[4]/div/button[2]")).click();
-        waitScreen(500);
+        waitScreen();
       }
 
       protected void autoSaveCompany(String name) {
@@ -85,17 +92,16 @@ public class Base {
         
         WebElement nameInput = driver.findElement(By.xpath("/html/body/div/div/div[5]/div/input"));
         nameInput.sendKeys(name);
-        waitScreen(200);
+        waitScreen();
 
         driver.findElement(By.xpath("/html/body/div/div/div[5]/div/button[2]")).click();
-        waitScreen(500);
+        waitScreen();
       }
 
       protected void waitScreen() {
-        try {Thread.sleep(2000);} catch (InterruptedException e) { e.printStackTrace();}
+        try {Thread.sleep(time);} catch (InterruptedException e) {e.printStackTrace();}
       }
-
-      protected void waitScreen(int time) {
+      protected void waitScreen(Integer time) {
         try {Thread.sleep(time);} catch (InterruptedException e) {e.printStackTrace();}
       }
 }
