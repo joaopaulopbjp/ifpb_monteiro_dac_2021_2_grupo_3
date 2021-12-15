@@ -22,7 +22,7 @@
                     
                 </div>
                 <div class="d-flex justify-content-between mb-4">
-                    <b-card  class="align-baseline ml-3 mr-3 w-45 p-3">
+                    <b-card id="authorBox" class="align-baseline ml-3 mr-3 w-45 p-3">
                         <h4 class="">Authors</h4>
                         <div class="checkboxWidth" id="authorsOptions">
                         </div>
@@ -30,7 +30,7 @@
 
                     <b-form-textarea placeholder="Description" id="descriptionInput" class="md-textarea p-3" style="width: 45%; "></b-form-textarea>
 
-                    <b-card class="ml-3 mr-3 w-45 p-3">
+                    <b-card id="categoryBox" class="ml-3 mr-3 w-45 p-3">
                         <h4>Categories</h4>
                         <div class="checkboxWidth" id="categoriesOptions">
                         </div>
@@ -103,7 +103,7 @@ export default {
                 let json = await apiResponse.json();
                 let count = 0;
                 while (json[count] !== undefined) {
-                    html = html + `<input type="checkbox" value="${json[count]["id"]}" id="categoryCheckBox"> ${json[count]["name"]}<br>`
+                    html = html + `<input type="checkbox" value="${json[count]["id"]}" id="categoriesCheckBox"> ${json[count]["name"]}<br>`
                     count++;
                 }
                 element.innerHTML = html;

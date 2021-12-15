@@ -120,42 +120,102 @@ class ProductApi {
         let companyInput = document.getElementById("companyInput");
         let imageInput = document.getElementById("imageInput");
         let descriptionInput = document.getElementById("descriptionInput");
+        let categoryInput = document.getElementById("categoryBox");
+        let authorInput = document.getElementById("authorBox");
         savebutton.addEventListener("click", async () => {
             let base64 = new Base64_1.Base64();
             let idAuthorArray = this.getIdListFromCheckboxId("authorCheckBox");
             let idCategoryArray = this.getIdListFromCheckboxId("categoriesCheckBox");
-            if (imageInput.files[0] !== undefined) {
-                base64.urlToBase64(imageInput.files[0]).then(async function (image) {
-                    fetch('http://localhost:8080/api/book', {
-                        method: 'POST',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json',
-                            "Authorization": `Bearer ${window.localStorage.getItem("token")}`
-                        },
-                        body: JSON.stringify({
-                            title: titleInput.value,
-                            description: descriptionInput.value,
-                            yearLaunch: yearLaunchInput.value,
-                            pages: pageInput.value,
-                            price: priceInput.value,
-                            inventory: {
-                                amount: inventoryInput.value
-                            },
-                            imageList: [{
-                                    base64: image
-                                }],
-                            idCategoryList: idCategoryArray,
-                            idCompany: companyInput.value,
-                            idAuthorList: idAuthorArray
-                        })
-                    }).then(apiResponse => {
-                        if (apiResponse.status === 201) {
-                            document.getElementById("cancelRegisterProduct").click();
-                        }
-                    });
-                });
+            if (titleInput.value === "") {
+                titleInput.classList.add("is-invalid");
             }
+            else {
+                titleInput.classList.remove("is-invalid");
+            }
+            if (yearLaunchInput.value === "") {
+                yearLaunchInput.classList.add("is-invalid");
+            }
+            else {
+                yearLaunchInput.classList.remove("is-invalid");
+            }
+            if (pageInput.value === "") {
+                pageInput.classList.add("is-invalid");
+            }
+            else {
+                pageInput.classList.remove("is-invalid");
+            }
+            if (priceInput.value === "") {
+                priceInput.classList.add("is-invalid");
+            }
+            else {
+                priceInput.classList.remove("is-invalid");
+            }
+            if (inventoryInput.value === "") {
+                inventoryInput.classList.add("is-invalid");
+            }
+            else {
+                inventoryInput.classList.remove("is-invalid");
+            }
+            if (companyInput.value === "") {
+                companyInput.style.border = "1px solid red";
+            }
+            else {
+                companyInput.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+            }
+            if (descriptionInput.value === "") {
+                descriptionInput.classList.add("is-invalid");
+            }
+            else {
+                descriptionInput.classList.remove("is-invalid");
+            }
+            if (idAuthorArray.length === 0) {
+                authorInput.style.border = "1px solid red";
+            }
+            else {
+                authorInput.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+            }
+            if (idCategoryArray.length === 0) {
+                categoryInput.style.border = "1px solid red";
+            }
+            else {
+                categoryInput.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+            }
+            if (imageInput.files[0] === undefined) {
+                imageInput.classList.add("is-invalid");
+            }
+            else {
+                imageInput.classList.remove("is-invalid");
+            }
+            base64.urlToBase64(imageInput.files[0]).then(async function (image) {
+                fetch('http://localhost:8080/api/book', {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        "Authorization": `Bearer ${window.localStorage.getItem("token")}`
+                    },
+                    body: JSON.stringify({
+                        title: titleInput.value,
+                        description: descriptionInput.value,
+                        yearLaunch: yearLaunchInput.value,
+                        pages: pageInput.value,
+                        price: priceInput.value,
+                        inventory: {
+                            amount: inventoryInput.value
+                        },
+                        imageList: [{
+                                base64: image
+                            }],
+                        idCategoryList: idCategoryArray,
+                        idCompany: companyInput.value,
+                        idAuthorList: idAuthorArray
+                    })
+                }).then(apiResponse => {
+                    if (apiResponse.status === 201) {
+                        document.getElementById("cancelRegisterProduct").click();
+                    }
+                });
+            });
         });
     }
     deleteProductListener() {

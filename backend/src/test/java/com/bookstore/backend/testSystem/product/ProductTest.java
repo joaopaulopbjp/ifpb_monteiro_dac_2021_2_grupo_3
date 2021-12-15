@@ -31,13 +31,7 @@ public class ProductTest extends Base {
         String title = "Livro Teste";
         String price = "30.99";
 
-        sendbookInfoOnRegister(title, "2020", "100", price, "200", "Essa é a descrição do livro");
-        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[3]/select/option[2]")).click();
-        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[3]/div/input"))
-        .sendKeys("D://Thauan//Jurassic_World_Evolution_2_Screenshot_2021.11.28_-_22.46.45.19.png");
-        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[4]/div[1]/div/div/input")).click();
-        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[4]/div[2]/div/div/input")).click();
-
+        sendbookInfoOnRegister(title, "2020", "100", price, "200", "D://Thauan//Screenshot 2021-11-30 191548.png", "Essa é a descrição do livro");
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[5]/button")).click();
         waitScreen(3000);
 
@@ -48,15 +42,19 @@ public class ProductTest extends Base {
         String priceReturn = driver.findElement(By.xpath("/html/body/div/div/div[6]/div/b-form-rating/div/span")).getText();
 
         assertEquals(title, titleReturn);
-        assertEquals("R$: " + price, priceReturn);
+        assertEquals(("R$: " + price).replace(".", ","), priceReturn);
     }
 
-    private void sendbookInfoOnRegister(String title, String yearLaunch, String pages, String price, String inventory, String description) {
+    private void sendbookInfoOnRegister(String title, String yearLaunch, String pages, String price, String inventory, String imageUrl, String description) {
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[2]/input[1]")).sendKeys(title);
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[2]/input[2]")).sendKeys(yearLaunch);
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[2]/input[3]")).sendKeys(pages);
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[3]/input[1]")).sendKeys(price);
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[3]/input[2]")).sendKeys(inventory);
+        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[3]/select/option[2]")).click();
+        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[3]/div/input")).sendKeys(imageUrl);
+        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[4]/div[1]/div/div/input")).click();
+        driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[4]/div[2]/div/div/input")).click();
         driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div/div[4]/textarea")).sendKeys(description);
     }
 }
