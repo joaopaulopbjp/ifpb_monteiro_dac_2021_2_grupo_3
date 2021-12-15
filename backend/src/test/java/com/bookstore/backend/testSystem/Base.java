@@ -3,6 +3,7 @@ package com.bookstore.backend.testSystem;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class Base {
@@ -13,8 +14,8 @@ public class Base {
       }
 
       protected void instanciaDriver(){
-          System.setProperty("webdriver.gecko.driver", "./driver/geckodriver.exe");
-          this.driver = new FirefoxDriver();
+          System.setProperty("webdriver.chrome.driver", "./driver/chromedriver.exe");
+          this.driver = new ChromeDriver();
           
       }
 
