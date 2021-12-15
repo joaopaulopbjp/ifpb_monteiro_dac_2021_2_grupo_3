@@ -10,4 +10,24 @@ public class Base {
           System.setProperty("webdriver.gecko.driver", "./driver/geckodriver.exe");
           this.driver = new FirefoxDriver();
       }
+
+      protected void waitScreen() {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+      }
+
+      protected void waitScreen(int time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+      }
+
+      protected void quit() {
+        driver.quit();
+      }
 }
