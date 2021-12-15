@@ -48,7 +48,7 @@ public class Base {
         WebElement sideBarButton = driver.findElement(By.xpath("/html/body/div/div/div[1]/div/nav/ul/li[2]/a/button"));
         sideBarButton.click();
 
-        waitScreen(2000);
+        waitScreen(500);
         WebElement profileButton = driver.findElement(By.xpath("/html/body/div/div/div[3]/div/div[2]/div/div/div/a"));
         profileButton.click();
 
