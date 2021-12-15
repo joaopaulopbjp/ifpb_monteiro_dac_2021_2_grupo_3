@@ -54,7 +54,7 @@ export default {
         },
         loggedVerify() {
             let token = window.localStorage.getItem("token");
-            if (token == null || token.length > 0)
+            if (token != null && token.length > 0)
                 return true;
             return false;
         },
