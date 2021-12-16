@@ -129,16 +129,91 @@ class ProductApi {
         let inventoryInput = document.getElementById("inventoryInput") as HTMLInputElement;
         let companyInput = document.getElementById("companyInput") as HTMLInputElement;
         let imageInput = document.getElementById("imageInput") as HTMLInputElement;
-        let descriptionInput = document.getElementById("descriptionInput") as HTMLInputElement;        
+        let descriptionInput = document.getElementById("descriptionInput") as HTMLInputElement;
+        
+        let categoryInput = document.getElementById("categoryBox") as HTMLInputElement;
+        let authorInput = document.getElementById("authorBox") as HTMLInputElement;
 
         savebutton.addEventListener("click", async () => {
             let base64 = new Base64();
 
             let idAuthorArray = this.getIdListFromCheckboxId("authorCheckBox");
             let idCategoryArray = this.getIdListFromCheckboxId("categoriesCheckBox");
-            
 
-            if(imageInput.files[0] !== undefined) {
+            let flag = true;
+            
+            if(titleInput.value === "") {
+                titleInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                titleInput.classList.remove("is-invalid");
+                flag = true;
+            }
+            if(yearLaunchInput.value === "") {
+                yearLaunchInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                yearLaunchInput.classList.remove("is-invalid");
+                flag = true;
+            }
+            if(pageInput.value === "") {
+                pageInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                pageInput.classList.remove("is-invalid");
+                flag = true;
+            }
+            if(priceInput.value === "") {
+                priceInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                priceInput.classList.remove("is-invalid");
+                flag = true;
+            }
+            if(inventoryInput.value === "") {
+                inventoryInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                inventoryInput.classList.remove("is-invalid");
+                flag = true;
+            }
+            if(companyInput.value === "") {
+                companyInput.style.border = "1px solid red";
+                flag = false;
+            }else {
+                companyInput.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+                flag = true;
+            }
+            if(descriptionInput.value === "") {
+                descriptionInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                descriptionInput.classList.remove("is-invalid");
+                flag = true;
+            }
+            if(idAuthorArray.length === 0) {
+                authorInput.style.border = "1px solid red";
+                flag = false;
+            }else {
+                authorInput.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+                flag = true;
+            }
+            if(idCategoryArray.length === 0) {
+                categoryInput.style.border = "1px solid red";
+                flag = false;
+            }else {
+                categoryInput.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+                flag = true;
+            }
+            if(imageInput.files[0] === undefined) {
+                imageInput.classList.add("is-invalid");
+                flag = false;
+            }else {
+                imageInput.classList.remove("is-invalid");
+                flag = true;
+            }
+
+            if(flag) {
                 base64.urlToBase64(imageInput.files[0]).then(async function(image) {
                     fetch('http://localhost:8080/api/book', {
                         method: 'POST',
@@ -148,8 +223,8 @@ class ProductApi {
                         "Authorization": `Bearer ${window.localStorage.getItem("token")}`
                         },
                         body: JSON.stringify({
-                            title: titleInput.value,
-                            description: descriptionInput.value,
+                            title: `${titleInput.value}`,
+                            description: `${descriptionInput.value}`,
                             yearLaunch: yearLaunchInput.value,
                             pages: pageInput.value,
                             price: priceInput.value,
@@ -169,6 +244,7 @@ class ProductApi {
                         }
                     });
                 })
+
             }
         });
     }
@@ -185,21 +261,28 @@ class ProductApi {
                 }
             });
 
-            idArray.forEach(element => {
-                fetch('http://localhost:8080/api/book', {
-                        method: 'DELETE',
-                        headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${window.localStorage.getItem("token")}`
-                        },
-                        body: JSON.stringify({
-                            id: `${element}`,
+            if(idArray.length > 0) {
+                element.style.border = "1px solid rgba(146, 146, 146, 0.507)";
+                idArray.forEach(element => {
+                    fetch('http://localhost:8080/api/book', {
+                            method: 'DELETE',
+                            headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${window.localStorage.getItem("token")}`
+                            },
+                            body: JSON.stringify({
+                                id: `${element}`,
+                            })
                         })
-                    })
-            });
-            document.getElementById("closeButtonCompanyDelete").click();
-            window.location.reload();
+                });
+                document.getElementById("closeButtonCompanyDelete").click();
+                window.location.reload();
+
+            } else {
+                element.style.border = "1px solid red";
+            }
+
         })
     }
 
