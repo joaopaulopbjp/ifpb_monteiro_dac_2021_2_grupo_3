@@ -67,8 +67,8 @@ public class RegisterUserTest extends Base{
             this.waitScreen();
             WebElement botao = driver.findElement(By.xpath("/html/body/div/div/div[4]/div[1]/div/button[2]"));
             botao.click();
+            this.waitScreen();
             WebElement isInvalid = driver.findElement(By.className("is-invalid"));
-            //instanciaDriver();
             if(isInvalid!=null){
                 permitiu++;
             }

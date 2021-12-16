@@ -56,7 +56,6 @@ public class LoginTest extends Base{
             }
         }
         assertEquals(2, naoPassou);
-        //driver.findElement(By.xpath("/html/body/div/div/div[1]/div/nav/ul/li[2]/a/button")).click();
         driver.quit();
     }
 
