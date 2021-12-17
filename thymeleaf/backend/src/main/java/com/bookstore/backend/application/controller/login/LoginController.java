@@ -4,6 +4,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import com.bookstore.backend.application.service.login.LoginService;
+import com.bookstore.backend.infrastructure.exception.InvalidCredentialsException;
 import com.bookstore.backend.presentation.dto.login.CredentialsDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,21 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@ModelAttribute("dtoLogin") CredentialsDTO loginDto, Model model, HttpServletResponse response) {
-        Cookie cookie = new Cookie("token", loginService.fazerLogin(loginDto).getToken());
+        try {
+            String token = loginService.fazerLogin(loginDto).getToken();
+            Cookie cookie = new Cookie("token", token);
+            response.addCookie(cookie);
+            return "redirect:";
+            
+        } catch (InvalidCredentialsException e) {
+            return "redirect:login-form";
+        }
+    }
+
+    @GetMapping("/logout")
+    public String logout(Model model, HttpServletResponse response) {
+        Cookie cookie = new Cookie("token", null);
         response.addCookie(cookie);
-        return "address";
+        return "redirect:login-form";
     }
 }
