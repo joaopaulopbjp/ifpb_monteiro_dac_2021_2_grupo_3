@@ -1,0 +1,108 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Address</title>
+
+</head>
+
+<body>
+    <div th:each="address : ${addressList}">
+        <div class="border border-dark rounded text-center ml-3 mt-3 p-3" style="background-color: #D1B1E8; width: 280px;">
+            <form th:action="@{save}" method="post">
+                <abbr title="street"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" th:id="'streetAdress' + ${address.getId()}" disabled th:value='${address.getStreet()}'></abbr>
+                <abbr title="number"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" th:id="'numberAdress' + ${address.getId()}" disabled th:value='${address.getNumber()}'></abbr>
+                <abbr title="city"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" th:id="'cityAdress' + ${address.getId()}" disabled th:value='${address.getCity()}'></abbr>
+                <abbr title="zipCode"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" th:id="'zipcodeAdress' + ${address.getId()}" disabled th:value='${address.getZipCode()}'></abbr>
+                <abbr title="district"><input style=" background: transparent; border: none !important; padding: 3px;" type="text" th:id="'districtAdress' + ${address.getId()}" disabled th:value='${address.getDistrict()}'></abbr>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" id="editButtonAddress" class="style-btn-yellow" th:name='${address.getId()}' value="disabled" style="margin-left: 3px;"><i class="fas fa-pen"></i></button>
+                    <button type="button" class="style-btn-dark" th:id="'trashbuttonAddress' + ${address.getId()}" style="margin-left: 3px;"><i class="fas fa-trash-alt"></i></button>
+                    <button type="submit" th:id="'savebuttonAddress' + ${address.getId()}" class=" style-btn-green " th:name='${address.getId()}' style="margin-left: 3px; display: none; "><i class="far fa-save "></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</body>
+<style>
+    .style-btn-red {
+        padding: 5px;
+        width: 3vw;
+        border-radius: 4px;
+        background-color: rgb(255, 0, 0);
+        color: rgb(255, 255, 255);
+        border: 2px solid #b44301;
+        -webkit-transition-duration: 0.4s;
+        /* Safari */
+        transition-duration: 0.4s;
+    }
+    
+    .style-btn-red:hover {
+        background-color: #ffffff;
+        /* Green */
+        color: rgb(255, 2, 2);
+    }
+    
+    .style-btn-green {
+        padding: 5px;
+        width: 3vw;
+        border-radius: 4px;
+        background-color: rgb(21, 138, 11);
+        color: rgb(255, 255, 255);
+        border: 2px solid rgb(11, 122, 1);
+        /* Green */
+        -webkit-transition-duration: 0.4s;
+        /* Safari */
+        transition-duration: 0.4s;
+    }
+    
+    .style-btn-green:hover {
+        background-color: #ffffff;
+        /* Green */
+        color: rgb(21, 138, 11);
+    }
+    
+    .style-btn-dark {
+        padding: 5px;
+        width: 3vw;
+        border-radius: 4px;
+        background-color: rgb(49, 49, 49);
+        color: rgb(255, 255, 255);
+        border: 2px solid rgb(0, 0, 0);
+        /* Green */
+        -webkit-transition-duration: 0.4s;
+        /* Safari */
+        transition-duration: 0.4s;
+    }
+    
+    .style-btn-dark:hover {
+        background-color: #ffffff;
+        /* Green */
+        color: rgb(2, 2, 2);
+    }
+    
+    .style-btn-yellow {
+        padding: 5px;
+        width: 3vw;
+        border-radius: 4px;
+        background-color: #E0A800;
+        color: rgb(255, 255, 255);
+        border: 2px solid #aa8000;
+        /* Green */
+        -webkit-transition-duration: 0.4s;
+        /* Safari */
+        transition-duration: 0.4s;
+    }
+    
+    .style-btn-yellow:hover {
+        background-color: #ffffff;
+        /* Green */
+        color: #E0A800;
+    }
+</style>
+
+</html>
