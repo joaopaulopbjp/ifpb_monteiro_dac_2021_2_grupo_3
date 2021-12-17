@@ -36,8 +36,8 @@ public class LoginController {
             String token = loginService.fazerLogin(loginDto).getToken();
             Cookie cookie = new Cookie("token", token);
             response.addCookie(cookie);
-            return "redirect:";
-            
+            return "redirect:address";
+
         } catch (InvalidCredentialsException e) {
             return "redirect:login-form";
         }

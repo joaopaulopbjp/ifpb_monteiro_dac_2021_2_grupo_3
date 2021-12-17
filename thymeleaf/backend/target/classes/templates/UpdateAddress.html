@@ -1,4 +1,43 @@
-* {
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Address</title>
+</head>
+
+<body>
+    
+    <div class="bloco">
+        <h2>Update Address</h2>
+        <div style= "display: grid;">
+              <label >Select Address</label>
+              <select  id="selectAddress"></select>
+        </div>
+        <div>
+            <input class="inputStreet" type="text" placeholder="Street">
+            <input class="inputNumber" type="number" placeholder="Number">
+        </div>
+        <div>
+            <input class="inputZip" type="text" placeholder="Zip-Code">
+            <input class="inputState" type="text" placeholder="State">
+        </div>
+        <div>
+            <input class="inputZip" type="text" placeholder="City">
+            <input class="inputState" type="text" placeholder="Distric">
+        </div>
+        <input class="inputState" type="text" placeholder="Country">
+        <div style="display: flex; justify-content: center">
+            <button type="submit" style="background-color: rgb(196, 16, 16); margin-left: 4px;">Cancel</button>
+            <button type="submit">Register</button>
+        </div>
+    </div>
+</body>
+
+<style>
+    * {
     padding: 0;
     margin: 0;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
@@ -190,4 +229,23 @@ h6 {
     text-decoration: line-through;
 }
 
+input {
+    padding: 5px;
+}
 
+button {
+    padding: 5px 15px;
+    background-color: rgb(104, 106, 233);
+    border-radius: 50px;
+    margin-right: 6px;
+    Color: white;
+}
+
+select {
+      padding: 4px;
+}
+
+
+</style>
+
+</html>

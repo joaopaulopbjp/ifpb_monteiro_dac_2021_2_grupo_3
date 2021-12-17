@@ -64,6 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
                 "/api/login",
                 "/api/book/find/**",
                 "/api/thymeleaf/login-form",
+                "/api/thymeleaf/**",
                 "/api/thymeleaf/logout",
                 "/api/thymeleaf/login").permitAll()
             .anyRequest().authenticated()
