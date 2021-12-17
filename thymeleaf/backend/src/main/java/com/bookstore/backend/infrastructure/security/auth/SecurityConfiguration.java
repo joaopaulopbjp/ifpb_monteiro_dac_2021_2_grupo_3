@@ -24,6 +24,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 
 
 @Configuration
@@ -60,7 +62,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .authorizeRequests()
             .antMatchers("/api/user/save",
                 "/api/login",
-                "/api/book/find/**").permitAll()
+                "/api/book/find/**",
+                "/api/thymeleaf/login-form",
+                "/api/thymeleaf/logout",
+                "/api/thymeleaf/login").permitAll()
             .anyRequest().authenticated()
             .and()
             
@@ -96,6 +101,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
+    }
+
+    @Bean
+    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+        StrictHttpFirewall firewall = new StrictHttpFirewall();
+        firewall.setAllowSemicolon(true);    
+        return firewall;
     }
 
 }
