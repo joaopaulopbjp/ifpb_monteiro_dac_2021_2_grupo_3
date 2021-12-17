@@ -29,7 +29,7 @@
         
         <form style="display: grid;" th:action="@{login}" th:object="${dtoLogin}" method="post">
             <input class="inputUsername" type="text" placeholder="Username" th:field="*{username}">
-            <input class="inputPassword" type="text" placeholder="Password" th:field="*{password}">
+            <input class="inputPassword" type="password" placeholder="Password" th:field="*{password}">
             <button type="submit">Login</button>
             <p>Not a member? <a href="/backend/src/main/resources/templates/Register.html">Create account</a></p>
         </form>
