@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Login</title>
 </head>
-<body>
 
-    
+<body>
     <div class="bloco">
         <h2>Sign-in</h2>
-        <input class="inputUsername" type="text" placeholder="Username">
-        <input class="inputPassword" type="text" placeholder="Password">
-        <input type="submit" value="Login">
-        <p>Not a member? <a href="/backend/src/main/resources/templates/Register.html">Create account</a></p>
+        <form th:action="@{login}" th:object="${dtoLogin}" method="post">
+            <input class="inputUsername" type="text" placeholder="Username" th:field="*{username}">
+            <input class="inputPassword" type="text" placeholder="Password" th:field="*{password}">
+            <button type="submit">Login</button>
+            <p>Not a member? <a href="/backend/src/main/resources/templates/Register.html">Create account</a></p>
+        </form>
     </div>
-    
 </body>
+
 </html>
