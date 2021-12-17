@@ -35,9 +35,9 @@ public class AdminModel extends PersonModel {
         inverseJoinColumns = @JoinColumn(name = "PRODUCT_FOR_SALE_ID", nullable = false))
     private List<ProductModel> productForSaleList;
 
-    public AdminModel(Long id, String username, String email, String password, List<AddressModel> addressList,
+    public AdminModel(Long id, String username, String image, String email, String password, List<AddressModel> addressList,
             List<ProductModel> productForSaleList, UserSaleHistoryModel saleHistory) {
-        super(id, username, email, password, addressList, saleHistory);
+        super(id, username, image, email, password, addressList, saleHistory);
     }
 
     public AdminModel() {

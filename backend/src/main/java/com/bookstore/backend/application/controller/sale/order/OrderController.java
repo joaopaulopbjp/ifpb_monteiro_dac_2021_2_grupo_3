@@ -58,7 +58,7 @@ public class OrderController {
         } 
     }
 
-    @GetMapping("/find-by-id")
+    @PostMapping("/find-by-id")
     public ResponseEntity<?> findById(@RequestBody OrderDTO dto, Principal principal){
         try {
             OrderModel order = orderService.findById(dto.getId(), principal.getName());

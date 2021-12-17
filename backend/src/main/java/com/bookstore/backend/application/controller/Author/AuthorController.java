@@ -74,7 +74,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/find/find-by-id")
+    @PostMapping("/find/find-by-id")
     public ResponseEntity<?> findById(@RequestBody AuthorDTO dto){
         try {
             AuthorModel authorList = authorService.findById(dto.getId());
@@ -92,7 +92,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/find/find-by-name")
+    @PostMapping("/find/find-by-name")
     public ResponseEntity<?> findByName(@RequestBody AuthorDTO dto){
         try {
             List<AuthorModel> author = authorService.findByName(dto.getName());

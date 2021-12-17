@@ -3,9 +3,10 @@ package com.bookstore.backend.application.service.login;
 import com.bookstore.backend.infrastructure.exception.InvalidCredentialsException;
 import com.bookstore.backend.infrastructure.security.auth.JwtUtils;
 import com.bookstore.backend.infrastructure.security.service.UserSecurityService;
+import com.bookstore.backend.infrastructure.utils.AdminVerify;
+import com.bookstore.backend.infrastructure.utils.Utils;
+import com.bookstore.backend.presentation.dto.login.CredentialResponse;
 import com.bookstore.backend.presentation.dto.login.CredentialsDTO;
-import com.bookstore.backend.presentation.response.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,12 +24,19 @@ public class LoginService {
 
     @Autowired
     private JwtUtils jwtUtils;
-    
-    public Response fazerLogin(CredentialsDTO credentials) throws InvalidCredentialsException {
-        String username = credentials.getUsername();
-        String password = credentials.getPassword();
 
+    @Autowired
+    private AdminVerify adminVerify;
+
+    private Utils utils = new Utils();
+    
+    public CredentialResponse fazerLogin(CredentialsDTO credentials) throws InvalidCredentialsException {
+        String username = "";
+        String password = "";
         try {
+            username = credentials.getUsername();
+            password = utils.shar256(credentials.getPassword());
+
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password));
         } catch (Exception e) {
@@ -39,7 +47,7 @@ public class LoginService {
 
         String generatedToken = jwtUtils.generateToken(loadedUser);
 
-        Response responseDTO = new Response(generatedToken);
-        return responseDTO;
+        CredentialResponse response = new CredentialResponse(generatedToken, adminVerify.isAdmin(username));
+        return response;
     }
 }

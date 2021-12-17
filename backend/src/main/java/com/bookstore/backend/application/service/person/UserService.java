@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.service.person;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -10,7 +12,7 @@ import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.sale.ShoppingCartRepositoryService;
-import com.bookstore.backend.infrastructure.utils.AdminVerify;
+import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -28,10 +30,9 @@ public class UserService {
     @Autowired
     private ShoppingCartRepositoryService shoppingCartRepositoryService;
 
-    @Autowired
-    private AdminVerify adminVerify;
+    private Utils utils = new Utils();
 
-    public UserModel save(UserModel user) throws IllegalArgumentException {
+    public UserModel save(UserModel user) throws IllegalArgumentException, NoSuchAlgorithmException, UnsupportedEncodingException {
 
         if(user.getUsername().equals(null))
             throw new IllegalArgumentException();
@@ -57,9 +58,11 @@ public class UserService {
         shoppingCart = shoppingCartRepositoryService.getInstance().save(shoppingCart);
         user.setShoppingCart(shoppingCart);
 
-        user = userRepositoryService.getInstance().save(user);
-        try {
+        user.setPassword(utils.shar256(user.getPassword()));
 
+        try {
+            user = userRepositoryService.getInstance().save(user);
+            
         } catch (DataIntegrityViolationException e) {
             shoppingCartRepositoryService.getInstance().delete(shoppingCart);
             throw e;
@@ -68,15 +71,6 @@ public class UserService {
     }
     
     public UserModel update(UserModel user, String username) throws Exception {
-        if(!userRepositoryService.getInstance().existsById(user.getId()))
-            throw new NotFoundException("User with id " + user.getId() + " not found");
-
-        boolean isAdmin = adminVerify.isAdmin(username);
-        if(!isAdmin) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findById(user.getId());
-            if(userOp.get().getUsername().equals(username))
-                throw new Exception("You can't update this user");
-        }
 
         if(user.getEmail() != null && !validate(user.getEmail()))
             throw new IllegalArgumentException(user.getEmail() + " is a invalid Email");
@@ -89,7 +83,7 @@ public class UserService {
             throw new IllegalArgumentException("Password must be at least 5 characters");
         }    
 
-        user = userRepositoryService.update(user);
+        user = userRepositoryService.update(user, username);
         return user;
     }
 

@@ -77,7 +77,7 @@ public class AddressController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @PostMapping("/find-by-id")
     public ResponseEntity<?> getAddressById(@RequestBody AddressDTO dto, Principal principal){
         try {
             AddressModel address = addressService.findById(dto.getId(), principal.getName());

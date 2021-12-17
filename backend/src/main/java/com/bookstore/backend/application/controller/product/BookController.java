@@ -82,10 +82,10 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find/find-all/{page}")
-    public ResponseEntity<?> findAll(@PathVariable("page") int page) {
+    @GetMapping("/find/find-all-available/{page}")
+    public ResponseEntity<?> findAllAvailable(@PathVariable("page") int page) {
         try {
-            List<BookModel> bookList = bookServices.findAll(page);
+            List<BookModel> bookList = bookServices.findAllAvailable(page);
             List<BookDTO> dtoList = new ArrayList<>();
             for (BookModel book : bookList) {
                 BookDTO dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
@@ -102,7 +102,7 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find/find-by-category")
+    @PostMapping("/find/find-by-category")
     public ResponseEntity<?> findByCategoryList(@RequestBody BookDTO dto) {
         try {
             List<BookModel> bookList = bookServices.findByCategoryId(dto.getIdCategory());
@@ -122,7 +122,7 @@ public class BookController {
         }
     }
     
-    @GetMapping("/find/find-by-id")
+    @PostMapping("/find/find-by-id")
     public ResponseEntity<?> findById(@RequestBody BookDTO dto) {
         try {
             BookModel book = bookServices.findById(dto.getId());
@@ -137,12 +137,15 @@ public class BookController {
         }
     }
 
-    @GetMapping("/find/find-by-title")
+    @PostMapping("/find/find-by-title")
     public ResponseEntity<?> findByTitle(@RequestBody BookDTO dto) {
         try {
-            List<BookModel> book = bookServices.findByTitle(dto.getTitle());
-            dto = (BookDTO) ModelMapperService.convertToDTO(book, BookDTO.class);
-            return ResponseEntity.status(HttpStatus.OK).body(dto);
+            List<BookModel> bookList = bookServices.findByTitle(dto.getTitle());
+            List<BookDTO> dtoList = new ArrayList<>();
+            for (BookModel bookModel : bookList) {
+                dtoList.add(((BookDTO) ModelMapperService.convertToDTO(bookModel, BookDTO.class)));
+            }
+            return ResponseEntity.status(HttpStatus.OK).body(dtoList);
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         } catch (DataIntegrityViolationException e) {
@@ -194,6 +197,16 @@ public class BookController {
         } catch (NotFoundException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/find/find-total-page")
+    public ResponseEntity<?> findBookstotalpage(){
+        try {
+            Integer total = bookServices.getTotalPages();
+            return ResponseEntity.status(HttpStatus.OK).body(new Response(total.toString()));
+        } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new Response(e.getMessage()));
         }
     }

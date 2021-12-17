@@ -1,5 +1,7 @@
 package com.bookstore.backend.application.service.person;
 
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
@@ -11,6 +13,7 @@ import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
 import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
+import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -29,14 +32,17 @@ public class AdminService {
     @Autowired
     private AdminVerify adminVerify;
 
+    private Utils utils = new Utils();
+
     private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
         Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
     
     @EventListener(ApplicationReadyEvent.class)
-    private void init() {
+    private void init() throws NoSuchAlgorithmException, UnsupportedEncodingException {
         List<AdminModel> adminlist = adminRepositoryService.getInstance().findAll();
         if(adminlist.isEmpty()) {
-            AdminModel admin = new AdminModel(0l, "admin", "admin@email.com", "admin", null, null, null);
+            AdminModel admin = new AdminModel(0l, "admin", null, "admin@email.com", "admin", null, null, null);
+            admin.setPassword(utils.shar256(admin.getPassword()));
             adminRepositoryService.getInstance().save(admin);
         }
     }
@@ -48,6 +54,7 @@ public class AdminService {
 
         AdminModel admin = new AdminModel(userOp.get().getId(),
             userOp.get().getUsername(),
+            userOp.get().getImage(),
             userOp.get().getEmail(),
             userOp.get().getPassword(),
             userOp.get().getAddressList(),
@@ -60,10 +67,7 @@ public class AdminService {
         return adminSaved;
     }
     
-    public AdminModel update(AdminModel admin) throws NotFoundException {
-        if(!adminRepositoryService.getInstance().existsById(admin.getId()))
-            throw new NotFoundException("admin with id " + admin.getId() + " not found");
-
+    public AdminModel update(AdminModel admin, String username) throws NotFoundException {
         if(admin.getEmail() != null && !validate(admin.getEmail()))
             throw new IllegalArgumentException(admin.getEmail() + " is a invalid Email");
         
@@ -75,7 +79,7 @@ public class AdminService {
             throw new IllegalArgumentException("Password must be at least 5 characters");
         }    
 
-        admin = adminRepositoryService.update(admin);
+        admin = adminRepositoryService.update(admin, username);
         return admin;
     }
 

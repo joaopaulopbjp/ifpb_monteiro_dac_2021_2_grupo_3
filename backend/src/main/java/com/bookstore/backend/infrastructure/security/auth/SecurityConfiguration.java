@@ -43,25 +43,27 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().and().csrf().disable().authorizeRequests()
             .antMatchers("/api/category/find-all").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/**").hasAnyAuthority("ADMIN")
+            .antMatchers("/api/evaluate/**").hasAnyAuthority("USER", "ADMIN")
             .antMatchers("/api/book").hasAnyAuthority("ADMIN")
             .antMatchers("/api/shopping-cart/**").hasAnyAuthority("USER")
             .antMatchers("/api/order/save").hasAnyAuthority("USER")
-            .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN")
+            .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
             .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
-            .logout(logout -> logout.logoutUrl("/logout")).csrf().disable()
+            .logout(logout -> logout.logoutUrl("/logout"))
             .authorizeRequests()
             .antMatchers("/api/user/save",
                 "/api/login",
-                "/api/book/find").permitAll()
+                "/api/book/find/**").permitAll()
             .anyRequest().authenticated()
             .and()
+            
             .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
                 @Override
                 public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {

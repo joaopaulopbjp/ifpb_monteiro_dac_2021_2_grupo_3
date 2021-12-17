@@ -36,6 +36,10 @@ public class BookRepositoryService {
         return bookRepository;
     }
 
+    public Integer getTotalPages() {
+        return (int) Math.ceil(((float) (bookRepository.findAll().size()) / Float.parseFloat(numberOfItemsPerPage)));
+    }
+
     public List<BookModel> findCheapests(int quantity) throws NotFoundException {
         Pageable pageable = PageRequest.of(0, quantity, Sort.by("price").ascending());
 
@@ -46,9 +50,9 @@ public class BookRepositoryService {
         return pages.getContent();
     }
 
-    public List<BookModel> findAll(int pageNumber) throws NotFoundException {
+    public List<BookModel> findAllAvailable(int pageNumber) throws NotFoundException {
         Pageable pageable = PageRequest.of(pageNumber, Integer.parseInt(numberOfItemsPerPage), Sort.by("title").ascending());
-        Page<BookModel> pages = bookRepository.findAll(pageable);
+        Page<BookModel> pages = bookRepository.findAllAvailable(pageable);
 
         if(pages.isEmpty()) throw new NotFoundException();
         

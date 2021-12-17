@@ -102,7 +102,8 @@ public class OrderService {
         saleList = saleRepositoryService.getInstance().saveAll(saleList);
         RevenuesModel revenue = revenuesRepositoryServices.getInstance().findAll().stream().findFirst().get();
         for(SaleModel sale : saleList) {
-            revenue.addSaleToSaleList(sale);
+            if(!revenue.getSaleList().contains(sale))
+                revenue.addSaleToSaleList(sale);
         }
         revenuesRepositoryServices.getInstance().save(revenue);
         return order;

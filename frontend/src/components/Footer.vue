@@ -1,12 +1,15 @@
 <template>
-    <footer class="page-footer" style="background-color: #955DBC">
-        <div class="bg-warning">
+    <div>
+        <Github :style="isDisplayGithub" @click="closeModalGithub"/>
+        <Linkedin :style="isDisplayLinkedin" @click="closeModalLinkedin"/>
+        <footer class="page-footer" style="background-color: #955DBC">
+        <div style="background-color: #FCB13A">
             <div class="container">
                 <div class="row py-4 d-flex align-items-center">
                     <div class="col-md-12 text-center">
                         <p class="d-inline mr-4">Get connected with us on social networks</p>
-                        <a href="https://docs.google.com/document/d/1E10pyBDxLLp47WjXzN6u13RawzWYb4JZun8VVvFxd9A/edit?usp=sharing" target="_blank"><i class="fab fa-linkedin-in text-dark mr-4 fa-2x"></i></a>
-                        <a href="https://docs.google.com/document/d/1znm7dzXswbS4kfrFsq0cFXhF9iJ-gVOBM3FyNvYgoeA/edit?usp=sharing" target="_blank"><i class="fab fa-github-alt text-dark mr-4 fa-2x"></i></a>
+                        <i @click="openModalLinkedin()" class="linkedin fab fa-linkedin-in text-dark mr-4 fa-2x" style="color:white;"></i>
+                        <i @click="openModalGithub()" class="github fab fa-github-alt text-dark mr-4 fa-2x"></i>
                     </div>
                 </div>
             </div>
@@ -30,16 +33,42 @@
         </div>
 
     </footer>
+    </div>
 </template>
 
 <script>
+import Github from "../modal/Github.vue";
+import Linkedin from "../modal/Linkedin.vue";
+
 export default {
-    
+    data() {
+        return {
+            isDisplayLinkedin:"display: none;",
+            isDisplayGithub:"display: none;",
+        }
+    },
+    methods: {
+        openModalLinkedin() {
+            this.isDisplayLinkedin = "display: flex;"
+        },
+        closeModalLinkedin(){
+            this.isDisplayLinkedin = "display: none;"
+        },
+        openModalGithub() {
+            this.isDisplayGithub = "display: flex;"
+        },
+        closeModalGithub(){
+            this.isDisplayGithub = "display: none;"
+        },
+    },
+    components: {Github, Linkedin}
 }
 </script>
 
 <style scoped>
-
+i:hover{
+    cursor: pointer;
+}
 .footer {
     height: 160px;
     width: 100%;

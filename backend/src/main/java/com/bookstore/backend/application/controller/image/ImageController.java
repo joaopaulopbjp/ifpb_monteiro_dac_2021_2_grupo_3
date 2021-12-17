@@ -66,7 +66,7 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/find-by-id")
+    @PostMapping("/find-by-id")
     public ResponseEntity<?> findById(@RequestBody ImageDTO dto, Principal principal){
         try {
             ImageModel image = imageService.findById(dto.getId(), principal.getName());
