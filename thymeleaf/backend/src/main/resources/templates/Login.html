@@ -26,78 +26,80 @@
             </defs>
             </svg>
         </div>
-        
+
         <form style="display: grid;" th:action="@{login}" th:object="${dtoLogin}" method="post">
             <input class="inputUsername" type="text" placeholder="Username" th:field="*{username}">
             <input class="inputPassword" type="password" placeholder="Password" th:field="*{password}">
             <button type="submit">Login</button>
-            <p>Not a member? <a href="/backend/src/main/resources/templates/Register.html">Create account</a></p>
+        </form>
+        <form th:action="@{http://localhost:8080/api/thymeleaf/user/save-form}" method="get">
+            <p>Not a member? <button href="" type="submit">Create account</button></p>
         </form>
     </div>
 </body>
 
 <style>
-body{
-    background-color: #EFEFEF;
-}
-
-#logo{
-    display: flex;
-    justify-content: center;
-}
-
-svg{
-    margin-top: 11vh;
-}
-
-       * {
-    padding: 0;
-    margin: 0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-}
-
-.bloco {
+    body {
+        background-color: #EFEFEF;
+    }
     
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    margin-top: 50px;
-    width: 650px;
-    height: 550px;
-    border-radius: 6px;
-    background: linear-gradient(138.08deg, #531A7B -13.53%, rgba(110, 38, 161, 0.66) 54.75%, rgba(149, 57, 213, 0.46) 111.81%, rgba(161, 60, 232, 0) 165.13%), #FFFFFF;
-}
-
-a{
-    color: #FCB13A;
-}
-
-p{
-    margin-top: 5%;
-    margin-right: auto;
-    margin-left: auto;
-    color: white;
-}
-
-input {
-    padding: 5px;
-    width: 50%;
-    height: 35%;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 5%;
-}
-
-button {
-    padding: 5px 15px;
-    background-color: #FCB13A;
-    border-radius: 50px;
-    Color: white;
-    width: 50%;
-    margin-top: 5%;
-    margin-left: auto;
-    margin-right: auto;
-}
+    #logo {
+        display: flex;
+        justify-content: center;
+    }
+    
+    svg {
+        margin-top: 11vh;
+    }
+    
+    * {
+        padding: 0;
+        margin: 0;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    }
+    
+    .bloco {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 50px;
+        width: 650px;
+        height: 550px;
+        border-radius: 6px;
+        background: linear-gradient(138.08deg, #531A7B -13.53%, rgba(110, 38, 161, 0.66) 54.75%, rgba(149, 57, 213, 0.46) 111.81%, rgba(161, 60, 232, 0) 165.13%), #FFFFFF;
+    }
+    
+    a {
+        color: #FCB13A;
+    }
+    
+    p {
+        margin-top: 5%;
+        margin-right: auto;
+        margin-left: auto;
+        color: white;
+    }
+    
+    input {
+        padding: 5px;
+        width: 50%;
+        height: 35%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 5%;
+    }
+    
+    button {
+        padding: 5px 15px;
+        background-color: #FCB13A;
+        border-radius: 50px;
+        Color: white;
+        width: 50%;
+        margin-top: 5%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 </style>
+
 </html>
