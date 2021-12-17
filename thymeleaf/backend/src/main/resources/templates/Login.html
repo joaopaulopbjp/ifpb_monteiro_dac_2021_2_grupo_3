@@ -32,7 +32,7 @@
             <input class="inputPassword" type="password" placeholder="Password" th:field="*{password}">
             <button type="submit">Login</button>
         </form>
-        <form th:action="@{http://localhost:8080/api/thymeleaf/user/save-form}" method="get">
+        <form id="create" th:action="@{http://localhost:8080/api/thymeleaf/user/save-form}" method="get">
             <p>Not a member? <button href="" type="submit">Create account</button></p>
         </form>
     </div>
@@ -68,6 +68,11 @@
         height: 550px;
         border-radius: 6px;
         background: linear-gradient(138.08deg, #531A7B -13.53%, rgba(110, 38, 161, 0.66) 54.75%, rgba(149, 57, 213, 0.46) 111.81%, rgba(161, 60, 232, 0) 165.13%), #FFFFFF;
+    }
+
+    #create{
+        display: flex;
+        justify-content: center;
     }
     
     a {
