@@ -12,7 +12,7 @@
 
     <div class="bloco">
         <h2>Register New Address</h2>
-        <form th:action="@{save}" method="post" th:object="${dto}">
+        <form th:action="@{http://localhost:8080/api/thymeleaf/address/save}" method="post" th:object="${dto}">
             <div>
                 <input class="inputStreet" type="text" placeholder="Street" th:field="*{street}">
                 <input class="inputNumber" type="number" placeholder="Number" th:field="*{number}">
