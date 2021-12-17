@@ -14,20 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api")
+@Controller
+@RequestMapping("/api/thymeleaf")
 @CrossOrigin
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody CredentialsDTO credentials) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(loginService.fazerLogin(credentials));
-        } catch (InvalidCredentialsException e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response(e.getMessage()));
-        }
+    @GetMapping("/login-form")
+    public String loginForm(Model model) {
+        model.addAttribute("dto", new AddressDTO());
+        return "Login";
     }
 }
