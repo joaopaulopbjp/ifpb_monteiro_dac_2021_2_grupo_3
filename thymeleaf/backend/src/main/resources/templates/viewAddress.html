@@ -21,7 +21,7 @@
         </div>
 
         <div id="areaAddress" th:each="address : ${addressList}">
-            <div style="background-color: rgb(140, 4, 219);width: 30vw;align-items: center;">
+            <div style="margin-top:2vh; border: 1px solid white; border-radius: 10px; padding-left: 1vw; width: 30vw; align-items: center;">
                 <p>Street: [[${address.getStreet()}]]</p>
                 <p>number: [[${address.getNumber()}]]</p>
                 <p>city: [[${address.getCity()}]]</p>

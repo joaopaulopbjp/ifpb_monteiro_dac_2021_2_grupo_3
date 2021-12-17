@@ -15,7 +15,7 @@
         <form th:action="@{http://localhost:8080/api/thymeleaf/user/save}" method="post" th:object="${dto}">
             <input class="inputUsername" type="text" placeholder="Username" th:field="*{username}">
             <input class="inputEmail" type="text" placeholder="Email" th:field="*{email}">
-            <input class="inputPassword" type="text" placeholder="Password" th:field="*{password}">
+            <input class="inputPassword" type="password" placeholder="Password" th:field="*{password}">
             <button type="submit">Register</button>
         </form>
     </div>
