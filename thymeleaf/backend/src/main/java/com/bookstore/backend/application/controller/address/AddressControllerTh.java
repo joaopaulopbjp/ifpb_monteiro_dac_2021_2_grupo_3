@@ -1,4 +1,4 @@
-package com.bookstore.backend.application.controller.address.thymeleaf;
+package com.bookstore.backend.application.controller.address;
 
 import java.security.Principal;
 import java.util.List;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RequestMapping("/api/addressTh")
