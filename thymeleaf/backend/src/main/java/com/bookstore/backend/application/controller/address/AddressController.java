@@ -52,20 +52,21 @@ public class AddressController {
       }
 
       @GetMapping("/form-address")
-      public String formAddress(Model model, Principal principal) {
+      public String formAddress(Model model) {
             model.addAttribute("dto", new AddressDTO());
             return "registerAddress";
       }
 
       @PostMapping("/save")
-      public String save(@ModelAttribute("dto") AddressDTO dto , Model model, Principal principal) {
+      public String save(@CookieValue(value = "token") String token, @ModelAttribute("dto") AddressDTO dto , Model model, HttpServletRequest request) {
             try {
+                  request.setAttribute("Authorization", token);
                   AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
-                  addressService.save(addressModel, principal.getName());
+                  addressService.save(addressModel, jwtUtils.extractUsername(token));
             } catch (NotFoundException e) {
                   e.printStackTrace();
             }
-            return "address";
+            return "redirect:";
       }
 
       @DeleteMapping("/delete")

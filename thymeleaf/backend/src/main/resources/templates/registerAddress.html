@@ -9,236 +9,250 @@
 </head>
 
 <body>
-    
+
     <div class="bloco">
         <h2>Register New Address</h2>
-        <div>
-            <input class="inputStreet" type="text" placeholder="Street">
-            <input class="inputNumber" type="number" placeholder="Number">
-        </div>
-        <div>
-            <input class="inputZip" type="text" placeholder="Zip-Code">
-            <input class="inputState" type="text" placeholder="State">
-        </div>
-        <div>
-            <input class="inputZip" type="text" placeholder="City">
-            <input class="inputState" type="text" placeholder="Distric">
-        </div>
-        <input class="inputState" type="text" placeholder="Country">
-        <div style="display: flex; justify-content: center">
+        <form th:action="@{save}" method="post" th:object="${dto}">
+            <div>
+                <input class="inputStreet" type="text" placeholder="Street" th:field="*{street}">
+                <input class="inputNumber" type="number" placeholder="Number" th:field="*{number}">
+            </div>
+            <div>
+                <input class="inputZip" type="text" placeholder="Zip-Code" th:field="*{zipCode}">
+            </div>
+            <div>
+                <input class="inputZip" type="text" placeholder="City" th:field="*{city}">
+                <input class="inputState" type="text" placeholder="Distric" th:field="*{district}">
+            </div>
+            <div style="display: flex; justify-content: center">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+        <form th:action="@{http://localhost:8080/api/thymeleaf/address}" method="get">
             <button type="submit" style="background-color: rgb(196, 16, 16); margin-left: 4px;">Cancel</button>
-            <button type="submit">Register</button>
-        </div>
+        </form>
     </div>
 </body>
 
 <style>
     * {
-    padding: 0;
-    margin: 0;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
-}
-
-header {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-section {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    padding: 0px 50px;
-}
-
-.a1,.a2,.a3,.a4,.a5{
-    width: 240px;
-    height: 300px;
-    margin: 5px;
-    background: black;
-    opacity: 0.6;
-}
-
-.b1,.b2,.b3,.b4,.b5{
-    width: 240px;
-    height: 300px;
-    margin: 5px;
-    background: black;
-    opacity: 0.6;
-}
-
-.c1,.c2,.c3,.c4,.c5{
-    width: 240px;
-    height: 300px;
-    margin: 5px;
-    background: black;
-    opacity: 0.6;
-}
-
-footer {
-    height: 100px;
-    margin-top: 10px;
-    background: rgb(177, 175, 175);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.bloco {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    margin-top: 50px;
-    width: 650px;
-    height: 550px;
-    border-radius: 6px;
-    background: rgb(170, 167, 167);
-}
-
-.dateBook {
-    width: 90%;
-    background: rgb(177, 175, 175);
-    justify-content: space-around;
-    margin: auto;
-    padding: 5px 5px;
-    margin-top: 25px;
-}
-
-.photoBook {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    width: 45%;
-    background: rgb(177, 175, 175);
-    align-items: center;
-    margin: auto;
-    padding: 100px 5px;
-    margin-top: 25px;
-}
-
-.detailsBook {
-    display: grid;
-    justify-content: center;
-    align-items: center;
-    width: 45%;
-    background: rgb(177, 175, 175);
-    padding: 100px 5px;
-    margin: auto;
-}
-
-.photo {
-    margin: auto;
-    display: flex;
-    max-width:60%;
-    height:auto;
-    align-items: center;
-    justify-content: center;
-}
-.photo2 {
-    justify-content: space-between;
-    display: grid;
-    max-width:10%;
-    height:auto;
-}
-
-.descriptionBook {
-    background: rgb(177, 175, 175);
-    padding: 20px 40px;
-    margin-top: 25px;
-    width: 100%;
-}
-
-.descriptionAddress {
-    background: rgb(177, 175, 175);
-    padding: 20px 40px;
-    margin-top: 25px;
-    width: 100%;
-}
-
-.evaluateBook {
-    background: #d3b35c77;
-    padding: 20px 40px;
-    margin-top: 25px;
-    width: 100%;
-    border-collapse: collapse;
+        padding: 0;
+        margin: 0;
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
+    }
     
-}
-
-.photoEstrela {
-    margin: auto;
-    display: flex;
-    max-width:5%;
-    height:auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.photoEstrelas {
-    margin: auto;
-    display: flex;
-    max-width:22%;
-    height:auto;
-    align-items: center;
-    justify-content: center;
-}
-
-.profileHeader {
-    display: flex;
-    justify-content: space-between;
-}
-
-.requests {
-    padding: 20px;
-    display: flow-root;
-    justify-items:auto;
-    width: auto;
-    height: auto;
-    background: #ffffff;
-}
-
-.bloco2 {
-    display: grid;
-    width: 200px;
-    height: 200px;
-    background: #ffffff;
-    margin-left: 20px;
-    padding: 10px 10px;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-}
-
-th, td {
-    text-align: left;
-    padding: 8px;
-}
-
-tr:nth-child(even){background-color: #f2f2f2}
-
-h6 {
-    font-style: italic;
-    text-decoration: line-through;
-}
-
-input {
-    padding: 5px;
-}
-
-button {
-    padding: 5px 15px;
-    background-color: rgb(104, 106, 233);
-    border-radius: 50px;
-    margin-right: 6px;
-    Color: white;
-}
-
-
-
+    header {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    
+    section {
+        margin-top: 10px;
+        display: flex;
+        justify-content: center;
+        padding: 0px 50px;
+    }
+    
+    .a1,
+    .a2,
+    .a3,
+    .a4,
+    .a5 {
+        width: 240px;
+        height: 300px;
+        margin: 5px;
+        background: black;
+        opacity: 0.6;
+    }
+    
+    .b1,
+    .b2,
+    .b3,
+    .b4,
+    .b5 {
+        width: 240px;
+        height: 300px;
+        margin: 5px;
+        background: black;
+        opacity: 0.6;
+    }
+    
+    .c1,
+    .c2,
+    .c3,
+    .c4,
+    .c5 {
+        width: 240px;
+        height: 300px;
+        margin: 5px;
+        background: black;
+        opacity: 0.6;
+    }
+    
+    footer {
+        height: 100px;
+        margin-top: 10px;
+        background: rgb(177, 175, 175);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .bloco {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        margin-top: 50px;
+        width: 650px;
+        height: 550px;
+        border-radius: 6px;
+        background: rgb(170, 167, 167);
+    }
+    
+    .dateBook {
+        width: 90%;
+        background: rgb(177, 175, 175);
+        justify-content: space-around;
+        margin: auto;
+        padding: 5px 5px;
+        margin-top: 25px;
+    }
+    
+    .photoBook {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        width: 45%;
+        background: rgb(177, 175, 175);
+        align-items: center;
+        margin: auto;
+        padding: 100px 5px;
+        margin-top: 25px;
+    }
+    
+    .detailsBook {
+        display: grid;
+        justify-content: center;
+        align-items: center;
+        width: 45%;
+        background: rgb(177, 175, 175);
+        padding: 100px 5px;
+        margin: auto;
+    }
+    
+    .photo {
+        margin: auto;
+        display: flex;
+        max-width: 60%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .photo2 {
+        justify-content: space-between;
+        display: grid;
+        max-width: 10%;
+        height: auto;
+    }
+    
+    .descriptionBook {
+        background: rgb(177, 175, 175);
+        padding: 20px 40px;
+        margin-top: 25px;
+        width: 100%;
+    }
+    
+    .descriptionAddress {
+        background: rgb(177, 175, 175);
+        padding: 20px 40px;
+        margin-top: 25px;
+        width: 100%;
+    }
+    
+    .evaluateBook {
+        background: #d3b35c77;
+        padding: 20px 40px;
+        margin-top: 25px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .photoEstrela {
+        margin: auto;
+        display: flex;
+        max-width: 5%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .photoEstrelas {
+        margin: auto;
+        display: flex;
+        max-width: 22%;
+        height: auto;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .profileHeader {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .requests {
+        padding: 20px;
+        display: flow-root;
+        justify-items: auto;
+        width: auto;
+        height: auto;
+        background: #ffffff;
+    }
+    
+    .bloco2 {
+        display: grid;
+        width: 200px;
+        height: 200px;
+        background: #ffffff;
+        margin-left: 20px;
+        padding: 10px 10px;
+    }
+    
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+    
+    tr:nth-child(even) {
+        background-color: #f2f2f2
+    }
+    
+    h6 {
+        font-style: italic;
+        text-decoration: line-through;
+    }
+    
+    input {
+        padding: 5px;
+    }
+    
+    button {
+        padding: 5px 15px;
+        background-color: rgb(104, 106, 233);
+        border-radius: 50px;
+        margin-right: 6px;
+        Color: white;
+    }
 </style>
 
 </html>

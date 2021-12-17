@@ -14,6 +14,9 @@
         <form th:action="@{logout}" method="get">
             <button>Logout</button>
         </form>
+        <form th:action="@{form-address}" method="get">
+            <button>Register</button>
+        </form>
         <div th:each="address : ${addressList}">
             <div style="background-color: rgb(140, 4, 219);width: 30vw;align-items: center;">
                 <p>Street: [[${address.getStreet()}]]</p>
