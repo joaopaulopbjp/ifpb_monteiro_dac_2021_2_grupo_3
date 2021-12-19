@@ -37,12 +37,12 @@ public class AddressController {
       private JwtUtils jwtUtils;
 
       @GetMapping
-      public String view(@CookieValue(value = "token") String token, Model model, HttpServletRequest request) {
-            request.setAttribute("Authorization", token);
+      public String view(Model model, Principal principal) {
+            System.out.println(principal.getName());
 
             List<AddressModel> addressList = null;
             try {
-                  addressList = addressService.findAll(jwtUtils.extractUsername(token));
+                  addressList = addressService.findAll(principal.getName());
             } catch (NotFoundException e) {
                   e.printStackTrace();
             }

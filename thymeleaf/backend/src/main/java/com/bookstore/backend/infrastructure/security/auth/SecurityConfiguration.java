@@ -45,7 +45,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable().authorizeRequests()
+        http.authorizeRequests()
             .antMatchers("/api/category/find-all").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
@@ -57,38 +57,38 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN", "USER")
             .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
             .and()
-            .formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/home", true).permitAll())
-            .logout(logout -> logout.logoutUrl("/logout"))
+            .formLogin().and()
+            // .logout(logout -> logout.logoutUrl("/logout"))
             .authorizeRequests()
             .antMatchers("/api/user/save",
                 "/api/login",
                 "/api/book/find/**",
                 "/api/thymeleaf/login-form",
-                "/api/thymeleaf/**",
-                "/api/thymeleaf/logout",
                 "/api/thymeleaf/login").permitAll()
-            .anyRequest().authenticated()
-            .and()
+            .anyRequest().authenticated();
+            // .and()
             
-            .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
-                @Override
-                public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                }
-            })
-            .and()
-            .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
-                @Override
-                public void commence(HttpServletRequest request, HttpServletResponse response,
-                            AuthenticationException authException) throws IOException, ServletException {
-                        response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+            // .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
+            //     @Override
+            //     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
+            //         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
                     
-                }
-            })
-            .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            //     }
+            // })
+            // .and()
+            // .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
+            //     @Override
+            //     public void commence(HttpServletRequest request, HttpServletResponse response,
+            //                 AuthenticationException authException) throws IOException, ServletException {
+            //             // response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
+            //             System.out.println("ala");
+            //             response.sendRedirect("/api/thymeleaf/login-form");
+                    
+            //     }
+            // });
+            
 
-        http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
+        // http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
