@@ -22,11 +22,11 @@
 
         <div id="areaAddress" th:each="address : ${addressList}">
             <div style="margin-top:2vh; border: 1px solid white; border-radius: 10px; padding-left: 1vw; width: 30vw; align-items: center;">
-                <p>Street: [[${address.getStreet()}]]</p>
-                <p>number: [[${address.getNumber()}]]</p>
-                <p>city: [[${address.getCity()}]]</p>
-                <p>zipCode: [[${address.getZipCode()}]]</p>
-                <p>district: [[${address.getDistrict()}]]</p>
+                <p>Street: <span th:text="${address.getStreet()}"></span></p>
+                <p>number: <span th:text="${address.getNumber()}"></span></p>
+                <p>city: <span th:text="${address.getCity()}"></span></p>
+                <p>zipCode: <span th:text="${address.getZipCode()}"></span></p>
+                <p>district: <span th:text="${address.getDistrict()}"></span></p>
             </div>
         </div>
         <div id="buttons">

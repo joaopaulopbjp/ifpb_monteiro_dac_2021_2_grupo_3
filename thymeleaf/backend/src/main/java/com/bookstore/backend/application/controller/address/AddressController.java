@@ -3,20 +3,18 @@ package com.bookstore.backend.application.controller.address;
 import java.security.Principal;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.bookstore.backend.application.service.address.AddressService;
 import com.bookstore.backend.domain.model.address.AddressModel;
+import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
-import com.bookstore.backend.infrastructure.security.auth.JwtUtils;
 import com.bookstore.backend.presentation.dto.address.AddressDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,23 +24,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RequestMapping("/api/thymeleaf/address")
-@CrossOrigin
 @Controller
 public class AddressController {
       
       @Autowired
       private AddressService addressService;
 
-      @Autowired
-      private JwtUtils jwtUtils;
+//      @Autowired
+//      private JwtUtils jwtUtils;
 
       @GetMapping
-      public String view(Model model, Principal principal) {
-            System.out.println(principal.getName());
+      public String view(Model model) {
 
             List<AddressModel> addressList = null;
             try {
-                  addressList = addressService.findAll(principal.getName());
+                  addressList = addressService.findAll();
             } catch (NotFoundException e) {
                   e.printStackTrace();
             }
@@ -58,23 +54,21 @@ public class AddressController {
       }
 
       @PostMapping("/save")
-      public String save(@CookieValue(value = "token") String token, @ModelAttribute("dto") AddressDTO dto , Model model, HttpServletRequest request) {
+      public String save(Principal principal, @ModelAttribute("dto") AddressDTO dto , Model model) {
             try {
-                  request.setAttribute("Authorization", token);
                   AddressModel addressModel = (AddressModel) ModelMapperService.convertToModel(dto, AddressModel.class);
-                  addressService.save(addressModel, jwtUtils.extractUsername(token));
+                  addressService.save(addressModel, principal.getName());
             } catch (NotFoundException e) {
                   e.printStackTrace();
             }
-            return "redirect:";
+            return "redirect:/api/thymeleaf/address";
       }
 
       @DeleteMapping("/delete")
-      public String delete(@CookieValue(value = "token") String token, @ModelAttribute("address") AddressDTO dto , Model model, HttpServletRequest request) {
-            request.setAttribute("Authorization", token);
+      public String delete( @ModelAttribute("address") AddressDTO dto , Model model, @AuthenticationPrincipal Principal principal) {
 
             try {
-                  addressService.delete(dto.getId(), jwtUtils.extractUsername(token));
+                  addressService.delete(dto.getId(), principal.getName());
             } catch (Exception e) {
                   e.printStackTrace();
             }

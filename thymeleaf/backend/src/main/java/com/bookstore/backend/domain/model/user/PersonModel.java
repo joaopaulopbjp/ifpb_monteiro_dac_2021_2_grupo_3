@@ -1,6 +1,7 @@
 package com.bookstore.backend.domain.model.user;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,15 +15,17 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
-import com.bookstore.backend.domain.model.sale.UserSaleHistoryModel;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -31,15 +34,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Getter
-@Setter
-@AllArgsConstructor
-@EqualsAndHashCode
-@NoArgsConstructor
 @Entity
-@Table(name = "T_PERSON")
-@Inheritance(strategy = InheritanceType.JOINED)
-public abstract class PersonModel {
+public class PersonModel implements UserDetails{
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,6 +53,9 @@ public abstract class PersonModel {
 
     @Column(name = "PASSWORD", nullable = false)
     private String password;
+    
+    @ManyToMany(cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
+    private List<Perfil> perfils;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @Fetch(FetchMode.SUBSELECT)
@@ -66,12 +65,24 @@ public abstract class PersonModel {
         inverseJoinColumns = @JoinColumn(name = "ADDRESS_ID", nullable = false))
     private List<AddressModel> addressList;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "SALE_HISTORY_ID")
-    private UserSaleHistoryModel saleHistory;
-    
+  
+    public PersonModel() {
+		super();
+	}
 
-    public boolean addAddressToAddressList(AddressModel addressModel) {
+	public PersonModel(Long id, String username, String image, String email, String password, List<Perfil> perfils,
+			List<AddressModel> addressList) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.image = image;
+		this.email = email;
+		this.password = password;
+		this.perfils = perfils;
+		this.addressList = addressList;
+	}
+
+	public boolean addAddressToAddressList(AddressModel addressModel) {
         if(addressList != null) {
             addressList.add(addressModel);
         } else {
@@ -92,4 +103,89 @@ public abstract class PersonModel {
     public String toString() {
         return String.format("PERSON [ID: %s - USERNAME: %s - EMAIL: %s]", getId(), getUsername(), getEmail()); 
     }
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return perfils;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Perfil> getPerfils() {
+		return perfils;
+	}
+
+	public void setPerfils(List<Perfil> perfils) {
+		this.perfils = perfils;
+	}
+
+	public List<AddressModel> getAddressList() {
+		return addressList;
+	}
+
+	public void setAddressList(List<AddressModel> addressList) {
+		this.addressList = addressList;
+	}
 }

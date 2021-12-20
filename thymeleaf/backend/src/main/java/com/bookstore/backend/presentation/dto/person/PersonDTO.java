@@ -3,8 +3,7 @@ package com.bookstore.backend.presentation.dto.person;
 import java.util.List;
 
 import com.bookstore.backend.presentation.dto.address.AddressDTO;
-import com.bookstore.backend.presentation.dto.product.ProductDTO;
-import com.bookstore.backend.presentation.dto.sale.UserSaleHistoryDTO;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
@@ -32,11 +31,9 @@ public class PersonDTO {
 
     private List<Long> idAddressList;
     
-    private List<ProductDTO> productForSaleList;
-
+ 
     private List<Long> idProductForSaleList;
 
-    private UserSaleHistoryDTO saleHistory;
 
     private Long IdsaleHistory;
 }

@@ -1,12 +1,14 @@
 package com.bookstore.backend.application.service.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
-import com.bookstore.backend.domain.model.user.AdminModel;
-import com.bookstore.backend.domain.model.user.UserModel;
+//import com.bookstore.backend.domain.model.user.AdminModel;
+import com.bookstore.backend.domain.model.user.PersonModel;
+//import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
+import com.bookstore.backend.infrastructure.persistence.repository.address.AddressRepository;
+import com.bookstore.backend.infrastructure.persistence.repository.person.PersonRepository;
 import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.AdminRepositoryService;
-import com.bookstore.backend.infrastructure.persistence.service.person.UserRepositoryService;
+
 import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,116 +20,69 @@ import java.util.Optional;
 @Service
 public class AddressService {
 
-    @Autowired
-    private AdminVerify adminVerify;
-    
-    @Autowired
-    private AddressRepositoryService addressRepositoryService;
+	@Autowired
+	private AdminVerify adminVerify;
 
-    @Autowired
-    private UserRepositoryService userRepositoryService;
+	@Autowired
+	private AddressRepository addressRepositoryService;
 
-    @Autowired
-    private AdminRepositoryService adminRepositoryService;
+	@Autowired
+	private PersonRepository userRepositoryService;
 
-    public AddressModel save(AddressModel address, String username) throws NotFoundException {
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> user = userRepositoryService.getInstance().findByUsername(username);
-    
-            verifyAddress(address);
-            
-            address = addressRepositoryService.getInstance().save(address);
-            user.get().addAddressToAddressList(address);
-            userRepositoryService.getInstance().save(user.get());
-            return address;
+	public AddressModel save(AddressModel address, String username) throws NotFoundException {
 
-        } else {
-            Optional<AdminModel> admin = adminRepositoryService.getInstance().findByUsername(username);
+		Optional<PersonModel> user = userRepositoryService.findByUsername(username);
 
-            verifyAddress(address);
+		verifyAddress(address);
 
-            address = addressRepositoryService.getInstance().save(address);
-            admin.get().addAddressToAddressList(address);
-            adminRepositoryService.getInstance().save(admin.get());
-            return address;
-        }
-    }
+		address = addressRepositoryService.save(address);
+		user.get().addAddressToAddressList(address);
+		userRepositoryService.save(user.get());
+		return address;
 
-    private void verifyAddress (AddressModel address) {
-        address.setZipCode(address.getZipCode().replaceAll("-", ""));
-        if(address.getZipCode().length() != 8) {
-            throw new IllegalArgumentException("ZipCode must be 8");
-        }
-    }
 
-    public void delete(Long id, String username) throws Exception {
-        Optional<UserModel> userOp = userRepositoryService.getInstance().findByAddressId(id);
-        Optional<AdminModel> adminOp = adminRepositoryService.getInstance().findByAddressId(id);
-        if(!userOp.isPresent() && !adminOp.isPresent())
-            throw new NotFoundException("Can't found address with id " + id);
+	}
 
-        if(!adminVerify.isAdmin(username)) {
-            userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = false;
-            flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == id).findFirst().isPresent();
+	private void verifyAddress (AddressModel address) {
+		address.setZipCode(address.getZipCode().replaceAll("-", ""));
+		if(address.getZipCode().length() != 8) {
+			throw new IllegalArgumentException("ZipCode must be 8");
+		}
+	}
 
-            if(!flag)
-                throw new Exception("You can't delete this address because it belongs to another user");
+	public void delete(Long id, String username) throws Exception {
 
-        }
+		addressRepositoryService.deleteById(id);
 
-        Optional<AddressModel> address = addressRepositoryService.getInstance().findById(id);
-        if(userOp.isPresent()) {
-            userOp.get().removeAddressFromAddressList(address.get());
-            userRepositoryService.getInstance().save(userOp.get());
+	}
 
-        } else {
-            adminOp.get().removeAddressFromAddressList(address.get());
-            adminRepositoryService.getInstance().save(adminOp.get());
-        }
-        addressRepositoryService.getInstance().deleteById(address.get().getId());
+	public AddressModel update(AddressModel addressModel, String username) throws NotFoundException{
 
-    }
+		return addressRepositoryService.save(addressModel);
+	}
 
-    public AddressModel update(AddressModel addressModel, String username) throws NotFoundException{
-        if(!adminVerify.isAdmin(username)){
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == addressModel.getId()).findFirst().isPresent();
-            if(!flag){
-                throw new NotFoundException("you can't update this address because belong to another user.");
-            }
-        }
-        return addressRepositoryService.update(addressModel);
-    }
+	public AddressModel findById(Long id, String username) throws Exception {
+		Optional<AddressModel> addressOp = addressRepositoryService.findById(id);
+		if(!addressOp.isPresent()){
+			throw new NotFoundException("Not found address with id " + id);
+		}
 
-    public AddressModel findById(Long id, String username) throws Exception {
-        Optional<AddressModel> addressOp = addressRepositoryService.getInstance().findById(id);
-        if(!addressOp.isPresent()){
-            throw new NotFoundException("Not found address with id " + id);
-        }
+		return addressOp.get();
+	}
 
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            boolean flag = false;
-            flag = userOp.get().getAddressList().stream().filter(address -> address.getId() == id).findFirst().isPresent();
+	public List<AddressModel> findAll(String username) throws NotFoundException {
 
-            if(!flag)
-                throw new Exception("You can't get this address because it belongs to another user");
+		Optional<PersonModel> userOp = userRepositoryService.findByUsername(username);
+		List<AddressModel> addressList = userOp.get().getAddressList();
 
-        }
-        return addressOp.get();
-    }
+		if(addressList.isEmpty())
+			throw new NotFoundException("You don't have any address");
+		return addressList;
 
-    public List<AddressModel> findAll(String username) throws NotFoundException {
-        if(!adminVerify.isAdmin(username)) {
-            Optional<UserModel> userOp = userRepositoryService.getInstance().findByUsername(username);
-            List<AddressModel> addressList = userOp.get().getAddressList();
+	}
 
-            if(addressList.isEmpty())
-                throw new NotFoundException("You don't have any address");
-            return addressList;
+	public List<AddressModel> findAll() throws NotFoundException {
 
-        }
-        return addressRepositoryService.getInstance().findAll();
-    }
+		return addressRepositoryService.findAll();
+	}
 }

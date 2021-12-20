@@ -1,4 +1,4 @@
-package com.bookstore.backend.infrastructure.security.auth;
+ package com.bookstore.backend.infrastructure.security.auth;
 
 import java.io.IOException;
 
@@ -6,12 +6,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bookstore.backend.infrastructure.security.filter.JwtFilterRequest;
 import com.bookstore.backend.infrastructure.security.service.UserSecurityService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -21,51 +22,50 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 
-@Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     
     @Autowired
     private UserSecurityService userService;
 
-    @Autowired
-    private JwtFilterRequest jwtFilterRequest;
+//    @Autowired
+//    private JwtFilterRequest jwtFilterRequest;
+    
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userService);
+//        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+//        return authProvider;
+//    }
 
-    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
-    }
+		auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
+//    	auth.authenticationProvider(authenticationProvider());
+	}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/api/category/find-all").hasAnyAuthority("ADMIN", "USER")
-            .antMatchers("/api/category/find-by-id").hasAnyAuthority("ADMIN", "USER")
-            .antMatchers("/api/category/find-by-name").hasAnyAuthority("ADMIN", "USER")
-            .antMatchers("/api/category/**").hasAnyAuthority("ADMIN")
-            .antMatchers("/api/evaluate/**").hasAnyAuthority("USER", "ADMIN")
-            .antMatchers("/api/book").hasAnyAuthority("ADMIN")
-            .antMatchers("/api/shopping-cart/**").hasAnyAuthority("USER")
-            .antMatchers("/api/order/save").hasAnyAuthority("USER")
-            .antMatchers("/api/user/find/**").hasAnyAuthority("ADMIN", "USER")
-            .antMatchers("api/revenue").hasAnyAuthority("ADMIN")
+        	.antMatchers("/api/thymeleaf/address").permitAll()
+        	.antMatchers("/api/thymeleaf/address/form-address").permitAll()
+            .antMatchers(HttpMethod.POST,"/api/thymeleaf/address/save").hasAuthority("ADMIN")
+            .anyRequest().authenticated()
             .and()
-            .formLogin().and()
+            .formLogin()
+            .loginPage("/login").permitAll()
+            .defaultSuccessUrl("/api/thymeleaf/address");
             // .logout(logout -> logout.logoutUrl("/logout"))
-            .authorizeRequests()
-            .antMatchers("/api/user/save",
-                "/api/login",
-                "/api/book/find/**",
-                "/api/thymeleaf/login-form",
-                "/api/thymeleaf/login").permitAll()
-            .anyRequest().authenticated();
+            
             // .and()
             
             // .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
@@ -91,24 +91,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         // http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userService);
-        return authProvider;
-    }
-    
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
 
-    @Bean
-    public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
-        StrictHttpFirewall firewall = new StrictHttpFirewall();
-        firewall.setAllowSemicolon(true);    
-        return firewall;
-    }
+	/** Para facilitar a geração de senha encriptada */
+	public static void main(String[] args) {
+		System.out.println(new BCryptPasswordEncoder().encode("admin"));
+	}
+    
+    
 
 }
