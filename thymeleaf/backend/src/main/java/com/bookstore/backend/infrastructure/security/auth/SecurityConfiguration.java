@@ -58,13 +58,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
         	.antMatchers("/api/thymeleaf/address").permitAll()
         	.antMatchers("/api/thymeleaf/address/form-address").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/thymeleaf/address/save").hasAuthority("ADMIN")
+            .antMatchers(HttpMethod.POST,"/api/thymeleaf/address/save").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()
             .loginPage("/login").permitAll()
-            .defaultSuccessUrl("/api/thymeleaf/address");
-            // .logout(logout -> logout.logoutUrl("/logout"))
+            .defaultSuccessUrl("/api/thymeleaf/address")
+            .and()
+            .logout();
             
             // .and()
             
