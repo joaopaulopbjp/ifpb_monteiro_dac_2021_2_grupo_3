@@ -75,8 +75,9 @@ public class PersonService {
         if(user.getPassword().length() < 5) {
             throw new IllegalArgumentException("Password must be at least 5 characters");
         }
-
-        return user;
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        user.setPassword(encoder.encode(user.getPassword()));
+        return personRepository.save(user);
     }
     
     public void delete(String username) throws NotFoundException {
