@@ -22,6 +22,8 @@
 
         <div id="areaAddress" th:each="address : ${addressList}">
             <div style="margin-top:2vh; border: 1px solid white; border-radius: 10px; padding-left: 1vw; width: 30vw; align-items: center;">
+                <button id="edit">edit</button>
+                <button id="delete">delete</button>
                 <p>Street: <span th:text="${address.getStreet()}"></span></p>
                 <p>number: <span th:text="${address.getNumber()}"></span></p>
                 <p>city: <span th:text="${address.getCity()}"></span></p>
@@ -75,6 +77,14 @@
         background-color: #FCB13A;
         border-radius: 50px;
         Color: white;
+    }
+
+    button#edit{
+
+    }
+
+    button#delete{
+        
     }
     
     #bloco {
