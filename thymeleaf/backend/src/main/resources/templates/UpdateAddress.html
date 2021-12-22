@@ -22,20 +22,18 @@
         </div>
 
         <div>
-            <form th:action="@{http://localhost:8080/api/thymeleaf/address/update-view}" th:object="${dto}" method="get">
+            <form th:action="@{http://localhost:8080/api/thymeleaf/address/update-view}" th:object="${dtoAddress}" method="post">
                 <div>
-                    <input class="inputStreet" type="text" placeholder="Street">
-                    <input class="inputNumber" type="number" placeholder="Number">
+                    <input class="inputStreet" type="text" th:field="*{street}" placeholder="Street">
+                    <input class="inputNumber" type="number" th:field="*{number}" placeholder="Number">
                 </div>
                 <div>
-                    <input class="inputZip" type="text" placeholder="Zip-Code">
-                    <input class="inputState" type="text" placeholder="State">
+                    <input class="inputZip" type="text" th:field="*{zipCode}" placeholder="Zip-Code">
                 </div>
                 <div>
-                    <input class="inputZip" type="text" placeholder="City">
-                    <input class="inputState" type="text" placeholder="Distric">
+                    <input class="inputZip" type="text" th:field="*{city}" placeholder="City">
+                    <input class="inputState" type="text" th:field="*{district}" placeholder="Distric">
                 </div>
-                <input class="inputState" type="text" placeholder="Country">
                 <div style="display: flex; justify-content: center">
                     <button type="submit" style="background-color: rgb(196, 16, 16); margin-left: 4px;">Cancel</button>
                     <button type="submit">Register</button>

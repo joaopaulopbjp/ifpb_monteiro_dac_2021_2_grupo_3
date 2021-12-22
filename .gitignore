@@ -3,7 +3,7 @@
 *.classpath
 *.factorypath
 *.settings
-thymeleaf/backend/target/
+*/backend/target/**
 backend.iml
 bin/
 /backend/mvnw.cmd
