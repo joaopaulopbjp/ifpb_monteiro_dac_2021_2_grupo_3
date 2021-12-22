@@ -76,7 +76,7 @@ public class PersonService {
             throw new IllegalArgumentException("Password must be at least 5 characters");
         }
 
-        return user;
+        return personRepository.save(user);
     }
     
     public void delete(String username) throws NotFoundException {
