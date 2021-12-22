@@ -37,20 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
     @Autowired
     private UserSecurityService userService;
 
-//    @Autowired
-//    private JwtFilterRequest jwtFilterRequest;
-    
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userService);
-//        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-//        return authProvider;
-//    }
-
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService).passwordEncoder(new BCryptPasswordEncoder());
-//    	auth.authenticationProvider(authenticationProvider());
 	}
 
     @Override
@@ -67,38 +55,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .and()
             .logout()
             .logoutSuccessUrl("/login");
-            
-            // .and()
-            
-            // .exceptionHandling().accessDeniedHandler(new AccessDeniedHandler() {
-            //     @Override
-            //     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-            //         response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
-                    
-            //     }
-            // })
-            // .and()
-            // .exceptionHandling().authenticationEntryPoint(new AuthenticationEntryPoint() {
-            //     @Override
-            //     public void commence(HttpServletRequest request, HttpServletResponse response,
-            //                 AuthenticationException authException) throws IOException, ServletException {
-            //             // response.sendError(HttpServletResponse.SC_FORBIDDEN, "Forbidden");
-            //             System.out.println("ala");
-            //             response.sendRedirect("/api/thymeleaf/login-form");
-                    
-            //     }
-            // });
-            
-
-        // http.addFilterBefore(jwtFilterRequest, UsernamePasswordAuthenticationFilter.class);
     }
-
-
-	/** Para facilitar a geração de senha encriptada */
-	public static void main(String[] args) {
-		System.out.println(new BCryptPasswordEncoder().encode("admin"));
-	}
-    
-    
-
 }
