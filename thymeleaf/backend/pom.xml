@@ -14,6 +14,7 @@
 	<name>backend</name>
 	<description>Demo project for Spring Boot</description>
 	<properties>
+		<selenium.version>4.1.0</selenium.version>
 		<java.version>8</java.version>
 		<!-- Versão das dependências selenium-->
 		<selenium.version>4.1.0</selenium.version>
@@ -135,6 +136,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>${selenium.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>6.9.9</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
