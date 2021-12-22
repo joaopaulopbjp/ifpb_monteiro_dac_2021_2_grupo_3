@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.view.RedirectView;
 
 
 @RequestMapping("/api/thymeleaf/address")
@@ -76,7 +77,7 @@ public class AddressController {
                   e.printStackTrace();
             }
 
-            return "viewAddress";
+            return "redirect:/api/thymeleaf/address";
       }
 
       @PostMapping("/update")
@@ -86,7 +87,8 @@ public class AddressController {
             } catch (NotFoundException e) {
                   e.printStackTrace();
             }
-            return "viewAddress";
+            
+            return "redirect:/api/thymeleaf/address";
       }
 
       @GetMapping("/update-view/{id}")
@@ -97,6 +99,7 @@ public class AddressController {
             } catch (Exception e) {
                   e.printStackTrace();
             }
+            
             return "UpdateAddress";
       } 
 }
