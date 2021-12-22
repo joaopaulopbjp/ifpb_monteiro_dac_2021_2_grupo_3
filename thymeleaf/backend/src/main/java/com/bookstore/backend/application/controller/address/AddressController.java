@@ -79,10 +79,19 @@ public class AddressController {
             return "viewAddress";
       }
 
-      @PutMapping("/update")
-      public String update(Model model, Principal principal) {
-            System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            return "redirect:";
+      @PostMapping("/update")
+      public String update(@ModelAttribute("dto") AddressModel address, Model model, Principal principal) {
+            try {
+                  addressService.update(address, principal.getName());
+            } catch (NotFoundException e) {
+                  e.printStackTrace();
+            }
+            return "viewAddress";
       }
-      
+
+      @GetMapping("/update-view")
+      public String updateView(Model model) {
+            model.addAttribute("dto", new AddressModel());
+            return "UpdateAddress";
+      } 
 }
