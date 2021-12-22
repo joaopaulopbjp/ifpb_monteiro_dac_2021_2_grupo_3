@@ -22,7 +22,7 @@
 
         <div id="areaAddress" th:each="address : ${addressList}">
             <div style="margin-top:2vh; border: 1px solid white; border-radius: 10px; padding-left: 1vw; width: 30vw; align-items: center;">
-                <form th:action="@{http://localhost:8080/api/thymeleaf/address/update-view}" th:object="${dto}" method="get">
+                <form th:action="@{http://localhost:8080/api/thymeleaf/address/update-view/{id}(id=${address.getId()})}" method="get">
                     <button id="edit">edit</button>
                 </form>
                 <form th:action="@{http://localhost:8080/api/thymeleaf/address/delete/{id}(id=${address.getId()})}" method="post">

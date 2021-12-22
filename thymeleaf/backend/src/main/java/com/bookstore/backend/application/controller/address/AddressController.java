@@ -80,7 +80,7 @@ public class AddressController {
       }
 
       @PostMapping("/update")
-      public String update(@ModelAttribute("dto") AddressModel address, Model model, Principal principal) {
+      public String update(@ModelAttribute("dtoAddress") AddressModel address, Model model, Principal principal) {
             try {
                   addressService.update(address, principal.getName());
             } catch (NotFoundException e) {
@@ -89,9 +89,14 @@ public class AddressController {
             return "viewAddress";
       }
 
-      @GetMapping("/update-view")
-      public String updateView(Model model) {
-            model.addAttribute("dto", new AddressModel());
+      @GetMapping("/update-view/{id}")
+      public String updateView(@PathVariable("id") Long id, Model model, Principal principal) {
+            try {
+                  AddressModel address = addressService.findById(id, principal.getName());
+                  model.addAttribute("dtoAddress", address);
+            } catch (Exception e) {
+                  e.printStackTrace();
+            }
             return "UpdateAddress";
       } 
 }
