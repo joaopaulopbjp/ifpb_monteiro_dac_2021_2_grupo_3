@@ -58,7 +58,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
         http.authorizeRequests()
         	.antMatchers("/api/thymeleaf/user/**").permitAll()
         	.antMatchers("/api/thymeleaf/address/form-address").permitAll()
-            .antMatchers(HttpMethod.POST,"/api/thymeleaf/address/save").permitAll()
+            .antMatchers("/api/thymeleaf/address/save").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin()

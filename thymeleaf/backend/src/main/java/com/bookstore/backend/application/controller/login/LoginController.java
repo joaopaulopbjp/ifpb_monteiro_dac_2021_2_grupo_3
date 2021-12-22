@@ -40,17 +40,4 @@ public class LoginController {
         }
         return "redirect:/login";
     }
-    
-//
-//    @PostMapping("/login")
-//    public String login(@ModelAttribute("dtoLogin") CredentialsDTO loginDto, Model model) {
-//        try {
-//            String token = loginService.fazerLogin(loginDto).getToken();
-//            return "redirect:address";
-//
-//        } catch (InvalidCredentialsException e) {
-//            return "redirect:login-form";
-//        }
-//    }
-//
 }

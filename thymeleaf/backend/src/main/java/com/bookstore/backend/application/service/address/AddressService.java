@@ -51,7 +51,12 @@ public class AddressService {
 	}
 
 	public void delete(Long id, String username) throws Exception {
+		PersonModel person = userRepositoryService.findByUsername(username).get();
+		AddressModel address = addressRepositoryService.findById(id).get();
 
+		person.removeAddressFromAddressList(address);
+		userRepositoryService.save(person);
+		
 		addressRepositoryService.deleteById(id);
 
 	}

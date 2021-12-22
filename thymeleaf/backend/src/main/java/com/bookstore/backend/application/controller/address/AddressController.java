@@ -3,6 +3,8 @@ package com.bookstore.backend.application.controller.address;
 import java.security.Principal;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.bookstore.backend.application.service.address.AddressService;
 import com.bookstore.backend.domain.model.address.AddressModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
@@ -18,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,16 +67,16 @@ public class AddressController {
             return "redirect:/api/thymeleaf/address";
       }
 
-      @DeleteMapping("/delete")
-      public String delete( @ModelAttribute("address") AddressDTO dto , Model model, @AuthenticationPrincipal Principal principal) {
+      @PostMapping("/delete/{id}")
+      public String delete( @PathVariable("id") Long id , Principal principal, HttpServletResponse response) {
 
             try {
-                  addressService.delete(dto.getId(), principal.getName());
+                  addressService.delete(id, principal.getName());
             } catch (Exception e) {
                   e.printStackTrace();
             }
 
-            return "address";
+            return "viewAddress";
       }
 
       @PutMapping("/update")
