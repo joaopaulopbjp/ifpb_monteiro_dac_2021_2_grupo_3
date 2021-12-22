@@ -5,10 +5,6 @@ import java.security.NoSuchAlgorithmException;
 
 import com.bookstore.backend.application.service.person.PersonService;
 import com.bookstore.backend.domain.model.user.PersonModel;
-//import com.bookstore.backend.application.service.person.UserService;
-//import com.bookstore.backend.domain.model.user.UserModel;
-import com.bookstore.backend.infrastructure.modelmapper.ModelMapperService;
-import com.bookstore.backend.presentation.dto.person.PersonDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
