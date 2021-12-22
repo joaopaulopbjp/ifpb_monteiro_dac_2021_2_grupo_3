@@ -1,15 +1,12 @@
 package com.bookstore.backend.application.service.address;
 
 import com.bookstore.backend.domain.model.address.AddressModel;
-//import com.bookstore.backend.domain.model.user.AdminModel;
 import com.bookstore.backend.domain.model.user.PersonModel;
-//import com.bookstore.backend.domain.model.user.UserModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.address.AddressRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.PersonRepository;
 import com.bookstore.backend.infrastructure.persistence.service.address.AddressRepositoryService;
 
-import com.bookstore.backend.infrastructure.utils.AdminVerify;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +16,6 @@ import java.util.Optional;
 
 @Service
 public class AddressService {
-
-	@Autowired
-	private AdminVerify adminVerify;
 
 	@Autowired
 	private AddressRepository addressRepository;

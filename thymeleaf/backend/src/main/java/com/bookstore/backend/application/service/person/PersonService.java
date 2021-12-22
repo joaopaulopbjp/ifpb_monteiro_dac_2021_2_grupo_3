@@ -6,8 +6,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 import com.bookstore.backend.domain.model.user.Perfil;
@@ -16,20 +14,15 @@ import com.bookstore.backend.domain.model.user.PersonModel;
 import com.bookstore.backend.infrastructure.exception.NotFoundException;
 import com.bookstore.backend.infrastructure.persistence.repository.person.PerfilRepository;
 import com.bookstore.backend.infrastructure.persistence.repository.person.PersonRepository;
-import com.bookstore.backend.infrastructure.utils.Utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PersonService {
-
-    private static final Pattern VALID_EMAIL_ADDRESS_REGEX = 
-        Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
     @Autowired
     private PersonRepository personRepository;
