@@ -31,6 +31,16 @@ public class LoginController {
         model.addAttribute("dtoLogin", new CredentialsDTO());
         return "login";
     }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null){    
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login";
+    }
+    
 //
 //    @PostMapping("/login")
 //    public String login(@ModelAttribute("dtoLogin") CredentialsDTO loginDto, Model model) {

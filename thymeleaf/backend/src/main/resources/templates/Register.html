@@ -27,14 +27,14 @@
             </defs>
             </svg>
         </div>
-            
+
         <form style="display: grid;" th:action="@{http://localhost:8080/api/thymeleaf/user/save}" method="post" th:object="${dto}">
             <input class="inputUsername" type="text" placeholder="Username" th:field="*{username}">
             <input class="inputEmail" type="text" placeholder="Email" th:field="*{email}">
             <input class="inputPassword" type="password" placeholder="Password" th:field="*{password}">
             <button type="submit">Register</button>
         </form>
-        <form id="login" th:action="@{http://localhost:8080/api/thymeleaf/login-form}" method="get">
+        <form id="login" th:action="@{http://localhost:8080/login}" method="get">
             <p>Have account? <button id="loginButton" type="submit">Login</button></p>
         </form>
     </div>
@@ -47,24 +47,28 @@
         margin: 0;
         font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
     }
+    
     #logo {
         display: flex;
         justify-content: center;
     }
+    
     svg {
         margin-top: 11vh;
     }
+    
     body {
         background-color: #EFEFEF;
     }
-    form#login{
+    
+    form#login {
         text-align: center
     }
-
-    button#loginButton{
+    
+    button#loginButton {
         width: 12vw;
     }
-
+    
     .bloco {
         flex-direction: column;
         justify-content: center;

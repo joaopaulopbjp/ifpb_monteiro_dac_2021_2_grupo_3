@@ -28,10 +28,9 @@ public class UserController {
    private PersonService personService;
    
    @PostMapping("/save")
-   public String save(@ModelAttribute("dto") PersonDTO dto , Model model) {
-    PersonModel userModel = (PersonModel) ModelMapperService.convertToModel(dto, PersonDTO.class);
+   public String save(@ModelAttribute("dto") PersonModel dto , Model model) {
        try {
-           personService.save(userModel);
+           personService.save(dto);
        } catch (IllegalArgumentException e) {
            e.printStackTrace();
        } catch (NoSuchAlgorithmException e) {
@@ -39,12 +38,12 @@ public class UserController {
        } catch (UnsupportedEncodingException e) {
            e.printStackTrace();
        }
-       return "redirect:http://localhost:8080/api/thymeleaf/login-form";
+       return "redirect:http://localhost:8080/login";
    }
 
    @GetMapping("/save-form")
    public String saveForm(Model model) {
-       model.addAttribute("dto", new PersonDTO());
+       model.addAttribute("dto", new PersonModel());
        return "Register";
    }
 }

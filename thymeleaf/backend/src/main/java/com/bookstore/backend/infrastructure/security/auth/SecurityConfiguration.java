@@ -65,7 +65,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
             .loginPage("/login").permitAll()
             .defaultSuccessUrl("/api/thymeleaf/address")
             .and()
-            .logout();
+            .logout()
+            .logoutSuccessUrl("/login");
             
             // .and()
             
