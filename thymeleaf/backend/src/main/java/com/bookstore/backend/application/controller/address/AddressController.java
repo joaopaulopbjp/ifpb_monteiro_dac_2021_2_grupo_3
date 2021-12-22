@@ -80,9 +80,10 @@ public class AddressController {
             return "redirect:/api/thymeleaf/address";
       }
 
-      @PostMapping("/update")
-      public String update(@ModelAttribute("dtoAddress") AddressModel address, Model model, Principal principal) {
+      @PostMapping("/update/{id}")
+      public String update(@PathVariable("id") Long id, @ModelAttribute("dtoAddress") AddressModel address, Model model, Principal principal) {
             try {
+                  address.setId(id);
                   addressService.update(address, principal.getName());
             } catch (NotFoundException e) {
                   e.printStackTrace();

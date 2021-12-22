@@ -24,7 +24,10 @@ public class AddressService {
 	private AdminVerify adminVerify;
 
 	@Autowired
-	private AddressRepository addressRepositoryService;
+	private AddressRepository addressRepository;
+
+	@Autowired
+	private AddressRepositoryService addressRepositoryService; 
 
 	@Autowired
 	private PersonRepository userRepositoryService;
@@ -35,7 +38,7 @@ public class AddressService {
 
 		verifyAddress(address);
 
-		address = addressRepositoryService.save(address);
+		address = addressRepository.save(address);
 		user.get().addAddressToAddressList(address);
 		userRepositoryService.save(user.get());
 		return address;
@@ -52,22 +55,22 @@ public class AddressService {
 
 	public void delete(Long id, String username) throws Exception {
 		PersonModel person = userRepositoryService.findByUsername(username).get();
-		AddressModel address = addressRepositoryService.findById(id).get();
+		AddressModel address = addressRepository.findById(id).get();
 
 		person.removeAddressFromAddressList(address);
 		userRepositoryService.save(person);
 		
-		addressRepositoryService.deleteById(id);
+		addressRepository.deleteById(id);
 
 	}
 
 	public AddressModel update(AddressModel addressModel, String username) throws NotFoundException{
 
-		return addressRepositoryService.save(addressModel);
+		return addressRepositoryService.update(addressModel);
 	}
 
 	public AddressModel findById(Long id, String username) throws Exception {
-		Optional<AddressModel> addressOp = addressRepositoryService.findById(id);
+		Optional<AddressModel> addressOp = addressRepository.findById(id);
 		if(!addressOp.isPresent()){
 			throw new NotFoundException("Not found address with id " + id);
 		}
@@ -88,6 +91,6 @@ public class AddressService {
 
 	public List<AddressModel> findAll() throws NotFoundException {
 
-		return addressRepositoryService.findAll();
+		return addressRepository.findAll();
 	}
 }
